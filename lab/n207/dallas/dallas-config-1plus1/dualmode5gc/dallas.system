@@ -1,0 +1,47 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{t3410_attach_timer, 60}.
+{t3410_release_timer, 60}.
+{tc_history_length, 90}.
+{log_interval, 60}.
+{nbr_of_dps_gi_nws, 32}.
+{link_group_num, 2}.
+{debug_startup, off}.
+{rtt_signalling_range_list, [10,30,50,100,150,300,800,1000,1500,2000,5000,10000,20000,50000], []}.
+%{nr_of_sctp_streams, 10}.
+%%%%%%%%%%%%% Frontend 1 start %%%%%%%%%%%%%
+{dp, 1, 'tool-01-202', []}.
+{gnb_n2_ip_addresses, [{'6.192.0.0', 19, undefined, 0}], 1, []}.
+{gnb_n3_ip_addresses, [{'6.196.0.0', 19, undefined, 0}], 1, []}.
+{gi_ip_addresses, [{'222.0.0.0', 13, '2A00:222:0:0::', 37}], 1, []}.
+%%{ausf_nausf_ip_addresses, [{network_v4, {'6.72.0.32', 27}},{network_v6, {'2A00:230:0:0::0', 51}},{dp_index, 1}]}.
+%%{hss_udm_nudm_ip_addresses, [{network_v4, {'6.72.0.64', 27}},{network_v6, {'2A00:231:0:0::0', 51}},{dp_index,1}]}.
+{hss_udm_s6a_ip_addresses, [{network_v4,{'6.72.0.0',27}},{dp_index, 1}]}.
+{upf_n4c_ip_addresses, [{network_v4, {'6.76.0.0', 22}}, {dp_index, 1}]}.
+{upf_n4u_ip_addresses, [{network_v4, {'6.76.4.0', 22}}, {dp_index, 1}]}.
+{upf_n3_ip_addresses, [{network_v4, {'6.76.8.0', 22}}, {dp_index, 1}]}.
+{upf_n6_ip_addresses, [{network_v4, {'6.76.12.0', 22}}, {dp_index, 1}]}.
+%%%%%%%%%%%%% Frontend 1 end %%%%%%%%%%%%%
+%%% for 4G dallas %%%%%%
+{enb_s1mme_ip_addresses, [{'8.140.0.0', 19, undefined, 0 }], 1, []}.
+{enb_s1u_ip_addresses, [{'6.16.0.0', 19, '2A02:6:C0:2000::', 51}], 1, []}.  %%Used by MMEsim towards SGW s1u interface
+%%%%%%%%%%%%% Backends start %%%%%%%%%%%%%
+{subsystem, 1, 'tool-01-101', 10, []}.
+%%%%%%%%%%%%% Backends end %%%%%%%%%%%%%
+
+%{dp, 2, 'tool-01-202', []}.
+%{gnb_n2_ip_addresses, [{'6.192.32.0', 19, undefined, 0}], 2, []}.
+%{gnb_n3_ip_addresses, [{'6.196.32.0', 19, undefined, 0}], 2, []}.
+%{gi_ip_addresses, [{'222.8.0.0', 13, '2A00:223:0:0::', 37}], 2, []}.
+%{hss_udm_s6a_ip_addresses, [{network_v4,{'6.72.0.32',27}},{dp_index, 2}]}.
+%{upf_n4c_ip_addresses, [{network_v4, {'6.80.0.0', 22}}, {dp_index, 2}]}.
+%{upf_n4u_ip_addresses, [{network_v4, {'6.80.4.0', 22}}, {dp_index, 2}]}.
+%{upf_n3_ip_addresses, [{network_v4, {'6.80.8.0', 22}}, {dp_index, 2}]}.
+%{upf_n6_ip_addresses, [{network_v4, {'6.80.12.0', 22}}, {dp_index, 2}]}.
+%%%%%%%%%%%%% Frontend 1 end %%%%%%%%%%%%%
+%%% for 4G dallas %%%%%%
+%{enb_s1mme_ip_addresses, [{'8.140.32.0', 19, undefined, 0 }], 2, []}.
+%{enb_s1u_ip_addresses, [{'6.16.32.0', 19, '2A02:6:C0:4000::', 51}], 2, []}.  %%Used by MMEsim towards SGW s1u interface
+
+%%%%%%%%%%%%% Backends start %%%%%%%%%%%%%
+%%{subsystem, 2, 'tool-01-104', 10, []}.
+%%%%%%%%%%%%% Backends end %%%%%%%%%%%%%

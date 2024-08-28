@@ -1,0 +1,30 @@
+############################################################################
+# sputils as SP scripts wrapper to run SP exposed scripts from gerrit
+############################################################################
+#
+##### SP scripts path definition for sputils supported subcommands #####
+#<sputils subcommand name>     <script OR ansible>     <SP script file relpath to lab/scripts>                  <SP script root directory to lab/scripts>
+collect_active_alarms          script                  p2gtool_internal/utils/collect_active_alarms.py          p2gtool_internal
+check_resources_allocation     script                  k8s/common/check_resources_allocation.sh                 k8s/common
+nrf                            script                  p2gtool_internal/nrfclient/nrf.py                        p2gtool_internal
+push_5gc_dls                   script                  p2gtool_internal/push_5gc_dls.py                         p2gtool_internal
+push_5gc_smf                   script                  p2gtool_internal/push_5gc_smf.py                         p2gtool_internal
+push_5gc_nrf                   script                  p2gtool_internal/push_5gc_nrf.py                         p2gtool_internal
+push_5gc_alarms                script                  p2gtool_internal/push_5gc_alarms.py                      p2gtool_internal
+push_5gc_redis                 script                  p2gtool_internal/push_5gc_redis.py                       p2gtool_internal
+pmshow                         script                  dallas/pmshow                                            dallas
+ssl_cert_gen                   script                  k8s/ssl_cert_generation/ssl_cert_gen.py                  k8s/ssl_cert_generation
+horseKeeper                    script                  k8s/horseKeeper/horseKeeper.py                           k8s/horseKeeper  
+fivegc-cnf-healthcheck         script                  k8s/fivegc-cnf-healthcheck/fivegc-cnf-healthcheck.sh     k8s/fivegc-cnf-healthcheck
+## adc was removed from suppport to separte git repo ADC 2022-03-02
+#adc                            ansible                 adc/scripts/adc                                          adc
+host_cpu                       script                  k8s/common/host_cpu.sh                                   k8s/common
+host_mem                       script                  k8s/common/host_memory.sh                                k8s/common
+pod_cpu                        script                  k8s/common/pod_cpu.sh                                    k8s/common
+pod_mem                        script                  k8s/common/pod_memory.sh                                 k8s/common
+smaller                        script                  k8s/common/smaller.sh                                    k8s/common
+isp_log                        script                  k8s/log/isp_log_collect.sh                               k8s/log
+collect_pm_data                script                  k8s/common/collect_pm_data/collect_prom.py               k8s/common
+
+#screenshot tool
+screenshottool                 script                  screenshots/screenshottool.py                            screenshots

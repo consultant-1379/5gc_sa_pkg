@@ -1,0 +1,13 @@
+parameters:
+
+  nova_availability_zone: nova
+  flavor: MGMT_8vcpu_16384MBmem_0GBdisk
+  disk: 100
+  enable_volume: true
+  image: xenial-server-cloudimg-amd64-disk1
+  security_groups_enabled: false
+  mgmt_network: test-mgmt229
+  mgmt_subnet: test-mgmt229_subnet
+  mgmt_ip: 10.117.61.91
+  public_key: >
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAjXPfGUC8fBvYN0cx6icqvRTaSTIdBZNHxz6ufPALT67g7ARXT5BhyQyT6KTSnsFW+SniFjz2ls3u9bx86OXWWs2R40Jch7rMXbKx4gR3VSaNfkiKxGlTp+aEpwjnPlO3TyNMrfbZUe57UJrLo7oo7ZsnJfKZ1z9N+NVGCks8Jp9oa2OBG9viG5vYB4o/3Tdl5/LiLHYm74AAsuTXnOWVOOowzvT3v2SMkLeyvTd/LBpVEvEXfG1kK+hdxfyRlpqERlOM10CeeYeBd5UrN8+xt5XDoTlnZjp2W3GWJeL3ZjMIU3MxOpmrNksqR6qeZQNF2BGGINs032/QMwYa1M/1 TS Dual-Mode 5GC CCD Deployment

@@ -1,0 +1,142 @@
+#!/bin/bash
+
+set -o pipefail
+sputils_scripts_dir="$HOME/.sputils"
+sputils_tmp=$sputils_scripts_dir/tmp
+[ ! -d $sputils_tmp ] && mkdir -p $sputils_tmp
+
+function _curl_url()
+{
+  local url=$1
+  local timeout=1
+  shift
+  curl -s -k -f $url --connect-timeout $timeout $@
+}
+
+function fetch_nfvi_sp_latest_branch_version()
+{
+  gerrit_url='https://gerrit.ericsson.se'
+  gerrit_uripath='/projects/5gc_config%2F5gc_sa_pkg/branches?m=release-'
+  url=${gerrit_url%/}$gerrit_uripath
+  _curl_url $url | grep -oP  'refs/heads/release-[0-9]+\.[0-9]+' | sort -V | tail -1  | awk -F\/ '{print $3}'
+  return $?
+}
+
+function download_git_repo_archive()
+{
+  local branch download_url script_dir
+  download_url=$1
+  script_dir=$2
+  curr_wdir=$(pwd)
+  [ ! -d $script_dir ] && mkdir -p $script_dir
+  cd $script_dir
+  _curl_url $download_url | tar -xz --strip-components 0 2>/dev/null
+  [ $? -ne 0 ] && echo "Error: download git repo $download_url failed"
+  cd $curr_wdir
+}
+
+function help()
+{
+  PROG=sputils
+  avc=( ${!sp_available_cmds[@]} )
+  echo "Usage: $PROG <COMMAND> [OPTIONS]"
+  echo
+  echo -e "AVAILABLE COMMANDS:"
+  echo -e "$(for c in ${avc[@]};do printf '%2s%s\n' '' $c;done)"
+}
+
+function main()
+{
+  spc_dname=sputils
+  spc_name=sputils_supported_cmds
+  base_url="https://gerrit.ericsson.se"
+  project="5gc_config/5gc_sa_pkg"
+  branch=$(fetch_nfvi_sp_latest_branch_version)
+  url=$base_url/plugins/gitiles/$project/+archive/refs/heads/${branch}/lab/scripts/${spc_dname}.tar.gz
+  expmins=60
+  # get sputils_suppported_cmds file from gerrit if it does not exist OR once the file ctime more than $expmins
+  if [ ! -f $sputils_scripts_dir/$spc_dname/$spc_name ] || \
+     test $(find $sputils_scripts_dir/$spc_dname/$spc_name -type f -name "$spc_name" -cmin +$expmins);then
+    ! download_git_repo_archive $url $sputils_scripts_dir/$spc_dname && echo "Warning: sync remote latest SP scripts failed, try it later."
+  fi
+
+  declare -A sputils_type
+  sputils_type=(["script"]="lab/scripts" ["ansible"]="lab/ansible")
+
+  declare -A sp_available_cmds
+  declare -A sp_download_paths
+  declare -A sp_cmd_base_paths
+  content=$(grep -v -E '^#|^$' $sputils_scripts_dir/sputils/sputils_supported_cmds)
+  while IFS= read -r line
+  do
+    c=$(echo $line | awk '{print $1}')
+    ctype=$(echo $line | awk '{print $2}')
+    cfpath=$(echo $line | awk '{print $3}')
+    crpath=$(echo $line | awk '{print $4}')
+    sp_available_cmds[$c]=$sputils_scripts_dir/$cfpath
+    sp_download_paths[$c]=${sputils_type[$ctype]}/$crpath
+    sp_cmd_base_paths[$c]=$crpath
+  done <<< "$content"
+
+  [ $# -eq 0 ] && help && exit 1
+  input_cmd=$1
+  if [ "$input_cmd" = cmdslist ];then
+    echo ${!sp_available_cmds[*]} | tr ' ' '\n'
+    return
+  #elif [ "$input_cmd" = adc ];then
+  #  adc_dir="$(mktemp -d -t adc.XXXXXXXX --tmpdir=$sputils_tmp)"
+  #  trap "rm -rf $adc_dir" EXIT
+  #  sp_available_cmds[adc]=$adc_dir/scripts/adc
+  #  sp_download_paths[adc]="master"
+  #  project="5gc_config/adc"
+  #  spc_dname="master"
+  #  url=$base_url/plugins/gitiles/$project/+archive/refs/heads/${spc_dname}.tar.gz
+  #  download_git_repo_archive $url $adc_dir
+  fi
+
+  cmd_path=${sp_available_cmds[$input_cmd]}
+  cmd_name=${cmd_path##*/}
+  cmd_download_path=${sp_download_paths[$input_cmd]}
+  [ -z $cmd_download_path ] && echo "Error: $input_cmd command does not exist" && exit 1
+  if [ $cmd_name != adc ] && \
+     ([ ! -f $cmd_path ] ||
+      test $(find $sputils_scripts_dir/${sp_cmd_base_paths[$input_cmd]} -type f -name "$cmd_name" -cmin +$expmins));then
+    url=$base_url/plugins/gitiles/$project/+archive/refs/heads/${branch}/${cmd_download_path}.tar.gz
+    ! download_git_repo_archive $url $sputils_scripts_dir/${sp_cmd_base_paths[$input_cmd]} && echo "Warning: sync remote latest SP scripts failed, try it later."
+  fi
+  shift
+  cmd_opts=("$@")
+
+
+  # load python3 env
+  unset PYTHONPATH
+  export PATH=/lab/pccc_utils/scripts/csdp_python3_anaconda/anaconda3/bin:$PATH
+
+  POD=""
+  pods_map=(selnpctool-1056-01:pod56 selnpctool-1096-01:n28 selnpctool-1248-01:n99 selnpctool-1298-01:n84)
+  dlshost=$(hostname)
+  for pm in ${pods_map[@]}
+  do
+    if [[ $dlshost =~ ^$(echo $pm | awk -F: '{print $1}').*$ ]];then
+      POD=$(echo $pm | awk -F: '{print $2}')
+      break
+    fi
+  done
+
+  if [ -f $cmd_path ];then
+    if [ $input_cmd == nrf ];then
+      if [[ ! -z $POD ]] && \
+         [[ ! " ${cmd_opts[@]} " =~ " -n " ]] && \
+         [[ ! " ${cmd_opts[@]} " =~ " -e " ]];then
+        cmd_opts+=(-e $POD)
+      fi
+    elif [ $input_cmd == adc ];then
+      $cmd_path "${cmd_opts[@]}"
+      return
+    fi
+    echo "INFO: SPUTILS ROOT DIRECTORY is $sputils_scripts_dir" 1>&2
+    exec $cmd_path "${cmd_opts[@]}"
+  fi
+}
+
+main "$@"

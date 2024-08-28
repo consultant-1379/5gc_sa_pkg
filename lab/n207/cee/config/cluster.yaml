@@ -1,0 +1,53 @@
+---
+clusters:
+  - name: openstack
+    softwareAllocation:
+      - container_v1
+    # - csc_drivers_v1 now in hostProfile.yaml
+      - sdi_v1
+    sharedServices:
+      - cluster: infra
+        serviceComponentGroups:
+          - infra_shared_services
+          - idam_shared_services
+          # - sso_shared_services
+          - cee_lcm_shared_services
+          - vmalert_shared_service
+      - cluster: csc
+        serviceComponentGroups:
+          - csc_shared_services
+    configurationData:
+      - default
+      - vxsds
+      - openstack
+      - csc
+    backupDomains:
+      - openstack
+  - name: infra
+    softwareAllocation:
+      - container_v1
+      - lcm_v1
+      - serviceassurance_v1
+      - portal_v1
+    configurationData:
+      - default
+    backupDomains:
+      - infra
+  - name: csc
+    softwareAllocation:
+      - container_v1
+      - csc_v1
+    sharedServices:
+      - cluster: infra
+        serviceComponentGroups:
+          - infra_shared_services
+          - idam_shared_services
+      - cluster: openstack
+        serviceComponentGroups:
+          - openstack_shared_services
+    configurationData:
+      - default
+      - csc
+    backupDomains:
+      - csc
+...

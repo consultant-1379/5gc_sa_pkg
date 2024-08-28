@@ -1,0 +1,6 @@
+{
+  "networkElementType": "UDR",
+  "routingMethod": "UnconditionalRouting",
+  "instance": "CCDM_UDR_LDAP",
+  "instanceType": "NetworkElementGroup"
+}

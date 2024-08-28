@@ -1,0 +1,45 @@
+- hosts: "{{ target_pod }}-misc"
+  become: true
+  vars:
+    src_dir: "{{ tgpp_dns_config_dir }}"
+    dest_dir: /etc/bind/dm5gc/
+    src_named_conf: "../config/bind9/named.conf.local"
+    dest_named_conf: /etc/bind/named.conf.local
+  tasks:
+  - block:
+    - name: Install bind9 package
+      apt:
+        name: bind9
+        state: present
+        #update_cache: yes
+      notify:
+      - Restart service named
+    - name: Upload dns main config file
+      copy:
+        src: "{{ src_named_conf }}"
+        dest: "{{ dest_named_conf }}"
+      notify:
+      - Reload service named
+    - name: "Create {{ dest_dir }} directory"
+      file:
+        path: "{{ dest_dir }}"
+        state: directory
+    - name: Upload dm5gc DNS config files
+      copy:
+        src: "{{ src_dir }}"
+        dest: "{{ dest_dir }}"
+      notify:
+      - Reload service named
+    when:
+    - pod == target_pod
+    - ansible_distribution == 'Ubuntu'
+
+  handlers:
+  - name: Restart service named
+    ansible.builtin.systemd:
+      name: named.service
+      state: restarted
+  - name: Reload service named
+    ansible.builtin.systemd:
+      name: named.service
+      state: reloaded

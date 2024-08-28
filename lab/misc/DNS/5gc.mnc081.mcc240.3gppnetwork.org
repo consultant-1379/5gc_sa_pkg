@@ -1,0 +1,73 @@
+;######################################################################
+; This file is maintained by ANSIBLE, any changes are getting lost.
+; Update the source file in support package gerrit REPO.
+;#######################################################################
+
+$TTL    604800
+@       IN      SOA     localhost. ns. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.5gc.mnc081.mcc240.3gppnetwork.org.
+@       IN      A       172.30.32.50
+@       IN      AAAA    ::1
+
+ns1     IN      A       172.30.32.50
+
+;###############################################################
+;DM 5GC 3GPP DNS
+;###############################################################
+;#
+;## site1 cluster1
+;#
+site1-cluster1-pcc1.amf                                           IN      A        172.17.128.1
+pcc1-smf-nsmf.site1-cluster1                                      IN      A        172.17.128.2
+pcc1-smf-notification.site1-cluster1                              IN      A        172.17.128.3
+pcc2-smf-nsmf.site1-cluster1                                      IN      A        172.17.129.2
+pcc2-smf-notification.site1-cluster1                              IN      A        172.17.129.3
+ccpc1-5g-traffic.site1-cluster1                                   IN      A        172.17.128.7
+ccdm1-5g-traffic.site1-cluster1                                   IN      A        172.17.128.4
+ccdm1-intersite.site1-cluster1                                    IN      A        172.17.192.1
+ccsm1-udm-5g-sig.site1-cluster1                                   IN      A        172.17.128.13
+ccsm1-ausf-5g-sig.site1-cluster1                                  IN      A        172.17.128.12
+ccrc1-nrf-sig.site1-cluster1                                      IN      A        172.17.128.9
+ccrc1-nssf-sig.site1-cluster1                                     IN      A        172.17.128.10
+ccsm1-hss-epc-http-sig.site1-cluster1                             IN      A        172.17.128.16
+ccsm1-eir-5g-sig.site1-cluster1                                   IN      A        172.17.128.15
+sc1-bsf-sig.site1-cluster1                                        IN      A        172.17.128.18
+sc1-scp-sig.site1-cluster1                                        IN      A        172.17.128.19
+cces1-5g-sbi-traffic.site1-cluster1                               IN      A        172.17.128.5
+cces1-5g-nbi-trust-traffic.site1-cluster1                         IN      A        172.17.128.6
+sc1-sepp-internal-sig.site1-cluster3                              IN      A        172.17.133.1
+sc1-sepp-external-sig.site1-cluster3                              IN      A        172.16.133.1
+
+;#
+;## site2 cluster1
+;#
+site2-cluster1-pcc1.amf                                           IN      A        172.17.136.1
+pcc1-smf-nsmf.site2-cluster1                                      IN      A        172.17.136.2
+pcc1-smf-notification.site2-cluster1                              IN      A        172.17.136.3
+pcc2-smf-nsmf.site2-cluster1                                      IN      A        172.17.137.2
+pcc2-smf-notification.site2-cluster1                              IN      A        172.17.137.3
+ccdm1-5g-traffic.site2-cluster1                                   IN      A        172.17.136.4
+ccdm1-intersite.site2-cluster1                                    IN      A        172.17.200.1
+ccsm1-udm-5g-sig.site2-cluster1                                   IN      A        172.17.136.13
+ccsm1-ausf-5g-sig.site2-cluster1                                  IN      A        172.17.136.12
+ccrc1-nrf-sig.site2-cluster1                                      IN      A        172.17.136.9
+ccrc1-nssf-sig.site2-cluster1                                     IN      A        172.17.136.10
+ccsm1-hss-epc-http-sig.site2-cluster1                             IN      A        172.17.136.16
+ccsm1-eir-5g-sig.site2-cluster1                                   IN      A        172.17.136.15
+sc1-bsf-sig.site2-cluster1                                        IN      A        172.17.136.18
+sc1-scp-sig.site2-cluster1                                        IN      A        172.17.136.19
+cces1-5g-sbi-traffic.site2-cluster1                               IN      A        172.17.136.5
+cces1-5g-nbi-trust-traffic.site2-cluster1                         IN      A        172.17.136.6
+sc1-sepp-internal-sig.site2-cluster3                              IN      A        172.17.141.1
+sc1-sepp-external-sig.site2-cluster3                              IN      A        172.16.141.1
+
+;#
+;## outline
+;#
+outline-af1.site1                                                 IN      A        8.104.0.65

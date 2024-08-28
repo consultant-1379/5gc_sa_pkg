@@ -1,0 +1,16 @@
+- hosts: director
+  gather_facts: no
+  vars:
+    resolv_file: /etc/hosts
+  tasks:
+  - name: get node host resolv
+    command: kubectl get node -owide -o=jsonpath='{range .items[*]}{.status.addresses[0].address}{"\t"}{.status.addresses[1].address}{"\n"}{end}'
+    register: output
+
+  - name: add host resolv to {{ resolv_file }}
+    blockinfile:
+      dest: "{{ resolv_file }}"
+      block: |
+        {{ output.stdout }}
+    when: output.changed
+    become: yes

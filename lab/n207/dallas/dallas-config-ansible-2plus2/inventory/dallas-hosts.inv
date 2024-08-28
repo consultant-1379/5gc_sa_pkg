@@ -1,0 +1,10 @@
+[cs]
+tool-01-101 host_index=0 host_id=101
+
+[be]
+tool-01-101 host_index=0 host_id=101
+tool-01-102 host_index=1 host_id=102
+
+[fe]
+tool-01-201 host_index=0 host_id=201
+tool-01-202 host_index=1 host_id=202

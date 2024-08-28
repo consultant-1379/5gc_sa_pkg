@@ -1,0 +1,18 @@
+# Push metrics to Prometheus pushgateway regually
+PYTHON_INTER=/lab/pccc_utils/scripts/csdp_python3_anaconda/anaconda3/bin/python
+PUSH_SCRIPT_DIR=/lab/pccc_utils/scripts/src/p2gtool_internal
+
+## Pushing dm5gc Dallas KPI
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_5gc_dls.py --host selnpctool-1056-01-001 --dlstype 5gcdls -g http://monitoring-eric-pm-server-pushgateway.ingress.pod56-eccd1.seln.ete.ericsson.se -i POD56 --push
+
+## Pushing dm5gc NRF Status
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_5gc_nrf.py --pod pod56 -i POD56 -g http://monitoring-eric-pm-server-pushgateway.ingress.pod56-eccd1.seln.ete.ericsson.se --push
+
+## Pushing SMF N11 HTTP Outgoing return code
+#*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_5gc_smf.py --host pod56-smf1.seln.ete.ericsson.se -g http://monitoring-eric-pm-server-pushgateway.ingress.pod56-eccd1.seln.ete.ericsson.se -i POD56 --push
+
+## Pushing dm5gc Active Alarms
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_5gc_alarms.py --pod pod56 -i POD56 -g http://monitoring-eric-pm-server-pushgateway.ingress.pod56-eccd1.seln.ete.ericsson.se --push --save-alarms
+
+## Pushing dm5gc Check_redis
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_redis.py --pod pod56 -n pcc,pcg -g http://monitoring-eric-pm-server-pushgateway.ingress.pod56-eccd1.seln.ete.ericsson.se -i POD56 --push 

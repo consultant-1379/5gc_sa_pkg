@@ -1,0 +1,533 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Host-Level-montor",
+  "editable": true,
+  "gnetId": 11074,
+  "graphTooltip": 0,
+  "id": 15,
+  "iteration": 1616380314306,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "info",
+      "includeVars": false,
+      "tags": [
+        "$node"
+      ],
+      "targetBlank": true,
+      "title": "Server IP：$node",
+      "type": "link",
+      "url": ""
+    },
+    {
+      "icon": "external link",
+      "tags": [],
+      "targetBlank": true,
+      "title": "Update Dashboards",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://grafana.com/dashboards/11074"
+    }
+  ],
+  "panels": [
+    {
+      "aliasColors": {
+        "192.168.200.241:9100_总内存": "dark-red",
+        "内存_Avaliable": "#6ED0E0",
+        "内存_Cached": "#EF843C",
+        "内存_Free": "#629E51",
+        "内存_Total": "#6d1f62",
+        "内存_Used": "#eab839",
+        "可用": "#9ac48a",
+        "总内存": "#bf1b00"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "eric-victoria-metrics-cluster-vmselect-monitoring",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "height": "300",
+      "hiddenSeries": false,
+      "id": 156,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.2",
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:250",
+          "alias": "/.*_Total/",
+          "color": "#C4162A",
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "{{instance}}_Total",
+          "refId": "A",
+          "step": 4
+        },
+        {
+          "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"} - node_memory_MemAvailable_bytes{instance=~\"$node\"}",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "{{instance}}_Used",
+          "refId": "B",
+          "step": 4
+        },
+        {
+          "expr": "node_memory_MemAvailable_bytes{instance=~\"$node\"}",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{instance}}_Avaliable",
+          "refId": "F",
+          "step": 4
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Host-Level-Memory Basic",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:259",
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:260",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "eric-victoria-metrics-cluster-vmselect-monitoring",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 179,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum((node_memory_MemTotal_bytes{instance=~'$node'}-(node_memory_MemFree_bytes{instance=~'$node'}+node_memory_Cached_bytes{instance=~'$node'}+node_memory_Buffers_bytes{instance=~'$node'}))/node_memory_MemTotal_bytes{instance=~'$node'}) by (instance)",
+          "interval": "",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Host-Level-MEM-USAGE",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:161",
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:162",
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "kubernetes-service-endpoints",
+          "value": "kubernetes-service-endpoints"
+        },
+        "datasource": "eric-victoria-metrics-cluster-vmselect-monitoring",
+        "definition": "label_values(node_uname_info, job)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "JOB",
+        "multi": false,
+        "name": "job",
+        "options": [],
+        "query": {
+          "query": "label_values(node_uname_info, job)",
+          "refId": "Prometheus-job-Variable-Query"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "eric-victoria-metrics-cluster-vmselect-monitoring",
+        "definition": "label_values(node_uname_info{job=~\"$job\"}, nodename)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Host",
+        "multi": true,
+        "name": "hostname",
+        "options": [],
+        "query": {
+          "query": "label_values(node_uname_info{job=~\"$job\"}, nodename)",
+          "refId": "Prometheus-hostname-Variable-Query"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allFormat": "glob",
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "eric-victoria-metrics-cluster-vmselect-monitoring",
+        "definition": "label_values(node_uname_info{nodename=~\"$hostname\"},instance)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "IP",
+        "multi": false,
+        "multiFormat": "regex values",
+        "name": "node",
+        "options": [],
+        "query": {
+          "query": "label_values(node_uname_info{nodename=~\"$hostname\"},instance)",
+          "refId": "Prometheus-node-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "/",
+          "value": "/"
+        },
+        "datasource": "eric-victoria-metrics-cluster-vmselect-monitoring",
+        "definition": "",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": "",
+        "multi": false,
+        "name": "maxmount",
+        "options": [],
+        "query": {
+          "query": "query_result(topk(1,sort_desc (max(node_filesystem_size_bytes{instance=~'$node',fstype=~\"ext4|xfs\"}) by (mountpoint))))",
+          "refId": "Prometheus-maxmount-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "/.*\\\"(.*)\\\".*/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allFormat": "glob",
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "eric-victoria-metrics-cluster-vmselect-monitoring",
+        "definition": "",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": "环境",
+        "multi": false,
+        "multiFormat": "regex values",
+        "name": "env",
+        "options": [],
+        "query": {
+          "query": "label_values(node_exporter_build_info,env)",
+          "refId": "Prometheus-env-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allFormat": "glob",
+        "allValue": "",
+        "current": {
+          "selected": true,
+          "text": [
+            "None"
+          ],
+          "value": [
+            ""
+          ]
+        },
+        "datasource": "eric-victoria-metrics-cluster-vmselect-monitoring",
+        "definition": "label_values(node_exporter_build_info{env=~'$env'},name)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": "名称",
+        "multi": true,
+        "multiFormat": "regex values",
+        "name": "name",
+        "options": [],
+        "query": {
+          "query": "label_values(node_exporter_build_info{env=~'$env'},name)",
+          "refId": "Prometheus-name-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "/.*/",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "Europe/Stockholm",
+  "title": "Host_MEM",
+  "uid": "hb7fSE002",
+  "version": 2
+}

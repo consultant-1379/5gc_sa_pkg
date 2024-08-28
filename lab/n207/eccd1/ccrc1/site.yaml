@@ -1,0 +1,115 @@
+######################################
+## CNF general information
+######################################
+nodeName: n280-eccd1-ccrc1
+nodeType: CCRC
+instance: 1
+
+vnflcm:
+  clusterName: n280-eccd1
+  namespace: ccrc1
+#  InstantiateVnfRequest:
+#    applicationTimeOut: 3600
+#    skipVerification: "true"
+
+users:
+  day1:
+  - username: ccrc-admin
+    password: Changeme@1st
+    groups:
+    - nrf-admin
+    - nssf-admin
+    - nrfagent-admin
+    - system-admin
+  - username: ccrc-sec
+    password: Changeme@1st
+    groups:
+    - nrf-security-admin
+    - nssf-security-admin
+    - nrfagent-security-admin
+    - system-security-admin
+
+vtap:
+  tapagent: true
+  remotePath: vtap/n280-eccd1-ccrc1
+
+cnom:
+  fqdn: cnom.ccrc1-oam.n280-eccd1.sero.gic.ericsson.se
+
+snmp:
+  agentEngineId: 800000c1044e5246a1c1d1
+  sourceIdentifier: 10.143.139.75
+
+license:
+  customerId: "946060"
+  swltId: STA-CCRC-4
+
+ddc:
+  remotePath: ddc/n280-eccd1-ccrc1
+
+######################################
+## CNF specific information
+######################################
+ccrc:
+  nrf:
+    instanceId: 0c765084-9cc5-49c6-9876-4e5246a1c1d1
+    host: ccrc1-nrf-sig.site1-cluster1
+    port: 443
+    geored:
+      remote:
+        instanceId: 0c765084-9cc5-49c6-9876-4e5246a1c1d2
+        host: ccrc1-nrf-sig.site2-cluster1
+        port: 443
+  nssf:
+    instanceId: 13a1de33-ec45-4cd6-a842-4e5353a1c1d1
+    host: ccrc1-nssf-sig.site1-cluster1
+    port: 443
+    geored:
+      remote:
+        instanceId: 13a1de33-ec45-4cd6-a842-4e5353a1c1d2
+        host: ccrc1-nssf-sig.site2-cluster1
+        port: 443
+    provisioning:
+      fqdn: nssf-prov.ccrc1-oam.n280-eccd1.sero.gic.ericsson.se
+      amf:
+        regionId: 255
+        setId: 2
+        instanceId:
+        - 3fb31bb6-99ee-4a34-b714-414d46a1c1d1
+        - 3fb31bb6-99ee-4a34-b714-414d46a1c1d2
+
+######################################
+## CNF certificates specific
+######################################
+certs:
+  iccr-external-tls-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-iccr-server.p12
+  eric-ccrc-nrf-sbi-server-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-nrf-sbi-server.p12
+  eric-ccrc-nrf-sbi-client-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-nrf-sbi-client.p12
+  eric-ccrc-nssf-sbi-server-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-nssf-sbi-server.p12
+  eric-ccrc-nssf-sbi-client-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-nssf-sbi-client.p12
+  eric-ccrc-nssf-provisioning-server-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-iccr-server.p12
+  eric-ccrc-nrf-kvdb-server-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-nrf-kvdb-server.p12
+  eric-ccrc-nrf-kvdb-client-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-nrf-kvdb-client.p12
+  eric-ccrc-nssf-kvdb-server-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-nssf-kvdb-server.p12
+  eric-ccrc-nssf-kvdb-client-certificate:
+    p12: ../../../certs/n280-eccd1/ccrc1/ccrc1-nssf-kvdb-client.p12
+
+######################################
+## CNF dimensioning specific
+######################################
+hpaReplica:
+  eric-nrf-discovery: {min: 2, max: 10}
+  eric-nrf-management: {min: 2, max: 6}
+  eric-nrf-management-notification: {min: 2, max: 18}
+  eric-nssf-slice-selection-control: {min: 2, max: 5}
+  eric-nssf-nssai-availability: {min: 2, max: 3}
+  eric-nssf-notification: {min: 2, max: 3}

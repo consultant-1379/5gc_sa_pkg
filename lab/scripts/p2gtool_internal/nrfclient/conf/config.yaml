@@ -1,0 +1,49 @@
+nrfs:
+  n280:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site1-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+    nrf_ip: 172.17.128.9
+  n99:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site2-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+    nrf_ip: 172.17.136.9
+  n280-nrf1:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site1-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+    nrf_ip: 172.17.128.9
+  n99-nrf1:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site2-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+    nrf_ip: 172.17.136.9
+  n99-nrf2:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site1-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+    nrf_ip: 172.17.142.9
+  t1-nrf1:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site1-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+    nrf_ip: 172.17.128.9
+  t1-nrf2:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site2-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+    nrf_ip: 172.17.136.9
+  t2-nrf1:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site1-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+    nrf_ip: 172.17.142.9

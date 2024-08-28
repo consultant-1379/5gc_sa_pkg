@@ -1,0 +1,71 @@
+---
+physicalNetworks:
+  - name: default
+    vniRange: '100000:199999'
+    mtu: 2140
+    networkType:
+      - vxlan
+  - name: N280-CEE1-PHY0_25
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: N280-CEE1-PHY1_25
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: N280-CEE1-PHY0_100
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: N280-CEE1-PHY1_100
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: N280-CEE1-MLAG
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: N280-CEE1-DCGW-NET
+    mtu: 2140
+    networkType:
+      - vlan
+    trusted: True
+  - name: N280-CEE1-MLAG_LEFT
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: N280-CEE1-MLAG_RIGHT
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: N280-CEE1-FLAT_PHY0_100
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: N280-CEE1-FLAT_PHY1_100
+    mtu: 2140
+    networkType:
+      - flat
+      - vlan
+    trusted: True
+  - name: n280vpod1-dcgw
+    mtu: 2090
+    networkType:
+      - vlan
+...

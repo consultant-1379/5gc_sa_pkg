@@ -1,0 +1,11 @@
+---
+
+- hosts: cs
+  gather_facts: no
+  roles:
+  - role: cs
+
+- hosts: fe
+  gather_facts: no
+  roles:
+  - role: fe

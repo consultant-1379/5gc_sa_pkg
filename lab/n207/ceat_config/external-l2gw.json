@@ -1,0 +1,165 @@
+[
+  {
+    "id": "fac7e9ac-5b6e-45aa-bf70-8c64a924000f",
+    "name": "L2GW_BORDER_LEAF",
+    "tenant_id": "540a6750113540bd844fe40015983676",
+    "devices": [
+      {
+        "device_name": "LC003",
+        "id": "de37e31d-d64b-44ae-b233-2cf0595872f4",
+        "interfaces": [
+          {
+            "segmentation_id": [],
+            "name": "vlag-6157ffac-d61a-4970-9b5b-0d5fecbac932"
+          },
+          {
+            "segmentation_id": [],
+            "name": "vlag-ae42adcb-d33a-4b31-b84e-fb2cd96842b1"
+          },
+          {
+            "segmentation_id": [],
+            "name": "vlag-d01a28f8-efef-4941-a131-1124832b0b1d"
+          },
+          {
+            "segmentation_id": [],
+            "name": "vlag-526f49f4-c526-4e2a-9775-9bea98a357bc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "0a797668-6071-4a9f-8c70-54c16ef9989a",
+    "name": "L2GW_LEAF_PHY0",
+    "tenant_id": "540a6750113540bd844fe40015983676",
+    "devices": [
+      {
+        "device_name": "LC001",
+        "id": "372cb03b-9708-4b54-80b2-b4467f552062",
+        "interfaces": [
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00223-Leaf1a-65"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00223-Leaf1a-69"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00223-Leaf1a-61"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00223-Leaf1a-73"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00223-Leaf1a-57"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00223-Leaf1a-53"
+          }
+        ]
+      },
+      {
+        "device_name": "LC002",
+        "id": "ebf8230e-cb07-4beb-877f-409a51fd9765",
+        "interfaces": [
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00314-Leaf2a-61"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00314-Leaf2a-73"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00314-Leaf2a-69"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00314-Leaf2a-57"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00314-Leaf2a-53"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00314-Leaf2a-65"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "546cfe89-1762-440c-8edf-075514a6d4f3",
+    "name": "L2GW_LEAF_PHY1",
+    "tenant_id": "540a6750113540bd844fe40015983676",
+    "devices": [
+      {
+        "device_name": "LC001",
+        "id": "e720f1bb-4b6f-4c6c-b9f7-f820d83a3b6c",
+        "interfaces": [
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00313-Leaf1b-73"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00313-Leaf1b-69"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00313-Leaf1b-57"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00313-Leaf1b-61"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00313-Leaf1b-65"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00313-Leaf1b-53"
+          }
+        ]
+      },
+      {
+        "device_name": "LC002",
+        "id": "28757cbb-73f9-4244-a715-c82bc60760f7",
+        "interfaces": [
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00315-Leaf2b-69"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00315-Leaf2b-61"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00315-Leaf2b-57"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00315-Leaf2b-53"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00315-Leaf2b-65"
+          },
+          {
+            "segmentation_id": [],
+            "name": "N280-seroinnru00315-Leaf2b-73"
+          }
+        ]
+      }
+    ]
+  }
+]

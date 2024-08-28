@@ -1,0 +1,128 @@
+vnflcm:
+  vnfInstanceName: n280-eccd1-ccrc1
+  vnfProductName: CCRC
+  vnfSoftwareVersion: 1.12.6+1
+  instantiate_file: instantiate.json
+  values_file: values.yaml
+  clusterName: n280-eccd1
+  namespace: ccrc1
+
+skip-instantiation: false
+
+day0:
+  k8s-secret:
+  # 1. Create Secret for LDAP Admin User
+  - name: eric-sec-ldap-server-creds
+    sources:
+    - { type: literal, key: adminuser, value: sysadmin }
+    - { type: literal, key: passwd, value: sysAdm1n@Day0 }
+    - type: literal
+      key: adminpasswd
+      value: $6$fzLPYlRZCpweJMJC$AiNfP0WYE3npY8Za6GxMFoGj75TOl.TS6tmnnky2Bv5wY0Ek8RIoJlr9pyj0LF3wMMaNsNTUH4jp2lIHviJGS0
+  # 2. Create Machine User Account Secret
+  #- name: eric-sec-admin-user-management-day0-user
+  #  sources:
+  #  - { type: file, key: config.json, value: user-machine-config.json }
+  # 3. Create the SNMP Alarm Provider Secret
+  - name: snmp-alarm-provider-config
+    sources:
+    - { type: file, key: config.json, file: snmp-config.json }
+  # 4. Create the Distributed Coordinator ED Service Secret
+  - name: eric-data-distributed-coordinator-creds
+    sources:
+    - { type: literal, key: etcdpasswd, value: sysAdm1n@Day0 }
+  # 5. Create Object Storage MN Secret
+  - name: eric-data-object-storage-mn-creds
+    sources:
+    - { type: literal, key: accesskey, value: admin }
+    - { type: literal, key: secretkey, value: sysAdm1n@Day0 }
+
+verify-running: true
+ignore-not-running:
+- eric-data-search-engine-curator
+
+day1:
+  access:
+    oam: ccrc1-oam.n280-eccd1.sero.gic.ericsson.se
+    ldap-admin:
+      user: sysadmin
+      pass: sysAdm1n@Day0
+    users:
+    - user: ccrc-admin
+      pass: Dm5GC@S0lut!on
+      pass_init: Changeme@1st
+    - user: ccrc-sec
+      pass: Dm5GC@S0lut!on
+      pass_init: Changeme@1st
+    configs:
+    - file: user-config.xml
+      proto: netconf
+      pre-verify-pods-ready:
+        check-interval: 5
+        deployments:
+        - eric-cm-yang-provider
+      post-delay: 30
+      retry-interval: 30
+  app-config:
+  - file: external-certificates.xml
+    user-id: 1
+    proto: netconf
+    post-delay: 10
+  - file: nrf-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 10
+  - file: nrfagent-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 10
+  - file: nssf-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 10
+  - file: ddc-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 180
+  nssf-provisioning:
+    host: nssf-prov.ccrc1-oam.n280-eccd1.sero.gic.ericsson.se
+    trustca: ../../../certs/RootCA/ca.crt
+    client-cert: ../../../certs/n280-eccd1/ccrc1/ccrc1-nssf-sbi-client.crt
+    client-key: ../../../certs/n280-eccd1/ccrc1/ccrc1-nssf-sbi-client.key
+    prov-data:
+    - api-path: /profiles/amf-set-profiles/amf-set-id/240-81-ff-002
+      json-data: nssf-provisioning/amf-set-profile.json
+    - api-path: /profiles/nrf-instance-profiles/nrf-slice-common-region-001
+      json-data: nssf-provisioning/nrf-instance-profile.json
+    - api-path: /profiles/tai-group-nss-profiles/tai-group-slice1-amf-001
+      json-data: nssf-provisioning/tai-group-profile.json
+    - api-path: /profiles/network-slice-instances/nsi-slice-common-region-001
+      json-data: nssf-provisioning/slice-instance-profile.json
+  k8s-config:
+  - name: Create outbound policy for non-443 TLS
+    cmd: |
+      apply -f {file1}
+      apply -f {file2}
+      apply -f {file3}
+      apply -f {file4}
+      apply -f {file5}
+      apply -f {file6}
+    inline-files:
+      file1: outbound-policy/auto-sni-amf.yaml
+      file2: outbound-policy/auto-sni-smf.yaml
+      file3: outbound-policy/destination-rules.yaml
+      file4: outbound-policy/service-entries.yaml
+      file5: outbound-policy/tcp-options-for-tls-amf.yaml
+      file6: outbound-policy/tcp-options-for-tls-smf.yaml
+  - name: Create networkpolicy to allow accessing eric-pm-server and eric-data-search-engine
+    cmd: |
+      apply -f {file1}
+      apply -f {file2}
+    inline-files:
+      file1: network-policy/eric-pm-server-allow.yaml
+      file2: network-policy/eric-data-search-engine-allow.yaml
+  - name: Create pm server ingress
+    cmd: |-
+      create ingress eric-pm-server --rule="eric-pm-server-ccrc.ingress.n280-eccd1.sero.gic.ericsson.se/*=eric-pm-server:9090"
+
+

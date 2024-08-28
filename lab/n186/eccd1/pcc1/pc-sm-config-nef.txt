@@ -1,0 +1,33 @@
+autowizard false
+config
+
+epg pgw apn mqf
+ network-instance internet
+ routing-instance internet
+ user-profile-selection gx-profile default gx-1
+ user-profile-selection n7-profile default n7-1
+ user-profile-selection local-policy-control-profile default lpc_profile1
+ user-profile-selection policy-charging-rule-scope default pc_ruleScope1
+ pdp-context creation unblocked
+ pdp-context pdp-type ipv4
+ pdp-context address-allocation shared-ip-pool
+ pdp-context limit  10000000
+
+epg pgw shared-ip-pool mqf_pool
+ address 22.0.0.0/16
+
+epg pgw user-plane node-name upf1
+
+ ip-selection-condition condition3
+  data-network              [ mqf ]
+  selected-shared-ipv4-pool mqf_pool
+
+epg pgw user-plane-selection selection-condition condition3
+ data-network  [ mqf ]
+ selected-pool up-pool0
+
+epg pgw apn mqf nrf-discovery service-npcf-smpolicycontrol discovery-parameters preferred-locality
+
+commit
+end
+

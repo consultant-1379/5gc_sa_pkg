@@ -1,0 +1,56 @@
+nodeName: n280-eccd3-sc1-sepp
+nodeType: SC
+
+vnflcm:
+  clusterName: n280-eccd3
+  namespace: sc1
+  InstantiateVnfRequest:
+    applicationTimeOut: 3000
+    skipVerification: "true"
+
+users:
+  day1:
+  - username: sc-admin
+    password: Changeme@1st
+    groups:
+    - system-admin
+    - system-security-admin
+    - sc-admin
+    - sc-security-admin
+    - sepp-admin
+    - sepp-security-admin
+
+license:
+  customerId: '946060'
+  swltId: STA-SC-8
+snmp:
+  agentEngineId: 800000c104534350a1c3d1
+ddc:
+  remotePath: ddc/n280-eccd3-sc1
+
+vtap:
+  tapagent: false
+  remotePath: vtap/n280-eccd3-sc1-sepp
+
+replicaCount:
+  eric-sepp-worker: 4
+
+sc:
+  bsf:
+    enabled: false
+  scp:
+    enabled: false
+  sepp:
+    enabled: true
+    instanceId: f8b5465c-43e8-463e-8f16-534550a1c3d1
+    internalNetwork:
+      host: sc1-sepp-internal-sig.site1-cluster3
+      ip: 172.17.133.1
+    externalNetwork:
+      host: sc1-sepp-external-sig.site1-cluster3
+      ip: 172.16.133.1
+
+instance: 1
+cnom:
+  fqdn: cnom.sc1-oam.n280-eccd3.sero.gic.ericsson.se
+

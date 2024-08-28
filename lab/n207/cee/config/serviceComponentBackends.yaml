@@ -1,0 +1,42 @@
+#######################################################################################
+##  Configuration file with CEE service component backends information                #
+#######################################################################################
+---
+serviceComponentBackends:
+  - name: cee_service_backend
+    protocol: http
+#    transportLayerSecurity: internal_pki_tls
+    subnet: cee-ipv4
+  - name: glance_service_backend
+    protocol: http
+#    transportLayerSecurity: internal_pki_tls
+    subnet: glance-ipv4
+  - name: swift_service_backend
+    protocol: http
+#    transportLayerSecurity: internal_pki_tls
+    subnet: swift-ipv4
+  - name: migration_service_backend
+    protocol: http
+#    transportLayerSecurity: internal_pki_tls
+    subnet: migration-ipv4
+  - name: lcm_service_backend
+    protocol: http
+#    transportLayerSecurity: internal_pki_tls
+    subnet: lcm-ipv4
+  - name: gluster_service_backend
+    protocol: http
+#    transportLayerSecurity: internal_pki_tls
+    subnet: gluster-ipv4
+  - name: csc_service_backend
+    protocol: http
+#    transportLayerSecurity: internal_pki_tls
+    subnet: sdnc-internal-ipv4
+  - name: sdi_agent_backend
+    protocol: https
+    transportLayerSecurity: sdi_agent_tls
+    subnet: sdi-agent-ipv4
+  - name: cee_rabbitmq_backend
+    protocol: http
+    transportLayerSecurity: internal_pki_tls
+    subnet: cee-ipv4
+...

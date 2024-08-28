@@ -1,0 +1,28 @@
+evnfm:
+  # 5gc I&V Pod
+  n181:
+    host: eo-nbi.evnfm1.n181-eccd2.seli.gic.ericsson.se
+    user: vnfm
+    pass: Srp@c0re@n1v
+    trustca: /lab/pccc_utils/scripts/certs/rootCA.crt
+  n186:
+    host: eo-nbi.evnfm1.n186-eccd1.seli.gic.ericsson.se
+    user: 'vnfm-user'
+    pass: 'DefaultP12345!'
+
+
+cluster_kubeconfig:
+  n181-eccd1: /lab/pccc_utils/scripts/kubeconfig/n181-eccd1.config
+  n186-eccd2: /lab/pccc_utils/scripts/kubeconfig/n186-eccd1.config
+
+TerminateVnfRequest:
+  terminationType: FORCEFUL
+  additionalParams:
+    cleanUpResources: true
+    skipVerification: true
+    
+
+export:
+  enabled: false
+  archive: true
+  #path: <export to directory path>

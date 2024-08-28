@@ -1,0 +1,648 @@
+# Dual-mode 5gc on nfvi release package build configuration file
+#
+#############################################################################
+## Release version
+#############################################################################
+track: NFVI
+
+#############################################################################
+## Release package name and usecases definition
+#############################################################################
+pkg_name: 'dm_5gc_on_nfvi_sp'
+usecases:
+- basic
+#- upgrade-1.9-1.10
+
+#############################################################################
+## ECCD/VNFs/CNFs config files list for two site of each use case
+## include_files : file pattern, support wildcards ("*, ?, [ranges])
+## config_path   : the relative path to "5gc_sa_pkg" repo root directory
+## cluster       : mgmt_cluster|traffic_cluster
+## site          : site1|site2
+## tags          : <usecases list> e.g. all|basic|advanced|...
+#############################################################################
+
+## -------------------------------------------------------------------------
+## infra configuration
+## -------------------------------------------------------------------------
+infra:
+- dcgw:
+  - include_files:
+    - dcgw01-config.txt
+    - dcgw02-config.txt
+    config_path: lab/n280/dcgw
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - dcgw01-config.txt
+    - dcgw02-config.txt
+    config_path: lab/n99/dcgw
+    site: site2
+    tags:
+    - basic
+- dns:
+  - include_files:
+    - 5gc.mnc081.mcc240.3gppnetwork.org
+    - epc.mnc081.mcc240.3gppnetwork.org
+    - kvdb.nrf.3gppnetwork.org
+    - kvdb.nssf.3gppnetwork.org
+    config_path: lab/misc/n280/DNS/
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - 5gc.mnc081.mcc240.3gppnetwork.org
+    - epc.mnc081.mcc240.3gppnetwork.org
+    - kvdb.nrf.3gppnetwork.org
+    - kvdb.nssf.3gppnetwork.org
+    config_path: lab/misc/n280/DNS/
+    site: site2
+    tags:
+    - basic
+
+## -------------------------------------------------------------------------
+## eccd configuration list
+## -------------------------------------------------------------------------
+caas:
+- eccd:
+  # initial installation configuration files
+  - include_files:
+    - env-eccd-net.yaml
+    - ccdadm-config.yaml
+    config_path: lab/n280/eccd2/eccd
+    cluster: mgmt_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - env-eccd-net.yaml
+    - ccdadm-config.yaml
+    config_path: lab/n280/eccd1/eccd
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - env-eccd-net.yaml
+    - ccdadm-config.yaml
+    config_path: lab/n280/eccd3/eccd
+    cluster: dmz_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - env-eccd-net.yaml
+    - ccdadm-config.yaml
+    config_path: lab/n99/eccd1/eccd
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - env-eccd-net.yaml
+      - ccdadm-config.yaml
+      - ccdadm-config-update.yaml
+      upgrade:
+      - env-eccd-2.23.0.yaml
+      - env-eccd-2.24.0.yaml
+    config_path: site1/infrastructure/mgmt-cluster
+    cluster: mgmt_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+  - include_files:
+      base:
+      - env-eccd-net.yaml
+      - ccdadm-config.yaml
+      upgrade:
+      - env-eccd-2.23.0.yaml
+      - env-eccd-2.24.0.yaml
+    config_path: site1/infrastructure/traffic-cluster
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+
+
+cnfs:
+## -------------------------------------------------------------------------
+## pcc configuraton list
+## -------------------------------------------------------------------------
+# initial installation configuration files
+- pcc1:
+  - include_files:
+    - instantiate.json
+    - user-config.txt
+    - pc-sm-config.txt
+    - vpngw-config.txt
+    - ddc-config.txt
+    - pc-sm-config-scp.txt
+    - pc-mm-config.txt
+    - values.yaml
+    - snmp-config.json
+    - pc-mm-config-external-certificates.txt
+    - pc-sm-config-external-certificates.txt
+    config_path: lab/n280/eccd1/pcc1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - instantiate.json
+    - user-config.txt
+    - pc-sm-config.txt
+    - pc-mm-config.txt
+    - vpngw-config.txt
+    - ddc-config.txt
+    - values.yaml
+    - snmp-config.json
+    - pc-mm-config-external-certificates.txt
+    - pc-sm-config-external-certificates.txt
+    config_path: lab/n99/eccd1/pcc1
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - basic
+#- pcc2:
+#  - include_files:
+#    - instantiate.json
+#    - user-config.txt
+#    - pc-sm-config.txt
+#    - vpngw-config.txt
+#    - ddc-config.txt
+#    - values.yaml
+#    config_path: lab/n280/eccd1/pcc2
+#    cluster: traffic_cluster
+#    site: site1
+#    tags:
+#    - basic
+#  - include_files:
+#    - instantiate.json
+#    - user-config.txt
+#    - pc-sm-config.txt
+#    - vpngw-config.txt
+#    - ddc-config.txt
+#    - values.yaml
+#    config_path: lab/n99/eccd1/pcc2
+#    cluster: traffic_cluster
+#    site: site2
+#    tags:
+#    - basic
+# upgrade configuration files
+- pcc1:
+  - include_files:
+      base:
+      - ddc-config.txt
+      - instantiate.json
+      - pc-sm-config-scp.txt
+      - pc-sm-config.txt
+      - user-config.txt
+      - values.yaml
+      - vpngw-config.txt
+      upgrade:
+      - values_1.25.yaml
+    config_path: site1/nf/traffic-cluster/pcc1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+
+
+## -------------------------------------------------------------------------
+## pcg configuraton list
+## -------------------------------------------------------------------------
+- pcg1:
+  # initial installation configuration files
+  - include_files:
+    - user-config.txt
+    - pcg-config.txt
+    - values.yaml
+    - instantiate.json
+    - ddc-config.txt
+    - snmp-config.json
+    config_path: lab/n280/eccd1/pcg1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - user-config.txt
+      - pcg-config.txt
+      - values.yaml
+      - instantiate.json
+      - ddc-config.txt
+      upgrade:
+      - values_1.17.yaml
+    config_path: site1/nf/traffic-cluster/pcg1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+
+## -------------------------------------------------------------------------
+## ccrc configuraton list
+## -------------------------------------------------------------------------
+- ccrc1:
+  # initial installation configuration files
+  - include_files:
+    - ddc-config.xml
+    - snmp-config.json
+    - external-certificates.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - nrf-config.xml
+    - nssf-config.xml
+    - nssf-provisioning
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n280/eccd1/ccrc1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - ddc-config.xml
+    - snmp-config.json
+    - external-certificates.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - nrf-config.xml
+    - nssf-config.xml
+    - nssf-provisioning
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccrc1
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - ddc-config.xml
+      - external-certificates.xml
+      - instantiate.json
+      - nrfagent-config.xml
+      - nrf-config.xml
+      - nssf-config.xml
+      - nssf-provisioning
+      - user-config.xml
+      - values.yaml
+      - change_vnfpkg.json
+      - outbound-policy
+      upgrade:
+      - ccrc_delta_1.8_1.9.yaml
+      - ccrc_delta_1.9_1.10.yaml
+      - ccrc_delta_warning_1.8_1.9.txt
+      - ccrc_delta_warning_1.9_1.10.txt
+    config_path: site1/nf/traffic-cluster/ccrc1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+## -------------------------------------------------------------------------
+## ccsm configuraton list
+## -------------------------------------------------------------------------
+- ccsm1:
+  # initial installation configuration files
+  - include_files:
+    - ausf-config.xml
+    - avg-config
+    - ccsm-sctp-config.xml
+    - ddc-config.xml
+    - diameter-eir-s13-config.xml
+    - diameter-epc-s6a-config.xml
+    - eir-config.xml
+    - external-certificates.xml
+    - hss-config.xml
+    - hssepc-config.xml
+    - hss-remote-nf-profile.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - snmp-config.xml
+    - udm-config.xml
+    - udm-remote-nf-profile.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n280/eccd1/ccsm1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - ausf-config.xml
+    - avg-config
+    - ccsm-sctp-config.xml
+    - ddc-config.xml
+    - diameter-eir-s13-config.xml
+    - diameter-epc-s6a-config.xml
+    - eir-config.xml
+    - external-certificates.xml
+    - hss-config.xml
+    - hssepc-config.xml
+    - hss-remote-nf-profile.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - snmp-config.xml
+    - udm-config.xml
+    - udm-remote-nf-profile.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccsm1
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - ausf-config.xml
+      - avg-config
+      - ccsm-sctp-config.xml
+      - ddc-config.xml
+      - diameter-config.xml
+      - eir-config.xml
+      - external-certificates.xml
+      - hss-config.xml
+      - hssepc-config.xml
+      - hss-remote-nf-profile.xml
+      - instantiate.json
+      - nrfagent-config.xml
+      - snmp-config.xml
+      - udm-config.xml
+      - udm-remote-nf-profile.xml
+      - user-config.xml
+      - values.yaml
+      upgrade:
+      - delta-1.9-1.10-eric-ccsm-values.yaml
+    config_path: site1/nf/traffic-cluster/ccsm1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+## -------------------------------------------------------------------------
+## ccdm configuraton list
+## -------------------------------------------------------------------------
+- ccdm1:
+  # initial installation configuration files
+  - include_files:
+    - ddc-config.xml
+    - snmp-config.json
+    - eir-application-counters.xml
+    - eir-main-branches-setting.ldif
+    - eir-search-order-setting.ldif
+    - external-certificates.xml
+    - hssepc-application-counters.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - schema
+    - udr-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n280/eccd1/ccdm1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - ddc-config.xml
+    - snmp-config.json
+    - eir-application-counters.xml
+    - eir-main-branches-setting.ldif
+    - eir-search-order-setting.ldif
+    - external-certificates.xml
+    - hssepc-application-counters.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - schema
+    - udr-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccdm1
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - ddc-config.xml
+      - eir-application-counters.xml
+      - eir-main-branches-setting.ldif
+      - eir-search-order-setting.ldif
+      - external-certificates.xml
+      - hss-application-counters.xml
+      - instantiate.json
+      - nrfagent-config.xml
+      - udr-config.xml
+      - user-config.xml
+      - values.yaml
+      upgrade:
+      - ccdm_delta_1.7CP1_1.8.yaml
+      - ccdm_delta_1.8_1.9.yaml
+    config_path: site1/nf/traffic-cluster/ccdm1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+
+
+## -------------------------------------------------------------------------
+## cces configuraton list
+## -------------------------------------------------------------------------
+- cces1:
+  # initial installation configuration files
+  - include_files:
+    - ddc-config.xml
+    - snmp-config.json
+    - external-certificates.xml
+    - instantiate.json
+    - nef-config.xml
+    - nef-diameter-config.xml
+    - nef-provisioning
+    - nrfagent-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n280/eccd1/cces1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - ddc-config.xml
+      - external-certificates.xml
+      - instantiate.json
+      - nef-config.xml
+      - nef-diameter-config.xml
+      - nef-provisioning
+      - nrfagent-config.xml
+      - user-config.xml
+      - values.yaml
+      upgrade:
+      - delta-mtls-values-1.7-1.8.yaml
+      - delta-mtls-values-1.8-1.9.yaml
+    config_path: site1/nf/traffic-cluster/cces1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+
+## -------------------------------------------------------------------------
+## ccpc configuraton list
+## -------------------------------------------------------------------------
+- ccpc1:
+  # initial installation configuration files
+  - include_files:
+    - ddc-config.xml
+    - external-certificates.xml
+    - instantiate.json
+    - diameter-config.xml
+    - nf-profile-config.xml
+    - nrf-agent-config.xml
+    - remote-nf-type-discovery-mode.xml
+    - svc-routing-agent-config.xml
+    - sm-policy-control.xml
+    - switch-admin-state.xml
+    - user-config.xml
+    - snmp-config.xml
+    - values.yaml
+    - policy-provisioning
+    config_path: lab/n280/eccd1/ccpc1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+
+## -------------------------------------------------------------------------
+## eda configuraton list
+## -------------------------------------------------------------------------
+- eda1:
+  # initial installation configuration files
+  - include_files:
+    - snmp-config.json
+    - instantiate.json
+    - values.yaml
+    config_path: lab/n280/eccd1/eda1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - instantiate.json
+      - values.yaml
+      upgrade:
+      - values-2.10-2.11.yaml
+      - values-2.11-2.12.yaml
+    config_path: site1/supporting-function/traffic-cluster/eda1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+
+
+## -------------------------------------------------------------------------
+## sc configuration list
+## -------------------------------------------------------------------------
+- sc1:
+  # initial installation configuration files
+  - include_files:
+    - ddc-config.txt
+    - snmp-config.json
+    - values-bsf.yaml
+    - values-bsf-scp.yaml
+    - instantiate.json
+    - bsf-config.txt
+    - scp-config.txt
+    - external-certificates-bsf.txt
+    - external-certificates-scp.txt
+    - user-config.txt
+    config_path: lab/n280/eccd1/sc1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  # initial installation configuration files
+  - include_files:
+    #- ddc-config.txt
+    - snmp-config.json
+    - instantiate.json
+    - site.yaml
+    - values.yaml
+    config_path: lab/n280/eccd3/sc1
+    cluster: dmz_cluster
+    site: site1
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - values-bsf.yaml
+      - values-bsf-scp.yaml
+      - instantiate.json
+      - bsf-config.txt
+      - scp-config.txt
+      - external-certificates-bsf.txt
+      - external-certificates-scp.txt
+      - user-config.txt
+      upgrade:
+      - eric-sc-values-1.8-1.10.yaml
+    config_path: site1/nf/traffic-cluster/sc1
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+
+
+## -------------------------------------------------------------------------
+## evnfm configuraton list
+## -------------------------------------------------------------------------
+- evnfm1:
+  # initial installation configuration files
+  - include_files:
+    - site_values.yaml
+    config_path: lab/n280/eccd2/evnfm1
+    cluster: mgmt_cluster
+    site: site1
+    tags:
+    - basic
+  # upgrade configuration files
+  - include_files:
+      base:
+      - site_values_2.2.0-313.yaml
+      upgrade:
+      - site_values_2.8.0-321.yaml
+    config_path: site1/supporting-function/mgmt-cluster/evnfm1
+    cluster: mgmt_cluster
+    site: site1
+    tags:
+    - upgrade-1.9-1.10
+
+
+#############################################################################
+## GIT Repo configuration
+#############################################################################
+build:
+  # the Git repository URL; the {user} variable will be automatically replaced with the current user
+  git_repo: ssh://{user}@gerrit.ericsson.se:29418/5gc_config/5gc_sa_pkg
+  git_repo_tsconfig: ssh://{user}@gerrit.ericsson.se:29418/5gc_config/ts-config
+
+  # the Git branch to be used to generate the dist package
+  git_branch:
+
+  # A specific commit can be specified, if needed (the branch will be ignored if a commit was specified)
+  git_commit:
+
+  # A release version MUST be defined when a specific commit is specified.
+  release_version:
+
+  # the name of the directory where the source code is stored in the Git repo
+  git_src_dir:

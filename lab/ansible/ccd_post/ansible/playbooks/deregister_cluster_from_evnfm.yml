@@ -1,0 +1,52 @@
+- hosts: master[0]
+  gather_facts: false
+  vars_files:
+  - ../config/site.yaml
+  tasks:
+  - name: check if this cluster already registerd
+    shell: |
+      set -ex
+      USER="{{ evnfm[evnfm_id].user }}"
+      PASSWORD="{{ evnfm[evnfm_id].pass }}"
+      EVNFM_NBI_HOST="{{ evnfm[evnfm_id].nbi }}"
+      JSESSIONID=$(curl -s -X POST -H "Content-Type: application/json" \
+       -H "X-login: ${USER}" \
+       -H "X-password: ${PASSWORD}" \
+       --fail --show-error \
+       https://${EVNFM_NBI_HOST}/auth/v1)
+
+      # Register Cluster to EVNFM
+      res=$(curl -s -X GET \
+       -H "cookie:JSESSIONID=${JSESSIONID}" \
+       --fail --show-error \
+       https://${EVNFM_NBI_HOST}/vnflcm/v1/clusterconfigs | jq -r '.items[]|select(.name=="{{ cluster_id }}.config")|.name')
+      [[ $res == "{{ cluster_id }}.config" ]]
+    register: alreay_registered
+    changed_when: alreay_registered.rc == 0
+    failed_when: false == true
+
+  - block:
+    - name: deregister this cluster to {{ evnfm_id }}
+      shell: |
+        set -ex
+        USER="{{ evnfm[evnfm_id].user }}"
+        PASSWORD="{{ evnfm[evnfm_id].pass }}"
+        EVNFM_NBI_HOST="{{ evnfm[evnfm_id].nbi }}"
+        KUBECONFIG="{{ cluster_id }}.config"
+        JSESSIONID=$(curl -s -X POST -H "Content-Type: application/json" \
+         -H "X-login: ${USER}" \
+         -H "X-password: ${PASSWORD}" \
+         --fail --show-error \
+         https://${EVNFM_NBI_HOST}/auth/v1)
+
+        # Deregister cluster from EVNFM
+        curl -s -i -X DELETE \
+         -H "cookie:JSESSIONID=${JSESSIONID}" \
+         --fail --show-error \
+         https://${EVNFM_NBI_HOST}/vnflcm/v1/clusterconfigs/$KUBECONFIG
+      register: result
+      no_log: true
+    rescue:
+    - name: show error log
+      debug: msg="{{ result.stderr_lines }}"
+    when: alreay_registered.changed

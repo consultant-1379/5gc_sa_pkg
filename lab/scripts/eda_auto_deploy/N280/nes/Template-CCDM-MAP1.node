@@ -1,0 +1,32 @@
+{
+	"active": true,
+	"name": "CCDM_PF_MAPI_1",
+	"protocolAttributes": {
+		"acceptedResponseCode": "200",
+		"baseUri": "mapi/v1",
+		"basicAuthPassword": "",
+		"basicAuthUsername": "",
+		"BlockingTimeout": "10000",
+		"connectionTimeout": "11000",
+		"heartbeatUri": "/mapi/v1/profiles/udm/udmSliceProfiles",
+		"host": "ccdm1-5g-prov.n280-eccd1.sero.gic.ericsson.se",
+		"IdleTimeout": "1",
+		"MaxPoolSize": "100",
+		"nrOfRetries": "3",
+		"oauthClientId": "mapi-client",
+		"oauthClientSecret": "mapi-secret",
+		"oauthTokenBaseUri": "auth/realms/oam/protocol/openid-connect/token",
+		"oauthTokenHost": "iam.ccdm1-oam.n280-eccd1.sero.gic.ericsson.se",
+		"oauthTokenPort": "443",
+		"port": "443",
+		"responseTimeout": "11000",
+		"retryErrorResponseCode": "503",
+		"retryFactor": "1",
+		"retryTimeInterval": "1000",
+		"secure": "true",
+		"truststoreFile": "/app/client-certificate/ccdmkeystore.p12",
+		"truststorePassword": "storepass"
+	},
+	"protocolType": "M-API",
+	"version": ""
+}

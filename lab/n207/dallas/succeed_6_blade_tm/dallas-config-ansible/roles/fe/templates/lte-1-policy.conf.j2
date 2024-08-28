@@ -1,0 +1,43 @@
+###----------------------------- Policy Rule ---------------------------------
+RuleName: gnb_ul
+SourceNetwork: 6.196.32.0/20
+RouteTable: Destination Gateway Device
+172.18.64.0/25 172.30.48.1 vlan1204
+
+RuleName: gnb_ul_4g
+SourceNetwork: 6.16.32.0/20
+RouteTable: Destination Gateway Device
+172.18.64.0/25 172.30.48.1 vlan1204
+
+RuleName: gnb_ul_2
+SourceNetwork: 6.196.48.0/20
+RouteTable: Destination Gateway Device
+172.18.64.0/25 172.30.50.1 vlan1224
+
+RuleName: gnb_ul_4g_2
+SourceNetwork: 6.16.48.0/20
+RouteTable: Destination Gateway Device
+172.18.64.0/25 172.30.50.1 vlan1224
+
+
+RuleName: gnb_dl
+SourceNetwork: 192.8.0.0/14
+RouteTable: Destination Gateway Device
+21.0.0.0/8 172.30.64.1 vlan1205
+
+
+RuleName: gnb_dl_2
+SourceNetwork: 192.12.0.0/14
+RouteTable: Destination Gateway Device
+21.0.0.0/8 172.30.66.1 vlan1225
+
+
+RuleName: payload_dl
+SourceNetwork: 222.8.0.0/14
+RouteTable: Destination Gateway Device
+21.0.0.0/8 172.30.64.1 vlan1205
+
+RuleName: payload_dl_2
+SourceNetwork: 222.12.0.0/14
+RouteTable: Destination Gateway Device
+21.0.0.0/8 172.30.66.1 vlan1225

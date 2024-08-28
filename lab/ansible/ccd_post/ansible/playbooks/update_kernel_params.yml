@@ -1,0 +1,32 @@
+# purpose: update kernel parameters default values for TS DM 5GC on NFVI
+# parameter_root_path:  /proc/sys/
+
+- hosts: worker
+  gather_facts: false
+  become: true
+  vars:
+    kernel_params:
+    # According to PCG CPI, it need to adjust net.core params default values
+    # Note: CCD 2.18 change default to much bigger values, but in the later
+    # release, it was changed to the previous same as before.
+    - name: net.core.rmem_default
+      value: 2388608
+    - name: net.core.wmem_default
+      value: 2388608
+    - name: net.core.rmem_max
+      value: 8388608
+    - name: net.core.wmem_max
+      value: 8388608
+    # since TS1.7
+    - name: vm_max_map_count
+      value: 262144
+  tasks:
+  - name: update kernel param {{ item.name }}
+    sysctl:
+      name: "{{ item.name }}"
+      value: "{{ item.value }}"
+      sysctl_set: yes
+      state: present
+      reload: yes
+    with_items: "{{ kernel_params }}"
+

@@ -1,0 +1,29 @@
+heat_template_version: 2017-09-01
+
+description: >
+
+parameters:
+  trunk_index:
+    type: number
+  network:
+    type: string
+  trunks:
+    type: json
+  vlan:
+    type: number
+
+resources:
+
+  port:
+    type: OS::Neutron::Port
+    properties:
+      name:
+        str_replace:
+          template: "<trunk>_<net>_<vlan>_subport"
+          params:
+            "<trunk>": { get_param: [ trunks, { get_param: trunk_index }, trunk ] }
+            "<net>": { get_param: network }
+            "<vlan>": { get_param: vlan }
+      network: { get_param: network }
+      binding:vnic_type: { get_param: [ trunks, { get_param: trunk_index }, vnic_type ] }
+      port_security_enabled: false

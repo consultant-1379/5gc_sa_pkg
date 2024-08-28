@@ -1,0 +1,88 @@
+- hosts: master[0]
+  gather_facts: false
+  vars_files:
+  - ../config/site.yaml
+  tasks:
+  - name: check if this cluster already registerd
+    shell: |
+      set -ex
+      USER="{{ evnfm[evnfm_id].user }}"
+      PASSWORD="{{ evnfm[evnfm_id].pass }}"
+      EVNFM_NBI_HOST="{{ evnfm[evnfm_id].nbi }}"
+      JSESSIONID=$(curl -s -X POST -H "Content-Type: application/json" \
+       -H "X-login: ${USER}" \
+       -H "X-password: ${PASSWORD}" \
+       --fail --show-error \
+       https://${EVNFM_NBI_HOST}/auth/v1)
+
+      # Register Cluster to EVNFM
+      res=$(curl -s -X GET \
+       -H "cookie:JSESSIONID=${JSESSIONID}" \
+       --fail --show-error \
+       https://${EVNFM_NBI_HOST}/vnflcm/v1/clusterconfigs | jq -r '.items[]|select(.name=="{{ cluster_id }}.config")|.name')
+      [[ $res != "{{ cluster_id }}.config" ]]
+    register: alreay_registered
+    changed_when: alreay_registered.rc == 0
+    failed_when: false == true
+
+  - name: register this cluster to {{ evnfm_id }}
+    block:
+    - name: Create temp workspace directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: _ccd_post
+      register: tmpdir
+      changed_when: False
+
+    - set_fact:
+       kubeconfig: "{{ tmpdir.path }}/{{ cluster_id }}.config"
+
+    - name: fetch current cluster ingress hostname
+      command: kubectl get ingress -n kube-system kubernetes-api -o jsonpath='{.spec.rules[0].host}'
+      register: ingress_host
+
+    - name: copy kube config to tmp directory
+      copy:
+        src: $HOME/.kube/config
+        dest: "{{ tmpdir.path }}/{{ cluster_id }}.config"
+        remote_src: true
+        mode: 0600
+
+    - name: replace kueapi local host with external ingress host
+      ansible.builtin.lineinfile:
+        path: "{{ kubeconfig }}"
+        regexp: '^(\s+server:)(.*)$'
+        line: '\1 https://{{ ingress_host.stdout }}'
+        backrefs: yes
+    - name: running script by curl to register this cluster
+      shell: |
+        set -ex
+        USER="{{ evnfm[evnfm_id].user }}"
+        PASSWORD="{{ evnfm[evnfm_id].pass }}"
+        EVNFM_NBI_HOST="{{ evnfm[evnfm_id].nbi }}"
+        KUBECONFIG="{{ kubeconfig }}"
+        JSESSIONID=$(curl -s -X POST -H "Content-Type: application/json" \
+         -H "X-login: ${USER}" \
+         -H "X-password: ${PASSWORD}" \
+         --fail --show-error \
+         https://${EVNFM_NBI_HOST}/auth/v1)
+
+        # Register Cluster to EVNFM
+        curl -s -i -X POST \
+         -F "clusterConfig=@$KUBECONFIG" \
+         -H "cookie:JSESSIONID=${JSESSIONID}" \
+         --fail --show-error \
+         https://${EVNFM_NBI_HOST}/vnflcm/v1/clusterconfigs
+      register: result
+      no_log: true
+    rescue:
+    - name: show register script errors
+      debug:
+        msg: "{{ result.stderr_lines }}"
+    always:
+    - name: Delete temp directory
+      file:
+        name: "{{ tmpdir.path }}"
+        state: absent
+      changed_when: False
+    when: alreay_registered.changed

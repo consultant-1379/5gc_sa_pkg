@@ -1,0 +1,37 @@
+%% ============================================================
+%% ============== SYSTEM CONFIGURATION  =======================
+%% ============================================================
+{t3410_attach_timer, 60}.
+{t3410_release_timer, 60}.
+%% {tc_history_length, Nbr of TC saved in TC history}.
+{tc_history_length, 90}.
+{log_interval, 60}.
+{nbr_of_dps_gi_nws, 32}.
+{link_group_num, 2}.
+{debug_startup, off}.
+{rtt_signalling_range_list, [10,20,30,50,100,150,300,800], []}.
+%{nr_of_sctp_streams, 10}.
+
+
+%% {subsystem, Subsystem-Index, Hostname, Load Weight, Option}.
+{subsystem, 1, 'pccc-node99-dallas-01', 10, []}.
+{subsystem, 2, 'pccc-node99-dallas-02', 10, []}.
+
+%% currently DP-index is equal to Subsystem-Index, that is, one DP-index per Host.
+{dp, 1, 'pccc-node99-dallas-01', []}.
+{dp, 2, 'pccc-node99-dallas-02', []}.
+%%  pccc-node99-dallas-01
+{enb_s1mme_ip_addresses, [{'8.128.0.0', 19, undefined, 0}], 1, []}.
+{enb_s1u_ip_addresses, [{ '8.132.0.0', 19, undefined, 0 }], 1, []}.
+{gnb_n3_ip_addresses, [{ '8.140.0.0', 19, undefined, 0 }], 1, []}.
+{gnb_n2_ip_addresses, [{ '8.136.0.0', 19, undefined, 0 }], 1, []}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  pccc-node99-dallas-02
+{enb_s1mme_ip_addresses, [{'8.128.32.0', 19, undefined, 0}], 2, []}.
+{enb_s1u_ip_addresses, [{ '8.132.32.0', 19, undefined, 0 }], 2, []}.
+{gnb_n3_ip_addresses, [{ '8.140.32.0', 19, undefined, 0 }], 2, []}.
+{gnb_n2_ip_addresses, [{ '8.136.32.0', 19, undefined, 0 }], 2, []}.
+
+

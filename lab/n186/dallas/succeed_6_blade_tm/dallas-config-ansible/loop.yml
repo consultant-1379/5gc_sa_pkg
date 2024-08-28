@@ -1,0 +1,9 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: set intf facts
+    set_fact: intfs="{{ intfs | default([]) + [ instance.intf ] }}"
+    loop: "{{ bird.values() }}"
+    loop_control:
+      loop_var: "instance"
+  - debug: "msg={{ intfs }}"

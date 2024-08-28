@@ -1,0 +1,52 @@
+ceat_config_version: 2
+
+# Note: For CNIS post installation, only cloud, openstack and vnfs section are needed
+# 1. configure 'null' value for cloud and openstack
+# 2. same configure under vnfs except deployment_stack property with NFVI/CEE
+
+## target cloud system: nfvi, cee, openstack
+cloud:
+  target_cloud_system: 'null'
+
+## openstack for CNIS Post installation
+openstack: 'null'
+
+## VNFs for CNIS Post installation
+vnfs:
+# ---------------------------------------------------------------------------
+# Traffic Cluster 1
+# ---------------------------------------------------------------------------
+  ccd1-cluster:
+    version: 2.26.0
+    vnf_id: n186-eccd1
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: 214.6.198.196
+    day1_parameters:
+      cluster_type: traffic
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$wWTNcw2sQiUiRPBa$hFJDwbecXHlIyyFan2uBS8JnO/E/f.qaMln1Q6iVxiLYoYg9vNsvE//4uUVz9tVGcq4ybQcl8iMWdsHNouUgX.'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/n186-eccd.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n186-eccd1.seli.gic.ericsson.se
+        port: '8880'
+        ssl: false
+      # install pushgateway
+      enable_pushgateway: true
+      pushgateway_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/pushgateway
+      pushgateway_registry_url: container-registry.ingress.n186-eccd1.seli.gic.ericsson.se
+      pushgateway_registry_password: 'admin123'
+      pushgateway_ingress_host: monitoring-eric-pm-pushgateway.ingress.n186-eccd1.seli.gic.ericsson.se
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana/n186
+      grafana_registry_url: container-registry.ingress.n186-eccd1.seli.gic.ericsson.se
+      grafana_registry_password: 'admin123'
+      grafana_ingress_host: grafana.ingress.n186-eccd1.seli.gic.ericsson.se

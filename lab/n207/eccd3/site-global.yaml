@@ -1,0 +1,79 @@
+######################################
+## CaaS Variables
+######################################
+caas: NFVI-CCD
+kubernetes_service_ipaddress: 10.96.0.1
+
+# Set to "csi-cinder-sc-delete" when deploy with CAPO, otherwise set to "network-block".
+storageClassName: csi-cinder-sc-delete
+
+######################################
+## Site Variables
+######################################
+timezone: CET
+mnc: '81'
+mcc: '240'
+# EPC domain: epc.mnc081.mcc240.3gppnetwork.org
+# 5GC domain: 5gc.mnc081.mcc240.3gppnetwork.org
+siteId: 1
+locality: LN-1
+nels:
+  host: nelsaas-vnf1-thrift.sero.gic.ericsson.se
+  port: 9095
+snmpServer:
+  host: 172.30.32.50
+DCEdgeType: Ericsson-R6000
+oamDomain: sero.gic.ericsson.se
+
+
+######################################
+## CNF Variables
+######################################
+
+###################
+## CCRC
+###################
+
+nrf:
+- host: ccrc1-nrf-sig.site1-cluster1
+  ipv4: 172.17.128.9
+  port: 443
+- host: ccrc1-nrf-sig.site2-cluster1
+  ipv4: 172.17.136.9
+  port: 443
+nssf:
+- host: ccrc1-nssf-sig.site1-cluster1
+  port: 443
+- host: ccrc1-nssf-sig.site2-cluster1
+  port: 443
+
+
+###################
+## SC
+###################
+
+indirectCommunication:
+  enabled: false
+  scp:
+  - host: sc1-scp-sig.site1-cluster1
+    port: 443
+  interfaces:
+  - n7
+
+######################################
+## Miscellaneous Variables
+######################################
+dnsServer:
+- 172.30.32.50
+sftpServer:
+  host: 172.30.32.50
+  username: sftp-user
+  password: U2Z0cEBTMGx1dCFvbg==   # base64
+  hostKey: MTAuMTMzLjUzLjYgZWNkc2Etc2hhMi1uaXN0cDI1NiBBQUFBRTJWalpITmhMWE5vWVRJdGJtbHpkSEF5TlRZQUFBQUlibWx6ZEhBeU5UWUFBQUJCQklmRXBXZDljRmhMWmVRRjVud0kwSXRyWHdoWmQ0L3NtNUY0WDI4WXNjd3ZKODN1YnJUU2xyYWJVR2RjL3k4VGM5RFZzN1RLZUFxODQ5TzdiNmdjY2k4PQo=
+
+######################################
+## RootCA Configuration
+######################################
+trustCAs:
+- ../../certs/RootCA/ca.crt
+

@@ -1,0 +1,104 @@
+vnflcm:
+  vnfInstanceName: n280-eccd1-sc1
+  vnfProductName: Signaling_Controller
+  vnfSoftwareVersion: 1.12.0+43
+  values_file: values.yaml
+  instantiate_file: instantiate.json
+  clusterName: n280-eccd1
+  namespace: sc1
+
+skip-instantiation: false 
+
+day0:
+  k8s-resource:
+    - file: day0_secrets/bsf-db-secret.yaml
+    - file: day0_secrets/wcdbcd-admin-secret.yaml
+    - file: day0_secrets/wcdbcd-day0-secret.yaml
+    - file: day0_configmaps/eric-sc-tap-config.yaml
+ 
+  k8s-secret:
+  # 1. Create Secret for LDAP Admin User
+  - name: eric-sec-ldap-server-creds
+    sources:
+    - { type: literal, key: adminuser, value: sysadmin }
+    - { type: literal, key: passwd, value: sysAdm1n@Day0 }
+    - type: literal
+      key: adminpasswd
+      value: $6$fzLPYlRZCpweJMJC$AiNfP0WYE3npY8Za6GxMFoGj75TOl.TS6tmnnky2Bv5wY0Ek8RIoJlr9pyj0LF3wMMaNsNTUH4jp2lIHviJGS0
+  - name: sftp-server-config
+    sources:
+    - { type: file, key: sftpConfig.json, file: day0_secrets/sftpConfig.json }
+  - name: snmp-alarm-provider-config
+    sources:
+    - { type: file, key: config.json, file: snmp-config.json }
+
+
+verify-running: true
+ignore-not-running:
+- eric-data-search-engine-curator
+
+day1:
+  access:
+    oam: sc1-oam.n280-eccd1.sero.gic.ericsson.se
+    ldap-admin:
+      user: sysadmin
+      pass: sysAdm1n@Day0
+    users:
+    - user: sc-admin
+      pass: Dm5GC@S0lut!on
+      pass_init: Changeme@1st
+    configs:
+    - file: user-config.txt
+      proto: ssh
+      pre-verify-pods-ready:
+        check-interval: 5
+        deployments:
+        - eric-cm-yang-provider
+      post-delay: 30
+      retry-interval: 30
+
+  app-config:
+  - file: external-certificates-bsf.txt
+    user-id: 0
+    proto: ssh
+    retry-interval: 30
+    post-delay: 10
+  - file: bsf-config.txt
+    user-id: 0
+    proto: ssh
+    retry-interval: 30
+    post-delay: 10
+  - file: external-certificates-scp.txt
+    user-id: 0
+    proto: ssh
+    retry-interval: 30
+    post-delay: 10
+  - file: scp-config.txt
+    user-id: 0
+    proto: ssh
+    retry-interval: 30
+    post-delay: 10
+  - file: ddc-config.txt
+    user-id: 0
+    proto: ssh
+    retry-interval: 30
+    post-delay: 10
+  - name: Database initialize
+    user-id: 0
+    commands: |-
+      bsf-function nf-instance bsf1 bsf-service serviceName1 binding-database initialize-db datacenter { name datacenter1 }
+      end
+    post-delay: 10
+
+  k8s-config:
+  - name: Create networkpolicy to allow accessing eric-pm-server and eric-data-search-engine
+    cmd: |
+      apply -f {file1}
+      apply -f {file2}
+    inline-files:
+      file1: network-policy/eric-pm-server-allow.yaml
+      file2: network-policy/eric-data-search-engine-allow.yaml
+  - name: Create pm server ingress
+    cmd: |-
+      create ingress eric-pm-server --rule="eric-pm-server-sc.ingress.n280-eccd1.sero.gic.ericsson.se/*=eric-pm-server:9090"
+

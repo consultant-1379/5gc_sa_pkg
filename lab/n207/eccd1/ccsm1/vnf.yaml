@@ -1,0 +1,151 @@
+vnflcm:
+  vnfInstanceName: n280-eccd1-ccsm1
+  vnfProductName: CCSM
+  vnfSoftwareVersion: 1.11.5-6
+  instantiate_file: instantiate.json
+  values_file: values.yaml
+  clusterName: n280-eccd1
+  namespace: ccsm1
+
+skip-instantiation: false
+
+day0:
+  k8s-secret:
+  # 1. Create Secret for LDAP Admin User
+  - name: eric-sec-ldap-server-creds
+    sources:
+    - { type: literal, key: adminuser, value: sysadmin }
+    - { type: literal, key: passwd, value: sysAdm1n@Day0 }
+    - type: literal
+      key: adminpasswd
+      value: $6$fzLPYlRZCpweJMJC$AiNfP0WYE3npY8Za6GxMFoGj75TOl.TS6tmnnky2Bv5wY0Ek8RIoJlr9pyj0LF3wMMaNsNTUH4jp2lIHviJGS0
+  # 2. Create the Distributed Coordinator ED Service Secret
+  - name: eric-data-distributed-coordinator-creds
+    sources:
+    - { type: literal, key: etcdpasswd, value: sysAdm1n@Day0 }
+
+
+verify-running: true
+ignore-not-running:
+- eric-data-search-engine-curator
+
+day1:
+  access:
+    oam: ccsm1-oam.n280-eccd1.sero.gic.ericsson.se
+    ldap-admin:
+      user: sysadmin
+      pass: sysAdm1n@Day0
+    users:
+    - user: ccsm-admin
+      pass: Dm5GC@S0lut!on
+      pass_init: Changeme@1st
+    - user: ccsm-sec
+      pass: Dm5GC@S0lut!on
+      pass_init: Changeme@1st
+    configs:
+    - file: user-config.xml
+      proto: netconf
+      pre-verify-pods-ready:
+        check-interval: 5
+        deployments:
+        - eric-cm-yang-provider
+      post-delay: 120
+      retry-interval: 30
+
+#  k8s-config:
+#  - cmd: |-
+#      patch svc eric-pm-server --type=json -p='[{"op": "add", "path": "/spec/ports/1", "value": { "name": "http", "port": 9090, "protocol": "TCP", "targetPort": 9090 }}]'
+
+  app-config:
+  - file: external-certificates.xml
+    user-id: 1
+    proto: netconf
+    post-delay: 15
+  - file: nrfagent-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: ausf-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: udm-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: avg-config/1-seed-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: avg-config/2-customerkey-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: avg-config/3-arpf-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: avg-config/4-hnkey-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: avg-config/5-a4key-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: avg-config/6-fset-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: hss-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: ccsm-sctp-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: hssepc-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: hss-remote-nf-profile.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: udm-remote-nf-profile.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: diameter-epc-s6a-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: diameter-eir-s13-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: eir-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: ddc-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+  - file: snmp-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 15
+
+  k8s-config:
+  - name: Create networkpolicy to allow accessing eric-pm-server and eric-data-search-engine
+    cmd: |
+      apply -f {file1}
+      apply -f {file2}
+    inline-files:
+      file1: network-policy/eric-pm-server-allow.yaml
+      file2: network-policy/eric-data-search-engine-allow.yaml
+  - name: Create pm server ingress
+    cmd: |-
+      create ingress eric-pm-server --rule="eric-pm-server-ccsm.ingress.n280-eccd1.sero.gic.ericsson.se/*=eric-pm-server:9090"

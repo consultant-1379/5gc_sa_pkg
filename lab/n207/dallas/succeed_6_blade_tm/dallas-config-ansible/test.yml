@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - debug: msg="Key={{ item.key }} value={{ item.value }}"
+    with_dict: "{{ bird }}"
+    

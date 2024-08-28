@@ -1,0 +1,10 @@
+config
+diagnostic-data-collection sftp-server Default
+ endpoints endpoint Default
+  remote-address 172.30.32.50
+  remote-port    22
+  remote-path    ddc/n186-eccd1-pcg1
+  client-identity username sftp-user
+  client-identity password U2Z0cEBTMGx1dCFvbg==
+commit
+end

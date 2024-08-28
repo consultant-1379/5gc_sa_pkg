@@ -1,0 +1,7 @@
+config
+system authentication user sc-admin
+ password             Changeme@1st
+ groups               [ system-admin  system-security-admin  sc-admin  sc-security-admin  bsf-admin  scp-admin  bsf-security-admin  scp-security-admin ]
+!
+commit
+end

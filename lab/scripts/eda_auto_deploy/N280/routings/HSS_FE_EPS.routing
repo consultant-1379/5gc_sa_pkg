@@ -1,0 +1,6 @@
+{
+	"networkElementType": "HSS_FE_EPS",
+	"routingMethod": "UnconditionalRouting",
+	"instance": "CCSM_HSS_NOTIFICATION",
+	"instanceType": "NetworkElementGroup"
+}

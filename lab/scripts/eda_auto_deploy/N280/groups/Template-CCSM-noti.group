@@ -1,0 +1,14 @@
+{
+	"name": "CCSM_HSS_NOTIFICATION",
+	"groupType": "Round-Robin",
+	"active": true,
+	"networkElements": [{
+			"name": "CCSM_HSS_NOTIFICATION_1",
+			"weight": 1
+		},
+                {
+			"name": "CCSM_HSS_NOTIFICATION_2",
+			"weight": 2
+		}
+	]
+}

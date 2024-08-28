@@ -1,0 +1,14 @@
+# Jinja2 template
+{% set ipv4_host = host_prefix | unique | ansible.utils.ipv4('host/prefix') | first %}
+iface eth0 inet static
+    address   {{ ipv4_host | ansible.utils.ipaddr('address') }}
+    network   {{ ipv4_host | ansible.utils.ipaddr('network') }}
+    netmask   {{ ipv4_host | ansible.utils.ipaddr('netmask') }}
+    broadcast {{ ipv4_host | ansible.utils.ipaddr('broadcast') }}
+
+# Generated configuration file
+iface eth0 inet static
+    address   192.0.2.48
+    network   192.0.2.0
+    netmask   255.255.255.0
+    broadcast 192.0.2.255

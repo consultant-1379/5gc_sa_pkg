@@ -1,0 +1,2905 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="ef087487-b2b7-4dec-b764-8e6279ef99cb" activeEnvironment="Default" name="EIR" resourceRoot="" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="da502379-1333-4b57-a32a-17e27523095d" wsaVersion="NONE" name="Equipment" type="wsdl" bindingName="{http://schemas.ericsson.com/cai3g1.2/}Equipment" soapVersion="1_1" anonymous="optional" definition="file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_Equipment.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_Equipment.wsdl"><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_Equipment.wsdl</con:url><con:content><![CDATA[<!--EIR, Equipment- PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB9-->
+<definitions targetNamespace="http://schemas.ericsson.com/cai3g1.2/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:Cai3gDC="http://schemas.ericsson.com/eda/extension/Cai3gDC/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:cai3g="http://schemas.ericsson.com/cai3g1.2/" xmlns:pg="http://schemas.ericsson.com/pg/1.0">
+  <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+    <!--disable wrapper style generation-->
+    <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
+  </jaxws:bindings>
+  <types>
+    <xs:schema targetNamespace="http://schemas.ericsson.com/cai3g1.2/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns="http://schemas.ericsson.com/cai3g1.2/">
+      <xs:import namespace="http://schemas.ericsson.com/ma/EIR/" schemaLocation="../../../schemas/Applications/Layered_EIR/EIR_Equipment.xsd"/>
+      <xs:import namespace="http://schemas.ericsson.com/pg/1.0" schemaLocation="../../../schemas/Applications/Layered_EIR/PGFault.xsd"/>
+      <xs:import namespace="http://schemas.ericsson.com/eda/extension/Cai3gDC/" schemaLocation="../../../schemas/Generic/cai3gDC/cai3gDC_extension.xsd"/>
+      <xs:element name="Create">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="Equipment@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imei"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOAttributes" minOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:CreateEquipment"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imei"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Delete">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="Equipment@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imei"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOAttributes" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:DeleteEquipment"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imei"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Set">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="Equipment@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:sequence>
+                    <xs:element ref="eir:imei"/>
+                    <xs:element ref="eir:svn" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOAttributes" minOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:SetEquipment"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetResponse">
+        <xs:complexType>
+          <xs:sequence></xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Get">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="Equipment@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imei"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOAttributes" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:GetResponseEquipment"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Cai3gFault">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="faultcode" type="xs:integer"/>
+            <xs:element name="faultreason">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="reasonText" type="xs:string" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="faultrole" type="xs:string"/>
+            <xs:element name="details" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="pg:PGFault"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SessionId" type="SessionIdType"/>
+      <xs:element name="TransactionId" type="xs:unsignedLong"/>
+      <xs:element name="SequenceId" type="xs:unsignedLong"/>
+      <xs:simpleType name="SessionIdType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\d\w]{1,}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="HeaderFaultType">
+        <xs:sequence>
+          <xs:element name="faultactor" type="xs:string"/>
+          <xs:element name="description" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SessionIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid SessionId"/>
+                      <xs:enumeration value="Session Timeout"/>
+                      <xs:enumeration value="SessionId Syntax Error"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SequenceIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid SequenceId"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TransactionIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid TransactionId"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="CreateRequest">
+    <part name="parameters" element="cai3g:Create"/>
+  </message>
+  <message name="CreateResponse">
+    <part name="parameters" element="cai3g:CreateResponse"/>
+  </message>
+  <message name="GetRequest">
+    <part name="parameters" element="cai3g:Get"/>
+  </message>
+  <message name="GetResponse">
+    <part name="parameters" element="cai3g:GetResponse"/>
+  </message>
+  <message name="SetRequest">
+    <part name="parameters" element="cai3g:Set"/>
+  </message>
+  <message name="SetResponse">
+    <part name="parameters" element="cai3g:SetResponse"/>
+  </message>
+  <message name="DeleteRequest">
+    <part name="parameters" element="cai3g:Delete"/>
+  </message>
+  <message name="DeleteResponse">
+    <part name="parameters" element="cai3g:DeleteResponse"/>
+  </message>
+  <message name="HeadInfo">
+    <part name="sessionId" element="cai3g:SessionId"/>
+    <part name="transactionId" element="cai3g:TransactionId"/>
+    <part name="sequenceId" element="cai3g:SequenceId"/>
+  </message>
+  <message name="Cai3gFault">
+    <part name="parameters" element="cai3g:Cai3gFault"/>
+  </message>
+  <message name="Cai3gHeaderFault">
+    <part name="sessionIdFault" element="cai3g:SessionIdFault"/>
+    <part name="transactionIdFault" element="cai3g:TransactionIdFault"/>
+    <part name="sequenceIdFault" element="cai3g:SequenceIdFault"/>
+  </message>
+  <portType name="Equipment">
+    <operation name="Create">
+      <input message="cai3g:CreateRequest"/>
+      <output message="cai3g:CreateResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+    <operation name="Delete">
+      <input message="cai3g:DeleteRequest"/>
+      <output message="cai3g:DeleteResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+    <operation name="Get">
+      <input message="cai3g:GetRequest"/>
+      <output message="cai3g:GetResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+    <operation name="Set">
+      <input message="cai3g:SetRequest"/>
+      <output message="cai3g:SetResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+  </portType>
+  <binding name="Equipment" type="cai3g:Equipment">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="Create">
+      <soap:operation soapAction="CAI3G#Create" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Delete">
+      <soap:operation soapAction="CAI3G#Delete" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Get">
+      <soap:operation soapAction="CAI3G#Get" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Set">
+      <soap:operation soapAction="CAI3G#Set" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="Provisioning">
+    <port name="Equipment" binding="cai3g:Equipment">
+      <soap:address location="http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/EIR_Equipment.xsd</con:url><con:content><![CDATA[<!--edited with XMLSpy v2011 sp1 (http://www.altova.com) by Tina (Ericsson)-->
+<!--EIR, Equipment - PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB13-->
+<xs:schema jaxb:version="2.0" targetNamespace="http://schemas.ericsson.com/ma/EIR/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/ma/EIR/" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:x="http://schemas.ericsson.com/ma/EIR/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cai3g="http://schemas.ericsson.com/cai3g1.2/">
+  <xs:include schemaLocation="types/eirla_types.xsd"/>
+  <xs:element name="imei" type="imeiType"/>
+  <xs:element name="svn" type="svnType"/>
+  <!--CreateEquipment MOId: imei, svn (optional) MOType: CreateEquipment@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="CreateEquipment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="imei" type="imeiType"/>
+        <xs:element name="svn" type="svnType" default="0F" minOccurs="0"/>
+        <xs:element name="date" type="dateType" minOccurs="0"/>
+        <xs:element name="time" type="timeType" minOccurs="0"/>
+        <xs:element name="comment" type="commentType" minOccurs="0"/>
+        <xs:element name="InsertEquipmentListType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="equipmentListNumber" type="equipmentListNumberType"/>
+              <xs:element name="insertReason" type="insertReasonType" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="clarifyReason" type="clarifyReasonType" minOccurs="0"/>
+        <xs:element name="sourceOfRequest" type="sourceOfRequestType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="imei" type="imeiType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imeiAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="svn" type="svnType" use="optional" default="0F">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="svnAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+    <xs:key name="key_imei">
+      <xs:selector xpath="./x:imei"/>
+      <xs:field xpath="."/>
+    </xs:key>
+    <xs:keyref name="keyref_imei" refer="key_imei">
+      <xs:selector xpath="."/>
+      <xs:field xpath="@imei"/>
+    </xs:keyref>
+  </xs:element>
+  <!--DeleteEquipment MOId: imei svn (optional) MOType: DeleteEquipment@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="DeleteEquipment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="comment" type="commentType" minOccurs="0"/>
+        <xs:element name="removeReason" type="removeReasonType" minOccurs="0"/>
+        <xs:element name="clarifyReason" type="clarifyReasonType" minOccurs="0"/>
+        <xs:element name="sourceOfRequest" type="sourceOfRequestType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="imei" type="imeiType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imeiAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="svn" type="svnType" use="optional" default="0F">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="svnAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <!--SetEquipment MOId: imei, svn (optional) MOType: SetEquipment@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="SetEquipment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="date" type="dateType" minOccurs="0"/>
+        <xs:element name="time" type="timeType" minOccurs="0"/>
+        <xs:element name="comment" type="commentType" minOccurs="0"/>
+        <xs:choice>
+          <xs:element name="InsertEquipmentListType">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="equipmentListNumber" type="equipmentListNumberType"/>
+                <xs:element name="insertReason" type="insertReasonType" minOccurs="0"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="RemoveEquipmentListType">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="equipmentListNumber" type="equipmentListNumberType"/>
+                <xs:element name="removeReason" type="removeReasonType" minOccurs="0"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+        <xs:element name="clarifyReason" type="clarifyReasonType" minOccurs="0"/>
+        <xs:element name="sourceOfRequest" type="sourceOfRequestType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="imei" type="imeiType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imeiAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="svn" type="svnType" use="optional" default="0F">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="svnAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <!--GetEquipment MOId: imsi, svn (optional) MOType: Equipment@http://schemas.ericsson.com/ma/EIR/-->
+  <!--GetResponseEquipment MOId: imsi, svn (optional) MOType: Equipment@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="GetResponseEquipment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="imei" type="imeiType"/>
+        <xs:element name="svn" type="svnType" minOccurs="0"/>
+        <xs:element name="date" type="dateType" minOccurs="0"/>
+        <xs:element name="time" type="timeType" minOccurs="0"/>
+        <xs:element name="comment" type="commentType" minOccurs="0"/>
+        <xs:sequence>
+          <xs:element name="EquipmentListType">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="equipmentListNumber" type="equipmentListNumberType" minOccurs="0" maxOccurs="10"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:sequence>
+      <xs:attribute name="imei" type="imeiType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imeiAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="svn" type="svnType" use="optional">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="svnAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/types/eirla_types.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/ma/EIR/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/ma/EIR/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--EIR types - PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB13-->
+  <xs:simpleType name="actionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="R"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clarifyReasonType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="commentType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="255"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="imeiType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="14"/>
+      <xs:maxLength value="14"/>
+      <xs:pattern value="[0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="imsiPrefixType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2"/>
+      <xs:maxLength value="15"/>
+      <xs:pattern value="[0-9]*|Default"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="imsiType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="6"/>
+      <xs:maxLength value="15"/>
+      <xs:pattern value="[0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="insertReasonType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="10"/>
+      <xs:enumeration value="11"/>
+      <xs:enumeration value="16"/>
+      <xs:enumeration value="23"/>
+      <xs:enumeration value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="searchOrderListNumberType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="equipmentListNumberType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="responseType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Black"/>
+      <xs:enumeration value="Grey"/>
+      <xs:enumeration value="White"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="presentInListType">
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="removeReasonType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="14"/>
+      <xs:enumeration value="18"/>
+      <xs:enumeration value="20"/>
+      <xs:enumeration value="22"/>
+      <xs:enumeration value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sourceOfRequestType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="statusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Black"/>
+      <xs:enumeration value="Grey"/>
+      <xs:enumeration value="White"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="svnType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{2}|[0][F]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="timeType">
+    <xs:restriction base="xs:time"/>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/PGFault.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/pg/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns="http://schemas.ericsson.com/pg/1.0">
+  <xs:element name="PGFault">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="errorcode" type="xs:integer"/>
+        <xs:element name="errormessage" type="xs:string"/>
+        <xs:element name="errordetails" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Generic/cai3gDC/cai3gDC_extension.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/eda/extension/Cai3gDC/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/eda/extension/Cai3gDC/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="cai3gDC">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="localAlways" type="xs:boolean"/>
+        <xs:element name="routingAttributeValue" minOccurs="0" maxOccurs="1" type="routingAttributeValueType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="routingAttributeValueType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="18"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint></con:endpoints><con:operation id="362ccd6b-1887-434b-8f1f-97eeef13db83" isOneWay="false" action="CAI3G#Create" name="Create" bindingOperationName="Create" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e425aab6-301b-4a0e-b7e8-dff02e92eb7f" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Create>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>?</eir:imei>
+            <!--Optional:-->
+            <eir:svn>?</eir:svn>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:CreateEquipment imei="?" svn="0F">
+               <eir:imei>?</eir:imei>
+               <!--Optional:-->
+               <eir:svn>0F</eir:svn>
+               <!--Optional:-->
+               <eir:date>?</eir:date>
+               <!--Optional:-->
+               <eir:time>?</eir:time>
+               <!--Optional:-->
+               <eir:comment>?</eir:comment>
+               <eir:InsertEquipmentListType>
+                  <eir:equipmentListNumber>?</eir:equipmentListNumber>
+                  <!--Optional:-->
+                  <eir:insertReason>?</eir:insertReason>
+               </eir:InsertEquipmentListType>
+               <!--Optional:-->
+               <eir:clarifyReason>?</eir:clarifyReason>
+               <!--Optional:-->
+               <eir:sourceOfRequest>?</eir:sourceOfRequest>
+            </eir:CreateEquipment>
+         </cai3:MOAttributes>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Create>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Create"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="8f5026c4-060a-401c-addf-856c954f7d7d" isOneWay="false" action="CAI3G#Delete" name="Delete" bindingOperationName="Delete" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bb4573d2-ecd9-4a9a-a57c-7012715076b2" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Delete>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>?</eir:imei>
+            <!--Optional:-->
+            <eir:svn>?</eir:svn>
+         </cai3:MOId>
+         <!--Optional:-->
+         <cai3:MOAttributes>
+            <eir:DeleteEquipment imei="?" svn="0F">
+               <!--Optional:-->
+               <eir:comment>?</eir:comment>
+               <!--Optional:-->
+               <eir:removeReason>?</eir:removeReason>
+               <!--Optional:-->
+               <eir:clarifyReason>?</eir:clarifyReason>
+               <!--Optional:-->
+               <eir:sourceOfRequest>?</eir:sourceOfRequest>
+            </eir:DeleteEquipment>
+         </cai3:MOAttributes>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Delete>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Delete"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="0eff071c-78c9-4694-87b9-bd952e30e373" isOneWay="false" action="CAI3G#Get" name="Get" bindingOperationName="Get" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="0aabe617-b7e1-46cf-a250-bf11d6c9a80f" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Get>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>?</eir:imei>
+            <!--Optional:-->
+            <eir:svn>?</eir:svn>
+         </cai3:MOId>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Get"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="899863fc-9050-4b4e-be8b-13620e213efa" isOneWay="false" action="CAI3G#Set" name="Set" bindingOperationName="Set" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="94295d1a-cbcb-4437-a497-1d15d9c061e4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Set>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>?</eir:imei>
+            <!--Optional:-->
+            <eir:svn>?</eir:svn>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:SetEquipment imei="?" svn="0F">
+               <!--Optional:-->
+               <eir:date>?</eir:date>
+               <!--Optional:-->
+               <eir:time>?</eir:time>
+               <!--Optional:-->
+               <eir:comment>?</eir:comment>
+               <!--You have a CHOICE of the next 2 items at this level-->
+               <eir:InsertEquipmentListType>
+                  <eir:equipmentListNumber>?</eir:equipmentListNumber>
+                  <!--Optional:-->
+                  <eir:insertReason>?</eir:insertReason>
+               </eir:InsertEquipmentListType>
+               <eir:RemoveEquipmentListType>
+                  <eir:equipmentListNumber>?</eir:equipmentListNumber>
+                  <!--Optional:-->
+                  <eir:removeReason>?</eir:removeReason>
+               </eir:RemoveEquipmentListType>
+               <!--Optional:-->
+               <eir:clarifyReason>?</eir:clarifyReason>
+               <!--Optional:-->
+               <eir:sourceOfRequest>?</eir:sourceOfRequest>
+            </eir:SetEquipment>
+         </cai3:MOAttributes>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Set>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Set"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="d9226b26-6cda-427a-b81b-a94f5f888edf" wsaVersion="NONE" name="Equipments" type="wsdl" bindingName="{http://schemas.ericsson.com/cai3g1.2/}Equipments" soapVersion="1_1" anonymous="optional" definition="file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_Equipments.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_Equipments.wsdl"><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_Equipments.wsdl</con:url><con:content><![CDATA[<!--EIR, Equipments- PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB9-->
+<definitions targetNamespace="http://schemas.ericsson.com/cai3g1.2/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:Cai3gDC="http://schemas.ericsson.com/eda/extension/Cai3gDC/" xmlns:cai3g="http://schemas.ericsson.com/cai3g1.2/" xmlns:pg="http://schemas.ericsson.com/pg/1.0">
+  <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+    <!--disable wrapper style generation-->
+    <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
+  </jaxws:bindings>
+  <types>
+    <xs:schema targetNamespace="http://schemas.ericsson.com/cai3g1.2/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns="http://schemas.ericsson.com/cai3g1.2/">
+      <xs:import namespace="http://schemas.ericsson.com/ma/EIR/" schemaLocation="../../../schemas/Applications/Layered_EIR/EIR_Equipments.xsd"/>
+      <xs:import namespace="http://schemas.ericsson.com/pg/1.0" schemaLocation="../../../schemas/Applications/Layered_EIR/PGFault.xsd"/>
+      <xs:import namespace="http://schemas.ericsson.com/eda/extension/Cai3gDC/" schemaLocation="../../../schemas/Generic/cai3gDC/cai3gDC_extension.xsd"/>
+      <xs:element name="Create">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="Equipments@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imeiFrom"/>
+                  <xs:element ref="eir:imeiTo"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOAttributes" minOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:CreateEquipments"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imeiFrom"/>
+                  <xs:element ref="eir:imeiTo"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Delete">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="Equipments@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imeiFrom"/>
+                  <xs:element ref="eir:imeiTo"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOAttributes" minOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:DeleteEquipments"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imeiFrom"/>
+                  <xs:element ref="eir:imeiTo"/>
+                  <xs:element ref="eir:svn" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Cai3gFault">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="faultcode" type="xs:integer"/>
+            <xs:element name="faultreason">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="reasonText" type="xs:string" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="faultrole" type="xs:string"/>
+            <xs:element name="details" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="pg:PGFault"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SessionId" type="SessionIdType"/>
+      <xs:element name="TransactionId" type="xs:unsignedLong"/>
+      <xs:element name="SequenceId" type="xs:unsignedLong"/>
+      <xs:simpleType name="SessionIdType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\d\w]{1,}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="HeaderFaultType">
+        <xs:sequence>
+          <xs:element name="faultactor" type="xs:string"/>
+          <xs:element name="description" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SessionIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid SessionId"/>
+                      <xs:enumeration value="Session Timeout"/>
+                      <xs:enumeration value="SessionId Syntax Error"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SequenceIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid SequenceId"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TransactionIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid TransactionId"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="CreateRequest">
+    <part name="parameters" element="cai3g:Create"/>
+  </message>
+  <message name="CreateResponse">
+    <part name="parameters" element="cai3g:CreateResponse"/>
+  </message>
+  <message name="DeleteRequest">
+    <part name="parameters" element="cai3g:Delete"/>
+  </message>
+  <message name="DeleteResponse">
+    <part name="parameters" element="cai3g:DeleteResponse"/>
+  </message>
+  <message name="HeadInfo">
+    <part name="sessionId" element="cai3g:SessionId"/>
+    <part name="transactionId" element="cai3g:TransactionId"/>
+    <part name="sequenceId" element="cai3g:SequenceId"/>
+  </message>
+  <message name="Cai3gFault">
+    <part name="parameters" element="cai3g:Cai3gFault"/>
+  </message>
+  <message name="Cai3gHeaderFault">
+    <part name="sessionIdFault" element="cai3g:SessionIdFault"/>
+    <part name="transactionIdFault" element="cai3g:TransactionIdFault"/>
+    <part name="sequenceIdFault" element="cai3g:SequenceIdFault"/>
+  </message>
+  <portType name="Equipments">
+    <operation name="Create">
+      <input message="cai3g:CreateRequest"/>
+      <output message="cai3g:CreateResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+    <operation name="Delete">
+      <input message="cai3g:DeleteRequest"/>
+      <output message="cai3g:DeleteResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+  </portType>
+  <binding name="Equipments" type="cai3g:Equipments">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="Create">
+      <soap:operation soapAction="CAI3G#Create" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Delete">
+      <soap:operation soapAction="CAI3G#Delete" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="Provisioning">
+    <port name="Equipments" binding="cai3g:Equipments">
+      <soap:address location="http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/EIR_Equipments.xsd</con:url><con:content><![CDATA[<!--edited with XMLSpy v2011 sp1 (http://www.altova.com) by Tina (Ericsson)-->
+<!--EIR, Equipments - PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB13-->
+<xs:schema jaxb:version="2.0" targetNamespace="http://schemas.ericsson.com/ma/EIR/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/ma/EIR/" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:x="http://schemas.ericsson.com/ma/EIR/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cai3g="http://schemas.ericsson.com/cai3g1.2/">
+  <xs:include schemaLocation="types/eirla_types.xsd"/>
+  <!--CreateEquipments MOId: imeiFrom, imeiTo, svn (optional) MOType: CreateEquipments@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="imeiFrom" type="imeiType"/>
+  <xs:element name="imeiTo" type="imeiType"/>
+  <xs:element name="svn" type="svnType"/>
+  <xs:element name="CreateEquipments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="imeiFrom" type="imeiType"/>
+        <xs:element name="imeiTo" type="imeiType"/>
+        <xs:element name="svn" type="svnType" default="0F" minOccurs="0"/>
+        <xs:element name="date" type="dateType" minOccurs="0"/>
+        <xs:element name="time" type="timeType" minOccurs="0"/>
+        <xs:element name="comment" type="commentType" minOccurs="0"/>
+        <xs:element name="InsertEquipmentListType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="equipmentListNumber" type="equipmentListNumberType"/>
+              <xs:element name="insertReason" type="insertReasonType" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="clarifyReason" type="clarifyReasonType" minOccurs="0"/>
+        <xs:element name="sourceOfRequest" type="sourceOfRequestType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="imeiFrom" type="imeiType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imeiFromAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="imeiTo" type="imeiType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imeiToAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="svn" type="svnType" use="optional" default="0F">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="svnAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+    <xs:key name="key_imeiFrom">
+      <xs:selector xpath="./x:imeiFrom"/>
+      <xs:field xpath="."/>
+    </xs:key>
+    <xs:keyref name="keyref_imeiFrom" refer="key_imeiFrom">
+      <xs:selector xpath="."/>
+      <xs:field xpath="@imeiFrom"/>
+    </xs:keyref>
+    <xs:key name="key_imeiTo">
+      <xs:selector xpath="./x:imeiTo"/>
+      <xs:field xpath="."/>
+    </xs:key>
+    <xs:keyref name="keyref_imeiTo" refer="key_imeiTo">
+      <xs:selector xpath="."/>
+      <xs:field xpath="@imeiTo"/>
+    </xs:keyref>
+  </xs:element>
+  <!--DeleteEquipments MOId: imeiFrom, imeiTo, svn (optional) MOType: DeleteEquipments@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="DeleteEquipments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="comment" type="commentType" minOccurs="0"/>
+        <xs:element name="removeReason" type="removeReasonType" minOccurs="0"/>
+        <xs:element name="clarifyReason" type="clarifyReasonType" minOccurs="0"/>
+        <xs:element name="sourceOfRequest" type="sourceOfRequestType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="imeiFrom" type="imeiType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imeiFromAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="imeiTo" type="imeiType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imeiToAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="svn" type="svnType" use="optional" default="0F">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="svnAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/types/eirla_types.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/ma/EIR/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/ma/EIR/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--EIR types - PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB13-->
+  <xs:simpleType name="actionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="R"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clarifyReasonType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="commentType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="255"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="imeiType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="14"/>
+      <xs:maxLength value="14"/>
+      <xs:pattern value="[0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="imsiPrefixType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2"/>
+      <xs:maxLength value="15"/>
+      <xs:pattern value="[0-9]*|Default"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="imsiType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="6"/>
+      <xs:maxLength value="15"/>
+      <xs:pattern value="[0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="insertReasonType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="10"/>
+      <xs:enumeration value="11"/>
+      <xs:enumeration value="16"/>
+      <xs:enumeration value="23"/>
+      <xs:enumeration value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="searchOrderListNumberType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="equipmentListNumberType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="responseType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Black"/>
+      <xs:enumeration value="Grey"/>
+      <xs:enumeration value="White"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="presentInListType">
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="removeReasonType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="14"/>
+      <xs:enumeration value="18"/>
+      <xs:enumeration value="20"/>
+      <xs:enumeration value="22"/>
+      <xs:enumeration value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sourceOfRequestType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="statusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Black"/>
+      <xs:enumeration value="Grey"/>
+      <xs:enumeration value="White"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="svnType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{2}|[0][F]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="timeType">
+    <xs:restriction base="xs:time"/>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/PGFault.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/pg/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns="http://schemas.ericsson.com/pg/1.0">
+  <xs:element name="PGFault">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="errorcode" type="xs:integer"/>
+        <xs:element name="errormessage" type="xs:string"/>
+        <xs:element name="errordetails" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Generic/cai3gDC/cai3gDC_extension.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/eda/extension/Cai3gDC/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/eda/extension/Cai3gDC/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="cai3gDC">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="localAlways" type="xs:boolean"/>
+        <xs:element name="routingAttributeValue" minOccurs="0" maxOccurs="1" type="routingAttributeValueType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="routingAttributeValueType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="18"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint></con:endpoints><con:operation id="e30b3c5c-91c4-479b-9c0e-e56ac9caa51e" isOneWay="false" action="CAI3G#Create" name="Create" bindingOperationName="Create" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="23ee5070-c751-4c2d-a306-998b6037fd6b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Create>
+         <cai3:MOType>Equipments@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imeiFrom>?</eir:imeiFrom>
+            <eir:imeiTo>?</eir:imeiTo>
+            <!--Optional:-->
+            <eir:svn>?</eir:svn>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:CreateEquipments imeiFrom="?" imeiTo="?" svn="0F">
+               <eir:imeiFrom>?</eir:imeiFrom>
+               <eir:imeiTo>?</eir:imeiTo>
+               <!--Optional:-->
+               <eir:svn>0F</eir:svn>
+               <!--Optional:-->
+               <eir:date>?</eir:date>
+               <!--Optional:-->
+               <eir:time>?</eir:time>
+               <!--Optional:-->
+               <eir:comment>?</eir:comment>
+               <eir:InsertEquipmentListType>
+                  <eir:equipmentListNumber>?</eir:equipmentListNumber>
+                  <!--Optional:-->
+                  <eir:insertReason>?</eir:insertReason>
+               </eir:InsertEquipmentListType>
+               <!--Optional:-->
+               <eir:clarifyReason>?</eir:clarifyReason>
+               <!--Optional:-->
+               <eir:sourceOfRequest>?</eir:sourceOfRequest>
+            </eir:CreateEquipments>
+         </cai3:MOAttributes>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Create>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Create"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="23b38317-1c46-44ef-8734-cfc923fb1425" isOneWay="false" action="CAI3G#Delete" name="Delete" bindingOperationName="Delete" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="22c1908a-c817-484d-8137-593ba381fc69" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Delete>
+         <cai3:MOType>Equipments@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imeiFrom>?</eir:imeiFrom>
+            <eir:imeiTo>?</eir:imeiTo>
+            <!--Optional:-->
+            <eir:svn>?</eir:svn>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:DeleteEquipments imeiFrom="?" imeiTo="?" svn="0F">
+               <!--Optional:-->
+               <eir:comment>?</eir:comment>
+               <!--Optional:-->
+               <eir:removeReason>?</eir:removeReason>
+               <!--Optional:-->
+               <eir:clarifyReason>?</eir:clarifyReason>
+               <!--Optional:-->
+               <eir:sourceOfRequest>?</eir:sourceOfRequest>
+            </eir:DeleteEquipments>
+         </cai3:MOAttributes>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Delete>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Delete"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="1f89971c-c955-4e3b-b431-1c8006e726bb" wsaVersion="NONE" name="SessionControl" type="wsdl" bindingName="{http://schemas.ericsson.com/cai3g1.2/}SessionControl" soapVersion="1_1" anonymous="optional" definition="file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Generic/Cai3g1.2_SessionControl.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Generic/Cai3g1.2_SessionControl.wsdl"><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Generic/Cai3g1.2_SessionControl.wsdl</con:url><con:content><![CDATA[<definitions targetNamespace="http://schemas.ericsson.com/cai3g1.2/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:cai3g="http://schemas.ericsson.com/cai3g1.2/">
+  <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+    <!--disable wrapper style generation-->
+    <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
+  </jaxws:bindings>
+  <types>
+    <xs:schema targetNamespace="http://schemas.ericsson.com/cai3g1.2/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/cai3g1.2/">
+      <xs:include schemaLocation="../../schemas/Generic/cai3g1.2_provisioning.xsd"/>
+    </xs:schema>
+  </types>
+  <message name="LoginRequest">
+    <part name="parameters" element="cai3g:Login"/>
+  </message>
+  <message name="LoginResponse">
+    <part name="parameters" element="cai3g:LoginResponse"/>
+  </message>
+  <message name="LogoutRequest">
+    <part name="parameters" element="cai3g:Logout"/>
+  </message>
+  <message name="LogoutResponse">
+    <part name="parameters" element="cai3g:LogoutResponse"/>
+  </message>
+  <message name="HeadInfo">
+    <part name="sessionId" element="cai3g:SessionId"/>
+    <part name="transactionId" element="cai3g:TransactionId"/>
+    <part name="context" element="cai3g:Context"/>
+    <part name="sequenceId" element="cai3g:SequenceId"/>
+  </message>
+  <message name="Cai3gFault">
+    <part name="parameters" element="cai3g:Cai3gFault"/>
+  </message>
+  <message name="Cai3gHeaderFault">
+    <part name="sessionIdFault" element="cai3g:SessionIdFault"/>
+    <part name="transactionIdFault" element="cai3g:TransactionIdFault"/>
+    <part name="contextFault" element="cai3g:ContextFault"/>
+    <part name="sequenceIdFault" element="cai3g:SequenceIdFault"/>
+  </message>
+  <portType name="SessionControl">
+    <operation name="Login">
+      <input message="cai3g:LoginRequest"/>
+      <output message="cai3g:LoginResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+    <operation name="Logout">
+      <input message="cai3g:LogoutRequest"/>
+      <output message="cai3g:LogoutResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+  </portType>
+  <binding name="SessionControl" type="cai3g:SessionControl">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="Login">
+      <soap:operation soapAction="CAI3G#Login" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Logout">
+      <soap:operation soapAction="CAI3G#Logout" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="SessionControl">
+    <port name="SessionControl" binding="cai3g:SessionControl">
+      <soap:address location="http://PG_NGN_VIP:8080/CAI3G1.2/services/CAI3G1.2"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Generic/cai3g1.2_provisioning.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/cai3g1.2/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.ericsson.com/cai3g1.2/">
+  <xs:element name="CreateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MOId" type="AnyMOIdType"/>
+        <xs:element name="MOAttributes" type="ResponseMOAttributesType" minOccurs="0"/>
+        <xs:element name="extension" type="AnySequenceType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MOAttributes" type="ResponseMOAttributesType" minOccurs="0"/>
+        <xs:element name="extension" type="AnySequenceType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MOId" type="AnyMOIdType" minOccurs="0"/>
+        <xs:element name="MOAttributes" type="ResponseMOAttributesType" minOccurs="0"/>
+        <xs:element name="extension" type="AnySequenceType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Search">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MOType" type="MoType"/>
+        <xs:element name="filters" type="SearchFiltersType"/>
+        <xs:element name="extension" type="AnySequenceType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MOId" type="AnyMOIdType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="extension" type="AnySequenceType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Login">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="userId" type="xs:string"/>
+        <xs:element name="pwd" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sessionId" type="SessionIdType"/>
+        <xs:element name="baseSequenceId" type="xs:unsignedLong"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Logout">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sessionId" type="SessionIdType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogoutResponse">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="Subscribe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="managerRef" type="xs:anyURI"/>
+        <xs:element name="filters" type="NotificationFiltersType"/>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:unique name="OperationUnique">
+      <xs:selector xpath="filters/filter/operation"/>
+      <xs:field xpath="."/>
+    </xs:unique>
+  </xs:element>
+  <xs:element name="SubscribeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="subscriptionId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Unsubscribe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="managerRef" type="xs:anyURI"/>
+        <xs:element name="subscriptionId" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnsubscribeResponse">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="Notify">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="notificationHeader" type="NotificationHeaderType"/>
+        <xs:element name="correlatedNotifications" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="additionalText" type="xs:string" minOccurs="0"/>
+        <xs:element name="sourceIndicator" type="xs:anyURI" minOccurs="0"/>
+        <xs:element name="notificationData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:any namespace="##any" processContents="lax" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyResponse">
+    <xs:complexType/>
+  </xs:element>
+  <xs:complexType name="ResponseMOAttributesType">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="lax" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AnyMOIdType">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="lax" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AnySequenceType">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="lax" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="MoType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z][_A-Za-z0-9]*@.*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SessionId" type="SessionIdType"/>
+  <xs:element name="TransactionId" type="xs:unsignedLong"/>
+  <xs:element name="Context" type="xs:string"/>
+  <xs:element name="SequenceId" type="xs:unsignedLong"/>
+  <xs:simpleType name="SessionIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\d\w]{1,}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="SearchFiltersType">
+    <xs:sequence>
+      <xs:element name="filter" type="SearchFilterType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchFilterType">
+    <xs:sequence>
+      <xs:element name="MOAttributes" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NotificationHeaderType">
+    <xs:sequence>
+      <xs:element name="cai3gUser" type="xs:string"/>
+      <xs:element name="MOType" type="MoType"/>
+      <xs:element name="MOId" type="AnyMOIdType"/>
+      <xs:element name="notificationId" type="xs:string" minOccurs="0"/>
+      <xs:element name="eventTime" type="xs:dateTime"/>
+      <xs:element name="notificationActor" type="xs:anyURI" minOccurs="0"/>
+      <xs:element name="operation" type="NotificationOperationType"/>
+      <xs:element name="subscriptionId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NotificationFilterType">
+    <xs:sequence>
+      <xs:element name="cai3gUser" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="MOType" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="operation" type="NotificationOperationType" minOccurs="0" maxOccurs="3"/>
+      <xs:element name="MOId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="MOAttributes" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <!--How to make sure there must exist one element-->
+  </xs:complexType>
+  <xs:complexType name="NotificationFiltersType">
+    <xs:sequence>
+      <xs:element name="filter" type="NotificationFilterType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="NotificationOperationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Create"/>
+      <xs:enumeration value="Delete"/>
+      <xs:enumeration value="Set"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Cai3gFault" type="Cai3gFaultType"></xs:element>
+  <xs:complexType name="Cai3gFaultType">
+    <xs:sequence>
+      <xs:element name="faultcode" type="xs:integer"/>
+      <xs:element name="faultreason">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="reasonText" type="xs:string" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="faultrole" type="xs:string"/>
+      <xs:element name="details" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:any namespace="##any" processContents="lax"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HeaderFaultType">
+    <xs:sequence>
+      <xs:element name="faultactor" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SessionIdFault">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HeaderFaultType">
+          <xs:sequence>
+            <xs:element name="faultcode">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Invalid SessionId"/>
+                  <xs:enumeration value="Session Timeout"/>
+                  <xs:enumeration value="SessionId Syntax Error"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SequenceIdFault">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HeaderFaultType">
+          <xs:sequence>
+            <xs:element name="faultcode">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Invalid SequenceId"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransactionIdFault">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HeaderFaultType">
+          <xs:sequence>
+            <xs:element name="faultcode">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Invalid TransactionId"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ContextFault">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HeaderFaultType">
+          <xs:sequence>
+            <xs:element name="faultcode">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Invalid Context"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://PG_NGN_VIP:8080/CAI3G1.2/services/CAI3G1.2</con:endpoint></con:endpoints><con:operation id="ad0c46c2-1866-4519-b5d1-0d140111b35d" isOneWay="false" action="CAI3G#Login" name="Login" bindingOperationName="Login" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="94256d0e-3365-43d6-905a-efb0229a6905" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://PG_NGN_VIP:8080/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cai3:Login>
+         <cai3:userId>?</cai3:userId>
+         <cai3:pwd>?</cai3:pwd>
+      </cai3:Login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Login"/></con:call></con:operation><con:operation id="adc1dcc8-a448-47fb-8df3-d10d31587e0e" isOneWay="false" action="CAI3G#Logout" name="Logout" bindingOperationName="Logout" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c53b18bc-d8e8-4366-bf72-7321dd9b2b64" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://PG_NGN_VIP:8080/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Logout>
+         <cai3:sessionId>?</cai3:sessionId>
+      </cai3:Logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Logout"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="3258c9eb-b875-4c42-9a2e-2d8b821732aa" wsaVersion="NONE" name="SearchOrder" type="wsdl" bindingName="{http://schemas.ericsson.com/cai3g1.2/}SearchOrder" soapVersion="1_1" anonymous="optional" definition="file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_SearchOrder.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_SearchOrder.wsdl"><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/wsdl/Applications/Layered_EIR/EIR_SearchOrder.wsdl</con:url><con:content><![CDATA[<!--EIR, SearchOrder - PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB9-->
+<definitions targetNamespace="http://schemas.ericsson.com/cai3g1.2/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:Cai3gDC="http://schemas.ericsson.com/eda/extension/Cai3gDC/" xmlns:cai3g="http://schemas.ericsson.com/cai3g1.2/" xmlns:pg="http://schemas.ericsson.com/pg/1.0">
+  <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+    <!--disable wrapper style generation-->
+    <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
+  </jaxws:bindings>
+  <types>
+    <xs:schema targetNamespace="http://schemas.ericsson.com/cai3g1.2/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns="http://schemas.ericsson.com/cai3g1.2/">
+      <xs:import namespace="http://schemas.ericsson.com/ma/EIR/" schemaLocation="../../../schemas/Applications/Layered_EIR/EIR_SearchOrder.xsd"/>
+      <xs:import namespace="http://schemas.ericsson.com/pg/1.0" schemaLocation="../../../schemas/Applications/Layered_EIR/PGFault.xsd"/>
+      <xs:import namespace="http://schemas.ericsson.com/eda/extension/Cai3gDC/" schemaLocation="../../../schemas/Generic/cai3gDC/cai3gDC_extension.xsd"/>
+      <xs:element name="Create">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="SearchOrder@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imsiPrefix"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOAttributes" minOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:CreateSearchOrder"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imsiPrefix"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Delete">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="SearchOrder@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imsiPrefix"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imsiPrefix"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Set">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="SearchOrder@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:sequence>
+                    <xs:element ref="eir:imsiPrefix"/>
+                  </xs:sequence>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOAttributes" minOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:SetSearchOrder"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetResponse">
+        <xs:complexType>
+          <xs:sequence></xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Get">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOType" type="xs:string" fixed="SearchOrder@http://schemas.ericsson.com/ma/EIR/"/>
+            <xs:element name="MOId">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:imsiPrefix"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extension" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="Cai3gDC:cai3gDC" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MOAttributes" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="eir:GetResponseSearchOrder"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Cai3gFault">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="faultcode" type="xs:integer"/>
+            <xs:element name="faultreason">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="reasonText" type="xs:string" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="faultrole" type="xs:string"/>
+            <xs:element name="details" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="pg:PGFault"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SessionId" type="SessionIdType"/>
+      <xs:element name="TransactionId" type="xs:unsignedLong"/>
+      <xs:element name="SequenceId" type="xs:unsignedLong"/>
+      <xs:simpleType name="SessionIdType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\d\w]{1,}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="HeaderFaultType">
+        <xs:sequence>
+          <xs:element name="faultactor" type="xs:string"/>
+          <xs:element name="description" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SessionIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid SessionId"/>
+                      <xs:enumeration value="Session Timeout"/>
+                      <xs:enumeration value="SessionId Syntax Error"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SequenceIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid SequenceId"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TransactionIdFault">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="HeaderFaultType">
+              <xs:sequence>
+                <xs:element name="faultcode">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="Invalid TransactionId"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="CreateRequest">
+    <part name="parameters" element="cai3g:Create"/>
+  </message>
+  <message name="CreateResponse">
+    <part name="parameters" element="cai3g:CreateResponse"/>
+  </message>
+  <message name="GetRequest">
+    <part name="parameters" element="cai3g:Get"/>
+  </message>
+  <message name="GetResponse">
+    <part name="parameters" element="cai3g:GetResponse"/>
+  </message>
+  <message name="SetRequest">
+    <part name="parameters" element="cai3g:Set"/>
+  </message>
+  <message name="SetResponse">
+    <part name="parameters" element="cai3g:SetResponse"/>
+  </message>
+  <message name="DeleteRequest">
+    <part name="parameters" element="cai3g:Delete"/>
+  </message>
+  <message name="DeleteResponse">
+    <part name="parameters" element="cai3g:DeleteResponse"/>
+  </message>
+  <message name="HeadInfo">
+    <part name="sessionId" element="cai3g:SessionId"/>
+    <part name="transactionId" element="cai3g:TransactionId"/>
+    <part name="sequenceId" element="cai3g:SequenceId"/>
+  </message>
+  <message name="Cai3gFault">
+    <part name="parameters" element="cai3g:Cai3gFault"/>
+  </message>
+  <message name="Cai3gHeaderFault">
+    <part name="sessionIdFault" element="cai3g:SessionIdFault"/>
+    <part name="transactionIdFault" element="cai3g:TransactionIdFault"/>
+    <part name="sequenceIdFault" element="cai3g:SequenceIdFault"/>
+  </message>
+  <portType name="SearchOrder">
+    <operation name="Create">
+      <input message="cai3g:CreateRequest"/>
+      <output message="cai3g:CreateResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+    <operation name="Delete">
+      <input message="cai3g:DeleteRequest"/>
+      <output message="cai3g:DeleteResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+    <operation name="Get">
+      <input message="cai3g:GetRequest"/>
+      <output message="cai3g:GetResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+    <operation name="Set">
+      <input message="cai3g:SetRequest"/>
+      <output message="cai3g:SetResponse"/>
+      <fault name="Cai3gFault" message="cai3g:Cai3gFault"/>
+    </operation>
+  </portType>
+  <binding name="SearchOrder" type="cai3g:SearchOrder">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="Create">
+      <soap:operation soapAction="CAI3G#Create" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Delete">
+      <soap:operation soapAction="CAI3G#Delete" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Set">
+      <soap:operation soapAction="CAI3G#Set" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Get">
+      <soap:operation soapAction="CAI3G#Get" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+        <soap:header message="cai3g:HeadInfo" part="sessionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sessionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="transactionId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="transactionIdFault" use="literal"/>
+        </soap:header>
+        <soap:header message="cai3g:HeadInfo" part="sequenceId" use="literal">
+          <soap:headerfault message="cai3g:Cai3gHeaderFault" part="sequenceIdFault" use="literal"/>
+        </soap:header>
+      </output>
+      <fault name="Cai3gFault">
+        <soap:fault name="Cai3gFault" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="Provisioning">
+    <port name="SearchOrder" binding="cai3g:SearchOrder">
+      <soap:address location="http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/EIR_SearchOrder.xsd</con:url><con:content><![CDATA[<!--EIR, SearchOrder - PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB13-->
+<xs:schema jaxb:version="2.0" targetNamespace="http://schemas.ericsson.com/ma/EIR/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/ma/EIR/" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:x="http://schemas.ericsson.com/ma/EIR/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cai3g="http://schemas.ericsson.com/cai3g1.2/">
+  <xs:include schemaLocation="types/eirla_types.xsd"/>
+  <!--CreateSearchOrder MOId: imsiPrefix MOType: CreateSearchOrder@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="imsiPrefix" type="imsiPrefixType"/>
+  <xs:element name="CreateSearchOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="imsiPrefix" type="imsiPrefixType"/>
+        <xs:element name="unknownResponse" type="responseType"/>
+        <xs:element name="SearchOrderListEntry" minOccurs="0" maxOccurs="10">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="searchOrderListNumber" type="searchOrderListNumberType"/>
+              <xs:element name="equipmentListNumber" type="equipmentListNumberType"/>
+              <xs:element name="response" type="responseType"/>
+            </xs:sequence>
+            <xs:attribute name="searchOrderListNumber" type="searchOrderListNumberType" use="required">
+              <xs:annotation>
+                <xs:appinfo>
+                  <jaxb:property name="searchOrderListNumberAttr"/>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+          <xs:key name="key_create_searchOrderListNumber">
+            <xs:selector xpath="./x:searchOrderListNumber"/>
+            <xs:field xpath="."/>
+          </xs:key>
+          <xs:keyref name="keyref_create_searchOrderListNumber" refer="key_create_searchOrderListNumber">
+            <xs:selector xpath="."/>
+            <xs:field xpath="@searchOrderListNumber"/>
+          </xs:keyref>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="imsiPrefix" type="imsiPrefixType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imsiPrefixAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+    <xs:key name="key_imsiPrefix">
+      <xs:selector xpath="./x:imsiPrefix"/>
+      <xs:field xpath="."/>
+    </xs:key>
+    <xs:keyref name="keyref_imsiPrefix" refer="key_imsiPrefix">
+      <xs:selector xpath="."/>
+      <xs:field xpath="@imsiPrefix"/>
+    </xs:keyref>
+  </xs:element>
+  <!--SetSearchOrder MOId: imsiPrefix MOType: SetSearchOrder@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="SetSearchOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="unknownResponse" type="responseType"/>
+        <xs:element name="SearchOrderListEntry" nillable="true" minOccurs="0" maxOccurs="10">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="searchOrderListNumber" type="searchOrderListNumberType"/>
+              <xs:element name="equipmentListNumber" type="equipmentListNumberType"/>
+              <xs:element name="response" type="responseType"/>
+            </xs:sequence>
+            <xs:attribute name="searchOrderListNumber" type="searchOrderListNumberType" use="required">
+              <xs:annotation>
+                <xs:appinfo>
+                  <jaxb:property name="searchOrderListNumberAttr"/>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+          <xs:key name="key_set_searchOrderListNumber">
+            <xs:selector xpath="."/>
+            <xs:field xpath="@searchOrderListNumber"/>
+          </xs:key>
+          <xs:keyref name="keyref_set_searchOrderListNumber" refer="key_set_searchOrderListNumber">
+            <xs:selector xpath="./x:searchOrderListNumber"/>
+            <xs:field xpath="."/>
+          </xs:keyref>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="imsiPrefix" type="imsiPrefixType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imsiPrefixAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <!--DeleteSearchOrder MOId: imsiPrefix MOType: SearchOrder@http://schemas.ericsson.com/ma/EIR/-->
+  <!--GetSearchOrder MOId: imsiPrefix MOType: SearchOrder@http://schemas.ericsson.com/ma/EIR/-->
+  <!--GetResponseSearchOrder MOId: imsiPrefix MOType: SearchOrder@http://schemas.ericsson.com/ma/EIR/-->
+  <xs:element name="GetResponseSearchOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="imsiPrefix" type="imsiPrefixType"/>
+        <xs:element name="unknownResponse" type="responseType"/>
+        <xs:element name="SearchOrderListEntry" minOccurs="0" maxOccurs="10">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="searchOrderListNumber" type="searchOrderListNumberType"/>
+              <xs:element name="equipmentListNumber" type="equipmentListNumberType"/>
+              <xs:element name="response" type="responseType"/>
+            </xs:sequence>
+            <xs:attribute name="searchOrderListNumber" type="searchOrderListNumberType" use="required">
+              <xs:annotation>
+                <xs:appinfo>
+                  <jaxb:property name="searchOrderListNumberAttr"/>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="imsiPrefix" type="imsiPrefixType" use="required">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="imsiPrefixAttr"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/types/eirla_types.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/ma/EIR/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/ma/EIR/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--EIR types - PG - Provisioning Interface for EIR data, EAB/K-10:1883 Uen, PB13-->
+  <xs:simpleType name="actionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="R"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clarifyReasonType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="commentType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="255"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="imeiType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="14"/>
+      <xs:maxLength value="14"/>
+      <xs:pattern value="[0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="imsiPrefixType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2"/>
+      <xs:maxLength value="15"/>
+      <xs:pattern value="[0-9]*|Default"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="imsiType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="6"/>
+      <xs:maxLength value="15"/>
+      <xs:pattern value="[0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="insertReasonType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="10"/>
+      <xs:enumeration value="11"/>
+      <xs:enumeration value="16"/>
+      <xs:enumeration value="23"/>
+      <xs:enumeration value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="searchOrderListNumberType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="equipmentListNumberType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="responseType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Black"/>
+      <xs:enumeration value="Grey"/>
+      <xs:enumeration value="White"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="presentInListType">
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="removeReasonType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="14"/>
+      <xs:enumeration value="18"/>
+      <xs:enumeration value="20"/>
+      <xs:enumeration value="22"/>
+      <xs:enumeration value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sourceOfRequestType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="statusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Black"/>
+      <xs:enumeration value="Grey"/>
+      <xs:enumeration value="White"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="svnType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{2}|[0][F]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="timeType">
+    <xs:restriction base="xs:time"/>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Applications/Layered_EIR/PGFault.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/pg/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns="http://schemas.ericsson.com/pg/1.0">
+  <xs:element name="PGFault">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="errorcode" type="xs:integer"/>
+        <xs:element name="errormessage" type="xs:string"/>
+        <xs:element name="errordetails" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/home/tsuser/ehuafna/EDAinterfaces/webservice_provisioning_cai3g1.2/schemas/Generic/cai3gDC/cai3gDC_extension.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.ericsson.com/eda/extension/Cai3gDC/" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://schemas.ericsson.com/eda/extension/Cai3gDC/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="cai3gDC">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="localAlways" type="xs:boolean"/>
+        <xs:element name="routingAttributeValue" minOccurs="0" maxOccurs="1" type="routingAttributeValueType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="routingAttributeValueType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="18"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint></con:endpoints><con:operation id="ab1b94f1-1aa2-42cd-85c7-a66a81ec5907" isOneWay="false" action="CAI3G#Create" name="Create" bindingOperationName="Create" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="46fbf9aa-3a19-4b9b-a82e-3bd7d4d63386" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Create>
+         <cai3:MOType>SearchOrder@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imsiPrefix>?</eir:imsiPrefix>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:CreateSearchOrder imsiPrefix="?">
+               <eir:imsiPrefix>?</eir:imsiPrefix>
+               <eir:unknownResponse>?</eir:unknownResponse>
+               <!--0 to 10 repetitions:-->
+               <eir:SearchOrderListEntry searchOrderListNumber="?">
+                  <eir:searchOrderListNumber>?</eir:searchOrderListNumber>
+                  <eir:equipmentListNumber>?</eir:equipmentListNumber>
+                  <eir:response>?</eir:response>
+               </eir:SearchOrderListEntry>
+            </eir:CreateSearchOrder>
+         </cai3:MOAttributes>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Create>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Create"/></con:call></con:operation><con:operation id="75971962-1c85-4f14-adb7-534380d91449" isOneWay="false" action="CAI3G#Delete" name="Delete" bindingOperationName="Delete" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="449d7754-b778-4030-ad58-6522db0a5d8c" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Delete>
+         <cai3:MOType>SearchOrder@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imsiPrefix>?</eir:imsiPrefix>
+         </cai3:MOId>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Delete>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Delete"/></con:call></con:operation><con:operation id="d6cf0dc2-3c51-4ef8-88e5-90753f5e85f1" isOneWay="false" action="CAI3G#Get" name="Get" bindingOperationName="Get" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b750245d-5a7a-4ffe-9d72-53a1b475b46b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Get>
+         <cai3:MOType>SearchOrder@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imsiPrefix>?</eir:imsiPrefix>
+         </cai3:MOId>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Get"/></con:call></con:operation><con:operation id="7315a4ae-9b05-46c1-b353-b53719b815e6" isOneWay="false" action="CAI3G#Set" name="Set" bindingOperationName="Set" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2cbd724d-7c02-4ad8-9e09-fde66b0014ca" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SequenceId>?</cai3:SequenceId>
+      <cai3:TransactionId>?</cai3:TransactionId>
+      <cai3:SessionId>?</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Set>
+         <cai3:MOType>SearchOrder@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imsiPrefix>?</eir:imsiPrefix>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:SetSearchOrder imsiPrefix="?">
+               <eir:unknownResponse>?</eir:unknownResponse>
+               <!--0 to 10 repetitions:-->
+               <eir:SearchOrderListEntry searchOrderListNumber="?">
+                  <eir:searchOrderListNumber>?</eir:searchOrderListNumber>
+                  <eir:equipmentListNumber>?</eir:equipmentListNumber>
+                  <eir:response>?</eir:response>
+               </eir:SearchOrderListEntry>
+            </eir:SetSearchOrder>
+         </cai3:MOAttributes>
+         <!--Optional:-->
+         <cai3:extension>
+            <!--Optional:-->
+            <cai31:cai3gDC>
+               <cai31:localAlways>?</cai31:localAlways>
+               <!--Optional:-->
+               <cai31:routingAttributeValue>?</cai31:routingAttributeValue>
+            </cai31:cai3gDC>
+         </cai3:extension>
+      </cai3:Set>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Set"/></con:call></con:operation></con:interface><con:testSuite id="7ed707c3-5233-4b7d-a09b-96a16381ffd2" name="create-eir"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="630b1ac4-6480-472e-9dde-d4c75ebd5599" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="properties" name="Properties" id="9c977a5b-c374-4bca-8d9e-58bb2ff25a03"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>sessionid</con:name><con:value>3015983cb36d4b1ba48b23d103bb422c</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="request" id="655245ae-a47f-4c52-9918-b8172ecfa76b" name="Login"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionControl</con:interface><con:operation>Login</con:operation><con:request name="Login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="41947be1-8508-4929-9d89-78553e8a1df4"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cai3:Login>
+         <cai3:userId>${#Project#eda-prov-username}</cai3:userId>
+         <cai3:pwd>${#Project#eda-prov-password}</cai3:pwd>
+      </cai3:Login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7d037f74-5da9-47a6-b9de-2987d643f237" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="68ae9c6d-eba5-4ad6-8987-8cc5dfca0a20" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="d4ed6381-9c03-402f-8290-9bf0e87dad15" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Login"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer" id="10543f8a-a5c5-4527-bfb5-aeddc01095c2"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>sessionidtransfer</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Login</con:sourceStep><con:sourcePath>declare namespace ns='http://schemas.ericsson.com/cai3g1.2/';
+//ns:sessionId</con:sourcePath><con:targetType>sessionid</con:targetType><con:targetStep>Properties</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" id="881b3796-8e77-432e-9da3-85a5d8090efe" name="Create-equipment"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>Equipment</con:interface><con:operation>Create</con:operation><con:request name="Create-equipment" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="4b7b3ae7-8185-4d58-8313-648b6bfc1fe8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Create>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>12340000000001</eir:imei>
+            <!--Optional:-->
+            <eir:svn>01</eir:svn>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:CreateEquipment imei="12340000000001" svn="01">
+               <eir:imei>12340000000001</eir:imei>
+               <!--Optional:-->
+               <eir:svn>01</eir:svn>
+               <eir:InsertEquipmentListType>
+                  <eir:equipmentListNumber>0</eir:equipmentListNumber>    
+               </eir:InsertEquipmentListType>
+            </eir:CreateEquipment>
+         </cai3:MOAttributes>
+      </cai3:Create>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="184da331-80d5-48c3-958e-5ea7d40f9deb" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="af2b23de-9714-481d-9ac6-66df924579d9" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="8b8c1b8d-4758-484e-97df-d3b446986f6d" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Create"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="12b90b11-9491-4a40-a86e-3dcf8006a216" name="Create-searchoder"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SearchOrder</con:interface><con:operation>Create</con:operation><con:request name="Create-searchoder" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c0d69a52-31f1-4153-98dc-ebb7d6c286b9"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Create>
+         <cai3:MOType>SearchOrder@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imsiPrefix>24081</eir:imsiPrefix>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:CreateSearchOrder imsiPrefix="24081">
+               <eir:imsiPrefix>24081</eir:imsiPrefix>
+               <eir:unknownResponse>Unknown</eir:unknownResponse>
+               <!--0 to 10 repetitions:-->
+               <eir:SearchOrderListEntry searchOrderListNumber="1">
+                  <eir:searchOrderListNumber>1</eir:searchOrderListNumber>
+                  <eir:equipmentListNumber>1</eir:equipmentListNumber>
+                  <eir:response>Black</eir:response>
+               </eir:SearchOrderListEntry>
+               <eir:SearchOrderListEntry searchOrderListNumber="2">
+                  <eir:searchOrderListNumber>2</eir:searchOrderListNumber>
+                  <eir:equipmentListNumber>0</eir:equipmentListNumber>
+                  <eir:response>White</eir:response>
+               </eir:SearchOrderListEntry>
+            </eir:CreateSearchOrder>
+         </cai3:MOAttributes>
+      </cai3:Create>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="2bc2c9e9-701b-4394-b19a-e5ddc596005e" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="4e17150f-b49c-4c20-9e74-35fbba505ad3" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Create"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="c7e762da-ac32-4b26-b0d7-7681c433615c" name="Delete - equipment"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>Equipment</con:interface><con:operation>Delete</con:operation><con:request name="Delete - equipment" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="cf57fa41-daec-4077-84dc-94af629a19a8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Delete>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>12340000000001</eir:imei>
+            <!--Optional:-->
+            <eir:svn>01</eir:svn>
+         </cai3:MOId>
+         <!--Optional:-->
+         <cai3:MOAttributes>
+            <eir:DeleteEquipment imei="12340000000001" svn="01">
+            </eir:DeleteEquipment>
+         </cai3:MOAttributes>
+      </cai3:Delete>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a8dc9530-1269-44c2-958e-a6e2d6999754" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Delete"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="da0dffb0-4c6f-451a-a237-d138b8810fe4" name="Get - equipment"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>Equipment</con:interface><con:operation>Get</con:operation><con:request name="Get - equipment" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c3e74feb-472d-405f-9e7b-05f16b425d61"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://anypg.anyprovisioningprovider.com/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Get>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>12340000000001</eir:imei>
+            <!--Optional:-->
+            <eir:svn>01</eir:svn>
+         </cai3:MOId>
+      </cai3:Get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="63ffee28-fee9-47ee-bee4-9f6d9f58d5eb" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="85506876-46bd-4d23-8fcc-d6948e3775a0" name="Logout"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionControl</con:interface><con:operation>Logout</con:operation><con:request name="Logout" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="252089b7-faec-42fa-b699-d1c3d3b5370c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Logout>
+         <cai3:sessionId>${Properties#sessionid}</cai3:sessionId>
+      </cai3:Logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="36eca90c-90d2-4c22-bb08-2ce0a8a9d771" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="37d31144-d47c-4ab1-9ec2-7d8987080c32" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="dd36a2a7-5fbd-46b0-b3e1-2ee47bda0b75" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Logout"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="bc4236d0-1b89-4035-85d5-869072cc270e" name="delete-eir"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="2b343e19-942a-414d-a421-5ae54f5ef896" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="delete equipment" searchProperties="true"><con:settings/><con:testStep type="properties" name="Properties" id="e31372b5-43a6-431a-9292-eb5309383acc"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>sessionid</con:name><con:value>499ba1979b2b4bb397c9ecd35a9576f2</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="request" id="6aaf1b99-1641-4196-9ccb-7cd1936e31c9" name="Login"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionControl</con:interface><con:operation>Login</con:operation><con:request name="Login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="41947be1-8508-4929-9d89-78553e8a1df4"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cai3:Login>
+         <cai3:userId>cai3guser</cai3:userId>
+         <cai3:pwd>Password!1234</cai3:pwd>
+      </cai3:Login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7d037f74-5da9-47a6-b9de-2987d643f237" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="68ae9c6d-eba5-4ad6-8987-8cc5dfca0a20" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Login"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer" id="13eadcdd-ef8d-4b58-8cd7-1a5cfb5e9459"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>sessionidtransfer</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Login</con:sourceStep><con:sourcePath>declare namespace ns='http://schemas.ericsson.com/cai3g1.2/';
+//ns:sessionId</con:sourcePath><con:targetType>sessionid</con:targetType><con:targetStep>Properties</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" id="53fcc5b8-3cd3-4bde-b0fe-69c5fd89b9e0" name="Get - equipment"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>Equipment</con:interface><con:operation>Get</con:operation><con:request name="Get - equipment" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c3e74feb-472d-405f-9e7b-05f16b425d61"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Get>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>12340000499999</eir:imei>
+            <!--Optional:-->
+            <eir:svn>01</eir:svn>
+         </cai3:MOId>
+      </cai3:Get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="63ffee28-fee9-47ee-bee4-9f6d9f58d5eb" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d6323a3e-583a-41ea-addd-5fc88f702c07" name="Delete - equipment"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>Equipment</con:interface><con:operation>Delete</con:operation><con:request name="Delete - equipment" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="cf57fa41-daec-4077-84dc-94af629a19a8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Delete>
+         <cai3:MOType>Equipment@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imei>12340000000001</eir:imei>
+            <!--Optional:-->
+            <eir:svn>01</eir:svn>
+         </cai3:MOId>
+         <!--Optional:-->
+         <cai3:MOAttributes>
+            <eir:DeleteEquipment imei="12340000000001" svn="01">
+            </eir:DeleteEquipment>
+         </cai3:MOAttributes>
+      </cai3:Delete>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a8dc9530-1269-44c2-958e-a6e2d6999754" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Delete"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="7d380fca-af5a-4d08-832b-d18b4f93056d" name="Logout"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionControl</con:interface><con:operation>Logout</con:operation><con:request name="Logout" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="252089b7-faec-42fa-b699-d1c3d3b5370c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://prov.eda2.n28-eccd1.sero.gic.ericsson.se/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Logout>
+         <cai3:sessionId>${Properties#sessionid}</cai3:sessionId>
+      </cai3:Logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="36eca90c-90d2-4c22-bb08-2ce0a8a9d771" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="37d31144-d47c-4ab1-9ec2-7d8987080c32" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Logout"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="a27f23c1-fc48-4fec-ab80-937942a72487" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="delete searchorder" searchProperties="true"><con:settings/><con:testStep type="properties" name="Properties" id="cdfd0a4f-3bc7-4ed6-8acc-ec23f6687f5c"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>sessionid</con:name><con:value>67060edff23944d3a66a67a47d675494</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="request" id="a221f931-d076-47dc-a25e-0368acf8f73d" name="Login"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionControl</con:interface><con:operation>Login</con:operation><con:request name="Login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="41947be1-8508-4929-9d89-78553e8a1df4"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cai3:Login>
+         <cai3:userId>cai3guser</cai3:userId>
+         <cai3:pwd>Password!1234</cai3:pwd>
+      </cai3:Login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7d037f74-5da9-47a6-b9de-2987d643f237" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="68ae9c6d-eba5-4ad6-8987-8cc5dfca0a20" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Login"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer" id="f4eeac9a-66d6-4960-b535-9c104455cc0d"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>sessionidtransfer</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Login</con:sourceStep><con:sourcePath>declare namespace ns='http://schemas.ericsson.com/cai3g1.2/';
+//ns:sessionId</con:sourcePath><con:targetType>sessionid</con:targetType><con:targetStep>Properties</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" id="cbe5ddc4-53b1-4488-b2f5-6ca06c5d1943" name="Get-searchorder"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SearchOrder</con:interface><con:operation>Get</con:operation><con:request name="Get-searchorder" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="ba568711-1cf7-4e6e-a116-d83ce33e8a19"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://prov.eda2.n28-eccd1.sero.gic.ericsson.se/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Get>
+         <cai3:MOType>SearchOrder@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imsiPrefix>24081</eir:imsiPrefix>
+         </cai3:MOId>
+      </cai3:Get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="864ea3a1-df56-486d-a345-7025abb0a3a3" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="176f68ba-40f2-49d3-8772-7afdbc15e236" name="Delete-searchorder"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SearchOrder</con:interface><con:operation>Delete</con:operation><con:request name="Delete-searchorder" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="2c02c816-29bd-4dbf-b88e-e1cff594208d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://prov.eda2.n28-eccd1.sero.gic.ericsson.se/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Delete>
+         <cai3:MOType>SearchOrder@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imsiPrefix>24081</eir:imsiPrefix>
+         </cai3:MOId>
+      </cai3:Delete>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="434e5960-f1fe-470b-b973-1fa5789ee742" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="eedd1356-dd30-4db0-b881-c80f931785a9" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Delete"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d43c426a-b237-4be1-88f9-39044995a938" name="Logout"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionControl</con:interface><con:operation>Logout</con:operation><con:request name="Logout" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="252089b7-faec-42fa-b699-d1c3d3b5370c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://prov.eda2.n28-eccd1.sero.gic.ericsson.se/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Logout>
+         <cai3:sessionId>${Properties#sessionid}</cai3:sessionId>
+      </cai3:Logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="36eca90c-90d2-4c22-bb08-2ce0a8a9d771" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="37d31144-d47c-4ab1-9ec2-7d8987080c32" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Logout"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="9c811892-d300-4948-a10e-147496d2a462" name="create-eir-multi"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="f94b51b1-12bc-4228-bc90-79df225a25b5" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="properties" name="Properties" id="f2b083da-e5da-45d2-ab3f-e572df6e9c0c"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>sessionid</con:name><con:value>3c43bfbb2f514b819604f9fa50d21223</con:value></con:property><con:property><con:name>startimei</con:name><con:value>12340001500000</con:value></con:property><con:property><con:name>threadvol</con:name><con:value>5000</con:value></con:property><con:property><con:name>imeifrom0</con:name><con:value>12340000000032</con:value></con:property><con:property><con:name>imeito0</con:name><con:value>12340000000041</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="init" id="51e91897-f1ab-4eda-9fb3-a828e8e98935"><con:settings/><con:config><script>def props = testRunner.testCase.getTestStepByName( "Properties" )
+startimei = props.getPropertyValue("startimei").toLong()
+threadvol = props.getPropertyValue("threadvol").toInteger()
+threadidx = context.ThreadIndex.toInteger()
+props.setPropertyValue("imeifrom"+context.ThreadIndex,(startimei+threadvol*threadidx).toString())
+props.setPropertyValue("imeito"+context.ThreadIndex,(startimei+threadvol*threadidx+9).toString())</script></con:config></con:testStep><con:testStep type="request" id="1775de08-8047-4b68-8318-982bff906850" name="Login"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionControl</con:interface><con:operation>Login</con:operation><con:request name="Login" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="41947be1-8508-4929-9d89-78553e8a1df4"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cai3:Login>
+         <cai3:userId>${#Project#eda-prov-username}</cai3:userId>
+         <cai3:pwd>${#Project#eda-prov-password}</cai3:pwd>
+      </cai3:Login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7d037f74-5da9-47a6-b9de-2987d643f237" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="68ae9c6d-eba5-4ad6-8987-8cc5dfca0a20" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="d4ed6381-9c03-402f-8290-9bf0e87dad15" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Login"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer" id="47b3d9a0-efd8-41bc-be89-e70ac505cd9d"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>sessionidtransfer</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Login</con:sourceStep><con:sourcePath>declare namespace ns='http://schemas.ericsson.com/cai3g1.2/';
+//ns:sessionId</con:sourcePath><con:targetType>sessionid</con:targetType><con:targetStep>Properties</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" id="07c3ebf9-c88c-45fd-b8e2-129e750ad269" name="Create-equipments"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>Equipments</con:interface><con:operation>Create</con:operation><con:request name="Create-equipments" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="3b2785ad-79be-4a43-9d90-92055cfe47cd"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/" xmlns:eir="http://schemas.ericsson.com/ma/EIR/" xmlns:cai31="http://schemas.ericsson.com/eda/extension/Cai3gDC/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Create>
+         <cai3:MOType>Equipments@http://schemas.ericsson.com/ma/EIR/</cai3:MOType>
+         <cai3:MOId>
+            <eir:imeiFrom>${imeifrom${ThreadIndex}}</eir:imeiFrom>
+            <eir:imeiTo>${imeito${ThreadIndex}}</eir:imeiTo>
+            <!--Optional:-->
+            <eir:svn>01</eir:svn>
+         </cai3:MOId>
+         <cai3:MOAttributes>
+            <eir:CreateEquipments imeiFrom="${imeifrom${ThreadIndex}}" imeiTo="${imeito${ThreadIndex}}" svn="01">
+               <eir:imeiFrom>${imeifrom${ThreadIndex}}</eir:imeiFrom>
+               <eir:imeiTo>${imeito${ThreadIndex}}</eir:imeiTo>
+               <!--Optional:-->
+               <eir:svn>01</eir:svn>
+               <eir:InsertEquipmentListType>
+                  <eir:equipmentListNumber>0</eir:equipmentListNumber>
+               </eir:InsertEquipmentListType>
+            </eir:CreateEquipments>
+         </cai3:MOAttributes>
+      </cai3:Create>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f84f7451-ae56-48ec-b39e-bccf55f2634f" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="f7ad689d-97e4-46d2-b216-b316ca4a0ddf" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="8ae4bece-c249-451f-b9f4-a04c45f0b9cc" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Create"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="loop" id="c8c1fe1f-4de5-4d62-81bd-f4105d7a8999"><con:settings/><con:config><script>def props = testRunner.testCase.getTestStepByName("Properties")
+startimei = props.getPropertyValue("startimei").toLong()
+threadvol = props.getPropertyValue("threadvol").toInteger()
+imeifrom = props.getPropertyValue("imeifrom"+context.ThreadIndex).toLong()
+imeito = props.getPropertyValue("imeito"+context.ThreadIndex).toLong()
+threadidx = context.ThreadIndex.toInteger()
+startimeilocal = startimei+threadvol*threadidx
+if((imeifrom+10) &lt; (startimeilocal+threadvol))
+{
+props.setPropertyValue("imeifrom"+context.ThreadIndex,(imeifrom+10).toString())
+props.setPropertyValue("imeito"+context.ThreadIndex,(imeito+10).toString())
+testRunner.gotoStepByName("Create-equipments")
+}</script></con:config></con:testStep><con:testStep type="request" id="e86dc889-2c93-4901-a9ff-a2bfaae0420c" name="Logout"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionControl</con:interface><con:operation>Logout</con:operation><con:request name="Logout" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="252089b7-faec-42fa-b699-d1c3d3b5370c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://${#Project#eda-prov-fqdn}/CAI3G1.2/services/CAI3G1.2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cai3="http://schemas.ericsson.com/cai3g1.2/">
+   <soapenv:Header>
+      <cai3:SessionId>${Properties#sessionid}</cai3:SessionId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <cai3:Logout>
+         <cai3:sessionId>${Properties#sessionid}</cai3:sessionId>
+      </cai3:Logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="36eca90c-90d2-4c22-bb08-2ce0a8a9d771" name="SOAP Response"/><con:assertion type="Valid HTTP Status Codes" id="37d31144-d47c-4ab1-9ec2-7d8987080c32" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="dd36a2a7-5fbd-46b0-b3e1-2ee47bda0b75" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CAI3G#Logout"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="ca7ae901-d5a5-45f1-9d96-d9ffc4941129" name="LoadTest 1"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>20</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>1</con:testLimit><con:limitType>COUNT_PER_THREAD</con:limitType><con:loadStrategy><con:type>Thread</con:type><con:config><startThreadCount>20</startThreadCount><endThreadCount>20</endThreadCount></con:config></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>eda-prov-fqdn</con:name><con:value>prov.eda1-oam.n280-eccd1.sero.gic.ericsson.se</con:value></con:property><con:property><con:name>eda-prov-username</con:name><con:value>cai3guser@ericsson.com</con:value></con:property><con:property><con:name>eda-prov-password</con:name><con:value>Cai3guser@</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

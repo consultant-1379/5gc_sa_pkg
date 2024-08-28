@@ -1,0 +1,10 @@
+*.pyc
+!.gitignore
+.vscode
+.kube
+.idea
+*.swp
+*.swo
+ts-config
+lab/certs/*.srl
+lab/certs/*.csr

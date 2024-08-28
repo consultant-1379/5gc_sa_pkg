@@ -1,0 +1,32 @@
+heat_template_version: 2017-09-01
+
+description: >
+
+parameters:
+  network_index:
+    type: number
+  networks:
+    type: json
+  trunks:
+    type: json
+
+
+resources:
+
+  port_resource_group_3:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: 
+        yaql:
+          expression: $.data.len()
+          data: { get_param: trunks }
+      resource_def:
+        type: port-per-trunk.yaml
+        properties:
+          trunk_index: "%index%"
+          network: { get_param: [ networks, { get_param: network_index }, network ] }
+          vlan: { get_param: [ networks, { get_param: network_index }, vlan ] }
+          trunks: { get_param: trunks }
+
+
+

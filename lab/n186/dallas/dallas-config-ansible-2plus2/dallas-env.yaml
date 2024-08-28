@@ -1,0 +1,10 @@
+dallas_version: 3R158A01
+dallas_basedir: /var/dallas
+dallas_system_dir: /var/dallas/dualmode5gc
+dallas_config_dir: /var/dallas/dualmode5gc
+intra_vlan: '1220'
+intra_parent_port: 'em1'
+
+# ltt dpdk ports
+dpdk_port1: p3p1
+dpdk_port2: p2p1

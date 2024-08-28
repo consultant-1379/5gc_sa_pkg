@@ -1,0 +1,432 @@
+#
+## The CCDADM Configuration YAML file for CCD Cluster deployment in Target Solution Dual Mode 5GC on NFVI
+##
+## Note:
+## 1. The root volume need to be set when HA-policy is enabled
+## 2. Configure user node scripts according to "Deploy the Dual-mode 5G Core in the Ericsson NFVI" CPI document
+## 3. The placeholder <description for the parameter> must be replaced with actual value
+#
+
+#######################################################################################################
+# infra
+#######################################################################################################
+infra:
+  audit:
+    log_level: detailed
+  ###################################### Target Cloud #################################################
+  iaas:
+    type: capo
+    # configure the delay between two VMs boot
+    provisioning_load_spread_delay: 20
+    nameservers: ['10.221.16.10', '10.221.16.11']
+    ntp_servers: ['10.221.17.6', '10.221.17.46']
+    ntp_parameters:
+      ntp_minpoll: 3
+      ntp_maxpoll: 8
+      ntp_version: 4
+      ntp_max_offset: "1.2"
+    timezone: "CET"
+    capo:
+      clouds:
+        nfvi:
+          auth:
+            auth_url: https://os-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se:5000/v3
+            username: tsdm5gc
+            password: "<TO.BE.FILLED>"
+            project_name: tsdm5gc
+            project_domain_name: default
+            user_domain_name: default
+          regions:
+          - name: CEERegion
+      target_cloud: nfvi
+      ## For NFVI7, CEE external cacert can be obtained from file /etc/kolla/certificates/ca/ca_ext.crt
+      ## on CEE control host.
+      ## Copy the content of the cert file above and paste below to replace <CEE external ca certificate>.
+      ## See example configuration below for target_cloud_cacert:
+      ## target_cloud_cacert: |
+      ##   -----BEGIN CERTIFICATE-----
+      ##   <...>
+      ##   -----END CERTIFICATE-----
+      target_cloud_cacert: |
+        <CEE external ca certificate>
+      oam_network:
+        name: n280-eccd3-ccd-oam
+      internal_network:
+        subnet_ipv4:
+          cidr: "10.0.1.0/24"
+        enable_port_security: false
+      election_network:
+        subnet_ipv4:
+          cidr: "20.0.0.0/24"
+      instance_create_timeout: 15
+      node_image:
+        name: eccd-2.26.0-000393-fc474230-node-image.raw
+
+  ## Custom root password for console access
+  ##
+  ## This field is a sha256 or sha512 hash of the root password which is applied for all pools.
+  ## The salt of the password must only contain characters from the set a-zA-Z0-9. The minimum
+  ## required length of the salt is 10 characters. The validity of the salt is verified with
+  ## the following regex: ^[a-zA-Z0-9]{10,}$.
+  ##
+  ## For example, one can use mkpasswd to generate a sha512 hash from a password and salt as
+  ## follows:
+  ## $ mkpasswd -m sha-512 testPassword -s ccdsalt1234567
+  ## $6$ccdsalt1234567$Lssr6CqKyQ4L/kPMROLBVal5vHezxLPLcUzrmAWE9.dm4UyHnHHt38TpyscIAcWQSP37PslE7RAiBDCaUCmwX/
+  ## Note: mkpasswd can be installed through 'apt install whois' on a Ubuntu OS.
+  console_password_hash: "<root password hash string>"
+  # deleting the value for session_timeout or setting to zero will default to 900
+  session_timeout: 800
+  # deleting the value for ssh_inactivity or setting to zero will default to 300
+  ssh_inactivity: 200
+  ###################################### Ephermeral Node ##############################################
+  bootstrap:
+    authorized_keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAjXPfGUC8fBvYN0cx6icqvRTaSTIdBZNHxz6ufPALT67g7ARXT5BhyQyT6KTSnsFW+SniFjz2ls3u9bx86OXWWs2R40Jch7rMXbKx4gR3VSaNfkiKxGlTp+aEpwjnPlO3TyNMrfbZUe57UJrLo7oo7ZsnJfKZ1z9N+NVGCks8Jp9oa2OBG9viG5vYB4o/3Tdl5/LiLHYm74AAsuTXnOWVOOowzvT3v2SMkLeyvTd/LBpVEvEXfG1kK+hdxfyRlpqERlOM10CeeYeBd5UrN8+xt5XDoTlnZjp2W3GWJeL3ZjMIU3MxOpmrNksqR6qeZQNF2BGGINs032/QMwYa1M/1 TS Dual-Mode 5GC CCD Deployment
+    capo:
+      ephemeral_root_volume:
+        size: 50
+        availability_zone: nova
+      ephemeral_flavor: EPH_2vcpu_4096MBmem_0GBdisk
+      ephemeral_image:
+        name: eccd-2.26.0-000393-fc474230-ephemeral-image.raw
+      ephemeral_availability_zone: nova
+      ephemeral_metadata:
+        ha-policy: ha-offline
+  ###################################### Control Plane Node ###########################################
+  controlplane:
+    control_plane_external_vip: "10.117.54.94"
+    control_plane_internal_vip: "10.0.1.2"
+    control_plane_registry_vip: "10.0.1.3"
+    control_plane_port: 6443
+    pool_cfg:
+      name: cp
+      count: 3
+      node_labels:
+      - "ecfe-speaker=false"
+      capo:
+        flavor: MGMT_8vcpu_16384MBmem_50GBdisk
+        availability_zones: ['nova']
+      authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAjXPfGUC8fBvYN0cx6icqvRTaSTIdBZNHxz6ufPALT67g7ARXT5BhyQyT6KTSnsFW+SniFjz2ls3u9bx86OXWWs2R40Jch7rMXbKx4gR3VSaNfkiKxGlTp+aEpwjnPlO3TyNMrfbZUe57UJrLo7oo7ZsnJfKZ1z9N+NVGCks8Jp9oa2OBG9viG5vYB4o/3Tdl5/LiLHYm74AAsuTXnOWVOOowzvT3v2SMkLeyvTd/LBpVEvEXfG1kK+hdxfyRlpqERlOM10CeeYeBd5UrN8+xt5XDoTlnZjp2W3GWJeL3ZjMIU3MxOpmrNksqR6qeZQNF2BGGINs032/QMwYa1M/1 TS Dual-Mode 5GC CCD Deployment
+      user_node_scripts:
+        post_network_init: ZWNobyBkdW1teSBzY3JpcHQgZm9yIHBvc3QgbmV0d29yayBpbml0IHNjcmlwdAo=
+      kubelet_options:
+        housekeeping_interval: 10
+        allowed_unsafe_sysctls:
+        - "kernel.shm*"
+        - "kernel.msg*"
+      machine_health_check:
+        max_unhealthy: 30%
+        node_startup_timeout: 15m
+        timeout: 5m
+        unhealthy_range: "[0-3]"
+    host_workloads: false
+  ###################################### Worker Nodes #################################################
+  worker_pools:
+  - pool_cfg:
+      name: pool1
+      # The initial count of nodes in one pool
+      initial_deployment_count: 4
+      count: 4
+      node_labels:
+      - "ecfe-speaker=true"
+      capo:
+        flavor: MGMT_24vcpu_51200MBmem_100GBdisk
+        availability_zones: ['nova']
+        traffic_networks:
+        # worker node eth1
+        - network: n280-eccd3-primary-signaling
+          subnets:
+          - n280-eccd3-primary-signaling_subnet
+          enable_port_security: false
+        # worker node eth2
+        - network: n280-eccd3-primary-oam
+          subnets:
+          - n280-eccd3-primary-oam_subnet
+          enable_port_security: false
+        # worker node eth3
+        - network: n280-eccd3-primary-signaling-ext
+          subnets:
+          - n280-eccd3-primary-signaling-ext_subnet
+          enable_port_security: false
+        server_group_policies:
+        - anti-affinity
+      cpu_isolation_config:
+        reserved_cpus: ""
+        cpu_manager_policy: none
+        isolation_interrupts: false
+      user_node_scripts:
+        post_network_init: IyEvdXNyL2Jpbi9lbnYgYmFzaApzZXQgLXVlCgoKIyBhZGp1c3Qga2VybmVsIHBhcmFtZXRlcnMgZm9yIERNIDVHQyBDTkZzCmNhdCA8PCBFT0YgPj4gL2V0Yy9zeXNjdGwuY29uZgojIyB1cGRhdGUgdG8ga2VybmVsIHBhcmFtZXRlcnMgcmVxdWlyZWQgYnkgU2VhcmNoIEVuZ2luZQp2bS5tYXhfbWFwX2NvdW50ID0gMjYyMTQ0CkVPRgpzeXNjdGwgLXAK
+      machine_health_check:
+        max_unhealthy: 30%
+        node_startup_timeout: 10m
+        timeout: 5m
+        unhealthy_range: "[0-3]"
+
+#######################################################################################################
+# kubernetes
+#######################################################################################################
+kubernetes:
+  ip_version: 4
+  ingress_cluster_ip: 10.96.255.200
+  apiserver_extra_sans:
+  - kubeapi.ingress.n280-eccd3.sero.gic.ericsson.se
+  pod_cidr_blocks:
+  - 192.168.0.0/16
+  ## Generate Self-Signed Certificate for Kubernetes Cluster
+  ## Refer to the script scripts/common/generate-certs.sh in CCD VMD image to generate self-signed certificate for
+  ## kubernetes cluster. The root CA certificate is generated under scripts/common/credentials directory.
+  ##
+  ## See example configuration below for the two parameters ca_cert and ca_key:
+  ## ca_cert: |
+  ##   -----BEGIN CERTIFICATE-----
+  ##   <...>
+  ##   -----END CERTIFICATE-----
+  ##
+  ## ca_key: |
+  ##   -----BEGIN RSA PRIVATE KEY-----
+  ##   <...>
+  ##   -----END RSA PRIVATE KEY-----
+  ca_cert: |
+    <kubernetes CA certificate>
+  ca_key: |
+    <kubernetes CA key>
+  # Some NFs include a requirement on CoreDNS cache TTL
+  coredns_cfg:
+      kube_dns_success_ttl: 5
+      kube_dns_denial_ttl: 5
+  nodelocalDNS_config_map_fwdzones:
+  - domain: 3gppnetwork.org
+    dns_server: 172.30.32.50
+  featuregates:
+    bound_service_account_token_volume: false
+  etcd_config:
+    election_timeout: 3000
+    heartbeat_interval: 300
+    snapshot_count: 10000
+    enable_pprof: true
+
+#######################################################################################################
+# license
+#######################################################################################################
+license:
+  nels_host: "<Hostname/ip of NeLS server>"
+  licensing_domains:
+  - customer_id: "<CustomerId from license key file>"
+    product_type: "<Product type from Cloud Container Distribution license key data>"
+    swlt_id: "<SwltId from license key file>"
+
+#######################################################################################################
+# Addons
+#######################################################################################################
+addons:
+- name: calico
+  spec:
+    mtu: 2090
+    interface_name: _calico_interface
+    ipv4_pool_ipip_mode: Never
+- name: cr-registry
+  spec:
+    storage_class: csi-cinder-sc-delete
+    storage_size: 50Gi
+    user_id: admin
+    ## container registry b64-encoded password
+    ##
+    ## Note: no newline character allowed at the end of the password.
+    ## for example: printf "<password string>" | base64
+    password: <base64 encoded password>
+    hostname: container-registry.ingress.n280-eccd3.sero.gic.ericsson.se
+    replicas_count: 1
+- name: ingress
+  spec:
+    ingress_service:
+      allocate_node_port: true
+      annotations:
+        metallb.universe.tf/address-pool: ingress
+      type: LoadBalancer
+      loadbalancer_ip: 10.143.139.67
+- name: metrics-server
+  spec: { }
+- name: multus
+  spec: { }
+- name: ecfe
+  spec:
+    node_selectors:
+      speaker:
+        ecfe-speaker: true
+    speakers_allowed_on_control_plane: false
+    allocate_speakers: true
+    config: |
+      bgp-bfd-peers:
+      - peer-address: 10.255.44.2
+        peer-asn: 4251100003
+        my-asn: 4221130003
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - ingress
+        - sc1-oam
+      - peer-address: 10.255.44.3
+        peer-asn: 4251100003
+        my-asn: 4221130003
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - ingress
+        - sc1-oam
+      - peer-address: 172.21.162.2
+        peer-asn: 4251100002
+        my-asn: 4221130002
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - sc1-sepp-internal-sig
+      - peer-address: 172.21.162.3
+        peer-asn: 4251100002
+        my-asn: 4221130002
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - sc1-sepp-internal-sig
+      - peer-address: 172.21.226.2
+        peer-asn: 4251100008
+        my-asn: 4221130008
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - sc1-sepp-external-sig
+      - peer-address: 172.21.226.3
+        peer-asn: 4251100008
+        my-asn: 4221130008
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - sc1-sepp-external-sig
+      address-pools:
+      - name: ingress
+        protocol: bgp
+        addresses:
+        - 10.143.139.67/32
+        auto-assign: false
+      - name: sc1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.89/32
+        auto-assign: false
+      - name: sc1-sepp-internal-sig
+        protocol: bgp
+        addresses:
+        - 172.17.133.1/32
+        auto-assign: false
+      - name: sc1-sepp-external-sig
+        protocol: bgp
+        addresses:
+        - 172.16.133.1/32
+        auto-assign: false
+- name: openstack-cloud-controller-manager
+  spec:
+    timeout: 50h
+- name: openstack-cinder
+  spec:
+    #Default value is 25 in CCD 2.26.0RC2
+    volume_attach_limit: 30
+    storage_classes:
+    - name: csi-cinder-sc-delete
+      spec:
+        reclaim_policy: Delete
+        allow_volume_expansion: true
+      default: true
+    - name: csi-cinder-sc-retain
+      spec:
+        reclaim_policy: Retain
+    openstack_hosts:
+    - https://os-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se:5000/v3
+    openstack_ports:
+    - 5000 # identity
+    - 8774 # compute
+    - 8776 # block storage
+    - 9696 # neutron
+    - 8786 # manila
+    - 13000
+    - 13774
+    - 13776
+    - 13786
+    - 13696
+- name: ccd-licensing
+  spec:
+    storage_class: csi-cinder-sc-delete
+    #db_ha_disabled: true
+    ccd_licensing_lm_db_migration_cpu_req: "100m"
+    ccd_app_sys_info:
+      nels:
+        host_ip: "<The IP address of Application Info Collection Service in the NeLS>"
+        host_name: "<The hostname of Application Info Collection Service (hosted on NeLS node>"
+- name: pm
+  spec:
+    victoria_metrics:
+      #deploy_in_workers: true
+      collect_only_ccd_namespace_metrics: false
+      vmselect:
+        #ha_enabled: "false"
+        resources:
+          limits:
+            cpu: "2"
+            memory: 4Gi
+            ephemeral_storage: 8Gi
+          requests:
+            cpu: 500m
+            memory: 256Mi
+            ephemeral_storage: 512Mi
+        ingress:
+          enable: "true"
+          hostname: "monitoring-vmselect.ingress.n280-eccd3.sero.gic.ericsson.se"
+      vmstorage:
+        #ha_enabled: "false"
+        resources:
+          limits:
+            memory: 7Gi
+        volume:
+          size: 200Gi
+          storage_class: csi-cinder-sc-delete
+        retention_time: 30d
+      vmagent:
+        scrape_interval: 60s
+        maxscrape_size: 256MB
+        resources:
+          limits:
+            memory: 700Mi
+        # remote_write_urls:
+        #   - url: http://10.117.58.8:1111/receive
+        #     username: abc
+        #     password: 123
+        #   - url: http://10.117.58.8:1234/receive
+        #     username:
+        #     password:
+      vmalert:
+        #ha_enabled: "false"
+    alertmanager:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 200Mi
+        requests:
+          cpu: 10m
+          memory: 100Mi
+      ingress:
+        enable: "true"
+        hostname: "monitoring-alertmanager.ingress.n280-eccd3.sero.gic.ericsson.se"
+    node_exporter:
+      default_collectors_disabled: false

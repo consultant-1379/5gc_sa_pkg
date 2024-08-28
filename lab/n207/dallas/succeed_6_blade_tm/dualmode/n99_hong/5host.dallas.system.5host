@@ -1,0 +1,78 @@
+%% ============================================================
+%% ============== SYSTEM CONFIGURATION  =======================
+%% ============================================================
+{t3410_attach_timer, 60}.
+{t3410_release_timer, 60}.
+%% {tc_history_length, Nbr of TC saved in TC history}.
+{tc_history_length, 90}.
+{log_interval, 60}.
+{nbr_of_dps_gi_nws, 32}.
+{link_group_num, 2}.
+{debug_startup, off}.
+{rtt_signalling_range_list, [10,20,30,50,100,150,300,800], []}.
+%{nr_of_sctp_streams, 10}.
+
+
+%% {subsystem, Subsystem-Index, Hostname, Load Weight, Option}.
+{subsystem, 1, 'pccc-node280-dallas-1-202', 10, []}.
+%%{subsystem, 2, 'pccc-tool-niv-249-08', 10, []}.
+{subsystem, 2, 'pccc-node280-misc-1-01', 10, []}.
+{subsystem, 3, 'pccc-node280-misc-1-03', 10, []}.
+{subsystem, 4, 'pccc-node280-misc-1-02', 10, []}.
+{subsystem, 5, 'pccc-node280-dallas-1-201', 10, []}.
+
+%% currently DP-index is equal to Subsystem-Index, that is, one DP-index per Host.
+{dp, 1, 'pccc-node280-dallas-1-202', []}.
+%%{dp, 2, 'pccc-tool-niv-249-08', []}.
+{dp, 2, 'pccc-node280-misc-1-01', []}.
+{dp, 3, 'pccc-node280-misc-1-03', []}.
+{dp, 4, 'pccc-node280-misc-1-02', []}.
+{dp, 5, 'pccc-node280-dallas-1-201', []}.
+%%  pccc-node280-dallas-1-202
+{enb_s1mme_ip_addresses, [{'8.128.0.0', 19, undefined, 0}], 1, []}.
+{enb_s1u_ip_addresses, [{ '8.132.0.0', 19, undefined, 0 }], 1, []}.
+{gnb_n3_ip_addresses, [{ '8.140.0.0', 19, undefined, 0 }], 1, []}.
+{gnb_n2_ip_addresses, [{ '8.136.0.0', 19, undefined, 0 }], 1, []}.
+%%{gi_ip_addresses, [{'193.0.0.0', 13, '2a00:193::', 37}], 1, []}.  
+%% gi_ip_addresses parameter must used if have mme, sgw, s4-sgsn, sgsn, twan, epdg sim
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  pccc-tool-niv-249-08
+%%{enb_s1mme_ip_addresses, [{'8.128.32.0', 19, undefined, 0}], 2, []}.
+%%{enb_s1u_ip_addresses, [{ '8.132.32.0', 19, undefined, 0 }], 2, []}.
+%%{gnb_n3_ip_addresses, [{ '8.140.32.0', 19, undefined, 0 }], 2, []}.
+%%{gnb_n2_ip_addresses, [{ '8.136.32.0', 19, undefined, 0 }], 2, []}.
+%%{gi_ip_addresses, [{'193.8.0.0', 13, '2a00:193:800::', 37}], 2, []}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  pccc-node280-misc-1-01
+{enb_s1mme_ip_addresses, [{'8.128.32.0', 19, undefined, 0}], 2, []}.
+{enb_s1u_ip_addresses, [{ '8.132.32.0', 19, undefined, 0 }], 2, []}.
+{gnb_n3_ip_addresses, [{ '8.140.32.0', 19, undefined, 0 }], 2, []}.
+{gnb_n2_ip_addresses, [{ '8.136.32.0', 19, undefined, 0 }], 2, []}.
+%%{gi_ip_addresses, [{'193.8.0.0', 13, '2a00:193:1000::', 37}], 2, []}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  pccc-node280-misc-1-03
+{enb_s1mme_ip_addresses, [{'8.128.64.0', 19, undefined, 0}], 3, []}.
+{enb_s1u_ip_addresses, [{ '8.132.64.0', 19, undefined, 0 }], 3, []}.
+{gnb_n3_ip_addresses, [{ '8.140.64.0', 19, undefined, 0 }], 3, []}.
+{gnb_n2_ip_addresses, [{ '8.136.64.0', 19, undefined, 0 }], 3, []}.
+%%{gi_ip_addresses, [{'193.16.0.0', 13, '2a00:193:1800::', 37}], 3, []}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  pccc-node280-misc-1-02
+{enb_s1mme_ip_addresses, [{'8.128.96.0', 19, undefined, 0}], 4, []}.
+{enb_s1u_ip_addresses, [{ '8.132.96.0', 19, undefined, 0 }], 4, []}.
+{gnb_n3_ip_addresses, [{ '8.140.96.0', 19, undefined, 0 }], 4, []}.
+{gnb_n2_ip_addresses, [{ '8.136.96.0', 19, undefined, 0 }], 4, []}.
+%%{gi_ip_addresses, [{'193.24.0.0', 13, '2a00:193:2000::', 37}], 4, []}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% pccc-node280-dallas-1-201
+{enb_s1mme_ip_addresses, [{'8.128.128.0', 19, undefined, 0}], 5, []}.
+{enb_s1u_ip_addresses, [{ '8.132.128.0', 19, undefined, 0 }], 5, []}.
+{gnb_n3_ip_addresses, [{ '8.140.128.0', 19, undefined, 0 }], 5, []}.
+{gnb_n2_ip_addresses, [{ '8.136.128.0', 19, undefined, 0 }], 5, []}.
+%%{gi_ip_addresses, [{'193.32.0.0', 13, '2a00:193:2800::', 37}], 5, []}.
+

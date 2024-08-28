@@ -1,0 +1,136 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%% 1. Simulator list for simulators enable/disable %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Configuration of backbone network, set backbone simulators:
+{sim_gnodeb, true}.       // 5G radio simulator
+{sim_hss_udm, false}.      // HSS+UDM simulator
+{sim_enodeb, true}.
+%%{sim_icr, false}.          // ICR simulator
+{sim_ess, false}.           // ESS simulator
+{sim_s4_sgsn, false}.       // S4-SGSN simulator
+{sim_sgsn, false}.          // SGSN simulator
+{sim_mme, false}.           // MME simulator
+{sim_rf, false}.            // RF simulator
+{sim_mag, false}.           // MAG simulator
+{sim_sgw, false}.           // SGW simulator
+{sim_sgwc, false}.         // SGW-C simulator
+%%{sim_sgwu, false}.         // SGW-U simulator
+{sim_pgw, false}.           // PGW simulator
+{sim_pgwc, false}.         // PGW-C simulator
+%%{sim_pgwu, false}.         // PGW-U simulator
+{sim_pcrf, false}.          // PCRF simulator
+%%{sim_embms, false}.        // Simulated MME side for real EMBMS test
+{sim_s2a_twan, false}.      // TWAN simulator
+{sim_s2b_epdg, false}.      // EPDG simulator
+{sim_icap_server, false}.  // ICAP simulator
+{sim_as, false}.            // AS simulator
+%%{sim_n3_userplane, false}. // 5G radio simulator
+{sim_upf, false}.          // 5G UPF sim
+{sim_nrf, false}.          // NRF simulator
+{sim_amf, false}.          // AMF simulator
+{sim_smf, false}.          // SMF simulator
+
+
+{enodeb_number_of_ips, 32}.
+{lte_enodeb_number_of_ips, 2400}.
+
+{mme, 1, '172.16.64.1', undefined, []}.
+{enodeb_group, 1, 1, [2,4,0], [8,1], [1],  {1, 11}, []}.
+{enodeb_group, 2, 1, [2,4,0], [8,1], [1],  {12, 11}, []}.
+{enodeb_group, 3, 1, [2,4,0], [8,1], [1],  {23, 11}, []}.
+{enodeb_group, 4, 1, [2,4,0], [8,1], [1],  {34, 11}, []}.
+{enodeb_group, 5, 1, [2,4,0], [8,1], [1],  {45, 11}, []}.
+{enodeb_group, 6, 1, [2,4,0], [8,1], [1],  {56, 11}, []}.
+{enodeb_group, 7, 1, [2,4,0], [8,1], [1],  {67, 11}, []}.
+{enodeb_group, 8, 1, [2,4,0], [8,1], [1],  {78, 11}, []}.
+{enodeb_group, 9, 1, [2,4,0], [8,1], [1],  {89, 11}, []}.
+{enodeb_group, 10, 1, [2,4,0], [8,1], [1], {100, 11}, []}.
+{enodeb_group, 11, 1, [2,4,0], [8,1], [1], {111, 11}, []}.
+{enodeb_group, 12, 1, [2,4,0], [8,1], [1], {122, 11}, []}.
+{enodeb_group, 13, 1, [2,4,0], [8,1], [1], {133, 11}, []}.
+{enodeb_group, 14, 1, [2,4,0], [8,1], [1], {144, 11}, []}.
+{enodeb_group, 15, 1, [2,4,0], [8,1], [1], {155, 11}, []}.
+{enodeb_group, 16, 1, [2,4,0], [8,1], [1], {166, 11}, []}.
+{enodeb_group, 17, 1, [2,4,0], [8,1], [1], {177, 11}, []}.
+{enodeb_group, 18, 1, [2,4,0], [8,1], [1], {188, 11}, []}.
+{enodeb_group, 19, 1, [2,4,0], [8,1], [1], {199, 11}, []}.
+{enodeb_group, 20, 1, [2,4,0], [8,1], [1], {210, 11}, []}.
+{enodeb_group, 21, 1, [2,4,0], [8,1], [1], {221, 11}, []}.
+{enodeb_group, 22, 1, [2,4,0], [8,1], [1], {232, 11}, []}.
+{enodeb_group, 23, 1, [2,4,0], [8,1], [1], {243, 11}, []}.
+{enodeb_group, 24, 1, [2,4,0], [8,1], [1], {254, 11}, []}.
+{enodeb_group, 25, 1, [2,4,0], [8,1], [1], {265, 11}, []}.
+{enodeb_group, 26, 1, [2,4,0], [8,1], [1], {276, 11}, []}.
+{enodeb_group, 27, 1, [2,4,0], [8,1], [1], {287, 11}, []}.
+{enodeb_group, 28, 1, [2,4,0], [8,1], [1], {298, 11}, []}.
+{enodeb_group, 29, 1, [2,4,0], [8,1], [1], {309, 11}, []}.
+{enodeb_group, 30, 1, [2,4,0], [8,1], [1], {320, 11}, []}.
+
+%{enodeb_startup_connect_rate_per_sec, 1000}.
+%{s1ap_nbr_of_sctp_streams, 10}.
+%{enodeb_startup_connect_rate_per_sec, 1000}.
+%{s1ap_nbr_of_sctp_streams, 10}.
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{real_amf, [
+    {index, 1},
+    {amf_set_id, 2},
+    {n2, [{ip_v4, '172.16.64.3'}]},
+    {namf,[{ip_v4, '5.8.6.137'}, {port, 8080}]},
+    {n26,[{ip_v4, '111.111.111.111'}, {port, 2123}]}
+]}.
+
+{real_amf, [
+    {index, 2},
+    {amf_set_id, 2},
+    {n2, [{ip_v4, '172.16.72.3'}]},
+    {namf,[{ip_v4, '5.8.6.55'}, {port, 8080}]},
+    {n26,[{ip_v4, '222.222.222.222'}, {port, 2123}]}
+]}.
+
+% smf-service ip in ip plan
+{smf_nsmf, [{index,1}, {ip_v4, '102.9.0.1'},{port,7070}]}.
+{nas_5g_check_integrity, false}.
+{nr_gnodeb_number_of_ips, 2400}.
+
+{first_gnodeb_id, 1}.
+{gnodeb_group, 1, 1, [2,4,0],[8,1], [1,2], [11],  {512, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 2, 1, [2,4,0],[8,1], [1,2], [11],  {523, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 3, 1, [2,4,0],[8,1], [1,2], [11],  {534, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 4, 1, [2,4,0],[8,1], [1,2], [11],  {545, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 5, 1, [2,4,0],[8,1], [1,2], [11],  {556, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 6, 1, [2,4,0],[8,1], [1,2], [11],  {567, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 7, 1, [2,4,0],[8,1], [1,2], [11],  {578, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 8, 1, [2,4,0],[8,1], [1,2], [11],  {589, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 9, 1, [2,4,0],[8,1], [1,2], [11],  {600, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 10, 1, [2,4,0],[8,1], [1,2], [11], {611, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 11, 1, [2,4,0],[8,1], [1,2], [11], {622, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 12, 1, [2,4,0],[8,1], [1,2], [11], {633, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 13, 1, [2,4,0],[8,1], [1,2], [11], {644, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 14, 1, [2,4,0],[8,1], [1,2], [11], {655, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 15, 1, [2,4,0],[8,1], [1,2], [11], {666, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 16, 1, [2,4,0],[8,1], [1,2], [11], {677, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 17, 1, [2,4,0],[8,1], [1,2], [11], {688, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 18, 1, [2,4,0],[8,1], [1,2], [11], {699, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 19, 1, [2,4,0],[8,1], [1,2], [11], {710, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 20, 1, [2,4,0],[8,1], [1,2], [11], {721, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 21, 1, [2,4,0],[8,1], [1,2], [11], {732, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 22, 1, [2,4,0],[8,1], [1,2], [11], {743, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 23, 1, [2,4,0],[8,1], [1,2], [11], {754, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 24, 1, [2,4,0],[8,1], [1,2], [11], {765, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 25, 1, [2,4,0],[8,1], [1,2], [11], {776, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 26, 1, [2,4,0],[8,1], [1,2], [11], {787, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 27, 1, [2,4,0],[8,1], [1,2], [11], {798, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 28, 1, [2,4,0],[8,1], [1,2], [11], {809, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 29, 1, [2,4,0],[8,1], [1,2], [11], {820, 11}, [{1,2},{2,2}], []}.
+{gnodeb_group, 30, 1, [2,4,0],[8,1], [1,2], [11], {831, 11}, [{1,2},{2,2}], []}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%% NRF/UDM/AUSF CONFIGURATION %%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%{hss_udm, [{index, 1},{hss, [{s6a, [{ip_v4, '8.34.0.1'}]},{realm, 'ericsson.se'},{host, 'hss1.ericsson.se'},{dwr, false},{dwr_interval, 20}]}]}.
+
+%{hss_udm, [{index, 2},{hss, [{s6a, [{ip_v4, '8.34.0.2'}]},{realm, 'ericsson.se'},{host, 'hss2.ericsson.se'},{dwr, false},{dwr_interval, 20}]}]}.
+

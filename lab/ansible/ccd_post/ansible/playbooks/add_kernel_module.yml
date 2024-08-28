@@ -1,0 +1,9 @@
+- hosts: std
+  gather_facts: false
+  become: true
+  vars:
+  tasks:
+  - name: Add the fou module
+    modprobe:
+      name: fou
+      state: present

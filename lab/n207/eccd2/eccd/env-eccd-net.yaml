@@ -1,0 +1,29 @@
+#
+## The ccd external network environment file for CCD External Network Heat Stack
+#
+
+parameters:
+  prefix: n280-eccd2
+  phynet_virtio: n280vpod1-dcgw
+  l2gw_dcgw_id: <External L2GW UUID>
+
+  virtio_networks:
+  - name: ccd-oam
+    vlan: 221
+    vxlan: 4221
+    cidr: 10.117.54.64/28
+    enable_dhcp: false
+    gateway: 10.117.54.65
+    allocation_pools: { start: 10.117.54.68, end: 10.117.54.78 }
+    routes: []
+
+  - name: primary-oam
+    vlan: 2343
+    vxlan: 6343
+    cidr: 10.255.43.0/24
+    enable_dhcp: false
+    gateway: 10.255.43.1
+    allocation_pools: { start: 10.255.43.21, end: 10.255.43.84 }
+    routes: []
+
+

@@ -1,0 +1,171 @@
+---
+serviceComponentFlavors:
+  - name: default_systemd
+    controlGroup: system
+    manager: systemd
+    properties:
+      {}
+    customProperties:
+      {}
+  - name: default_container
+    controlGroup: container
+    manager: docker
+    properties:
+      {}
+  - name: HPE_css_Xeon6330N_control
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '1,29'
+      ovs_pmd_ht: '57,85'
+      ovs_nonpmd: '0'
+  - name: HPE_css_Xeon6330N
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '1,29'
+      ovs_pmd_ht: '57,85'
+      ovs_nonpmd: '0'   
+  - name: HPE_css_Xeon6330N_control_2_plus_2
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '1,2,29,30'
+      ovs_pmd_ht: '57,58,85,86'
+      ovs_nonpmd: '0' 
+  - name: HPE_css_Xeon6330N_2_plus_2
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '1,2,29,30'
+      ovs_pmd_ht: '57,58,85,86'
+      ovs_nonpmd: '0'
+ 
+  - name: DELL_css_Xeon6330N_control
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '2,3'
+      ovs_pmd_ht: '58,59'
+      ovs_nonpmd: '0'
+  - name: DELL_css_Xeon6330N
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '2,3'
+      ovs_pmd_ht: '58,59'
+      ovs_nonpmd: '0'
+  - name: DELL_css_Xeon6330N_control_2_plus_2
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '2,3,4,5'
+      ovs_pmd_ht: '58,59,60,61'
+      ovs_nonpmd: '0'
+  - name: DELL_css_Xeon6330N_2_plus_2
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '2,3,4,5'
+      ovs_pmd_ht: '58,59,60,61'
+      ovs_nonpmd: '0'
+
+  - name: DELL_css_Xeon6330N_vxsds
+    controlGroup: css
+    manager: systemd
+    customProperties:
+      ovs_pmd: '2,3'
+      ovs_pmd_ht: '58,59'
+      ovs_nonpmd: '0'
+
+
+  - name: HPE_nova_Xeon6330N_control
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: '8,64,36,92'
+      novaDedicatedCpus: '9-27,65-83,37-55,93-111'
+  - name: HPE_nova_Xeon6330N
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: '2,58,30,86'
+      novaDedicatedCpus: '3-27,59-83,31-55,87-111'
+  - name: HPE_nova_Xeon6330N_control_2_plus_2
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: '8,64,36,92'
+      novaDedicatedCpus: '9-27,65-83,37-55,93-111'
+  - name: HPE_nova_Xeon6330N_2_plus_2
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: '3,59,31,87'
+      novaDedicatedCpus: '3-27,59-83,31-55,87-111'
+      # dell r650 vxsds flavor
+
+  - name: nova_Xeon6330N_compute_vxsds_hc
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: ''
+      novaDedicatedCpus: '8-55,64-111'
+      
+  - name: DELL_nova_Xeon6330N_control     
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: ''
+      novaDedicatedCpus: '16-55,72-111'
+  - name: DELL_nova_Xeon6330N     
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: ''
+      novaDedicatedCpus: '4-55,60-111'
+  - name: DELL_nova_Xeon6330N_control_2_plus_2     
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: ''
+      novaDedicatedCpus: '16-55,72-111'
+  - name: DELL_nova_Xeon6330N_2_plus_2     
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: ''
+      novaDedicatedCpus: '6-55,62-111'
+
+  - name: DELL_nova_Xeon6330N_vxsds
+    controlGroup: container
+    manager: docker
+    customProperties:
+      novaSharedCpus: ''
+      novaDedicatedCpus: '8-55,64-111'
+
+
+  - name: ovs
+    controlGroup: ovs
+    manager: systemd
+  - name: confined_cinder_container
+    controlGroup: container
+    manager: docker
+    properties:
+      ulimits:
+        nofile:
+          soft: 4096
+          hard: 4096
+  - name: apparmor
+    controlGroup: system
+    manager: systemd
+    customProperties:
+      apparmor_mode: complain
+## Configuration of API and RPC workers count.
+#  - name: <flavorname>
+#    controlGroup: <controlGroupname>
+#    manager: docker
+#    customProperties:
+#      APIWorkersCount: '<TO.BE.FILLED>
+#      RPCWorkersCount: '<TO.BE.FILLED>
+...

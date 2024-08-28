@@ -1,0 +1,3 @@
+openssl genrsa -out ca.key 4096
+openssl req -config openssl.cnf -extensions v3_ca -x509 -new -nodes -key ca.key -sha256 -days 10240 -out ca.crt  -subj '/C=SE/ST=VG/L=Goteborg/O=Ericsson/OU=vepc/CN=Target Solution Dual-Mode 5G Core MultiVerseRootCA'
+openssl x509 -noout -text -in ca.crt

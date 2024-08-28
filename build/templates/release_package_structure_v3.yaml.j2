@@ -1,0 +1,25 @@
+# Dual-mode 5gc on nfvi release package structure Jinja2 template
+package:
+  name: {{ pkg_name }}
+  fnd: .files_not_distributed
+  content:
+  - {{ pkg_name }}:
+    - type: readme.txt
+      config_path: build/templates/readme.txt
+    - type: common/external-network-hot
+      config_path: 5gc_sa_net_hot
+
+    {% for uc in usecases %}
+    {% if uc.name == "basic" %}
+    {% filter indent(4, true) %}
+    {% include "./site_config.yaml.j2" %}
+    {% endfilter %}
+    {% endif %}
+    {% if uc.name.startswith("upgrade-") %}
+    - {{ uc.name }}:
+    {% filter indent(6, true) %}
+    {% include "./site_config.yaml.j2" %}
+    {% endfilter %}
+    {% endif %}
+
+    {% endfor %}

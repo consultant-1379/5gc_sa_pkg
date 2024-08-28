@@ -1,0 +1,79 @@
+nodeName: n280-eccd1-sc1
+nodeType: SC
+instance: 1
+
+vnflcm:
+  clusterName: n280-eccd1
+  namespace: sc1
+  InstantiateVnfRequest:
+    applicationTimeOut: 3000
+    skipVerification: "true"
+
+users:
+  day1:
+  - username: sc-admin
+    password: Changeme@1st
+    groups:
+    - system-admin
+    - system-security-admin
+    - sc-admin
+    - sc-security-admin
+    - bsf-admin
+    - scp-admin
+    - bsf-security-admin
+    - scp-security-admin
+
+license:
+  customerId: '946060'
+  swltId: STA-SC-8
+snmp:
+  agentEngineId: 800000c104534350a1c1d1
+ddc:
+  remotePath: ddc/n280-eccd1-sc1
+vtap:
+  tapagent: true
+  remotePath: vtap/n280-eccd1-sc1
+
+
+replicaCount:
+  eric-bsf-worker: 2
+  eric-scp-worker: 2
+
+sc:
+  bsf:
+    enabled: true
+    instanceId: f8b5465c-43e8-463e-8f16-425346a1c1d1
+    host: sc1-bsf-sig.site1-cluster1
+    ip: 172.17.128.18
+    diameter:
+      ip: 172.17.128.17
+  scp:
+    enabled: true
+    instanceId: f8b5465c-43e8-463e-8f16-534350a1c1d1
+    host: sc1-scp-sig.site1-cluster1
+    ip: 172.17.128.19
+    smfSbiNotifyHost: pcc1-smf-notification.site1-cluster1
+    pcfSbiHost: ccpc1-5g-traffic.site1-cluster1 
+  sepp:
+    enabled: false
+
+
+instance: 1
+cnom:
+  fqdn: cnom.sc1-oam.n280-eccd1.sero.gic.ericsson.se
+
+######################################
+## CNF certificates
+######################################
+certs:
+  iccr-external-tls-certificate:
+    p12: ../../../certs/n280-eccd1/sc1/sc1-iccr-server.p12
+  eric-bsf-sbi-server-certs:
+    p12: ../../../certs/n280-eccd1/sc1/sc1-bsf-sbi-server.p12
+  eric-bsf-sbi-client-certs:
+    p12: ../../../certs/n280-eccd1/sc1/sc1-bsf-sbi-client.p12
+  eric-scp-sbi-server-certs:
+    p12: ../../../certs/n280-eccd1/sc1/sc1-scp-sbi-server.p12
+  eric-scp-sbi-client-certs:
+    p12: ../../../certs/n280-eccd1/sc1/sc1-scp-sbi-client.p12
+

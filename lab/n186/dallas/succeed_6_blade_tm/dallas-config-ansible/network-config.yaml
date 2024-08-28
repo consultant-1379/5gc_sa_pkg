@@ -1,0 +1,147 @@
+global:
+  script_path: /root/add_dm_5gc_route.sh
+######################################
+# Dallas Control System Node
+######################################
+  cs:
+#  - interface: em1
+#    overwrite: true
+#    routing_instance: sig_cn
+#    vlan: 1202
+#    gateway: 172.30.16.1
+#    node_ips:
+#    - 172.30.16.101/24
+#    - 172.30.16.102/24
+#    static_routes:
+#    - name: ECFE Signaling Pool
+#      prefix: 172.17.128.0/24
+#    - name: ECFE Signaling linknet
+#      prefix: 172.21.160.0/24
+    
+  
+######################################
+# Dallas BE Nodes
+######################################
+  be: []
+
+#######################################
+## Dallas FE Nodes
+#######################################
+  fe:
+  - interface: em2
+    overwrite: false
+    routing_instance: om_cn
+    vlan: 1203
+    gateway: 172.30.32.1
+    node_ips:
+    - 172.30.32.101/24
+    - 172.30.32.102/24
+    - 172.30.32.103/24
+    - 172.30.32.104/24
+    - 172.30.32.105/24
+    - 172.30.32.106/24
+    static_routes:
+    - name: n280 shared OAM VIP
+      prefix: 10.143.139.64/26
+    - name: n99 shared OAM VIP
+      prefix: 10.155.138.0/26
+
+  - interface: em2
+    overwrite: false
+    routing_instance: sig_cn
+    vlan: 1202
+    gateway: 172.30.16.1
+    node_ips:
+    - 172.30.16.101/24
+    - 172.30.16.102/24
+    - 172.30.16.103/24
+    - 172.30.16.104/24
+    - 172.30.16.105/24
+    - 172.30.16.106/24
+    static_routes:
+    - name: ECFE Signaling Pool
+      prefix: 172.17.128.0/24
+    - name: ECFE Signaling linknet
+      prefix: 172.21.160.0/24
+
+  - interface: p3p1_tap
+    overwrite: true
+    routing_instance: ran
+    vlan: 1204
+    cidr: 172.30.48.0/24
+    gateway: 172.30.48.1
+    node_ips:
+    - 172.30.48.101/24
+    - 172.30.48.102/24
+    - 172.30.48.103/24
+    - 172.30.48.104/24
+    - 172.30.48.105/24
+    - 172.30.48.106/24
+    static_routes:
+    - name: n280 PCC N2-1/S1-MME-1, N2-2/S1-MME-2
+      prefix: 172.16.64.0/24
+    - name: n99 PCC N2-1/S1-MME-1, N2-2/S1-MME-2
+      prefix: 172.16.72.0/24
+
+  - interface: p2p1_tap
+    overwrite: true
+    routing_instance: ran
+    vlan: 1224
+    cidr: 172.30.50.0/24
+    gateway: 172.30.50.1
+    node_ips:
+    - 172.30.50.101/24
+    - 172.30.50.102/24
+    - 172.30.50.103/24
+    - 172.30.50.104/24
+    - 172.30.50.105/24
+    - 172.30.50.106/24
+    static_routes: []
+
+  - interface: p3p1_tap
+    overwrite: true
+    routing_instance: toExt_open
+    vlan: 1205
+    cidr: 172.30.64.0/24
+    gateway: 172.30.64.1
+    gateway6: fdac:30:64::1
+    node_ips:
+    - 172.30.64.101/24
+    - 172.30.64.102/24
+    - 172.30.64.103/24
+    - 172.30.64.104/24
+    - 172.30.64.105/24
+    - 172.30.64.106/24
+    static_routes: []
+    static6_routes: []
+    node_ips6:
+    - fdac:30:64::101/64
+    - fdac:30:64::102/64
+    - fdac:30:64::103/64
+    - fdac:30:64::104/64
+    - fdac:30:64::105/64
+    - fdac:30:64::106/64
+
+  - interface: p2p1_tap
+    overwrite: true
+    routing_instance: toExt_open
+    vlan: 1225
+    cidr: 172.30.66.0/24
+    gateway: 172.30.66.1
+    gateway6: fdac:30:66::1
+    node_ips:
+    - 172.30.66.101/24
+    - 172.30.66.102/24
+    - 172.30.66.103/24
+    - 172.30.66.104/24
+    - 172.30.66.105/24
+    - 172.30.66.106/24
+    static_routes: []
+    static6_routes: []
+    node_ips6:
+    - fdac:30:66::101/64
+    - fdac:30:66::102/64
+    - fdac:30:66::103/64
+    - fdac:30:66::104/64
+    - fdac:30:66::105/64
+    - fdac:30:66::106/64

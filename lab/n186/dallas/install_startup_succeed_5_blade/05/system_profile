@@ -1,0 +1,3 @@
+reserved_memory_perc=0.7
+total_sessions_payload_packet_latency=300
+packet_interval_payload_packet_latency=1000

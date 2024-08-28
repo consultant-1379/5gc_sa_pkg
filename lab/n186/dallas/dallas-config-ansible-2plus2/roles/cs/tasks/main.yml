@@ -1,0 +1,55 @@
+#- name: set facts dallas_host_fe_internal_ips
+#  set_fact:
+#    dallas_host_fe_internal_ips: {{ }}
+#  with_items: _meta['hostvars'].items()
+
+- name: Create dallas hook file
+  template:
+    src: "hook.yaml.j2"
+    dest: "{{ dallas_hook_dir }}/.hook.yaml"
+
+- name: "Create dallas base directory {{ dallas_basedir }}"
+  file:
+    name: "{{ dallas_basedir }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+
+#- name: Creating application.yaml and infra.yaml using dallas SDK
+#  command: "{{ dallas_version }}/scripts/sdk_parser.sh -a {{ dallas_basedir }}/application_sdk.yaml -i {{ dallas_basedir }}/infra_sdk.yaml --output_app {{ dallas_basedir }}/application.yaml --output_infra /var/dallas/infra.yaml"
+#  when: "'master' in target_dc.dallas_hosts[inventory_hostname].roles"
+
+- name: "Create dualmode5gc dallas config directory {{ dallas_config_dir }}"
+  file:
+    name: "{{ dallas_config_dir }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Create dallas setup files
+  template:
+    src: "{{item}}.j2"
+    dest: "{{ dallas_basedir }}/{{item}}"
+    mode: 0644
+    owner: root
+    group: root
+  with_items:
+  - setup.yaml
+  - infra.yaml
+  - application.yaml
+
+- name: Create dallas config files
+  template:
+    src: "{{item}}.j2"
+    dest: "{{ dallas_config_dir }}/{{item}}"
+    mode: 0644
+    owner: root
+    group: root
+  with_items:
+  - dallas.backbone
+  - dallas.mobile
+  - dallas.system
+  - dallas.tm

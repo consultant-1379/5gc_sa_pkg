@@ -1,0 +1,51 @@
+---
+backupDomains:
+  - name: openstack
+    encryptBackups: true
+    encryptionPassword: cGFzc3dvcmQ=
+    localBackupsStored: 2
+    incrementalBackup: true
+    incrementalBackupsStored: 10
+    defaultImportExportCredential: "<TO.BE.FILLED>"
+    defaultImportExportHost: ftps://ceeinfra:r00tme@backuphost/
+    defaultImportExportPath: /
+  - name: infra
+    encryptBackups: true
+    encryptionPassword: cGFzc3dvcmQ=
+    localBackupsStored: 2
+    incrementalBackup: true
+    incrementalBackupsStored: 10
+    defaultImportExportCredential: "<TO.BE.FILLED>"
+    defaultImportExportHost: ftps://ceeinfra:r00tme@backuphost/
+  - name: lcm
+    encryptBackups: true
+    encryptionPassword: cGFzc3dvcmQ=
+    localBackupsStored: 5
+    incrementalBackup: false
+    # If import/export host is not given in the parameters the then below default values will be
+    # used. Currently full URI is expected in field below, like: ftp://username:password@ftphost/
+    # It will be replaced by host profile in future.
+    defaultImportExportCredential: "<TO.BE.FILLED>"
+    defaultImportExportHost: ftps://ceeinfra:r00tme@backuphost/
+    defaultImportExportPath: /
+  - name: serviceassurance
+    encryptBackups: true
+    encryptionPassword: cGFzc3dvcmQ=
+    localBackupsStored: 5
+    incrementalBackup: false
+    # If import/export host is not given in the parameters the then below default values will be
+    # used. Currently full URI is expected in field below, like: ftp://username:password@ftphost/
+    # It will be replaced by host profile in future.
+    defaultImportExportCredential: "<TO.BE.FILLED>"
+    defaultImportExportHost: ftps://ceeinfra:r00tme@backuphost/
+    defaultImportExportPath: /
+  - name: csc
+    encryptBackups: true
+    encryptionPassword: cGFzc3dvcmQ=
+    localBackupsStored: 2
+    incrementalBackup: true
+    incrementalBackupsStored: 10
+    defaultImportExportCredential: "<TO.BE.FILLED>"
+    defaultImportExportHost: ftps://ceeinfra:r00tme@backuphost/
+    defaultImportExportPath: /
+...

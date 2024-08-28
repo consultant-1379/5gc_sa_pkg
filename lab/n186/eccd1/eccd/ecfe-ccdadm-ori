@@ -1,0 +1,477 @@
+apiVersion: v1
+data:
+  config: |
+    bgp-bfd-peers:
+    - peer-address: 172.21.192.2
+      peer-asn: 4251100010
+      my-asn: 4221110010
+      min-rx: 500ms
+      min-tx: 500ms
+      multiplier: 3
+      password-key: sig_data_key
+      my-address-pools:
+      - ccdm-intersite
+      - ccdm-4g-traffic
+      - ccdm2-intersite
+      - ccdm2-4g-traffic
+    - peer-address: 172.21.192.3
+      peer-asn: 4251100010
+      my-asn: 4221110010
+      min-rx: 500ms
+      min-tx: 500ms
+      multiplier: 3
+      password-key: sig_data_key
+      my-address-pools:
+      - ccdm-intersite
+      - ccdm-4g-traffic
+      - ccdm2-intersite
+      - ccdm2-4g-traffic
+    - peer-address: 214.6.198.194
+      peer-asn: 4251100003
+      my-asn: 4221110003
+      min-rx: 500ms
+      min-tx: 500ms
+      multiplier: 3
+      password-key: om_cn_key
+      my-address-pools:
+      - ingress
+      - ccdm-oam
+      - ccdm-5g-prov
+      - ccdm-4g-prov
+      - ccsm-oam
+      - ccrc-oam
+      - ccrc-nrf-prov
+      - ccrc-nssf-prov
+      - eda-oam
+      - cces-oam
+      - cces-5g-prov
+      - ccpc-oam
+      - ccpc-5g-prov
+      - pcc-oam
+      - amf-oam
+      - pcg-oam
+      - evnfm-iccr
+      - sc-oam
+      - ccdm2-oam
+      - ccdm2-5g-prov
+      - ccdm2-4g-prov
+      - ccsm2-oam
+    - peer-address: 214.6.198.195
+      peer-asn: 4251100003
+      my-asn: 4221110003
+      min-rx: 500ms
+      min-tx: 500ms
+      multiplier: 3
+      password-key: om_cn_key
+      my-address-pools:
+      - ingress
+      - ccdm-oam
+      - ccdm-5g-prov
+      - ccdm-4g-prov
+      - ccsm-oam
+      - ccrc-oam
+      - ccrc-nrf-prov
+      - ccrc-nssf-prov
+      - eda-oam
+      - cces-oam
+      - cces-5g-prov
+      - ccpc-oam
+      - ccpc-5g-prov
+      - pcc-oam
+      - amf-oam
+      - pcg-oam
+      - evnfm-iccr
+      - sc-oam
+      - ccdm2-oam
+      - ccdm2-5g-prov
+      - ccdm2-4g-prov
+      - ccsm2-oam
+    - peer-address: 172.21.160.2
+      peer-asn: 4251100002
+      my-asn: 4221110002
+      min-rx: 500ms
+      min-tx: 500ms
+      multiplier: 3
+      password-key: sig_cn_key
+      my-address-pools:
+      - pcc-smf-nsmf
+      - pcc-smf-notification
+      - ccdm-5g-traffic
+      - ccsm-ausf-5g-sig
+      - ccrc-nrf-sig
+      - ccsm-udm-5g-sig
+      - pcc-amf-namf
+      - ccsm-hss-dia-sig
+      - ccrc-nssf-sig
+      - sc-bsf-sig
+      - sc-bsf-dia-sig
+      - ccsm-eir-5g-sig
+      - ccpc-5g-traffic
+      - ccpc-4g-traffic
+      - cces-5g-sbi-traffic
+      - ccsm-hss-epc-http-sig
+      - ccdm2-5g-traffic
+      - ccsm2-ausf-5g-sig
+      - ccsm2-udm-5g-sig
+      - ccsm2-eir-5g-sig
+      - ccsm2-hss-epc-http-sig
+    - peer-address: 172.21.160.3
+      peer-asn: 4251100002
+      my-asn: 4221110002
+      min-rx: 500ms
+      min-tx: 500ms
+      multiplier: 3
+      password-key: sig_cn_key
+      my-address-pools:
+      - pcc-smf-nsmf
+      - pcc-smf-notification
+      - ccdm-5g-traffic
+      - ccsm-ausf-5g-sig
+      - ccrc-nrf-sig
+      - ccsm-udm-5g-sig
+      - pcc-amf-namf
+      - ccsm-hss-dia-sig
+      - ccrc-nssf-sig
+      - sc-bsf-sig
+      - sc-bsf-dia-sig
+      - ccsm-eir-5g-sig
+      - ccpc-5g-traffic
+      - ccpc-4g-traffic
+      - cces-5g-sbi-traffic
+      - ccsm-hss-epc-http-sig
+      - ccdm2-5g-traffic
+      - ccsm2-ausf-5g-sig
+      - ccsm2-udm-5g-sig
+      - ccsm2-eir-5g-sig
+      - ccsm2-hss-epc-http-sig
+    address-pools:
+    # SIG_DATA
+    - name: ccdm-intersite
+      protocol: bgp
+      addresses:
+      - 112.2.0.1/32
+      auto-assign: false
+    - name: ccdm-4g-traffic
+      protocol: bgp
+      addresses:
+      - 112.2.0.2/32
+      auto-assign: false
+    - name: ccdm2-intersite
+      protocol: bgp
+      addresses:
+      - 112.2.0.3/32
+      auto-assign: false
+    - name: ccdm2-4g-traffic
+      protocol: bgp
+      addresses:
+      - 112.2.0.4/32
+      auto-assign: false
+    # OM_CN
+    - name: ingress
+      protocol: bgp
+      addresses:
+      - 214.6.199.33/32
+      auto-assign: false
+    - name: ccdm-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.49/32
+      auto-assign: false
+    - name: ccdm-5g-prov
+      protocol: bgp
+      addresses:
+      - 214.6.199.35/32
+      auto-assign: false
+    - name: ccdm-4g-prov
+      protocol: bgp
+      addresses:
+      - 214.6.199.36/32
+      auto-assign: false
+    - name: ccsm-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.37/32
+      auto-assign: false
+    - name: ccrc-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.38/32
+      auto-assign: false
+    - name: ccrc-nrf-prov
+      protocol: bgp
+      addresses:
+      - 214.6.199.39/32
+      auto-assign: false
+    - name: ccrc-nssf-prov
+      protocol: bgp
+      addresses:
+      - 214.6.199.40/32
+      auto-assign: false
+    - name: eda-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.41/32
+      auto-assign: false
+    - name: cces-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.42/32
+      auto-assign: false
+    - name: cces-5g-prov
+      protocol: bgp
+      addresses:
+      - 214.6.199.43/32
+      auto-assign: false
+    - name: ccpc-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.44/32
+      auto-assign: false
+    - name: ccpc-5g-prov
+      protocol: bgp
+      addresses:
+      - 214.6.199.45/32
+      auto-assign: false
+    - name: pcc-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.46/32
+      auto-assign: false
+    - name: amf-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.47/32
+      auto-assign: false
+    - name: pcg-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.48/32
+      auto-assign: false
+    - name: evnfm-iccr
+      protocol: bgp
+      addresses:
+      - 214.6.199.34/32
+      auto-assign: false
+    - name: sc-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.50/32
+      auto-assign: false
+    # Secondary nodes for geo-redundancy testing
+    - name: ccdm2-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.51/32
+      auto-assign: false
+    - name: ccdm2-5g-prov
+      protocol: bgp
+      addresses:
+      - 214.6.199.52/32
+      auto-assign: false
+    - name: ccdm2-4g-prov
+      protocol: bgp
+      addresses:
+      - 214.6.199.53/32
+      auto-assign: false
+    - name: ccsm2-oam
+      protocol: bgp
+      addresses:
+      - 214.6.199.54/32
+      auto-assign: false
+    # SIG_CN
+    - name: pcc-smf-nsmf
+      protocol: bgp
+      addresses:
+      - 107.2.0.1/32
+      auto-assign: false
+    - name: pcc-smf-notification
+      protocol: bgp
+      addresses:
+      - 107.2.0.2/32
+      auto-assign: false
+    - name: ccdm-5g-traffic
+      protocol: bgp
+      addresses:
+      - 107.2.0.3/32
+      auto-assign: false
+    - name: ccsm-ausf-5g-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.4/32
+      auto-assign: false
+    - name: ccrc-nrf-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.5/32
+      auto-assign: false
+    - name: ccsm-udm-5g-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.6/32
+      auto-assign: false
+    - name: pcc-amf-namf
+      protocol: bgp
+      addresses:
+      - 107.2.0.7/32
+      auto-assign: false
+    - name: ccsm-hss-dia-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.8/32
+      auto-assign: false
+    - name: ccrc-nssf-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.9/32
+      auto-assign: false
+    - name: sc-bsf-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.10/32
+      auto-assign: false
+    - name: sc-bsf-dia-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.11/32
+      auto-assign: false
+    - name: ccsm-eir-5g-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.12/32
+      auto-assign: false
+    - name: ccpc-5g-traffic
+      protocol: bgp
+      addresses:
+      - 107.2.0.13/32
+      auto-assign: false
+    - name: ccpc-4g-traffic
+      protocol: bgp
+      addresses:
+      - 107.2.0.14/32
+      auto-assign: false
+    - name: ccsm-hss-epc-http-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.15/32
+      auto-assign: false
+    - name: cces-5g-sbi-traffic
+      protocol: bgp
+      addresses:
+      - 107.2.0.21/32
+      auto-assign: false
+    - name: ccdm2-5g-traffic
+      protocol: bgp
+      addresses:
+      - 107.2.0.16/32
+      auto-assign: false
+    - name: ccsm2-ausf-5g-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.17/32
+      auto-assign: false
+    - name: ccsm2-udm-5g-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.18/32
+      auto-assign: false
+    - name: ccsm2-eir-5g-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.19/32
+      auto-assign: false
+    - name: ccsm2-hss-epc-http-sig
+      protocol: bgp
+      addresses:
+      - 107.2.0.20/32
+      auto-assign: false
+kind: ConfigMap
+metadata:
+  annotations:
+    ccd.ericsson.com/last-applied-configuration: '{"apiVersion":"v1","data":{"config":"bgp-bfd-peers:\n-
+      peer-address: 172.21.192.2\n  peer-asn: 4251100010\n  my-asn: 4221110010\n  min-rx:
+      500ms\n  min-tx: 500ms\n  multiplier: 3\n  password-key: sig_data_key\n  my-address-pools:\n  -
+      ccdm-intersite\n  - ccdm-4g-traffic\n  - ccdm2-intersite\n  - ccdm2-4g-traffic\n-
+      peer-address: 172.21.192.3\n  peer-asn: 4251100010\n  my-asn: 4221110010\n  min-rx:
+      500ms\n  min-tx: 500ms\n  multiplier: 3\n  password-key: sig_data_key\n  my-address-pools:\n  -
+      ccdm-intersite\n  - ccdm-4g-traffic\n  - ccdm2-intersite\n  - ccdm2-4g-traffic\n-
+      peer-address: 214.6.198.194\n  peer-asn: 4251100003\n  my-asn: 4221110003\n  min-rx:
+      500ms\n  min-tx: 500ms\n  multiplier: 3\n  password-key: om_cn_key\n  my-address-pools:\n  -
+      ingress\n  - ccdm-oam\n  - ccdm-5g-prov\n  - ccdm-4g-prov\n  - ccsm-oam\n  -
+      ccrc-oam\n  - ccrc-nrf-prov\n  - ccrc-nssf-prov\n  - eda-oam\n  - cces-oam\n  -
+      cces-5g-prov\n  - ccpc-oam\n  - ccpc-5g-prov\n  - pcc-oam\n  - amf-oam\n  -
+      pcg-oam\n  - evnfm-iccr\n  - sc-oam\n  - ccdm2-oam\n  - ccdm2-5g-prov\n  - ccdm2-4g-prov\n  -
+      ccsm2-oam\n- peer-address: 214.6.198.195\n  peer-asn: 4251100003\n  my-asn:
+      4221110003\n  min-rx: 500ms\n  min-tx: 500ms\n  multiplier: 3\n  password-key:
+      om_cn_key\n  my-address-pools:\n  - ingress\n  - ccdm-oam\n  - ccdm-5g-prov\n  -
+      ccdm-4g-prov\n  - ccsm-oam\n  - ccrc-oam\n  - ccrc-nrf-prov\n  - ccrc-nssf-prov\n  -
+      eda-oam\n  - cces-oam\n  - cces-5g-prov\n  - ccpc-oam\n  - ccpc-5g-prov\n  -
+      pcc-oam\n  - amf-oam\n  - pcg-oam\n  - evnfm-iccr\n  - sc-oam\n  - ccdm2-oam\n  -
+      ccdm2-5g-prov\n  - ccdm2-4g-prov\n  - ccsm2-oam\n- peer-address: 172.21.160.2\n  peer-asn:
+      4251100002\n  my-asn: 4221110002\n  min-rx: 500ms\n  min-tx: 500ms\n  multiplier:
+      3\n  password-key: sig_cn_key\n  my-address-pools:\n  - pcc-smf-nsmf\n  - pcc-smf-notification\n  -
+      ccdm-5g-traffic\n  - ccsm-ausf-5g-sig\n  - ccrc-nrf-sig\n  - ccsm-udm-5g-sig\n  -
+      pcc-amf-namf\n  - ccsm-hss-dia-sig\n  - ccrc-nssf-sig\n  - sc-bsf-sig\n  - sc-bsf-dia-sig\n  -
+      ccsm-eir-5g-sig\n  - ccpc-5g-traffic\n  - ccpc-4g-traffic\n  - cces-5g-sbi-traffic\n  -
+      ccsm-hss-epc-http-sig\n  - ccdm2-5g-traffic\n  - ccsm2-ausf-5g-sig\n  - ccsm2-udm-5g-sig\n  -
+      ccsm2-eir-5g-sig\n  - ccsm2-hss-epc-http-sig\n- peer-address: 172.21.160.3\n  peer-asn:
+      4251100002\n  my-asn: 4221110002\n  min-rx: 500ms\n  min-tx: 500ms\n  multiplier:
+      3\n  password-key: sig_cn_key\n  my-address-pools:\n  - pcc-smf-nsmf\n  - pcc-smf-notification\n  -
+      ccdm-5g-traffic\n  - ccsm-ausf-5g-sig\n  - ccrc-nrf-sig\n  - ccsm-udm-5g-sig\n  -
+      pcc-amf-namf\n  - ccsm-hss-dia-sig\n  - ccrc-nssf-sig\n  - sc-bsf-sig\n  - sc-bsf-dia-sig\n  -
+      ccsm-eir-5g-sig\n  - ccpc-5g-traffic\n  - ccpc-4g-traffic\n  - cces-5g-sbi-traffic\n  -
+      ccsm-hss-epc-http-sig\n  - ccdm2-5g-traffic\n  - ccsm2-ausf-5g-sig\n  - ccsm2-udm-5g-sig\n  -
+      ccsm2-eir-5g-sig\n  - ccsm2-hss-epc-http-sig\naddress-pools:\n# SIG_DATA\n-
+      name: ccdm-intersite\n  protocol: bgp\n  addresses:\n  - 112.2.0.1/32\n  auto-assign:
+      false\n- name: ccdm-4g-traffic\n  protocol: bgp\n  addresses:\n  - 112.2.0.2/32\n  auto-assign:
+      false\n- name: ccdm2-intersite\n  protocol: bgp\n  addresses:\n  - 112.2.0.3/32\n  auto-assign:
+      false\n- name: ccdm2-4g-traffic\n  protocol: bgp\n  addresses:\n  - 112.2.0.4/32\n  auto-assign:
+      false\n# OM_CN\n- name: ingress\n  protocol: bgp\n  addresses:\n  - 214.6.199.33/32\n  auto-assign:
+      false\n- name: ccdm-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.49/32\n  auto-assign:
+      false\n- name: ccdm-5g-prov\n  protocol: bgp\n  addresses:\n  - 214.6.199.35/32\n  auto-assign:
+      false\n- name: ccdm-4g-prov\n  protocol: bgp\n  addresses:\n  - 214.6.199.36/32\n  auto-assign:
+      false\n- name: ccsm-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.37/32\n  auto-assign:
+      false\n- name: ccrc-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.38/32\n  auto-assign:
+      false\n- name: ccrc-nrf-prov\n  protocol: bgp\n  addresses:\n  - 214.6.199.39/32\n  auto-assign:
+      false\n- name: ccrc-nssf-prov\n  protocol: bgp\n  addresses:\n  - 214.6.199.40/32\n  auto-assign:
+      false\n- name: eda-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.41/32\n  auto-assign:
+      false\n- name: cces-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.42/32\n  auto-assign:
+      false\n- name: cces-5g-prov\n  protocol: bgp\n  addresses:\n  - 214.6.199.43/32\n  auto-assign:
+      false\n- name: ccpc-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.44/32\n  auto-assign:
+      false\n- name: ccpc-5g-prov\n  protocol: bgp\n  addresses:\n  - 214.6.199.45/32\n  auto-assign:
+      false\n- name: pcc-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.46/32\n  auto-assign:
+      false\n- name: amf-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.47/32\n  auto-assign:
+      false\n- name: pcg-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.48/32\n  auto-assign:
+      false\n- name: evnfm-iccr\n  protocol: bgp\n  addresses:\n  - 214.6.199.34/32\n  auto-assign:
+      false\n- name: sc-oam\n  protocol: bgp\n  addresses:\n  - 214.6.199.50/32\n  auto-assign:
+      false\n# Secondary nodes for geo-redundancy testing\n- name: ccdm2-oam\n  protocol:
+      bgp\n  addresses:\n  - 214.6.199.51/32\n  auto-assign: false\n- name: ccdm2-5g-prov\n  protocol:
+      bgp\n  addresses:\n  - 214.6.199.52/32\n  auto-assign: false\n- name: ccdm2-4g-prov\n  protocol:
+      bgp\n  addresses:\n  - 214.6.199.53/32\n  auto-assign: false\n- name: ccsm2-oam\n  protocol:
+      bgp\n  addresses:\n  - 214.6.199.54/32\n  auto-assign: false\n# SIG_CN\n- name:
+      pcc-smf-nsmf\n  protocol: bgp\n  addresses:\n  - 107.2.0.1/32\n  auto-assign:
+      false\n- name: pcc-smf-notification\n  protocol: bgp\n  addresses:\n  - 107.2.0.2/32\n  auto-assign:
+      false\n- name: ccdm-5g-traffic\n  protocol: bgp\n  addresses:\n  - 107.2.0.3/32\n  auto-assign:
+      false\n- name: ccsm-ausf-5g-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.4/32\n  auto-assign:
+      false\n- name: ccrc-nrf-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.5/32\n  auto-assign:
+      false\n- name: ccsm-udm-5g-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.6/32\n  auto-assign:
+      false\n- name: pcc-amf-namf\n  protocol: bgp\n  addresses:\n  - 107.2.0.7/32\n  auto-assign:
+      false\n- name: ccsm-hss-dia-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.8/32\n  auto-assign:
+      false\n- name: ccrc-nssf-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.9/32\n  auto-assign:
+      false\n- name: sc-bsf-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.10/32\n  auto-assign:
+      false\n- name: sc-bsf-dia-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.11/32\n  auto-assign:
+      false\n- name: ccsm-eir-5g-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.12/32\n  auto-assign:
+      false\n- name: ccpc-5g-traffic\n  protocol: bgp\n  addresses:\n  - 107.2.0.13/32\n  auto-assign:
+      false\n- name: ccpc-4g-traffic\n  protocol: bgp\n  addresses:\n  - 107.2.0.14/32\n  auto-assign:
+      false\n- name: ccsm-hss-epc-http-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.15/32\n  auto-assign:
+      false\n- name: cces-5g-sbi-traffic\n  protocol: bgp\n  addresses:\n  - 107.2.0.21/32\n  auto-assign:
+      false\n- name: ccdm2-5g-traffic\n  protocol: bgp\n  addresses:\n  - 107.2.0.16/32\n  auto-assign:
+      false\n- name: ccsm2-ausf-5g-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.17/32\n  auto-assign:
+      false\n- name: ccsm2-udm-5g-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.18/32\n  auto-assign:
+      false\n- name: ccsm2-eir-5g-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.19/32\n  auto-assign:
+      false\n- name: ccsm2-hss-epc-http-sig\n  protocol: bgp\n  addresses:\n  - 107.2.0.20/32\n  auto-assign:
+      false\n"},"kind":"ConfigMap","metadata":{"creationTimestamp":null,"name":"ecfe-ccdadm","namespace":"kube-system"}}'
+  creationTimestamp: "2023-10-15T19:43:49Z"
+  name: ecfe-ccdadm
+  namespace: kube-system
+  resourceVersion: "34845"
+  uid: fb5284b5-4a25-4a3b-8cfd-c453e60eb29c

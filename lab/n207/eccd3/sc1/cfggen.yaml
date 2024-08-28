@@ -1,0 +1,23 @@
+nodeInfo: site.yaml
+siteGlobal: ../site-global.yaml
+templateDir: ../../../../ts-config/templates/
+jsonschema: ../jsonschemas/schema-cnf.yaml
+jsonschemaGlobal: ../jsonschemas/schema-global.yaml
+
+files:
+- template: sc/1.12/values.yaml.jinja2
+  target: values.yaml
+- template: sc/1.12/ddc-config.txt.jinja2
+  target: ddc-config.txt
+- template: sc/1.12/instantiate.json.jinja2
+  target: instantiate.json
+- template: common/snmp-config.json.jinja2
+  target: snmp-config.json
+- template: common/sftp-config.json.jinja2
+  target: day0_secrets/sftpConfig.json
+- template: common/user-config.txt.jinja2
+  target: user-config.txt
+- template: common/network-policy/eric-pm-server-allow.yaml.jinja2
+  target: network-policy/eric-pm-server-allow.yaml
+- template: common/network-policy/eric-data-search-engine-allow.yaml.jinja2
+  target: network-policy/eric-data-search-engine-allow.yaml

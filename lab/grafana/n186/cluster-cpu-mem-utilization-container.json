@@ -1,0 +1,1266 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": 11074,
+  "graphTooltip": 0,
+  "id": 13,
+  "iteration": 1648189206961,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 191,
+      "interval": "30s",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "irate(container_cpu_usage_seconds_total{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"}[5m]) / on(namespace,pod,container)group_left() (kube_pod_container_resource_requests{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=\"cpu\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Container CPU Usage by request",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 193,
+      "interval": "30s",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "(container_memory_usage_bytes{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"} - container_memory_cache{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"}) / on(namespace,pod,container)group_left() kube_pod_container_resource_requests{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=\"memory\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Container Memory Usage by request",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 192,
+      "interval": "30s",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "irate(container_cpu_usage_seconds_total{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"}[5m]) / on(namespace,pod,container)group_left() (kube_pod_container_resource_limits{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=\"cpu\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Container CPU Usage by limit",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "CPU Usage",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 194,
+      "interval": "30s",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "(container_memory_usage_bytes{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"} - container_memory_cache{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"}) / on(namespace,pod,container)group_left() kube_pod_container_resource_limits{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=\"memory\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Container Memory Usage by limit",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Field"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 581
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 137
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 195,
+      "interval": "30s",
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": false,
+          "expr": "kube_pod_container_resource_requests{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=\"cpu\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": false,
+          "expr": "kube_pod_container_resource_limits{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=\"cpu\"}",
+          "format": "time_series",
+          "hide": true,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Container CPU Request",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Field"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 562
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 196,
+      "interval": "30s",
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": false,
+          "expr": "kube_pod_container_resource_limits{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=~\"memory\"}",
+          "format": "time_series",
+          "hide": true,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": false,
+          "expr": "kube_pod_container_resource_requests{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=~\"memory\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "D"
+        }
+      ],
+      "title": "Container Memory Request",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "labelsToFields": false,
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Field"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 581
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 137
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 197,
+      "interval": "30s",
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": false,
+          "expr": "kube_pod_container_resource_limits{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=\"cpu\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Container CPU Limit",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Field"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 562
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 198,
+      "interval": "30s",
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": false,
+          "expr": "kube_pod_container_resource_limits{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\",resource=~\"memory\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "C"
+        }
+      ],
+      "title": "Container Memory Limit",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "labelsToFields": false,
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 199,
+      "interval": "30s",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "irate(container_cpu_usage_seconds_total{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"}[5m])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "sum(irate(container_cpu_usage_seconds_total{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"}[5m]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Total",
+          "refId": "B"
+        }
+      ],
+      "title": "Container CPU Absolute Use",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 200,
+      "interval": "30s",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "(container_memory_usage_bytes{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"} - container_memory_cache{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{namespace}}_{{pod}}_{{container}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "sum((container_memory_usage_bytes{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"} - container_memory_cache{namespace=~\"$namespace\",pod=~\".*$pod.*\",container=~\"$container\"}))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Total",
+          "refId": "A"
+        }
+      ],
+      "title": "Container Memory Absolute Use",
+      "transformations": [],
+      "type": "timeseries"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 33,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": "",
+        "current": {
+          "selected": true,
+          "text": [
+            "monitoring"
+          ],
+          "value": [
+            "monitoring"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+        },
+        "definition": "label_values(container_last_seen{}, namespace)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "",
+        "multi": true,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(container_last_seen{}, namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "eric-pm-server-external"
+          ],
+          "value": [
+            "eric-pm-server-external"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+        },
+        "definition": "label_values(container_last_seen{namespace=~\"$namespace\"}, pod)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "pod",
+        "options": [],
+        "query": {
+          "query": "label_values(container_last_seen{namespace=~\"$namespace\"}, pod)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "/^(?!eric-data-search-engine-curator)(\\S+)-.*$/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": true,
+          "text": [
+            "eric-pm-server",
+            "eric-pm-exporter",
+            "eric-pm-configmap-reload"
+          ],
+          "value": [
+            "eric-pm-server",
+            "eric-pm-exporter",
+            "eric-pm-configmap-reload"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+        },
+        "definition": "label_values(container_last_seen{namespace=~\"$namespace\",pod=~\".*$pod.*\"}, container)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "",
+        "multi": true,
+        "name": "container",
+        "options": [],
+        "query": {
+          "query": "label_values(container_last_seen{namespace=~\"$namespace\",pod=~\".*$pod.*\"}, container)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "now": true,
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "Europe/Stockholm",
+  "title": "Cluster-CPU-Mem-Utilization-Container",
+  "uid": "ueOHJPa7z",
+  "version": 1,
+  "weekStart": ""
+}

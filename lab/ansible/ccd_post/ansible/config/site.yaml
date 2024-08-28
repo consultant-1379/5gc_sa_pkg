@@ -1,0 +1,71 @@
+auth:
+  evnfm_default_user: &id001
+    user: vnfm
+    pass: Ts@dm5gc@b1ues
+  ccd_default_user: &id002
+    user: admin
+    pass: c0ntainerReg!stry
+
+evnfm:
+  pod56-evnfm1:
+    host: pod56-evnfm1.seln.ete.ericsson.se
+    nbi: eo-nbi.evnfm.pod56-eccd2.seln.ete.ericsson.se
+    registry: docker-registry.evnfm.pod56-eccd2.seln.ete.ericsson.se
+    <<: *id001
+  n28-evnfm1:
+    host: n28-evnfm1.sero.gic.ericsson.se
+    nbi: eo-nbi.evnfm.n28-eccd2.sero.gic.ericsson.se
+    registry: docker-registry.evnfm.n28-eccd2.sero.gic.ericsson.se
+    <<: *id001
+  n99-evnfm1:
+    host: n99-evnfm1.sero.gic.ericsson.se
+    nbi: eo-nbi.evnfm.n99-eccd2.sero.gic.ericsson.se
+    registry: docker-registry.evnfm.n99-eccd2.sero.gic.ericsson.se
+    <<: *id001
+  n99-evnfm2:
+    host: n99-evnfm2.sero.gic.ericsson.se
+    nbi: eo-nbi.evnfm.n99-eccd4.sero.gic.ericsson.se
+    registry: docker-registry.evnfm.n99-eccd4.sero.gic.ericsson.se
+    <<: *id001
+
+eric_crd:
+  path: /home/eccd/ccd_post/install_crd
+
+ccd:
+  n28-eccd1:
+    registry: container-registry.ingress.n99-eccd1.sero.gic.ericsson.se
+    <<: *id002
+  n28-eccd2:
+    registry: container-registry.ingress.n99-eccd1.sero.gic.ericsson.se
+    <<: *id002
+  n28-eccd5:
+    registry: container-registry.ingress.n99-eccd1.sero.gic.ericsson.se
+    <<: *id002
+  n99-eccd1:
+    registry: container-registry.ingress.n99-eccd1.sero.gic.ericsson.se
+    <<: *id002
+
+pods:
+  eric-pm-server-external:
+    traffic_cluster:
+      limit:
+        cpu: "8"
+        memory: "32Gi"
+      requests:
+        cpu: "3"
+        memory: "10Gi"
+    mgmt_cluster:
+      limit:
+        cpu: "8"
+        memory: "8Gi"
+      requests:
+        cpu: "2"
+        memory: "1.5Gi"
+  eric-pm-server:
+    traffic_cluster:
+      limit:
+        cpu: "2"
+        memory: "3Gi"
+      requests:
+        cpu: "250m"
+        memory: "1536Mi"

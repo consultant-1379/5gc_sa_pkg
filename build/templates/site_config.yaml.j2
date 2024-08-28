@@ -1,0 +1,115 @@
+- site1:
+  - infrastructure:
+    {% if 'dcgw' in uc.site1 %}
+    {% for i in uc.site1.dcgw %}
+    - {{ i.type }}:
+      - {{ i }}
+    {% endfor %}
+    {% endif %}
+    {% if 'dns' in uc.site1 %}
+    {% for i in uc.site1.dns %}
+    - {{ i.type }}:
+      - {{ i }}
+    {% endfor %}
+    {% endif %}
+    {% if 'mgmt_cluster' in uc.site1 %}
+    - mgmt-cluster:
+      {% for cp in uc.site1.mgmt_cluster.caas %}
+      - {{ cp }}
+      {% endfor %}
+    {% endif %}
+    {% if 'traffic_cluster' in uc.site1 %}
+    - traffic-cluster:
+      {% for cp in uc.site1.traffic_cluster.caas %}
+      - {{ cp }}
+      {% endfor %}
+    {% endif %}
+    {% if 'dmz_cluster' in uc.site1 %}
+    - dmz-cluster:
+      {% for cp in uc.site1.dmz_cluster.caas %}
+      - {{ cp }}
+      {% endfor %}
+    {% endif %}
+  - nf:
+    {% if 'traffic_cluster' in uc.site1 %}
+    - traffic-cluster:
+      {% if 'cnfs' in uc.site1.traffic_cluster %}
+      {% for cnf in uc.site1.traffic_cluster.cnfs %}
+      {% if cnf.type != 'eda' %}
+      - {{ cnf }}
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    {% endif %}
+    {% if 'dmz_cluster' in uc.site1 %}
+    - dmz-cluster:
+      {% if 'cnfs' in uc.site1.dmz_cluster %}
+      {% for cnf in uc.site1.dmz_cluster.cnfs %}
+      - {{ cnf }}
+      {% endfor %}
+      {% endif %}
+    {% endif %}
+  {% if 'sapc' in uc.site1 %}
+  - sapc:
+    {% for vnf in uc.site1.sapc %}
+    - {{ vnf }}
+    {% endfor %}
+  {% endif %}
+  - supporting-function:
+    {% if 'mgmt_cluster' in uc.site1 %}
+    - mgmt-cluster:
+      {% if 'cnfs' in uc.site1.mgmt_cluster %}
+      {% for cnf in uc.site1.mgmt_cluster.cnfs %}
+      - {{ cnf }}
+      {% endfor %}
+      {% endif %}
+    {% endif %}
+    {% if 'traffic_cluster' in uc.site1 %}
+    - traffic-cluster:
+      {% if 'cnfs' in uc.site1.traffic_cluster %}
+      {% for cnf in uc.site1.traffic_cluster.cnfs %}
+      {% if cnf.type == 'eda' %}
+      - {{ cnf }}
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    {% endif %}
+{% if 'site2' in uc %}
+- site2:
+  - infrastructure:
+    {% if 'dcgw' in uc.site2 %}
+    {% for i in uc.site2.dcgw %}
+    - {{ i.type }}:
+      - {{ i }}
+    {% endfor %}
+    {% endif %}
+    {% if 'dns' in uc.site2 %}
+    {% for i in uc.site2.dns %}
+    - {{ i.type }}:
+      - {{ i }}
+    {% endfor %}
+    {% endif %}
+    {% if 'mgmt_cluster' in uc.site2 %}
+    - mgmt_cluster:
+      {% for cp in uc.site2.mgmt_cluster.caas %}
+      - {{ cp }}
+      {% endfor %}
+    {% endif %}
+    {% if 'traffic_cluster' in uc.site2 %}
+    - traffic-cluster:
+      {% for cp in uc.site2.traffic_cluster.caas %}
+      - {{ cp }}
+      {% endfor %}
+    {% endif %}
+  - nf:
+    {% if 'traffic_cluster' in uc.site2 %}
+    - traffic-cluster:
+      {% if 'cnfs' in uc.site2.traffic_cluster %}
+      {% for cnf in uc.site2.traffic_cluster.cnfs %}
+      {% if cnf.type != 'eda' %}
+      - {{ cnf }}
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    {% endif %}
+{% endif %}

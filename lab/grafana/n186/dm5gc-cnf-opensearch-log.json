@@ -1,0 +1,1093 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 20,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 29,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "logStatistics",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${log_datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "service_id.keyword",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "0"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${log_datasource}"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "severity:$severity AND service_id:$service_id AND logplane:$logplane AND metadata.pod_name:$pod_name",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "log_per_service_id",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 15,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${log_datasource}"
+          },
+          "gridPos": {
+            "h": 22,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          "id": 6,
+          "options": {
+            "dedupStrategy": "exact",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${log_datasource}"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "settings": {
+                    "limit": "9999"
+                  },
+                  "type": "logs"
+                }
+              ],
+              "query": "severity:$severity AND service_id:$service_id AND logplane:$logplane AND metadata.pod_name:$pod_name",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "log_per_service_id",
+          "type": "logs"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "logDetail",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 23,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${log_datasource}"
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 24,
+            "x": 0,
+            "y": 11
+          },
+          "id": 9,
+          "options": {
+            "dedupStrategy": "exact",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${log_datasource}"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "settings": {
+                    "limit": "9999"
+                  },
+                  "type": "logs"
+                }
+              ],
+              "query": "!severity:error AND  !severity:warning AND !severity:info AND !severity:ERROR AND !severity:WARN AND !severity:INFO",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "non_error_warning_log_log",
+          "type": "logs"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "noSeverityLog",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 13,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${log_datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.asi.severity"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 98
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "@timestamp"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 205
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.asi.serviceName"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 158
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.asi.category"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 261
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.asi.alarmName"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 222
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.asi.description"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 537
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.asi.faultyResource"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 327
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.asi.specificProblem"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 355
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 22,
+            "w": 24,
+            "x": 0,
+            "y": 12
+          },
+          "id": 11,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "@timestamp"
+              }
+            ]
+          },
+          "pluginVersion": "8.3.0",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${log_datasource}"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "settings": {
+                    "limit": "9999"
+                  },
+                  "type": "logs"
+                }
+              ],
+              "query": "logplane:\"adp-app-asi-logs\" OR logplane:\"adp-app-alarm-log\"",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "cnf_history_alarm",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "@version": true,
+                  "_id": true,
+                  "_index": true,
+                  "_source": true,
+                  "_type": true,
+                  "container_id": true,
+                  "container_name": true,
+                  "extra_data.asi.additionalInformation.Minimum number of replicas": true,
+                  "extra_data.asi.additionalInformation.Unavailable number of replicas": true,
+                  "extra_data.asi.additionalInformation.Wanted number of replicas": true,
+                  "extra_data.asi.additionalInformation.name": true,
+                  "extra_data.asi.additionalInformation.parameter": true,
+                  "extra_data.asi.additionalInformation.text": true,
+                  "extra_data.asi.alarmUpdate": true,
+                  "extra_data.asi.category": true,
+                  "extra_data.asi.code": true,
+                  "extra_data.asi.eventTime": true,
+                  "extra_data.asi.faultyResource": false,
+                  "extra_data.asi.log_plane": true,
+                  "extra_data.asi.probableCause": true,
+                  "extra_data.asi.vendor": true,
+                  "extra_data.asi.version": true,
+                  "facility": true,
+                  "highlight": true,
+                  "input.type": true,
+                  "kubernetes.container.name": true,
+                  "kubernetes.namespace": true,
+                  "kubernetes.node.name": true,
+                  "kubernetes.pod.name": true,
+                  "kubernetes.pod.uid": true,
+                  "kubernetes.replicaset.name": true,
+                  "logplane": true,
+                  "message": true,
+                  "metadata.container_name": true,
+                  "metadata.function": true,
+                  "metadata.namespace": true,
+                  "metadata.node_name": true,
+                  "metadata.pod_name": true,
+                  "metadata.pod_uid": true,
+                  "metadata.ul_id": true,
+                  "namespace": true,
+                  "pod_name": true,
+                  "service_id": true,
+                  "severity": true,
+                  "sort": true,
+                  "tags": true,
+                  "timestamp": true,
+                  "type": true,
+                  "version": true
+                },
+                "indexByName": {
+                  "@timestamp": 0,
+                  "@version": 4,
+                  "_id": 5,
+                  "_index": 6,
+                  "_source": 7,
+                  "_type": 8,
+                  "extra_data.asi.additionalInformation.Minimum number of replicas": 9,
+                  "extra_data.asi.additionalInformation.Unavailable number of replicas": 10,
+                  "extra_data.asi.additionalInformation.Wanted number of replicas": 11,
+                  "extra_data.asi.additionalInformation.name": 12,
+                  "extra_data.asi.alarmName": 13,
+                  "extra_data.asi.alarmUpdate": 14,
+                  "extra_data.asi.category": 15,
+                  "extra_data.asi.code": 16,
+                  "extra_data.asi.description": 17,
+                  "extra_data.asi.eventTime": 18,
+                  "extra_data.asi.faultyResource": 19,
+                  "extra_data.asi.log_plane": 20,
+                  "extra_data.asi.probableCause": 21,
+                  "extra_data.asi.serviceName": 2,
+                  "extra_data.asi.severity": 1,
+                  "extra_data.asi.specificProblem": 22,
+                  "extra_data.asi.vendor": 23,
+                  "extra_data.asi.version": 24,
+                  "facility": 25,
+                  "highlight": 26,
+                  "kubernetes.container.name": 27,
+                  "kubernetes.namespace": 28,
+                  "kubernetes.node.name": 29,
+                  "kubernetes.pod.name": 30,
+                  "kubernetes.pod.uid": 31,
+                  "kubernetes.replicaset.name": 32,
+                  "logplane": 33,
+                  "message": 3,
+                  "metadata.ul_id": 34,
+                  "service_id": 35,
+                  "severity": 36,
+                  "sort": 37,
+                  "timestamp": 38,
+                  "version": 39
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "historyAlarm",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 27,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${log_datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.in_service_performance.originating_pod_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 388
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "hostname"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 443
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.pc_mm_stream"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 242
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.in_service_performance.originating_service_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 309
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "extra_data.in_service_performance.event_type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 329
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "@timestamp"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 253
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "message"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 775
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "event_type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 173
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 19,
+            "w": 24,
+            "x": 0,
+            "y": 13
+          },
+          "id": 25,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.3.0",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${log_datasource}"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "settings": {
+                    "limit": "9999"
+                  },
+                  "type": "logs"
+                }
+              ],
+              "query": "logplane:\"pcc-isp-log\" OR logplane:\"isp-logs\"",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "pcc_isp_log",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "@version": true,
+                  "_id": true,
+                  "_index": true,
+                  "_source": true,
+                  "_type": true,
+                  "container_id": true,
+                  "container_name": true,
+                  "event_type": false,
+                  "extra_data.in_service_performance.originating_pod_name": true,
+                  "extra_data.in_service_performance.originating_service_name": true,
+                  "extra_data.in_service_performance.originating_service_version": true,
+                  "extra_data.in_service_performance.reporting_service_version": true,
+                  "extra_data.in_service_performance.version": true,
+                  "extra_data.pc_mm_stream": true,
+                  "facility": true,
+                  "function": true,
+                  "highlight": true,
+                  "hostname": true,
+                  "input.type": true,
+                  "logplane": true,
+                  "metadata.application_id": true,
+                  "metadata.namespace": true,
+                  "metadata.pod_name": true,
+                  "namespace": true,
+                  "pod_name": true,
+                  "service_id": true,
+                  "severity": true,
+                  "software_version": true,
+                  "sort": true,
+                  "subcomponent": true,
+                  "tags": true,
+                  "timestamp": true,
+                  "trigger_method": true,
+                  "type": true,
+                  "version": true
+                },
+                "indexByName": {
+                  "@timestamp": 0,
+                  "@version": 3,
+                  "_id": 4,
+                  "_index": 5,
+                  "_source": 6,
+                  "_type": 7,
+                  "container_id": 8,
+                  "container_name": 9,
+                  "event_type": 1,
+                  "extra_data.in_service_performance.event_type": 10,
+                  "extra_data.in_service_performance.originating_pod_name": 11,
+                  "extra_data.in_service_performance.originating_service_name": 12,
+                  "extra_data.in_service_performance.originating_service_version": 13,
+                  "extra_data.in_service_performance.reporting_service_version": 14,
+                  "extra_data.in_service_performance.version": 15,
+                  "extra_data.pc_mm_stream": 16,
+                  "facility": 17,
+                  "function": 18,
+                  "highlight": 19,
+                  "hostname": 20,
+                  "input.type": 21,
+                  "logplane": 22,
+                  "message": 2,
+                  "metadata.application_id": 23,
+                  "metadata.category": 24,
+                  "metadata.namespace": 25,
+                  "metadata.pod_name": 26,
+                  "namespace": 27,
+                  "pod_name": 28,
+                  "service_id": 29,
+                  "severity": 30,
+                  "software_version": 31,
+                  "sort": 32,
+                  "subcomponent": 33,
+                  "tags": 34,
+                  "timestamp": 35,
+                  "trigger_method": 36,
+                  "type": 37,
+                  "version": 38
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "pccISPlog",
+      "type": "row"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "elasticsearch-pcc1",
+          "value": "elasticsearch-pcc1"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "log_datasource",
+        "multi": false,
+        "name": "log_datasource",
+        "options": [],
+        "query": "elasticsearch",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "severity",
+        "multi": true,
+        "name": "severity",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "error",
+            "value": "error"
+          },
+          {
+            "selected": false,
+            "text": "warning",
+            "value": "warning"
+          },
+          {
+            "selected": false,
+            "text": "info",
+            "value": "info"
+          },
+          {
+            "selected": false,
+            "text": "debug",
+            "value": "debug"
+          },
+          {
+            "selected": false,
+            "text": "WARN",
+            "value": "WARN"
+          }
+        ],
+        "query": "error,warning,info,debug,WARN",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "${log_datasource}"
+        },
+        "definition": "{\n  \"find\": \"terms\",\n  \"field\": \"service_id.keyword\",\n  \"size\": 200\n} ",
+        "hide": 0,
+        "includeAll": true,
+        "label": "service_id",
+        "multi": true,
+        "name": "service_id",
+        "options": [],
+        "query": "{\n  \"find\": \"terms\",\n  \"field\": \"service_id.keyword\",\n  \"size\": 200\n} ",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "${log_datasource}"
+        },
+        "definition": "{\n  \"find\": \"terms\",\n  \"field\": \"metadata.pod_name.keyword\",\n  \"size\": 1000\n} ",
+        "hide": 0,
+        "includeAll": true,
+        "label": "pod_name",
+        "multi": true,
+        "name": "pod_name",
+        "options": [],
+        "query": "{\n  \"find\": \"terms\",\n  \"field\": \"metadata.pod_name.keyword\",\n  \"size\": 1000\n} ",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "${log_datasource}"
+        },
+        "definition": "{\n  \"find\": \"terms\",\n  \"field\": \"logplane.keyword\",\n  \"size\": 200\n} ",
+        "hide": 0,
+        "includeAll": true,
+        "label": "logplane",
+        "multi": true,
+        "name": "logplane",
+        "options": [],
+        "query": "{\n  \"find\": \"terms\",\n  \"field\": \"logplane.keyword\",\n  \"size\": 200\n} ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "${log_datasource}"
+        },
+        "filters": [],
+        "hide": 1,
+        "label": "Filter1",
+        "name": "Filter1",
+        "skipUrlSync": false,
+        "type": "adhoc"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Europe/Stockholm",
+  "title": "Dm5gc_CNF_Opensearch_Log",
+  "uid": "Dm5gc_CNF_Opensearch_Log",
+  "version": 1,
+  "weekStart": ""
+}

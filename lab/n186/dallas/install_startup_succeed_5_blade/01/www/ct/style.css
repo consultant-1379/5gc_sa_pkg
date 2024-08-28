@@ -1,0 +1,153 @@
+body {
+	font-size: 11px;
+	color:black;
+	font-family: Verdana, Arial, SunSans-Regular, Sans-Serif;
+	background: #f4f4f4 url(images/bg.gif) center repeat-y;
+	padding-left: 50%;
+	margin:0px;
+}
+
+
+#container {
+	width: 700px;
+	margin-left: -350px;
+}
+
+
+#top {
+	background-color:#EEE;
+	width:auto;
+	height:20px;
+}
+
+
+h1 {
+	font: 17px verdana;
+	color: #B0B0B0;
+	margin: 5px;
+}
+
+h2 {
+	font-size:11px;
+	color:#787878;
+	margin:9px;
+}
+
+
+.navmenu
+{
+	background-color:#F3F3F3;
+	padding: 3px;
+	font-weight:bold;
+	text-align:center;
+	width: 23%;
+	margin-top:1px;
+	margin-right:2px;
+	float:left;
+}
+
+.nav_test
+{
+	background-color:#F3F3F3;
+	padding: 3px;
+	font-weight:bold;
+	text-align:center;
+	width: 14%;
+	margin-top:1px;
+	margin-right:2px;
+	float:left;
+}
+
+
+
+a {
+	text-decoration: none;
+	padding: 0;
+	margin: 0;
+	color: #005784;
+}
+
+a:hover {
+	color:	#28E;
+	text-decoration: underline;
+}
+
+
+.outsidebox {
+    width: auto;
+    padding: 0px 6px 0px 5px;
+    clear: both;
+}
+
+
+.insidebox {
+    width: auto;
+    line-height: 20px;
+    color: #555A60;
+    font-size:12px;
+    padding: 15px 6px 0px 6px;
+    background:#f8f8f8;
+    border:1px solid #DDDDDD;
+    text-align: justify;
+    height: auto;
+}
+
+
+.title
+{
+    color:#579;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.date
+{
+    font-size: 9px;
+    margin:4px;
+}
+
+.archive
+{
+    width:100px;
+    line-height: 20px;
+    font-size:10px;
+    background-color: #f4f1f1;
+    border:1px solid #DDDDDD;
+    float:right;
+    text-align:center;
+}
+
+.test_report
+{
+    width:90%;
+    line-height: auto;
+    font-size:12px;
+    background-color: #f4f1f1;
+    border:1px solid #DDDDDD;
+    float:left;
+    text-align:left;
+}
+
+.footer {
+    width: auto;
+    line-height: 20px;
+    color: #555A60;
+    font-size:10px;
+    background: #f1f1f1;
+    border:1px solid #DDDDDD;
+    text-align: center;
+    height: auto;
+}
+
+.textinput
+{
+    font-family: Tahoma;
+    color: #555A60;
+    font-size:11px;
+    border:1px solid #DDDDDD;
+}
+
+.buttonSubmit
+{
+    font-size:11px;
+}

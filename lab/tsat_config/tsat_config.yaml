@@ -1,0 +1,53 @@
+#############################################################################
+# Note:
+# -- password is an encrypted string, use the below command to genearte an
+#    encrypted password
+#    $ /lab/pccc_utils/scripts/src/bin/secpass --encrypt <clear_password>
+#
+############################################################################
+
+sut_5gs:
+###########################################################
+## n186
+###########################################################
+  n186-dls01:
+    type: dallas
+    host: pccc-node186-dallas-01.seli.gic.ericsson.se
+    username: root
+    
+    ssh_keyfile: /lab/j20/testtools/binaries/linux/scripts/share/ssh/keys/testlab_dsakey
+
+  n186-eccd1-pcc1:
+    type: smf
+    version: '1.28'
+    host: pcc1-oam.n186-eccd1.seli.gic.ericsson.se
+    username: 'pcc-admin'
+    password: 'gAAAAABkbq48sMtykxwM8T3ve5FFK_CwKSuQDalc-aX8wPLzcu1QwKwh3DPvYdNd6xDD4FecvKNx5lx3VVSZpj3uBbFVp2_mzQ=='
+    sftp_port: 9023
+    options:
+      cdr_path: /home/pcc-admin/eric-pc-sm-cdr
+      # geored_enabled: true
+      # geored_role: active
+
+  n186-eccd1-sc1:
+    type: sc
+    host: sc1-oam.n186-eccd1.seli.gic.ericsson.se
+    username: 'sc-admin'
+    password: 'gAAAAABkbq48sMtykxwM8T3ve5FFK_CwKSuQDalc-aX8wPLzcu1QwKwh3DPvYdNd6xDD4FecvKNx5lx3VVSZpj3uBbFVp2_mzQ=='
+    eccd_host: n186-eccd1.seli.gic.ericsson.se
+    eccd_username: eccd
+    eccd_password: 'gAAAAABlUXlkSffjQfwQmMdiXXIa3nrFMe1gYkoq8fjAxtr-6LAWxRgLTi4hKNVzCmu6f0C0GKhha5HLH_kyskKy2vTHHvGDmw=='
+    options:
+      namespace: sc1
+
+  n186-eccd1-ccpc1:
+    type: ccpc
+    host: ccpc1-oam.n186-eccd1.seli.gic.ericsson.se
+    username: 'ccpc-admin'
+    password: 'gAAAAABkbq48sMtykxwM8T3ve5FFK_CwKSuQDalc-aX8wPLzcu1QwKwh3DPvYdNd6xDD4FecvKNx5lx3VVSZpj3uBbFVp2_mzQ=='
+    eccd_host: n186-eccd1.seli.gic.ericsson.se
+    eccd_username: eccd
+    eccd_password: 'gAAAAABlUXlkSffjQfwQmMdiXXIa3nrFMe1gYkoq8fjAxtr-6LAWxRgLTi4hKNVzCmu6f0C0GKhha5HLH_kyskKy2vTHHvGDmw=='
+    options:
+      namespace: ccpc1
+

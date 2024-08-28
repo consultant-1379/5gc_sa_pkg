@@ -1,0 +1,16 @@
+- name: restart network
+  service:
+    name: network
+    state: restarted
+  async: 120
+  poll: 0
+
+- name: bringing up intra_parent_port interface
+  command: ifup {{ intra_parent_port }}
+  async: 120
+  poll: 0
+
+- name: bringing up internal VLAN interface
+  command: ifup {{ intra_parent_port }}.{{ intra_vlan }}
+  async: 120
+  poll: 0

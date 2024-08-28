@@ -1,0 +1,2025 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": 36,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 0,
+        "y": 0
+      },
+      "id": 57,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "expr": "stability_lead_time",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "stability_elapsed_time",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 6,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "#EF843C",
+                "value": 99
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 99.9
+              },
+              {
+                "color": "light-green",
+                "value": 99.99
+              },
+              {
+                "color": "green",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 2,
+        "y": 0
+      },
+      "id": 39,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "100*(1-dallas_system_total_signaling_failed/(dallas_system_total_signaling_successful+dallas_system_total_signaling_resendings))",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "sig_KPI",
+          "refId": "A"
+        }
+      ],
+      "title": "dallas_signaling_kpi",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 4,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "#EF843C",
+                "value": 99
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 99.9
+              },
+              {
+                "color": "light-green",
+                "value": 99.99
+              },
+              {
+                "color": "green",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 4,
+        "y": 0
+      },
+      "id": 79,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "(100*sum(((bsf_out_answers_total{status=~\"2.*\"} @ end() ) - (bsf_out_answers_total @ start() ))) / (sum(bsf_in_requests_total{nf='bsf'} @ end()) - sum(bsf_in_requests_total{nf='bsf'} @ start())))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "(sum(bsf_in_requests_total{nf='bsf'} @ end()) - sum(bsf_in_requests_total{nf='bsf'} @ start()))",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "bsf_kpi",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "accG"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 6,
+        "y": 0
+      },
+      "id": 40,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "(dallas_ltt_payload_gi_ul_bytes_rate+dallas_ltt_payload_gn_iuu_dl_bytes_rate)*8/1000/1000/1000",
+          "interval": "",
+          "legendFormat": "Throughput-G",
+          "refId": "A"
+        }
+      ],
+      "title": "dallas_throughput",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "ppm"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 8,
+        "y": 0
+      },
+      "id": 52,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "(dallas_ltt_payload_downlink_packets_dropped_e2e_value+dallas_ltt_payload_uplink_packets_dropped_e2e_value) /(dallas_ltt_payload_gi_dl_packets_value+dallas_ltt_payload_gn_iuu_ul_packets_value)*1e6",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "dallas_packet_drop",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 10,
+        "y": 0
+      },
+      "id": 99,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "dallas_system_crashes_value",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "dallas_crash",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 12,
+        "y": 0
+      },
+      "id": 80,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "exemplar": true,
+          "expr": "sum(pcmm_MM_SessionResilienceNonRedundantConnections)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "amf_NonRedundant",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "NonRedundantConnection",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 14,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "expr": "pcmm_VS_N2_NbrConnectedGnodeB_5GS",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "title": "connected_GnodeB",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 4,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 86,
+      "maxDataPoints": 5000,
+      "options": {
+        "legend": {
+          "calcs": [
+            "changeCount"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Change Count",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "NrfInfo_nfstatus{nfServiceName!~\"self\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{nfType}}({{nfServiceName}})",
+          "refId": "B"
+        }
+      ],
+      "title": "nf_registration",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 10,
+        "x": 0,
+        "y": 5
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "expr": "sum(pcmm_VS_MM_NbrActAttachedSub_E)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4g_sau",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "expr": "sum(sgw_nbr_of_bearers)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4g_sgw_bearer",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "expr": "sum(nbr_of_pgw_pdn_connections)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4g_pdn",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "exemplar": true,
+          "expr": "sum(pcmm_VS_MM_NbrRegisteredSub_5GS{kubernetes_pod_name=~\"eric-pc-mm-mobility.*\"})",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "5g_sau",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "expr": "sum(pdu_session_ipv4{ns=\"1-000002\"}+pdu_session_ipv6{ns=\"1-000002\"}+pdu_session_ipv4v6{ns=\"1-000002\"})",
+          "interval": "",
+          "legendFormat": "5g_pdu",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "exemplar": true,
+          "expr": "sum(pcmm_gsnSessionResilienceNotInitializedConnections)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "amf_notinitalized",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcc1"
+          },
+          "exemplar": true,
+          "expr": "sum(pcmm_MM_SessionResilienceNonRedundantConnections)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "amf_NonRedundant",
+          "refId": "G"
+        }
+      ],
+      "title": "PCC_SAU_PDU_PDN_4GBear",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 10,
+        "y": 5
+      },
+      "id": 51,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^pdu$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "editorMode": "code",
+          "expr": "pc_up_pfcp_sessions_total",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "pdu",
+          "refId": "A"
+        }
+      ],
+      "title": "PCG Bearer/session",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 12,
+        "y": 5
+      },
+      "id": 77,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "sum(ALERTS) or vector(0) ",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "eccd1",
+          "queryType": "randomWalk",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "ALERTS_FOR_STAT",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "title": "eccd1_alert",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": []
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 18,
+        "x": 0,
+        "y": 10
+      },
+      "id": 100,
+      "maxDataPoints": 5000,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "dm5gc_alarms{exported_instance=\"N186\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{namespace}}",
+          "queryType": "randomWalk",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "N186_eccd1_active_alarm",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-pcc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 0,
+        "y": 15
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-pcc1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-pcc1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-cces1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 2,
+        "y": 15
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-cces1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-cces1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-ccrc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 4,
+        "y": 15
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-ccrc1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-ccrc1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-eda1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 6,
+        "y": 15
+      },
+      "id": 21,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-eda1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-eda1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-ccsm1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 8,
+        "y": 15
+      },
+      "id": 22,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-ccsm1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-ccsm1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 10,
+        "y": 15
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-sc1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-sc1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-ccpc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 12,
+        "y": 15
+      },
+      "id": 23,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-ccpc1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-ccpc1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-ccdm1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 14,
+        "y": 15
+      },
+      "id": 24,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-ccdm1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-ccdm1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = INVALID|unusedCapacity = 0).*/",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "License Error"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "pattern": "/.*(licenseStatus = VALID|unusedCapacity = [1-9][1,1]).*/",
+                "result": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ok"
+                }
+              },
+              "type": "regex"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "color": "yellow",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "No Report Data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 16,
+        "y": 15
+      },
+      "id": 101,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^message$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "elasticsearch-pcg1"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "service_id:eric-lm-combiled-server AND message:\"Received report callback\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "license-pcg1",
+      "type": "stat"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "Europe/Stockholm",
+  "title": "Dm5gc-System-Overview",
+  "uid": "Dm5gc-System-Overview",
+  "version": 1,
+  "weekStart": ""
+}

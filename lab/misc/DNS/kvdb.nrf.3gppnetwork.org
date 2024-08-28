@@ -1,0 +1,23 @@
+$TTL    604800
+@       IN      SOA     localhost. ns. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.kvdb.nrf.3gppnetwork.org.
+@       IN      A       172.30.32.50
+@       IN      AAAA    ::1
+
+ns1     IN      A       172.30.32.50
+
+;#
+;##site1 cluster1 nrf1 kvdb
+;#
+ccrc1-nrf-sig.site1-cluster1  IN      A        172.17.128.9
+
+;#
+;##site2 cluster1 nrf1 kvdb
+;#
+ccrc1-nrf-sig.site2-cluster1  IN      A        172.17.136.9

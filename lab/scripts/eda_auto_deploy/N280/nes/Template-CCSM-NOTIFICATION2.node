@@ -1,0 +1,15 @@
+{
+	"name": "CCSM_HSS_NOTIFICATION_2",
+	"protocolType": "ProvisioningNotification",
+	"version": "",
+	"active": true,
+	"protocolAttributes": {
+		"EndPointURL": "http://10.137.49.47:84/HssEsmUdcWS/services/NotificationService",
+		"BlockingTimeout": "10000",
+		"RetryAttempts": "3",
+		"HeartbeatEndPointURL": "http://10.137.49.47:84/HssEsmUdcWS/services/NotificationService?wsdl",
+		"MaxPoolSize": "10",
+		"IdleTimeout": "1",
+		"RetryInterval": "1000"
+	}
+}

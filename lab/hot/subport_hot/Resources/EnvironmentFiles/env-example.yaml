@@ -1,0 +1,47 @@
+parameters:
+
+  networks_on_trunks:
+  # control plane pool
+  - networks: 
+    - network: amf2-n2-1
+      vlan: 3904
+    - network: amf2-n2-2
+      vlan: 3929
+    - network: amf2-sbi
+      vlan: 3902
+    - network: amf2-n26
+      vlan: 3901
+    - network: pgwc2-s5s8c
+      vlan: 3851
+    - network: smf2-n4
+      vlan: 3952
+    - network: upf2-n3
+      vlan: 3854
+    - network: upf2-n6
+      vlan: 3855
+    - network: upf2-n4
+      vlan: 3877
+    trunks:
+    - trunk: worker-pool1-qf4tb3sr-eccd2_trunk
+      vnic_type: normal
+    - trunk: worker-pool1-w66kg13t-eccd2_trunk
+      vnic_type: normal
+    - trunk: worker-pool1-8i2jmq10-eccd2_trunk
+      vnic_type: normal
+    - trunk: worker-pool1-d259hoj1-eccd2_trunk
+      vnic_type: normal
+    - trunk: worker-pool1-kg9jjun9-eccd2_trunk
+      vnic_type: normal
+  
+  # data plane pool
+  - networks:
+    - network: upf2-n3
+      vlan: 3854
+    - network: upf2-n6
+      vlan: 3855
+    - network: upf2-n4
+      vlan: 3877
+    trunks:
+    - trunk: worker-pool2-rs2w6i8u-eccd2_trunk
+      vnic_type: normal
+  

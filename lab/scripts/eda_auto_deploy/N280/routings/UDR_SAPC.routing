@@ -1,0 +1,7 @@
+{
+  "networkElementType": "UDR_SAPC",
+  "routingMethod": "UnconditionalRouting",
+  "instance": "CCDM_UDR_LDAP",
+  "instanceType": "NetworkElementGroup"
+}
+

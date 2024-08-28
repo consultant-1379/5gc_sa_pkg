@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  tap_config.json: |
+    [{"ServiceName": "eric-bsf-worker","TAP_ENABLED": false,"TracingMode": "sftp","TAP_INT": "eth0","NF_TYPE": "bsf","TAP_FILTER": "port 443"},{"ServiceName": "eric-scp-worker","TAP_ENABLED": false,"TracingMode": "sftp","TAP_INT": "eth0","NF_TYPE": "scp","TAP_FILTER": "port 443"}]
+kind: ConfigMap
+metadata:
+  name: eric-sc-tap-config
+

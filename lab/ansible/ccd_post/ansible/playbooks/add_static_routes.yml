@@ -1,0 +1,14 @@
+- hosts: std
+  gather_facts: false
+  vars_files: ../static_route_config.yml
+  become: true
+  tasks:
+  - name: Add static routes by CLI
+    command: "ip route add {{ item.dest }} via {{ item.nh }}"
+    loop: "{{ static_routes }}"
+  - name: Save static routes to NIC conf file
+    lineinfile:
+        path: "/etc/sysconfig/network/ifroute-{{ item.intf }}"
+        line: "{{ item.dest }} {{ item.nh }} - -"
+        insertbefore: BOF
+    loop: "{{ static_routes }}"

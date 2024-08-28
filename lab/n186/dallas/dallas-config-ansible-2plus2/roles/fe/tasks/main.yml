@@ -1,0 +1,26 @@
+- name: "Create dallas base directory {{ dallas_basedir }}"
+  file:
+    name: "{{ dallas_basedir }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Create dallas policy.conf files for each FE host
+  template:
+    src: "lte-{{host_index}}-policy.conf.j2"
+    dest: "{{ dallas_basedir }}/policy.conf"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Create dallas setup files for FE hosts
+  template:
+    src: "{{item}}.j2"
+    dest: "{{ dallas_basedir }}/{{item}}"
+    mode: 0644
+    owner: root
+    group: root
+  with_items:
+  - system_profile
+  - tap.conf

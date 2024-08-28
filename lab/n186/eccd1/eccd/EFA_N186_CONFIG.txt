@@ -1,0 +1,539 @@
+-------------------------------------------------------------------------
+EFA cli:
+
+efa fabric create --name N186-Fabric --type non-clos
+efa fabric setting update --name N186-Fabric --mtu 9216
+efa fabric setting update --name N186-Fabric --backup-routing-enable yes
+efa fabric setting update --name N186-Fabric --bfd-tx 200 --bfd-rx 200 --bfd-multiplier 3 --bfd-enable yes
+efa fabric setting update --name N186-Fabric --md5-password-enable yes     
+Er!css0n123@
+efa fabric device add-bulk --name N186-Fabric --ip 192.168.246.21,192.168.246.22 --rack n186-slx-leaf --username admin
+#-------------------------provide password of slx switches here--------------------------------------------------
+efa fabric setting update --name N186-Fabric --bgp-dynamic-peer-listen-limit 255
+efa fabric configure --name N186-Fabric
+efa fabric show
+
+
+-----------Maintenance Mode----------------------
+
+efa inventory device setting update --ip 192.168.246.21 --maint-mode-enable-on-reboot Yes
+efa inventory device setting update --ip 192.168.246.22 --maint-mode-enable-on-reboot Yes
+
+ -------------------Maintenance Mode Status Check--------------------------------------
+efa inventory drift-reconcile history
+
+#-------------------SNMP----------------------------------------------------
+efa inventory device snmp community create --name hds-public --group read-notify --enable-read-access --enable-notify-access --ip 192.168.246.21,192.168.246.22
+
+#-------------------NTP-------------------------------------------------------
+efa inventory device ntp server create --ntp-ip 192.168.246.1 --fabric "N186-Fabric"
+efa inventory device timezone set --timezone Europe/Stockholm --ip 192.168.246.21,192.168.246.22
+
+#-------------------------------Periodic EFA System Backup configuration----------------------------
+efa system settings update --periodic-device-config-backup Enabled
+ 
+#---------------------------------------set MTU----------------------------------------------
+
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/1 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/2 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/3 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/4 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/5 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/6 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/7 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/8 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/9 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/10 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/11 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/12 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/13 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/14 --mtu 9022
+efa inventory device interface set-mtu --ip "192.168.246.21,192.168.246.22" --if-type eth --if-name 0/15 --mtu 9022
+ 
+------Ethernet Port Admin State Control---------
+---for servers---
+
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/1,0/2,0/3,0/4,0/5,0/6,0/7,0/8,0/9,0/10,0/11,0/12,0/13,0/14,0/15 --state down
+efa inventory device interface set-breakout --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/1,0/2,0/3,0/4,0/5,0/6,0/7 --mode 4x25g
+efa inventory device update --fabric N186-Fabric
+
+efa inventory device reload --ip 192.168.246.21,192.168.246.22 --fabric N186-Fabric
+
+
+
+#------------------------------------------------Ethernet Port FEC Settings---------------------------------------------
+
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/1:1-4 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/2:1-4 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/3:1-4 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/4:1-4 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/5:1-4 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/6:1-4 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/7:1-4 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/8 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/9 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/10 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/11 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/12 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/13 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/14 --state down
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/15 --state down
+
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/1:1-4 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/2:1-4 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/3:1-4 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/4:1-4 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/5:1-4 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/6:1-4 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/7:1-4 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/8 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/9 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/10 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/11 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/12 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/13 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/14 --mode RS-FEC
+efa inventory device interface set-fec --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/15 --mode RS-FEC
+
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/1:1-4 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/2:1-4 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/3:1-4 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/4:1-4 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/5:1-4 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/6:1-4 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/7:1-4 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/8 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/9 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/10 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/11 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/12 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/13 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/14 --state up
+efa inventory device interface set-admin-state --ip 192.168.246.21,192.168.246.22 --if-type eth --if-name 0/15 --state up
+
+
+#Configure Interface Port Dampening
+
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/1:1-4 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/2:1-4 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/3:1-4 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/4:1-4 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/5:1-4 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/6:1-4 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/7:1-4 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/8 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/9 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/10 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/11 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/12 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/13 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/14 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+efa inventory device interface set-link-error-disable --ip 192.168.246.21,192.168.246.22 --if-name 0/15 --toggle-threshold 10 --sampling-time 60 --wait-time 120
+
+-------Tenant vPOD deployment-------
+
+####SLX TO QFX 
+
+
+efa tenant create --name "slx-to-qfx-tenant" --type shared --vrf-count 2 --port 192.168.246.21[0/29-30],192.168.246.22[0/29-30]
+
+efa tenant po create --tenant "slx-to-qfx-tenant" --name "slx-la_qfx-po" --description "Port-channel slx-la_qfx-po Member interface" --min-link-count 1 --mtu 9022 --speed 100Gbps --negotiation active --number 102 --lacp-timeout short --port 192.168.246.21[0/29-30]
+efa tenant po create --tenant "slx-to-qfx-tenant" --name "slx-lb_qfx-po" --description "Port-channel slx-lb_qfx-po Member interface" --min-link-count 1 --mtu 9022 --speed 100Gbps --negotiation active --number 101 --lacp-timeout short --port 192.168.246.22[0/29-30]
+
+
+VPOD1-----------------------------------------------------------------------------------------------------
+--------------Configuration setup for tenant including Compute connectivity-----------
+
+efa tenant create --name=n186-CCD-Tenant-vPOD1 --port=192.168.246.21[0/1:1-4,0/2:1-4,0/3:1-4,0/4:1-4,0/5:1-4,0/6:1-4,0/7:1-4,0/8,0/9,0/10,0/11,0/12,0/13,0/14,0/15],192.168.246.22[0/1:1-4,0/2:1-4,0/3:1-4,0/4:1-4,0/5:1-4,0/6:1-4,0/7:1-4,0/8,0/9,0/10,0/11,0/12,0/13,0/14,0/15] --vlan-range=805,3220,3608,3609,901,1403,951,1413,2302,2310,1410,1420,1402,1412 --vrf-count=7 
+
+
+
+##PO Creation 
+
+*************************************************************************************
+Note : <compute>_data_po OCP - for all computes 
+
+       <compute>_repl_po PCIe-2 - for ceph computes 
+
+efa tenant po create --name seliics09236_data_po --description seliics09236_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/6:4],192.168.246.22[0/6:4] --speed 25Gbps --negotiation active --number 1 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09237_data_po --description seliics09237_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/6:3],192.168.246.22[0/6:3] --speed 25Gbps --negotiation active --number 2 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09238_data_po --description seliics09238_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/6:2],192.168.246.22[0/6:2] --speed 25Gbps --negotiation active --number 3 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+                                                                                                                                                                                                          
+efa tenant po create --name seliics09232_data_po --description seliics09232_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/1:4],192.168.246.22[0/1:4] --speed 25Gbps --negotiation active --number 4 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09233_data_po --description seliics09233_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/1:3],192.168.246.22[0/1:3] --speed 25Gbps --negotiation active --number 5 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09234_data_po --description seliics09234_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/1:2],192.168.246.22[0/1:2] --speed 25Gbps --negotiation active --number 6 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09235_data_po --description seliics09235_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/1:1],192.168.246.22[0/1:1] --speed 25Gbps --negotiation active --number 7 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+                                                                                                                                                                                                          
+efa tenant po create --name seliics09240_data_po --description seliics09240_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/5:4],192.168.246.22[0/5:4] --speed 25Gbps --negotiation active --number 8 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09241_data_po --description seliics09241_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/5:3],192.168.246.22[0/5:3] --speed 25Gbps --negotiation active --number 9 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09242_data_po --description seliics09242_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/5:2],192.168.246.22[0/5:2] --speed 25Gbps --negotiation active --number 10 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09243_data_po --description seliics09243_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/5:1],192.168.246.22[0/5:1] --speed 25Gbps --negotiation active --number 11 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09244_data_po --description seliics09244_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/4:4],192.168.246.22[0/4:4] --speed 25Gbps --negotiation active --number 12 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09245_data_po --description seliics09245_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/4:3],192.168.246.22[0/4:3] --speed 25Gbps --negotiation active --number 13 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09246_data_po --description seliics09246_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/4:2],192.168.246.22[0/4:2] --speed 25Gbps --negotiation active --number 14 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09247_data_po --description seliics09247_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/4:1],192.168.246.22[0/4:1] --speed 25Gbps --negotiation active --number 15 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09248_data_po --description seliics09248_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/3:4],192.168.246.22[0/3:4] --speed 25Gbps --negotiation active --number 16 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09249_data_po --description seliics09249_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/3:3],192.168.246.22[0/3:3] --speed 25Gbps --negotiation active --number 17 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09250_data_po --description seliics09250_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/3:2],192.168.246.22[0/3:2] --speed 25Gbps --negotiation active --number 18 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09251_data_po --description seliics09251_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/3:1],192.168.246.22[0/3:1] --speed 25Gbps --negotiation active --number 19 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1																																											  
+																					 																											          
+efa tenant po create --name seliics09232_repl_po --description seliics09232_repl_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/2:4],192.168.246.22[0/2:4] --speed 25Gbps --negotiation active --number 20 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09233_repl_po --description seliics09233_repl_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/2:3],192.168.246.22[0/2:3] --speed 25Gbps --negotiation active --number 21 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09234_repl_po --description seliics09234_repl_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/2:2],192.168.246.22[0/2:2] --speed 25Gbps --negotiation active --number 22 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics09235_repl_po --description seliics09235_repl_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/2:1],192.168.246.22[0/2:1] --speed 25Gbps --negotiation active --number 23 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+                                                                                     
+efa tenant po create --name seliics02016_data_po --description seliics02016_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/7:4],192.168.246.22[0/7:4] --speed 25Gbps --negotiation active --number 24 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics02021_data_po --description seliics02021_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/7:3],192.168.246.22[0/7:3] --speed 25Gbps --negotiation active --number 25 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics02321_data_po --description seliics02321_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/7:2],192.168.246.22[0/7:2] --speed 25Gbps --negotiation active --number 26 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+efa tenant po create --name seliics02796_data_po --description seliics02796_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/7:1],192.168.246.22[0/7:1] --speed 25Gbps --negotiation active --number 27 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+                                                                                                                                                                                                          
+efa tenant po create --name seliics09239_data_po --description seliics09239_data_po --min-link-count 1 --mtu 9022 --port 192.168.246.21[0/6:1],192.168.246.22[0/6:1] --speed 25Gbps --negotiation active --number 28 --lacp-timeout short --tenant n186-CCD-Tenant-vPOD1
+
+
+
+VPN : VPN01313_vPOD1 We have to create VRFs , EPGs , BGP Peer Groups , Service BGP Peer for all the networks mentioned in OM , SIG , DATA networks LLD 
+
+efa tenant vrf create \ 
+--tenant=n186-CCD-Tenant-vPOD1 \
+--name=N186_om_cn \
+--routing-type=distributed \
+--layer3-extension-enable=true \
+--rh-ecmp-enable=true \
+--rh-max-path=64 \
+--rt-type=import \
+--rt=103:103 \
+--rt-type=export \
+--rt=103:103 \
+--ipv4-static-route-next-hop=192.168.246.21,0.0.0.0/0,214.6.198.102 \
+--ipv4-static-route-next-hop=192.168.246.22,0.0.0.0/0,214.6.198.112 \
+--ipv4-static-route-bfd=192.168.246.21,214.6.198.102,214.6.198.103,200,200,3 \
+--ipv4-static-route-bfd=192.168.246.22,214.6.198.112,214.6.198.113,200,200,3 \
+--local-asn=4251100003 \
+--max-path 64 \
+--redistribute=static \
+--redistribute=connected \
+--redistribute=static \
+--graceful-restart-enable=true
+
+efa tenant vrf create \ 
+--tenant=n186-CCD-Tenant-vPOD1 \
+--name=N186_sig_cn \
+--routing-type=distributed \
+--layer3-extension-enable=true \
+--rh-ecmp-enable=true \
+--rh-max-path=64 \
+--rt-type=import \
+--rt=103:103 \
+--rt-type=export \
+--rt=103:103 \
+--ipv4-static-route-next-hop=192.168.246.21,0.0.0.0/0,172.23.4.2 \
+--ipv4-static-route-next-hop=192.168.246.22,0.0.0.0/0,172.23.68.2 \
+--ipv4-static-route-bfd=192.168.246.21,172.23.4.2,172.23.4.1,200,200,3 \
+--ipv4-static-route-bfd=192.168.246.22,172.23.68.2,172.23.68.1,200,200,3 \
+--local-asn=4251100002 \
+--max-path 64 \
+--redistribute=static \
+--redistribute=connected \
+--redistribute=static \
+--graceful-restart-enable=true
+
+efa tenant vrf create \ 
+--tenant=n186-CCD-Tenant-vPOD1 \
+--name=N186_data_cn \
+--routing-type=distributed \
+--layer3-extension-enable=true \
+--rh-ecmp-enable=true \
+--rh-max-path=64 \
+--rt-type=import \
+--rt=103:103 \
+--rt-type=export \
+--rt=103:103 \
+--ipv4-static-route-next-hop=192.168.246.21,0.0.0.0/0,172.23.5.2 \
+--ipv4-static-route-next-hop=192.168.246.22,0.0.0.0/0,172.23.69.2 \
+--ipv4-static-route-bfd=192.168.246.21,172.23.5.2,172.23.5.1,200,200,3 \
+--ipv4-static-route-bfd=192.168.246.22,172.23.69.2,172.23.69.1,200,200,3 \
+--local-asn=4251100010 \
+--max-path 64 \
+--redistribute=static \
+--redistribute=connected \
+--redistribute=static \
+--graceful-restart-enable=true
+
+
+## ccd_ecfe_om_sp ##
+efa tenant epg create \
+--name=n186-vpod1-805-epg \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--ctag-description=805:n186-vpod1-805-epg \
+--switchport-mode=trunk-no-default-native \
+--ctag-range=805 \
+--type=extension \
+--single-homed-bfd-session-type=auto \
+--po seliics09236_data_po,seliics09237_data_po,seliics09238_data_po,seliics09232_data_po,seliics09233_data_po,seliics09234_data_po,seliics09235_data_po,seliics09240_data_po,seliics09241_data_po,seliics09242_data_po,seliics09243_data_po,seliics09244_data_po,seliics09245_data_po,seliics09246_data_po,seliics09247_data_po,seliics09248_data_po,seliics09249_data_po,seliics09250_data_po,seliics09251_data_po,seliics09232_repl_po,seliics09233_repl_po,seliics09234_repl_po,seliics09235_repl_po,seliics02016_data_po,seliics02021_data_po,seliics02321_data_po,seliics02796_data_po,seliics09239_data_po \
+--anycast-ip=805:214.6.198.193/26 \
+--local-ip=805,192.168.246.21:214.6.198.194/26 \
+--local-ip=805,192.168.246.22:214.6.198.195/26 \
+--vrf=N186_om_cn \
+--ip-mtu 805:9000
+
+###5gc_ecfe_sig
+efa tenant epg create \ 
+--name=n186-vpod1-2302-epg \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--description=n186-vpod1-2302-epg \
+--type=extension \
+--switchport-mode=trunk-no-default-native \
+--single-homed-bfd-session-type=auto \
+--po seliics09236_data_po,seliics09237_data_po,seliics09238_data_po,seliics09232_data_po,seliics09233_data_po,seliics09234_data_po,seliics09235_data_po,seliics09240_data_po,seliics09241_data_po,seliics09242_data_po,seliics09243_data_po,seliics09244_data_po,seliics09245_data_po,seliics09246_data_po,seliics09247_data_po,seliics09248_data_po,seliics09249_data_po,seliics09250_data_po,seliics09251_data_po,seliics09232_repl_po,seliics09233_repl_po,seliics09234_repl_po,seliics09235_repl_po,seliics02016_data_po,seliics02021_data_po,seliics02321_data_po,seliics02796_data_po,seliics09239_data_po \
+--anycast-ip=2302:172.21.160.1/24 \
+--local-ip=2302,192.168.246.21:172.21.160.2/24 \
+--local-ip=2302,192.168.246.22:172.21.160.3/24 \
+--vrf=N186_sig_cn \
+--ctag-range=2302 \
+--ctag-description=2302:n186-vpod1-2302-epg \
+--ip-mtu=2302:9000
+
+###5gc_ecfe_data
+efa tenant epg create \ 
+--name=n186-vpod1-2310-epg \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--description=n186-vpod1-2310-epg \
+--type=extension \
+--switchport-mode=trunk-no-default-native \
+--single-homed-bfd-session-type=auto \
+--po seliics09236_data_po,seliics09237_data_po,seliics09238_data_po,seliics09232_data_po,seliics09233_data_po,seliics09234_data_po,seliics09235_data_po,seliics09240_data_po,seliics09241_data_po,seliics09242_data_po,seliics09243_data_po,seliics09244_data_po,seliics09245_data_po,seliics09246_data_po,seliics09247_data_po,seliics09248_data_po,seliics09249_data_po,seliics09250_data_po,seliics09251_data_po,seliics09232_repl_po,seliics09233_repl_po,seliics09234_repl_po,seliics09235_repl_po,seliics02016_data_po,seliics02021_data_po,seliics02321_data_po,seliics02796_data_po,seliics09239_data_po \
+--anycast-ip=2310:172.21.192.1/24 \
+--local-ip=2310,192.168.246.21:172.21.192.2/24 \
+--local-ip=2310,192.168.246.22:172.21.192.3/24 \
+--vrf=N186_data_cn \
+--ctag-range=2310 \
+--ctag-description=2310:n186-vpod1-2310-epg \
+--ip-mtu=2310:9000
+
+## ccd_int_sp ##
+efa tenant epg create \
+--name=n186-vpod1-3220-epg \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--description=n186-vpod1-3220-epg \
+--type=extension \
+--po seliics09236_data_po,seliics09237_data_po,seliics09238_data_po,seliics09232_data_po,seliics09233_data_po,seliics09234_data_po,seliics09235_data_po,seliics09240_data_po,seliics09241_data_po,seliics09242_data_po,seliics09243_data_po,seliics09244_data_po,seliics09245_data_po,seliics09246_data_po,seliics09247_data_po,seliics09248_data_po,seliics09249_data_po,seliics09250_data_po,seliics09251_data_po,seliics09232_repl_po,seliics09233_repl_po,seliics09234_repl_po,seliics09235_repl_po,seliics02016_data_po,seliics02021_data_po,seliics02321_data_po,seliics02796_data_po,seliics09239_data_po \
+--switchport-mode=trunk-no-default-native \
+--single-homed-bfd-session-type=auto \
+--ctag-range=3220 \
+--ctag-description=3220:n186-vpod1-3220-epg
+
+## ccd_hs_repl_sp ##
+efa tenant epg create \
+--name=n186-vpod1-3608-epg \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--description=n186-vpod1-3608-epg \
+--po seliics09232_repl_po,seliics09233_repl_po,seliics09234_repl_po,seliics09235_repl_po \   
+--ctag-range=3608 \
+--type=extension \
+--ctag-description=3608:n186-vpod1-3608-epg\
+--single-homed-bfd-session-type=auto \
+--switchport-mode=trunk-no-default-native
+
+## ccd_hs_san_sp ##
+efa tenant epg create \
+--name=n186-vpod1-3609-epg \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--description=n186-vpod1-3609-epg \
+--type=extension \
+--single-homed-bfd-session-type=auto \
+--switchport-mode=trunk-no-default-native \
+--po seliics09236_data_po,seliics09237_data_po,seliics09238_data_po,seliics09232_data_po,seliics09233_data_po,seliics09234_data_po,seliics09235_data_po,seliics09240_data_po,seliics09241_data_po,seliics09242_data_po,seliics09243_data_po,seliics09244_data_po,seliics09245_data_po,seliics09246_data_po,seliics09247_data_po,seliics09248_data_po,seliics09249_data_po,seliics09250_data_po,seliics09251_data_po,seliics09232_repl_po,seliics09233_repl_po,seliics09234_repl_po,seliics09235_repl_po,seliics02016_data_po,seliics02021_data_po,seliics02321_data_po,seliics02796_data_po,seliics09239_data_po \
+--ctag-range=3609  \
+--ctag-description=3609:n186-vpod1-3609-epg
+
+
+
+#DC-GW EPGS ## (vlans According to LLD)
+###Link nets#
+ 
+
+efa tenant epg create \
+--name=n186-SLXA-QFX-1403-epg \
+--description=n186-SLXA-QFX-1403-epg \
+--po=slx-la_qfx-po \
+--switchport-mode=trunk-no-default-native \
+--ctag-range=1403 \
+--ctag-description=1403:n186-vpod1-1403-epg \
+--local-ip=1403,192.168.246.21:214.6.198.103/31 \
+--single-homed-bfd-session-type=auto \
+--vrf=N186_om_cn \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--type=l3-hand-off
+
+ 
+
+efa tenant epg create \
+--name=n186-SLXB-QFX-1413-epg \
+--description=n186-SLXB-QFX-1413-epg \
+--po=slx-lb_qfx-po \
+--switchport-mode=trunk-no-default-native \
+--ctag-range=1413 \
+--ctag-description=1413:n186-vpod1-1413-epg \
+--local-ip=1413,192.168.246.22:214.6.198.113/31 \
+--vrf=N186_om_cn \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--single-homed-bfd-session-type=auto \
+--type=l3-hand-off
+
+ 
+
+efa tenant epg create \
+--name=n186-SLXA-QFX-1402-epg \
+--description=n186-SLXA-QFX-1402-epg \
+--po=slx-la_qfx-po \
+--switchport-mode=trunk-no-default-native \
+--ctag-range=1402 \
+--ctag-description=1402:n186-vpod1-1402-epg \
+--local-ip=1402,192.168.246.21:172.23.4.1/31 \
+--single-homed-bfd-session-type=auto \
+--vrf=N186_sig_cn \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--type=l3-hand-off
+
+ 
+
+efa tenant epg create \
+--name=n186-SLXB-QFX-1412-epg \
+--description=n186-SLXB-QFX-1412-epg \
+--po=slx-lb_qfx-po \
+--switchport-mode=trunk-no-default-native \
+--ctag-range=1412 \
+--ctag-description=1412:n186-vpod1-1412-epg \
+--local-ip=1412,192.168.246.22:172.23.68.1/31 \
+--vrf=N186_sig_cn \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--single-homed-bfd-session-type=auto \
+--type=l3-hand-off
+
+ 
+
+efa tenant epg create \
+--name=n186-SLXA-QFX-1410-epg \
+--description=n186-SLXA-QFX-1410-epg \
+--po=slx-la_qfx-po \
+--switchport-mode=trunk-no-default-native \
+--ctag-range=1410 \
+--ctag-description=1410:n186-vpod1-1410-epg \
+--local-ip=1410,192.168.246.21:172.23.5.1/31 \
+--single-homed-bfd-session-type=auto \
+--vrf=N186_data_cn \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--type=l3-hand-off
+
+ 
+
+efa tenant epg create \
+--name=n186-SLXB-QFX-1420-epg \
+--description=n186-SLXB-QFX-1420-epg \
+--po=slx-lb_qfx-po \
+--switchport-mode=trunk-no-default-native \
+--ctag-range=1420 \
+--ctag-description=1420:n186-vpod1-1420-epg \
+--local-ip=1420,192.168.246.22:172.23.69.1/31 \
+--vrf=N186_data_cn \
+--tenant=n186-CCD-Tenant-vPOD1 \
+--single-homed-bfd-session-type=auto \
+--type=l3-hand-off
+
+
+####################Service BGP Group Create
+
+efa tenant service bgp peer-group create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "n186-vpod1-BGP-ecfe-sig-peers" \
+--pg-name 192.168.246.22:n186-vpod1-BGP-ecfe-sig-peers \
+--pg-asn 192.168.246.22,n186-vpod1-BGP-ecfe-sig-peers:4221110002 \
+--pg-bfd-enable 192.168.246.22,n186-vpod1-BGP-ecfe-sig-peers:true \
+--pg-bfd 192.168.246.22,n186-vpod1-BGP-ecfe-sig-peers:500,500,3 \
+--pg-md5-password 192.168.246.22,n186-vpod1-BGP-ecfe-sig-peers:'SIG_CN_md5secret@' \
+--pg-name 192.168.246.21:n186-vpod1-BGP-ecfe-sig-peers \
+--pg-asn 192.168.246.21,n186-vpod1-BGP-ecfe-sig-peers:4221110002 \
+--pg-bfd-enable 192.168.246.21,n186-vpod1-BGP-ecfe-sig-peers:true \
+--pg-bfd 192.168.246.21,n186-vpod1-BGP-ecfe-sig-peers:500,500,3 \
+--pg-md5-password 192.168.246.21,n186-vpod1-BGP-ecfe-sig-peers:'SIG_CN_md5secret@'
+
+efa tenant service bgp peer-group create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "n186-vpod1-BGP-ecfe-data-peers" \
+--pg-name 192.168.246.21:n186-vpod1-BGP-ecfe-data-peers \
+--pg-asn 192.168.246.21,n186-vpod1-BGP-ecfe-data-peers:4221110010 \              	
+--pg-bfd-enable 192.168.246.21,n186-vpod1-BGP-ecfe-data-peers:true \
+--pg-bfd 192.168.246.21,n186-vpod1-BGP-ecfe-data-peers:500,500,3 \
+--pg-md5-password 192.168.246.21,n186-vpod1-BGP-ecfe-data-peers:'SIG_DATA_md5secret@' \
+--pg-name 192.168.246.22:n186-vpod1-BGP-ecfe-data-peers \
+--pg-asn 192.168.246.22,n186-vpod1-BGP-ecfe-data-peers:4221110010 \
+--pg-bfd-enable 192.168.246.22,n186-vpod1-BGP-ecfe-data-peers:true \
+--pg-bfd 192.168.246.22,n186-vpod1-BGP-ecfe-data-peers:500,500,3 \
+--pg-md5-password 192.168.246.22,n186-vpod1-BGP-ecfe-data-peers:'SIG_DATA_md5secret@'
+
+efa tenant service bgp peer-group create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "om_cn-ecfe-1-peers" \
+--pg-name 192.168.246.22:om_cn-ecfe-1-peers \
+--pg-asn 192.168.246.22,om_cn-ecfe-1-peers:4221110003 \
+--pg-bfd-enable 192.168.246.22,om_cn-ecfe-1-peers:true \
+--pg-bfd 192.168.246.22,om_cn-ecfe-1-peers:500,500,3 \
+--pg-md5-password 192.168.246.22,om_cn-ecfe-1-peers:'OM_CN_md5secret@' \
+--pg-name 192.168.246.21:om_cn-ecfe-1-peers \
+--pg-asn 192.168.246.21,om_cn-ecfe-1-peers:4221110003 \
+--pg-bfd-enable 192.168.246.21,om_cn-ecfe-1-peers:true \
+--pg-bfd 192.168.246.21,om_cn-ecfe-1-peers:500,500,3 \
+--pg-md5-password 192.168.246.21,om_cn-ecfe-1-peers:'OM_CN_md5secret@'
+
+efa tenant service bgp peer-group create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "n186-vpod1-BGP-ecfe-om-peers" \
+--description "n186-vpod1-BGP-ecfe-om-peers" \
+--pg-name 192.168.246.22:n186-vpod1-BGP-ecfe-om-peers \
+--pg-asn 192.168.246.22,n186-vpod1-BGP-ecfe-om-peers:8068 \     
+--pg-bfd-enable 192.168.246.22,n186-vpod1-BGP-ecfe-om-peers:true \
+--pg-bfd 192.168.246.22,n186-vpod1-BGP-ecfe-om-peers:500,500,3 \
+--pg-name 192.168.246.21:n186-vpod1-BGP-ecfe-om-peers \
+--pg-asn 192.168.246.21,n186-vpod1-BGP-ecfe-om-peers:8068 \         
+--pg-bfd-enable 192.168.246.21,n186-vpod1-BGP-ecfe-om-peers:true \
+--pg-bfd 192.168.246.21,n186-vpod1-BGP-ecfe-om-peers:500,500,3
+
+Service BGP Peer Create
+
+efa tenant service bgp peer create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "n186-vpod1-ecfe-om-peers-dyn" \
+--ipv4-uc-dyn-nbr 192.168.246.21,N186_om_cn:214.6.198.192/26,om_cn-ecfe-1-peers \ 
+--ipv4-uc-dyn-nbr 192.168.246.22,N186_om_cn:214.6.198.192/26,om_cn-ecfe-1-peers
+
+efa tenant service bgp peer create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "n186-vpod1-sig-cn-peers-dyn" \
+--ipv4-uc-dyn-nbr 192.168.246.21,N186_sig_cn:172.21.160.0/24,n186-vpod1-BGP-ecfe-sig-peers \
+--ipv4-uc-dyn-nbr 192.168.246.22,N186_sig_cn:172.21.160.0/24,n186-vpod1-BGP-ecfe-sig-peers
+
+efa tenant service bgp peer create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "n186-vpod1-data-cn-peers-dyn" \
+--ipv4-uc-dyn-nbr 192.168.246.21,N186_data_cn:172.21.192.0/24,n186-vpod1-BGP-ecfe-data-peers \
+--ipv4-uc-dyn-nbr 192.168.246.22,N186_data_cn:172.21.192.0/24,n186-vpod1-BGP-ecfe-data-peers
+
+efa tenant service bgp peer create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "slxa_pe1_n186-serointrt00018" \
+--ipv4-uc-nbr 192.168.246.21,N186_om_cn:214.6.198.102,8068 \     
+--ipv4-uc-nbr-bfd 192.168.246.21,N186_om_cn:214.6.198.102,true,500,500,3
+
+efa tenant service bgp peer create \
+--tenant "n186-CCD-Tenant-vPOD1" \
+--name "slxb_pe1_n186-serointrt00018" \
+--ipv4-uc-nbr 192.168.246.22,N186_om_cn:214.6.198.112,8068 \     
+--ipv4-uc-nbr-bfd 192.168.246.22,N186_om_cn:214.6.198.112,true,500,500,3
+
+5GC Solutions User access route management
+
+efa mgmt route create --src 214.6.198.89 --to 10.117.0.0/16 --via 214.6.198.81
+efa mgmt route create --src 214.6.198.89 --to 10.143.0.0/16 --via 214.6.198.81
+efa mgmt route create --src 214.6.198.89 --to 10.128.249.0/24 --via 214.6.198.81
+efa mgmt route create --src 214.6.198.89 --to 10.63.0.0/16 --via 214.6.198.81
+efa mgmt route create --src 214.6.198.89 --to 10.200.0.0/16 --via 214.6.198.81

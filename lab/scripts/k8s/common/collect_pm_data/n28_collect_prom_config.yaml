@@ -1,0 +1,160 @@
+start: "2023-03-13T07:00:00"
+end: "2023-03-13T08:00:00"
+
+
+
+servers:
+  monitoring:
+    host: "monitoring-eric-victoria-metrics-cluster-vmselect.ingress.n28-eccd1.sero.gic.ericsson.se"
+    pmtype: victoria-metrics
+    api: "/select/0/prometheus/api/v1/"
+    metrics:
+    - kube_pod_container_status_ready
+    - container_cpu_usage_seconds_total
+    - container_memory_working_set_bytes
+    - container_fs_writes_bytes_total
+    - container_fs_reads_bytes_total
+    - container_fs_reads_total
+    - container_fs_writes_total
+    - container_cpu_cfs_throttled_seconds_total
+    - container_fs_reads_merged_total
+    - container_fs_writes_merged_total
+    - container_fs_read_seconds_total
+    - container_fs_write_seconds_total
+    - container_fs_io_time_seconds_total
+    - kube_pod_container_resource_limits
+    - kube_pod_container_resource_requests
+    - kube_pod_container_status_restarts_total
+    - kubelet_volume_stats_used_bytes
+    - kubelet_volume_stats_capacity_bytes
+    - node_memory_MemTotal_bytes
+    - node_memory_MemFree_bytes
+    - node_memory_MemAvailable_bytes
+    - node_cpu_seconds_total
+    - node_filesystem_avail_bytes
+    - node_filesystem_size_bytes
+    - node_disk_read_time_seconds_total
+    - node_disk_write_time_seconds_total
+    - node_disk_io_time_seconds_total
+    - node_disk_read_bytes_total
+    - node_disk_written_bytes_total
+    - node_disk_reads_completed_total
+    - node_disk_writes_completed_total
+
+    criticalPodsTable:
+      - unit: integer
+        target: 'sum(avg%20by%20(pod)(avg_over_time(kube_pod_container_info\{\})))'
+        name: Replicas
+
+      - unit: percent
+        target: avg(avg_over_time(container_memory_usage_bytes\{container=\"\",image=\"\"\}))/sum(avg%20by%20(container)(avg_over_time(kube_pod_container_resource_requests\{resource=\"memory\"\})))
+        name: Memory/Request
+
+      - unit: gibiByte
+        target: sum(avg%20by%20(container)(avg_over_time(kube_pod_container_resource_requests\{resource=\"memory\"\})))
+        name: Memory Request
+
+      - unit: percent
+        target: rate(avg(avg_over_time(container_cpu_usage_seconds_total\{container=\"\",image=\"\"\})))/sum(avg%20by%20(container)(avg_over_time(kube_pod_container_resource_requests\{resource=\"cpu\"\})))
+        name: CPU/Request
+
+      - unit: float
+        target: sum(avg%20by%20(container)(avg_over_time(kube_pod_container_resource_requests\{resource=\"cpu\"\})))
+        name: CPU Request
+  ccrc:
+    host: "eric-pm-server-ccrc.ingress.n28-eccd1.sero.gic.ericsson.se"
+    api: "/api/v1/"
+    pmtype: prometheus
+    metrics:
+    - eric_nrf_nf_profiles
+  ccdm:
+    host: "eric-pm-server-ccdm.ingress.n28-eccd1.sero.gic.ericsson.se"
+    api: "/api/v1/"
+    pmtype: prometheus
+    metrics:
+    - eric_udr_nudr_dr_successful_responses_sent_total
+    - eric_udr_nudr_dr_unsuccessful_responses_sent_total
+    - eric_udr_nudr_dr_unsuccessful_responses_recv_total
+    - eric_udr_nudr_dr_successful_responses_recv_total
+    - eric_udr_nudr_dr_requests_recv_total
+    - eric_udr_nudr_dr_requests_sent_total
+    - eric_udr_nudr_dr_recv_requests_duration_seconds_bucket
+    - eric_ncudr_gud_dr_successful_responses_sent_total
+    - eric_ncudr_gud_dr_requests_recv_total
+    - eric_ncudr_gud_dr_unsuccessful_responses_sent_total
+    - eric_udr_ud_requests_recv_total
+    - eric_udr_ud_successful_responses_sent_total
+    - eric_udr_ud_unsuccessful_responses_sent_total
+    - eric_udr_ud_request_duration_seconds_bucket
+    - eric_act_rest_mapi_requests_recv_total
+    - eric_act_rest_mapi_successful_responses_sent_total
+  # # ccdm2:
+  #   # host: "eric-pm-server-ccdm2.node89.sero.gic.ericsson.se"
+  #   # api: "/api/v1/"
+  #   # pmtype: prometheus
+  # #   metrics:
+  # #   - eric_udr_nudr_dr_successful_responses_sent_total
+  # #   - eric_udr_nudr_dr_unsuccessful_responses_sent_total
+  # #   - eric_udr_nudr_dr_unsuccessful_responses_recv_total
+  # #   - eric_udr_nudr_dr_successful_responses_recv_total
+  # #   - eric_udr_nudr_dr_requests_recv_total
+  # #   - eric_udr_nudr_dr_requests_sent_total
+  # #   - eric_udr_nudr_dr_recv_requests_duration_seconds_bucket
+  # #   - eric_ncudr_gud_dr_successful_responses_sent_total
+  # #   - eric_ncudr_gud_dr_requests_recv_total
+  # #   - eric_ncudr_gud_dr_unsuccessful_responses_sent_total
+  # #   - eric_udr_ud_requests_recv_total
+  # #   - eric_udr_ud_successful_responses_sent_total
+  # #   - eric_udr_ud_unsuccessful_responses_sent_total
+  # #   - eric_udr_ud_request_duration_seconds_bucket
+  # #   - eric_act_rest_mapi_requests_recv_total
+  # #   - eric_act_rest_mapi_successful_responses_sent_total
+  ccsm:
+    host: "eric-pm-server-ccsm.ingress.n28-eccd1.sero.gic.ericsson.se"
+    api: "/api/v1/"
+    pmtype: prometheus
+    metrics:
+    - eric_udm_nudm_ueau_requests_recv
+    - eric_udm_nudm_ueau_unsuccessful_responses_sent
+    - eric_ausf_nausf_auth_successful_responses_sent
+    - eric_ausf_nausf_auth_requests_recv
+    - eric_hssepc_ncudr_gud_dr_requests_sent
+    - eric_hssepc_ncudr_gud_dr_successful_responses_recv
+    - eric_hssepc_ncudr_gud_dr_unsuccessful_responses_recv
+    - eric_udm_nudr_dr_unsuccessful_responses_recv
+    - eric_udm_nudr_dr_successful_responses_recv
+    - eric_udm_nudr_dr_requests_sent
+  pcg:
+    host: "eric-pm-server-pcg.ingress.n28-eccd1.sero.gic.ericsson.se"
+    api: "/api/v1/"
+    pmtype: victoria-metrics
+    metrics:
+    - pc_up_cpu_load_5s_average_percent
+    - pc_up_cpu_time_seconds_total
+    - pc_up_payload_received_bytes_total
+    - pc_up_payload_sent_bytes_total
+    - pc_up_upf_sessions
+    - pc_up_upf_ipv4_sessions
+    - pc_up_upf_ipv6_sessions
+    dpPodtable: ["Egress", "Ingress"]
+  pcc1:    
+    host: "eric-pm-server-pcc.ingress.n28-eccd1.sero.gic.ericsson.se"
+    api: "/api/v1/"
+    pmtype: victoria-metrics
+    metrics: 
+    - ggsn_nbr_of_subscribers
+    - pdu_session
+    - nbr_of_pgw_pdn_connections
+    - unsubscribe_req
+    - pcmm_VS_SMF_SmContextCreateAtt_5GS
+    - pcmm_VS_SMF_SmContextCreateSucc_5GS
+    - pcmm_VS_SMF_SmContextUpdateAtt_5GS
+    - pcmm_VS_SMF_SmContextUpdateSucc_5GS
+    - pcmm_VS_NSSF_NSSelectionAtt_5GS
+    - pcmm_VS_NSSF_NSSelectionSucc_5GS
+    - pcmm_VS_UDM_SdmSubscribeSucc_5GS
+    - pcmm_VS_UDM_SdmSubscribeAtt_5GS
+    - pcmm_VS_UDM_UeCmRegistrationSucc_5GS
+    - pcmm_VS_UDM_UeCmRegistrationAtt_5GS
+    - pcmm_VS_UDM_SdmGetSucc_5GS
+    - pcmm_VS_UDM_SdmGetAtt_5GS

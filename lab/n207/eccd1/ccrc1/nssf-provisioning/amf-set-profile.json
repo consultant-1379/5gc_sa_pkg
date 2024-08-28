@@ -1,0 +1,22 @@
+{
+   "amfSetName":"AmfSetId-002",
+   "amfSetAdminState":"UNLOCKED",
+   "amfSetId":"240-81-ff-002",
+   "servedPlmnIds":[
+      {
+         "mcc":"240",
+         "mnc":"81"
+      }
+   ],
+   "amfNfInstances":[
+      {
+         "amfNfInstanceId":"3fb31bb6-99ee-4a34-b714-414d46a1c1d1",
+         "amfNfInstanceState":"UNLOCKED"
+      },
+      {
+         "amfNfInstanceId":"3fb31bb6-99ee-4a34-b714-414d46a1c1d2",
+         "amfNfInstanceState":"UNLOCKED"
+      }
+   ],
+   "nrfProfileName":"nrf-slice-common-region-001"
+}

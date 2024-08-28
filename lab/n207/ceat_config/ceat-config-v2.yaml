@@ -1,0 +1,1222 @@
+ceat_config_version: 2
+
+## target cloud system: nfvi, cee, openstack
+cloud:
+  target_cloud_system: nfvi
+  openstack_version: victoria
+
+openstack:
+  ## Use following command to get Keystone Public URL
+  ## openstack endpoint list -f json | jq -r '.[] | select(."Service Name" | startswith("keystone")) | select(.Interface=="public") | .URL'
+  ## See openstack RC file for Keystone auth info, e.g. 'openrc' file in cee9 and 'admin-openrc.sh' in cee10
+  auth_url: https://os-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se:5000/v3
+  password: TsDm5gc@NFVI
+  tenant: tsdm5gc
+  user: tsdm5gc
+  identity_api_version: 3
+  domain: default
+  quotas:
+    compute: {cores: -1, ram: -1, instances: -1, server_groups: -1, server_group_members: -1}
+    network: {port: -1,  subnet: -1, network: -1}
+    volume: {gigabytes: -1, volumes: -1}
+  ## openstack root ca cert
+  ca_cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIFgjCCA2qgAwIBAgIQXfAZDd+9XJpFa1GJ2eqreDANBgkqhkiG9w0BAQsFADAV
+    MRMwEQYDVQQDEwpFR0FEUm9vdENBMB4XDTE4MDIwOTE1MzMyM1oXDTM4MDIwOTE1
+    NDAwMlowFTETMBEGA1UEAxMKRUdBRFJvb3RDQTCCAiIwDQYJKoZIhvcNAQEBBQAD
+    ggIPADCCAgoCggIBAM5hqGswhA9sZstmTwCCp18z7Y+OSUGzFSrJ/ocI4h9UsusA
+    40yOvmt4XnNxb6oGFsEOE+8eHzaCE00TlwS9nLGq6x+cj8nDuLYI66KEimR1xdkt
+    3mwJbSZ/4tuulgvyUcARB+xcRSsyLWraboxFa41VY6yCeBfs4FKyrkmGmhFxzknN
+    jKQQRkfRQz3wyggWebSa1Aa2DZdMa0BSn+ZnFcMyhOamLxj5RVvTLwuoqhSCfVU5
+    QW5ioLQ85DFg4667VClP+gDQ0F2XoLBmUPDmSXrlHZ3x+yA+ls0rdh79N84dq9hU
+    2Y3zApqyohjeFCj9F0DiGMRwQ8cj9PhMHp9mCreuS6ZMXk5Phqil5gyyf1Blqg9Y
+    21JWUoag+CKFlTbL6yRRauhbLCFTxZxpc6noG0B5fXTEftIl040jQ0XFcx6BOBru
+    DESkdhCuT4LZw4tOU79v5OVxLAcZOWsC+l/gt2gRRToz3HFFR4R7vDzVJKom5d22
+    dwy7v17kVcIsbMNndJMELz8UXK7tbHioBNnW8Sp7sRFrxz/lPzUF6eJFucgrpnng
+    n8xBoiBbZOWu7EFttTOE2pKpPPGFbl+c0EbyUa71RxidRsBKjy3aTDwT967q1h/v
+    uZDecSQH3JDPqH66MvP31YvLOLxSczWYYLC0+R23SslEgRFOxmtF4YODM4KPAgMB
+    AAGjgc0wgcowCwYDVR0PBAQDAgGGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYE
+    FFZFQloUqLksRP6bNcTb7i85gk3QMBAGCSsGAQQBgjcVAQQDAgEAMHkGA1UdIARy
+    MHAwbgYEVR0gADBmMGQGCCsGAQUFBwICMFgeVgBUAGgAaQBzACAAUABLAEkAIABp
+    AHMAIABpAG4AdABlAG4AZABlAGQAIABmAG8AcgAgAGkAbgB0AGUAcgBuAGEAbAAg
+    AHUAcwBlACAAbwBuAGwAeQAuMA0GCSqGSIb3DQEBCwUAA4ICAQBiBuc9JLpv0+nx
+    eY5Np7X0HPODG4AdPepVpwh/JUh07G8eClq6ZFoejjiIGpLvMN+Lhfg8Q+hoh7Yb
+    z2Gf96TpyAsjx4lmqIgDNfBdf7G0wDf+irP6pifCPBzu2T5519WztvaiZfQoPEz+
+    CXm3/yiSKBQUx705fPctx91TjkQEbiBFU3hN9bmw5VkM+2HN7eDJUIUVNXXaTec0
+    6M1RhLB2vLVinACpamylLIzShLZpDyk1VI2tniyia+sJulDdpu6kY3LuMr7s97Gj
+    UqFHn3PO8lXwYqueJ5xeOjMIKzaliw5n58mDYzpt1uu0u9i0w/8nJpGl4iYwcgBn
+    ZPmKet3KG+9LIh/JUdR2KMFv706E4Z24B/QCjbRFqjzS4BDXKmcZV84/HwA48hwa
+    yUTWsWZXIibEmvyQcZo9+943o3jkiFYDZZfmQ2a2bzvcHsrNa4ptJYWaBEm2NQWa
+    F6pPdUr9uerqyOjRHPkPyd711P7gYC6MWlEKi9JME6lbvanFOwwwh+4nhNnk1iw8
+    335Q2U+S8WCzPo7Mzn2DGfa6bdO6sOChXgM//QbaL9GH0LYO8O6XWfS0HSztnBFB
+    etCUFffhDdzPkIxfmd7ylGgZSbls2+KFjIgF2M9gKkglmzf5qjNhA1jjHiaUyRTZ
+    tRq4ImVO9Ddg1VngqJRZvro+zlH3pQ==
+    -----END CERTIFICATE-----
+    -----BEGIN CERTIFICATE-----
+    MIIGhTCCBG2gAwIBAgITJAAAAAgZo51IZLn3FgAAAAAACDANBgkqhkiG9w0BAQsF
+    ADAVMRMwEQYDVQQDEwpFR0FEUm9vdENBMB4XDTE5MDUwMjEwNTgzNVoXDTI5MDUw
+    MjExMDgzNVowRzESMBAGCgmSJomT8ixkARkWAnNlMRgwFgYKCZImiZPyLGQBGRYI
+    ZXJpY3Nzb24xFzAVBgNVBAMTDkVHQURJc3N1aW5nQ0EzMIICIjANBgkqhkiG9w0B
+    AQEFAAOCAg8AMIICCgKCAgEAorS/FxfmNVug9Q963xTydgf5JD/XHEQ0HAypY0Mw
+    omgZA1Sj1cRFjFzqVbZlQB/d0RUeN8K9+wzpXl2sDiDTYFKc4v3sesmVrT+VHOtf
+    2G1Wuw+7OjMURFhoGNz56vDEL10KH86ViPF0Rx3R5/myKYgn/AX6rdVPSsBPyhAe
+    YDdsNX3yWrvxr6x3P5Ze8L5cfgDmw1NR3sR3j9mJSKxEpJHo/6z+wh1xOgV7z8Kj
+    Tzdl0+103ZvPw8wpnX3JGwOy5O/lIXMFctMEvZoD/eIerPtYEdjk8HrGbWWu66VK
+    EoXopl0/3MbPypVdizPcRBq7ldaCDDdLMi2LjFvZbD0UwHHjR/piIE/YsdPLxi1o
+    KSO2vPJHSPjpQ0JtP0gcAGR1wSFQCiOzklupMzZ1PMSySbT04woRnUDdTu9BMzIi
+    OV5scI+KtJ1JmPqHq3nCS2nkA0grSNbsbB0bz/mrJLX+wH3CXNj0r0gBIDKlaPQb
+    8UzrahG3uuIGk4/x8gnU/wh5WYeU89o+3neIgXySK5chnjfevWBwYVF1vddYltpf
+    DFZYuFwT+zefeMEiPnseW6JSnRvNljz1XsBlPC++UydVJDGkp+WzeCR46J6iCVeK
+    kWKoLv+BtNIbue7SJw0GdGWBJ0DzKdPBmp+Ya5YPDE1g8SqrfdlO61ykJQ1L6EGf
+    Sb0CAwEAAaOCAZowggGWMBAGCSsGAQQBgjcVAQQDAgEAMB0GA1UdDgQWBBSBekIQ
+    iZ64URB+VptBwt+veMU9JDB5BgNVHSAEcjBwMG4GBFUdIAAwZjBkBggrBgEFBQcC
+    AjBYHlYAVABoAGkAcwAgAFAASwBJACAAaQBzACAAaQBuAHQAZQBuAGQAZQBkACAA
+    ZgBvAHIAIABpAG4AdABlAHIAbgBhAGwAIAB1AHMAZQAgAG8AbgBsAHkALjAZBgkr
+    BgEEAYI3FAIEDB4KAFMAdQBiAEMAQTALBgNVHQ8EBAMCAYYwEgYDVR0TAQH/BAgw
+    BgEB/wIBADAfBgNVHSMEGDAWgBRWRUJaFKi5LET+mzXE2+4vOYJN0DA/BgNVHR8E
+    ODA2MDSgMqAwhi5odHRwOi8vcGtpLmVyaWNzc29uLnNlL0NlcnREYXRhL0VHQURS
+    b290Q0EuY3JsMEoGCCsGAQUFBwEBBD4wPDA6BggrBgEFBQcwAoYuaHR0cDovL3Br
+    aS5lcmljc3Nvbi5zZS9DZXJ0RGF0YS9FR0FEUm9vdENBLmNydDANBgkqhkiG9w0B
+    AQsFAAOCAgEAk6hklv9NPua9UImj08ILq43l9SgFhg5+y1pRsrUwdTmFANkL0dxi
+    TOF93QwFTfwOs1xJr2nzvCsoJ2Rvc04VQlONwiTqn1kMs9vJr2fuQg9hf2O9l0ss
+    AftlHq+UxbeIhloGTyJgleJUc2/+pm4UJn8fhZvNZywL8ok4xr5HQRH5xQz21X4i
+    VF9RJlvZbsdWLX1iJMs8+oZJQmhRxoHsPylg+24xLuKFuva7BevDub4HpF6utXeE
+    qRMN8Yd1HPg55abf8wEqt1VqNp2erZfLETdf59aXdznqeI+ZJl8gQZwBsOlSANct
+    n0nj306BlYm6jthXb7T/Bgau48qyrH/vEnwawZ+RH2q1UvGiAMY1/L5PAP4LGubP
+    q5VHsibvoQz+jld2bWM4X8y7Z93s33/elZo26pNuYWiE67IVmZntoHJZmq0RfI7V
+    cG27eExeNXYc7T0HheK32CguyDsDUURHOMfMzUJBzDnZ8zQWWeOsKCut9xcpxpPW
+    7XQB+iH59lFgRF0WW3H4Z3jh7Kvfbr6XsbzEx/onzLaEVrXBf1xKlXgV5rZW69w1
+    It5HdRmqOsfW32Bdz9JehI+Z/Iql9UFDsM1lS9dWfMj4Kv3ALpmG5uS3SjU5y1+e
+    7EaQhOp85z15UYt9yoS7KqaNZ07bZb2uzBs32lN/Bn1vwPoLA60kI48=
+    -----END CERTIFICATE-----
+  ## External L2GW Definition
+  l2gw_dcgw_name: L2GW_BORDER_LEAF
+  l2gw_sriov_left_name: L2GW_LEAF_PHY0
+  l2gw_sriov_right_name: L2GW_LEAF_PHY1
+
+## nova host aggregates and availability zones
+zones:
+# T1 Host Aggregate Definition
+  MGMT_HA:
+    compute_hosts:
+    - compute-vxsds-1-8026.cee.tld
+    - compute-vxsds-1-8027.cee.tld
+    - compute-vxsds-1-8028.cee.tld
+    - compute-vxsds-1-8029.cee.tld
+    - compute-vxsds-1-8030.cee.tld
+    name: MGMT
+    meta:
+      type: management
+  STD_HA:
+    compute_hosts:
+    - compute-1-8018.cee.tld
+    - compute-1-8019.cee.tld
+    - compute-1-8020.cee.tld
+    - compute-1-8021.cee.tld
+    - compute-1-8031.cee.tld
+    - compute-1-8032.cee.tld
+    - compute-1-8033.cee.tld
+    - compute-1-8034.cee.tld
+    - compute-1-8035.cee.tld
+    - compute-1-8036.cee.tld
+    - compute-1-8037.cee.tld
+    - compute-1-8038.cee.tld
+    - compute-1-8039.cee.tld
+    - compute-1-8040.cee.tld
+    - compute-1-8041.cee.tld
+    - compute-1-8042.cee.tld
+    name: STD
+    meta:
+      type: standard
+  HT_HA:
+    compute_hosts:
+    - compute-1-8049.cee.tld
+    - compute-1-8050.cee.tld
+    - compute-1-8051.cee.tld
+    - compute-1-8052.cee.tld
+    - compute-1-8054.cee.tld
+    name: HT
+    meta:
+      type: high-throughput
+      hw_desc: highBW
+
+# T2 Host Aggregate Definition
+  STD2_HA:
+    compute_hosts:
+    - compute-1-8043.cee.tld
+    - compute-1-8044.cee.tld
+    - compute-1-8045.cee.tld
+    - compute-1-8046.cee.tld
+    - compute-1-8047.cee.tld
+    - compute-1-8048.cee.tld
+    - compute-1-8320.cee.tld
+    name: STD2
+    meta:
+      type: standard-2
+
+# Test Host Aggregate Definition
+
+## nova flavors
+flavors:
+  ephemeral_node:
+    name: EPH_2vcpu_4096MBmem_0GBdisk
+    vcpus: 2
+    mem: 4096
+    disk: 0
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+  management-cluster_controlplane:
+    name: MGMT_8vcpu_16384MBmem_150GBdisk
+    vcpus: 8
+    mem: 16384
+    disk: 150
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+  management-cluster_worker:
+    name: MGMT_12vcpu_24576MBmem_150GBdisk
+    vcpus: 12
+    mem: 24576
+    disk: 150
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+
+  traffic-cluster_controlplane:
+    name: MGMT_10vcpu_32768MBmem_50GBdisk
+    vcpus: 8
+    mem: 32768
+    disk: 50
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+  traffic-cluster_STDworker:
+    name: STD_104vcpu_409600MBmem_250GBdisk
+    vcpus: 104
+    mem: 409600
+    disk: 250
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'hw:numa_nodes': '2'
+      'aggregate_instance_extra_specs:type': 'standard'
+  traffic-cluster_HTworker:
+    # for Dell R650 icelake 28cores, nova shared vcpu set list is [54,55,110,111]
+    name: HT_52vcpu_81920MBmem_50GBdisk
+    vcpus: 52
+    mem: 81920
+    disk: 50
+    meta:
+      'hw:cpu_policy': 'mixed'
+      'hw:cpu_dedicated_mask': '2-51'
+      'hw:emulator_threads_policy': 'share'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'high-throughput'
+      'aggregate_instance_extra_specs:hw_desc': 'highBW'
+  traffic-cluster_STD2worker:
+    name: STD2_100vcpu_389120MBmem_200GBdisk
+    vcpus: 100
+    mem: 389120
+    disk: 200
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'hw:numa_nodes': '2'
+      'aggregate_instance_extra_specs:type': 'standard-2'
+
+  dmz-cluster_controlplane:
+    name: MGMT_8vcpu_16384MBmem_50GBdisk
+    vcpus: 8
+    mem: 16384
+    disk: 50
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management' 
+  dmz-cluster_worker:
+    name: MGMT_24vcpu_51200MBmem_100GBdisk
+    vcpus: 24
+    mem: 51200
+    disk: 100
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+
+  evnfm_deployment_vm:
+    name: MGMT_2vcpu_4096MBmem_250GBdisk
+    vcpus: 2
+    mem: 4096
+    disk: 250
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+
+## glance images
+images:
+  ccdcapo_eph_2.25.1:
+    name: eccd-2.25.1-000039-c4185058-ephemeral-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.25.1-000039-c4185058/ephemeral-images/ephemeral.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+
+  ccdcapo_node_2.25.1:
+    name: eccd-2.25.1-000039-c4185058-node-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.25.1-000039-c4185058/node-images/node.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+    properties: hw_vif_multiqueue_enabled=true,hw_disk_bus=scsi,hw_scsi_model=virtio-scsi
+#
+ # ccdcapo_eph_2.26.0rc2:
+ #   name: eccd-2.26.0-000265-f9a19b59-ephemeral-image.raw
+ #   file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.26.0-000265-f9a19b59/ephemeral-images/ephemeral.img
+ #   ## image disk format in openstack, range: raw, qcow2
+ #   store_format: raw
+
+ # ccdcapo_node_2.26.0rc2:
+ #   name: eccd-2.26.0-000265-f9a19b59-node-image.raw
+ #   file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.26.0-000265-f9a19b59/node-images/node.img
+ #   ## image disk format in openstack, range: raw, qcow2
+ #   store_format: raw
+ #   properties: hw_vif_multiqueue_enabled=true,hw_disk_bus=scsi,hw_scsi_model=virtio-scsi
+
+  ccdcapo_eph_2.26.0:
+    name: eccd-2.26.0-000393-fc474230-ephemeral-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.26.0-000393-fc474230/ephemeral-images/ephemeral.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+
+  ccdcapo_node_2.26.0:
+    name: eccd-2.26.0-000393-fc474230-node-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.26.0-000393-fc474230/node-images/node.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+    properties: hw_vif_multiqueue_enabled=true,hw_disk_bus=scsi,hw_scsi_model=virtio-scsi
+
+  ccdcapo_eph_2.27.0:
+    name: eccd-2.27.0-001119-d579fe9b-ephemeral-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.27.0-001119-d579fe9b/ephemeral-images/ephemeral.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+
+  ccdcapo_node_2.27.0:
+    name: eccd-2.27.0-001119-d579fe9b-node-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.27.0-001119-d579fe9b/node-images/node.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+    properties: hw_vif_multiqueue_enabled=true,hw_disk_bus=scsi,hw_scsi_model=virtio-scsi
+
+  
+  evnfm_deployment_vm:
+    name: envm_deployment_vm
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/EVNFM_VM/evnfm-deployment-vm.qcow2
+    store_format: qcow2
+    properties: hw_disk_bus=scsi,hw_scsi_model=virtio-scsi
+
+## neutron networks
+networks:
+  EXT_SRIOV-FLAT-1:
+    physical_network: N280-CEE1-PHY0_100
+    network_type: flat
+    name: sriov-flat-left
+    cidr: 172.31.192.0/24
+    enable_dhcp: false
+    existing: flase
+  EXT_SRIOV-FLAT-2:
+    physical_network: N280-CEE1-PHY1_100
+    network_type: flat
+    name: sriov-flat-right
+    cidr: 172.31.193.0/24
+    enable_dhcp: false
+    existing: flase
+
+## VNFs
+vnfs:
+# ---------------------------------------------------------------------------
+# Traffic Cluster 1
+# ---------------------------------------------------------------------------
+  ccd1-cluster:
+    version: 2.26.0
+    vnf_id: n280-eccd1
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: n280-eccd1.sero.gic.ericsson.se
+    day1_parameters:
+      cluster_type: traffic
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$yhb.znT05bMCsdE5$DHsF6c8FPutNN7hUkaN8mwsdTmo.YnqjSckRJmLrnrjs8upOe9PqK3IA215avLP5TcXY0B7JmlkNCRrHOA/cf1'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/ccd_director_rsa.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n280-eccd1.sero.gic.ericsson.se
+        port: '8880'
+        ssl: false
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana
+      grafana_registry_url: container-registry.ingress.n280-eccd1.sero.gic.ericsson.se
+      grafana_registry_password: 'c0ntainerReg!stry'
+      grafana_ingress_host: grafana.ingress.n280-eccd1.sero.gic.ericsson.se
+    deployment_stack:
+    - stack: network
+      hot_file:
+        template_file: 5gc_sa_net_hot/5gc_sa_net.yaml
+        # Note:
+        # The env_file is used for CCD IBD and other VNF deployment.
+        # When the 'cluster_config' section is defined which means a CCD VMD deployment,
+        # then the CCD network environment file will be always generated dynamically by
+        # 'gen_ccdadm_config' module. So undefine the 'env_file' parameter, when cluster_config
+        # section is defined.
+        #
+        env_file: lab/n280/eccd1/eccd/env-eccd-net.yaml
+
+# ---------------------------------------------------------------------------
+# Management Cluster
+# ---------------------------------------------------------------------------
+  ccd2-cluster:
+    version: 2.26.0
+    vnf_id: n280-eccd2
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: n280-eccd2.sero.gic.ericsson.se
+    day1_parameters:
+      cluster_type: management
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$yhb.znT05bMCsdE5$DHsF6c8FPutNN7hUkaN8mwsdTmo.YnqjSckRJmLrnrjs8upOe9PqK3IA215avLP5TcXY0B7JmlkNCRrHOA/cf1'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/ccd_director_rsa.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n280-eccd2.sero.gic.ericsson.se
+        port: '8880'
+        ssl: false
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana
+      grafana_registry_url: container-registry.ingress.n280-eccd2.sero.gic.ericsson.se
+      grafana_registry_password: 'c0ntainerReg!stry'
+      grafana_ingress_host: grafana.ingress.n280-eccd2.sero.gic.ericsson.se
+    deployment_stack:
+    - stack: network
+      hot_file:
+        template_file: 5gc_sa_net_hot/5gc_sa_net.yaml
+        # Note:
+        # The env_file is used for CCD IBD and other VNF deployment.
+        # When the 'cluster_config' section is defined which means a CCD VMD deployment,
+        # then the CCD network environment file will be always generated dynamically by
+        # 'gen_ccdadm_config' module. So undefine the 'env_file' parameter, when cluster_config
+        # section is defined.
+        #
+        env_file: lab/n280/eccd2/eccd/env-eccd-net.yaml
+
+# ---------------------------------------------------------------------------
+# DMZ Cluster
+# ---------------------------------------------------------------------------
+  ccd3-cluster:
+    version: 2.26.0
+    vnf_id: n280-eccd3
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: n280-eccd3.sero.gic.ericsson.se
+    day1_parameters:
+      cluster_type: dmz
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$yhb.znT05bMCsdE5$DHsF6c8FPutNN7hUkaN8mwsdTmo.YnqjSckRJmLrnrjs8upOe9PqK3IA215avLP5TcXY0B7JmlkNCRrHOA/cf1'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/ccd_director_rsa.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n280-eccd3.sero.gic.ericsson.se
+        port: '8880'
+        ssl: false
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana
+      grafana_registry_url: container-registry.ingress.n280-eccd3.sero.gic.ericsson.se
+      grafana_registry_password: 'c0ntainerReg!stry'
+      grafana_ingress_host: grafana.ingress.n280-eccd3.sero.gic.ericsson.se
+    deployment_stack:
+    - stack: network
+      hot_file:
+        template_file: 5gc_sa_net_hot/5gc_sa_net.yaml
+        # Note:
+        # The env_file is used for CCD IBD and other VNF deployment.
+        # When the 'cluster_config' section is defined which means a CCD VMD deployment,
+        # then the CCD network environment file will be always generated dynamically by
+        # 'gen_ccdadm_config' module. So undefine the 'env_file' parameter, when cluster_config
+        # section is defined.
+        #
+        env_file: lab/n280/eccd3/eccd/env-eccd-net.yaml
+
+# ---------------------------------------------------------------------------
+# Traffic Cluster 2
+# ---------------------------------------------------------------------------
+  ccd4-cluster:
+    version: 2.27.0
+    vnf_id: n280-eccd4
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: n280-eccd4.sero.gic.ericsson.se
+    day1_parameters:
+      cluster_type: traffic
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$yhb.znT05bMCsdE5$DHsF6c8FPutNN7hUkaN8mwsdTmo.YnqjSckRJmLrnrjs8upOe9PqK3IA215avLP5TcXY0B7JmlkNCRrHOA/cf1'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/ccd_director_rsa.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n280-eccd4.sero.gic.ericsson.se
+        port: '8880'
+        ssl: false
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana
+      grafana_registry_url: container-registry.ingress.n280-eccd4.sero.gic.ericsson.se
+      grafana_registry_password: 'c0ntainerReg!stry'
+      grafana_ingress_host: grafana.ingress.n280-eccd4.sero.gic.ericsson.se
+    deployment_stack:
+    - stack: network
+      hot_file:
+        template_file: 5gc_sa_net_hot/5gc_sa_net.yaml
+        # Note:
+        # The env_file is used for CCD IBD and other VNF deployment.
+        # When the 'cluster_config' section is defined which means a CCD VMD deployment,
+        # then the CCD network environment file will be always generated dynamically by
+        # 'gen_ccdadm_config' module. So undefine the 'env_file' parameter, when cluster_config
+        # section is defined.
+        #
+        env_file: lab/n280/eccd4/eccd/env-eccd-net.yaml
+
+## CCD Cluster
+cluster_config:
+  global:
+    # At most 2 nameserver filled, otherwise by k8s default, it will show the alarm info
+    # 'Nameserver limits were exceeded'.
+    nameservers: [ 10.221.16.10, 10.221.16.11 ]
+    ntp_servers: [ 10.221.17.6, 10.221.17.46 ]
+    license:
+      nels_host: nelsaas-vnf1-thrift.sero.gic.ericsson.se
+      licensing_domains:
+        - customer_id: '946060'
+          product_type: ECCD
+          swlt_id: STA-CCD-1
+      ccd_app_sys_info_nels_host_ip: 10.155.142.68
+      ccd_app_sys_info_nels_host_name: nelsaas-vnf1-thrift.sero.gic.ericsson.se
+
+    ephemeral_image: ccdcapo_eph_2.26.0
+    node_image: ccdcapo_node_2.26.0
+    ephemeral_flavor: ephemeral_node
+    control_plane_flavor: management-cluster_controlplane
+    ecfe_bfd_rx: 100ms
+    ecfe_bfd_tx: 100ms
+    ecfe_bfd_multiplier: 9
+    tgpp_dns_server: 172.30.32.50
+    ## if dm5gc ca is well-konwn, then the parameter dm5gc_cacert can be undefined.
+    dm5gc_cacert: |
+      -----BEGIN CERTIFICATE-----
+      MIIGDTCCA/WgAwIBAgIUZLr11v37tmlXMG0eJ0EM+iftWUMwDQYJKoZIhvcNAQEL
+      BQAwgYwxCzAJBgNVBAYTAlNFMQswCQYDVQQIDAJWRzERMA8GA1UEBwwIR290ZWJv
+      cmcxETAPBgNVBAoMCEVyaWNzc29uMQ0wCwYDVQQLDAR2ZXBjMTswOQYDVQQDDDJU
+      YXJnZXQgU29sdXRpb24gRHVhbC1Nb2RlIDVHIENvcmUgTXVsdGlWZXJzZVJvb3RD
+      QTAgFw0yMzA1MDYwODIwNTdaGA8yMDUxMDUxOTA4MjA1N1owgYwxCzAJBgNVBAYT
+      AlNFMQswCQYDVQQIDAJWRzERMA8GA1UEBwwIR290ZWJvcmcxETAPBgNVBAoMCEVy
+      aWNzc29uMQ0wCwYDVQQLDAR2ZXBjMTswOQYDVQQDDDJUYXJnZXQgU29sdXRpb24g
+      RHVhbC1Nb2RlIDVHIENvcmUgTXVsdGlWZXJzZVJvb3RDQTCCAiIwDQYJKoZIhvcN
+      AQEBBQADggIPADCCAgoCggIBALXGi23iW+Rlz2u20Vn8cd2X46kH6WpnXB0GYzDm
+      qaDI9hDjRsQs3ngyIujrb9r8xnfmlVMIWmqlVLSCwqc/PUe5aMnbhlU3G0HaR16a
+      eI8JRBn0oj9G1B9F8xr40XaM1RCy7NE4kXRTR0jEPctJ00j/u9XMwttbfAbCZEvu
+      gewFDd4fVx8MuTmNiNjDv66WeRw/eMFWYZBT9Mr6sPRGT2AGLtMomPFP3U7RVZRL
+      GLqAQj5/P4+dspzuBam3uoBXLYhUD8pILVgvZ2mE+igzbJ05sOd+LizN2va1nggj
+      AIyPSxGBpfFmiWkITT1V+8zTuA/lN7NZvSw0jfdIjIvBW2s02xeKjUsiIes95aW5
+      yX1g3OAE0ndI4WZcQ49ZhBy0f7D5ZSt8Jy4nukjf3N5e9wUtzEoell65FS2zr/qT
+      vIM3kFwuD8JkXpO8iFf/5RT9fO3emE3PC+gZy6XLrjlXYny5JIgFBzilIyE+i77S
+      lP+1o+B6+clC5Ny+Jn6N8PL8PxzcwxPNqqQMYRtoxH8/Xlnw1lPHtvBO/nKQbU//
+      B96fRcyTj2+XFPSpbz9PKYQkRezTn7dgj79C8sZyNK/YXfZ3ZeFX0inti7/RlJN8
+      iRBwzXTq6tQAKs+Bcd3HxurC8r0aGmsS22qKx8CquTPvijAaOpZo8+jnoOXP4+Nz
+      sDQTAgMBAAGjYzBhMB0GA1UdDgQWBBTuIsONl7IngwPClz+btbR1YSnk6DAfBgNV
+      HSMEGDAWgBTuIsONl7IngwPClz+btbR1YSnk6DAPBgNVHRMBAf8EBTADAQH/MA4G
+      A1UdDwEB/wQEAwIBhjANBgkqhkiG9w0BAQsFAAOCAgEAtRgndBH7YyUZoBxuWWVK
+      orGPSXNZhUOQxyfIKASS3tDnAmD+4JVSy6W4AzOv7cF8KofcDZpNjw2wstKhePRT
+      ztTtM0CPBY4QvXyHNNKlXQDEUqp9OeEvzi04zEefsiF2N3e717oSqmz9zoELO6Uw
+      V1ICrhZwrv+Af+CT4ZUhM+JaqNxaXkwur8Ypafhe+cDSj1CLMeL7g7lql0sBTE0E
+      WcR9NYx4OlkQC9hHTqYWToJXvjcuUFbVE/QuoARG+tea+/CNM+ayB5UUlV40OqXK
+      iQ2l4M+NDVDJauuZpJsl63OUWSdTw0bnj4S4EHaJmnHQUfQAtZO2dmwCzr7G15zJ
+      2LeRnhUfATRYJXiMXDveJAxQPwipHpC39pGK0bOQIHiHe84KP/8yo1ALJZGoqRbv
+      RwR5VHbCN4PsWlT5Te/TJZ416GUiod+v+8a6aYTaUe5dz+qv/ufRianxHNPnaXTr
+      /QZ1i2Pzo8ulMiSGA2KstPIRXS/cCXavIPfzqddHfOzk/ct5+MbRKao+2ZtCeZHl
+      aayaeFYfs1UrEu6tnGh/ER+5NVH0NZvGBdnl5xBmuarGGdz+zJjXf+9iEhq2P8mg
+      SrjnOH3hYYcNRgg9kHTw6qlHCTDzUs95zzbLT5QE/hvA1DrsuzpNbQKHKpUKg7s3
+      Ypc901s9BWoNxqjOdWJ5o3c=
+      -----END CERTIFICATE-----
+
+    enable_small_worker: false
+    phynet_virtio: n280vpod1-dcgw
+    phynet_sriov_left: N280-CEE1-PHY0_100
+    phynet_sriov_right: N280-CEE1-PHY1_100
+
+    ## ccdadm host
+    # -- password is an encrypted string, use the below command to generate an
+    #    encrypted password
+    #    $ /lab/pccc_utils/scripts/src/bin/secpass --encrypt <clear_password>
+    ccdadm_host_ip: 10.155.215.196
+    ccdadm_host_username: ceeinfra
+    ccdadm_host_encrypt_password: gAAAAABkia7ano-VdE18YAsGMfCnUFIYid8T_EGPdytpvHYs00BRqqXaVx0PPmvbnHis9P8UYvej20PaG_5DFUrxUCOsjUct7g==
+
+    ## root password for console access
+    console_password_hash: "$6$TWHU0Xf7tbN9czcs$mCOSALLIILhOSWSYF31c85RmBJxRBhlMGbI3g/l/JLH0L0PI37k.nrs4SNGeMgCCDNhkH1LWYHJTetopg5Rro0"
+
+    ## WA for small worker deployment and ephemeral storage deployment since NFVI 7.2
+    provisioning_load_spread_delay: 20
+    initial_deployment_count: 5
+
+    ## PCC MM/SM controller worker nodes label script
+    pcmm_controller_worker_nodes_count: 3
+    pcsm_controller_worker_nodes_count: 2
+
+  clusters:
+####################################################################################################
+# n280 eccd1 cluster
+####################################################################################################
+    # cluster id
+    n280-eccd1:
+      # output directory to save ccd configuration files
+      output_dir: lab/n280/eccd1/eccd
+      ## default cluser name equals cluster id
+      cluster_name: n280-eccd1
+      # Range: traffic, management, dmz
+      cluster_type: traffic
+      tgpp_dns_server: 172.30.32.50
+      ephemeral_image: ccdcapo_eph_2.26.0
+      node_image: ccdcapo_node_2.26.0
+      ephemeral_flavor: ephemeral_node
+
+      control_plane_external_vip: 10.117.54.62
+      control_plane_flavor: traffic-cluster_controlplane
+
+      kubeapi_external_ingress: kubeapi.ingress.n280-eccd1.sero.gic.ericsson.se
+      kubeapi_external_ip: 10.143.139.65
+      cr_hostname: container-registry.ingress.n280-eccd1.sero.gic.ericsson.se
+      kubernetes_ca_cert: |
+        -----BEGIN CERTIFICATE-----
+        MIIDEzCCAfugAwIBAgIUarTzIHIW6suoygpj/fXads4J9OIwDQYJKoZIhvcNAQEL
+        BQAwGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTAgFw0yMzA1MDgxMTU0MTJaGA8y
+        MDUwMDkyMzExNTQxMlowGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTCCASIwDQYJ
+        KoZIhvcNAQEBBQADggEPADCCAQoCggEBANqgUj35/gmPOLo2NkLGiKBtyU4tjuJD
+        FDeiUNc2lvQUS4WFo/678+1qXUeVUp3s5T1SSQDnDYoxuyqe7fWRPWSNUiMrcPqw
+        a/WSnMfXN8RLUfSrP574E5+2H6+4hNPbu2ph/ZA8hmxb/6Enouu1W2W6jvqXeO5e
+        1llzIsJomR3Fj7yL8Z2OlxnbtnZdrDygfBbgUAGdL92V+wmiK+vaoRjQtr0K18hj
+        GFL0s8z/0lKRwBm0Qd2STp/i1A/aiW/s4HQtyze/Fjc0TEZvA3wLj7SkdA1yJjR0
+        phs0PP+nX1dRG11eR9aXIvVOhkrDg+A+4NYLBibwGO8uFnVVmcQ9qbECAwEAAaNT
+        MFEwHQYDVR0OBBYEFMg0+DNpVCOPVzgm+gLDTYyEQu9sMB8GA1UdIwQYMBaAFMg0
+        +DNpVCOPVzgm+gLDTYyEQu9sMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL
+        BQADggEBALKiE1rtdWaWJxEPWdgVzZNku365uI2XKUveeKvs8DXb/UyxgZr0rYcA
+        Th7mta98npviH27xKrTUrlM4ilQERD78I9b+wwqISRE0OXleuG1+fBY+MiO07i2j
+        rokSdmGhoMIMnf6CbI8yc68PINpiQQX31IKm5RZrrnKfMESzh+N6MNghkUoiIH8z
+        8PG/4oLMkRlYJidfcmovqXEytUXsTBrYXzvST4QMW8llpY8YCDOH25tJBKb6fK66
+        8DS9qFoe9vMWxxV52FqLl8wPLbJV84f+40QcnuYKDAQ3/YAZKFigM+uvUNOws3MC
+        dJXNNYPwf6W3Zg2LHbEzyPTJXYWEQIc=
+        -----END CERTIFICATE-----
+      kubernetes_ca_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEowIBAAKCAQEA2qBSPfn+CY84ujY2QsaIoG3JTi2O4kMUN6JQ1zaW9BRLhYWj
+        /rvz7WpdR5VSnezlPVJJAOcNijG7Kp7t9ZE9ZI1SIytw+rBr9ZKcx9c3xEtR9Ks/
+        nvgTn7Yfr7iE09u7amH9kDyGbFv/oSei67VbZbqO+pd47l7WWXMiwmiZHcWPvIvx
+        nY6XGdu2dl2sPKB8FuBQAZ0v3ZX7CaIr69qhGNC2vQrXyGMYUvSzzP/SUpHAGbRB
+        3ZJOn+LUD9qJb+zgdC3LN78WNzRMRm8DfAuPtKR0DXImNHSmGzQ8/6dfV1EbXV5H
+        1pci9U6GSsOD4D7g1gsGJvAY7y4WdVWZxD2psQIDAQABAoIBAHWaxGLedc9CoetZ
+        ejrVfW1/YUiSrUf9eYSr5fy/Oti1iiKbTyqahI70JpV5N+YIJxCjkO3RXLE4K0y0
+        DaGJrZLHiqWsmqvf91M0uO2vUipfsgiBjkm/fR7u44CtK5ajnt+NMs9CH7Vuj8Zr
+        AfL1reK9Rmh6zuy7S2b2zn3xslwWibakay/HCAWBsgM/GqRWlv14wewo1h3zkhvT
+        QxV2CyWkgEGancUQj28bju3+1PW4vmva5mnAqICxi+LzzPx9eacvMSgG7GZg5h4x
+        Gjv20/VY37Ve9gKwwtTFBE4Q1bK/TM67+e+rAnBuZWVvCNOlAN0IhKIWNw/WmxVR
+        OL3dn4ECgYEA8UgKHgiQSA51QXpriVFYWvn5XRPIeY/Yz1V/Jr/1FiBemSZUlTGB
+        e7EYGIvzvl6Z/aOWsZC2biSokeKdxDToJ18ZRWXUdyeDkYTfLfMbY3Yb+Dj9kwvk
+        arNbBcbk+KUUxmX16xuM0GaFKL16m2UsZAvCBdoLNiTq70m52AkUzykCgYEA5/Z9
+        FCLW89IQlb3Z5eWQsSc+lg+qFag4eNczR5Dw0qx2i78JVlQlGPBD4Wd9452oouXv
+        MHFKLbSuTxlFMb7e+ei0qtSpKYt5+ToUsGQzi+DLZhn5EwIsTTMwRjsW3qGzd/7/
+        YkQ73/HmtBjDIh5I7mArN3DCmlVlkPUsYMunv0kCgYAzaeNmBPMht5r6yehSSXgn
+        Yq7lS4rjhGhxvckra6oA/gLKZaWOaQ8rWVBGIsRco3Hy30IEMk79Z2hYNc7ieVei
+        1BvhctJ0VYIupv6bnvsOFaPeH97Az77rka5qq7gs15h2slFVuPgnjEEBrmaK6GMu
+        Kmc8sfrDndhGBxLH2x+JCQKBgC2em4DPTUkMgjiA6w68tFUy66slj4TM3bZeVHZ5
+        ufMk+feH7bUtvVIHRsJY0ThntFe9MuprDXSpuTJTPPmImV+69XU3d8F07dsnIhSC
+        0GRtJHODHiov3jicnZziWCAW2y35V46i7sefUokO6amXHS7MeRNhONSTgPMeVMkA
+        pJAJAoGBAN87zxIMh6I73h/2FxhS+NoUf0c7ijIndTHefUbSEnUTOshASt8vM6IV
+        dgzY5BFgeJg9qzeIjjFahDn0P9u1oIWYklpcs/OGNVRnelFdsDwlYSlNjbumfQ38
+        fjRedCwdxf47e9FdSTLCIyklfXr/jxsNLeHNbbQQhB8q9JPkXq3E
+        -----END RSA PRIVATE KEY-----
+
+      # neutron static route for primary networks
+      primary_oam_routes: &ccd1_primary_oam_routes
+      - { dest: 10.63.0.0/16, desc: Terminal Server }
+      - { dest: 10.86.0.0/16, desc: Terminal Server }
+      - { dest: 10.117.91.0/24, desc: Terminal Server }
+      - { dest: 132.196.0.0/16, desc: Terminal Server }
+      - { dest: 10.155.142.68/32, desc: Centralized NeLS Server }
+      - { dest: 10.143.139.64/26, desc: n280 Shared CNF OAM services }
+      - { dest: 10.255.43.0/24, desc: n280-eccd2 ECFE OAM link for EVNFM }
+      - { dest: 10.155.138.0/26, desc: n99 Shared CNF OAM services }
+      - { dest: 10.255.38.0/24, desc: n99-eccd2 ECFE OAM link for EVNFM }
+      - { dest: 172.30.32.0/24, desc: n280/n99 tool services 1 }
+      - { dest: 172.30.36.0/24, desc: n280/n99 tool services 2 }
+      primary_intersite_routes: &ccd1_primary_intersite_routes
+      - { dest: 172.17.200.0/24, desc: n99-eccd1-ccdm1 primary-intersite VIP pool }
+      - { dest: 172.21.196.0/24, desc: n99-eccd1-ccdm1 primary-intersite link }
+
+      virtio_networks:
+      - { name: ccd-oam, vlan: 220, cidr: 10.117.54.48/28, tags: [ccd] }
+      - { name: primary-signaling, vlan: 2302, cidr: 172.21.160.0/24, tags: [ecfe] }
+      - { name: primary-oam, vlan: 2303, cidr: 10.255.42.0/24, tags: [ecfe], routes: *ccd1_primary_oam_routes }
+      - { name: primary-intersite, vlan: 2310, cidr: 172.21.192.0/24, tags: [ecfe], routes: *ccd1_primary_intersite_routes }
+      #- { name: primary-gsa, vlan: 2309, cidr: 172.21.208.0/24, tags: [pcc, pc-mm, macvlan], routes: *ccd1_primary_gsa_routes }
+      - { name: pcc1-pc-mm-oam, vlan: 2003, cidr: 172.20.160.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-ran-1, vlan: 2004, cidr: 172.20.64.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-ran-2, vlan: 2009, cidr: 172.20.128.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-signaling-1, vlan: 2002, cidr: 172.20.32.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-signaling-2, vlan: 2010, cidr: 172.20.96.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-media, vlan: 2001, cidr: 172.20.0.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-sm-media, vlan: 2101, cidr: 172.21.0.0/24, tags: [pcc, pc-sm, macvlan] }
+      - { name: pcc1-pc-sm-signaling, vlan: 2102, cidr: 172.21.32.0/24, tags: [pcc, pc-sm, macvlan] }
+      - { name: pcc1-pc-sm-intra, vlan: 2110, cidr: 172.21.128.0/24, tags: [pcc, pc-sm, macvlan, internal] }
+      sriov_networks:
+      - { name: pcg1-pc-up-ran, vlan: 2204, cidr: 172.22.64.0/24, tags: [pcg, sriov, macvlan] }
+      - { name: pcg1-pc-up-signaling, vlan: 2202, cidr: 172.22.32.0/24, tags: [pcg, sriov, macvlan] }
+      - { name: pcg1-pc-up-media, vlan: 2201, cidr: 172.22.0.0/24, tags: [pcg, sriov, macvlan] }
+      - { name: pcg1-pc-up-open1, vlan: 2205, cidr: 172.22.128.0/24, tags: [pcg, sriov, macvlan] }
+      - { name: pcg1-pc-up-intra, vlan: 2210, cidr: 172.21.129.0/24, tags: [pcg, sriov, internal, macvlan] }
+
+      ecfe_config:
+      - peers: [172.21.160.2, 172.21.160.3]
+        peer_asn: 4251100002
+        local_asn: 4221110002
+        address_pools:
+        - { name: pcc1-amf-sbi, addresses: [172.17.128.1/32] }
+        - { name: pcc1-smf-nsmf, addresses: [172.17.128.2/32] }
+        - { name: pcc1-smf-notification, addresses: [172.17.128.3/32] }
+        - { name: ccdm1-5g-traffic, addresses: [172.17.128.4/32] }
+        - { name: cces1-5g-sbi-traffic, addresses: [172.17.128.5/32] }
+        - { name: cces1-5g-nbi-trust-traffic, addresses: [172.17.128.6/32] }
+        - { name: ccpc1-5g-traffic, addresses: [172.17.128.7/32] }
+        - { name: ccpc1-4g-traffic, addresses: [172.17.128.8/32] }
+        - { name: ccrc1-nrf-sig, addresses: [172.17.128.9/32] }
+        - { name: ccrc1-nssf-sig, addresses: [172.17.128.10/32] }
+        - { name: ccsm1-ausf-5g-sig, addresses: [172.17.128.12/32] }
+        - { name: ccsm1-udm-5g-sig, addresses: [172.17.128.13/32] }
+        - { name: ccsm1-dia-sig, addresses: [172.17.128.14/32] }
+        - { name: ccsm1-eir-5g-sig, addresses: [172.17.128.15/32] }
+        - { name: ccsm1-hss-epc-http-sig, addresses: [172.17.128.16/32] }
+        - { name: sc1-bsf-dia-sig, addresses: [172.17.128.17/32] }
+        - { name: sc1-bsf-sig, addresses: [172.17.128.18/32] }
+        - { name: sc1-scp-sig, addresses: [172.17.128.19/32] }
+      - peers: [10.255.42.2, 10.255.42.3]
+        peer_asn: 4251100003
+        local_asn: 4221110003
+        address_pools:
+        - { name: ingress, addresses: [10.143.139.65/32] }
+        - { name: pcc1-oam, addresses: [10.143.139.72/32] }
+        - { name: pcc2-oam, addresses: [10.143.139.73/32] }
+        - { name: pcg1-oam, addresses: [10.143.139.74/32] }
+        - { name: ccrc1-oam, addresses: [10.143.139.75/32] }
+        - { name: ccsm1-oam, addresses: [10.143.139.79/32] }
+        - { name: ccdm1-oam, addresses: [10.143.139.80/32] }
+        - { name: ccdm1-5g-prov, addresses: [10.143.139.81/32] }
+        - { name: ccdm1-4g-prov, addresses: [10.143.139.82/32] }
+        - { name: cces1-oam, addresses: [10.143.139.83/32] }
+        - { name: cces1-5g-prov, addresses: [10.143.139.84/32] }
+        - { name: ccpc1-oam, addresses: [10.143.139.85/32] }
+        - { name: ccpc1-5g-prov, addresses: [10.143.139.86/32] }
+        - { name: eda1-oam, addresses: [10.143.139.87/32] }
+        - { name: sc1-oam, addresses: [10.143.139.88/32] }
+      - peers: [172.21.192.2, 172.21.192.3]
+        peer_asn: 4251100010
+        local_asn: 4221110010
+        address_pools:
+        - { name: ccdm1-intersite, addresses: [172.17.192.1/32] }
+        - { name: ccdm1-4g-traffic, addresses: [172.17.192.2/32] }
+      #- peers: [172.21.208.2, 172.21.208.3]
+      #  peer_asn: 4251100009
+      #  local_asn: 4221110009
+      #  address_pools:
+      #  - { name: pcc1-pcsm-gsa, addresses: [172.17.224.2/32] }
+      #  - { name: pcc2-pcsm-gsa, addresses: [172.17.225.2/32] }
+
+      pm_vmselect_ingress: monitoring-vmselect.ingress.n280-eccd1.sero.gic.ericsson.se
+      pm_alertmanager_ingress: monitoring-alertmanager.ingress.n280-eccd1.sero.gic.ericsson.se
+
+      worker_pools:
+      - name: pool1
+        flavor: traffic-cluster_STDworker
+        count: 15
+        type: standard
+        max_pods_per_node: 200
+        ## TODO: this parameter will be removed, CEAT will inject subports info during deploying a cluster dynamically.
+        subports:
+        - network_id: 'null'
+          vlan_id: 'null'
+        ## Note: external network name will be added the cluster name prefix EXCEPT SR-IOV networks
+        external_networks:
+        - name: primary-signaling
+        - name: primary-oam
+        - name: primary-intersite
+        - name: macvlan-parent-1
+          trunk: true
+          ## Note: Only one subportset used in Dual mode 5gc, so the subport set 'subportset1' is hardcoded, do not change it
+          nic_subport_sets: [subportset1]
+       #- name: primary-gsa
+       #  trunk: true ## dummy config only for WA to solve trunk ports not being created issue
+      - name: pool3
+        flavor: traffic-cluster_HTworker
+        count: 8
+        type: high-throughput
+        reserved_cpus: '0,1'
+        external_networks:
+        - { name: primary-oam, type: virtio }
+        - { name: sriov-flat-left, type: sriov }
+        - { name: sriov-flat-right, type: sriov }
+        - { name: sriov-flat-left, type: sriov }
+        - { name: sriov-flat-right, type: sriov }
+        - { name: sriov-flat-left, type: sriov }
+        - { name: sriov-flat-right, type: sriov }
+        - { name: sriov-flat-left, type: sriov }
+        - { name: sriov-flat-right, type: sriov }
+####################################################################################################
+# n280 eccd2 cluster
+####################################################################################################
+    # cluster id
+    n280-eccd2:
+      # output directory to save ccd configuration files
+      output_dir: lab/n280/eccd2/eccd
+      ## default cluser name equals cluster id
+      cluster_name: n280-eccd2
+      # Range: traffic, management, dmz
+      cluster_type: management
+      ephemeral_image: ccdcapo_eph_2.26.0
+      node_image: ccdcapo_node_2.26.0
+
+      control_plane_external_vip: 10.117.54.78
+      kubeapi_external_ingress: kubeapi.ingress.n280-eccd2.sero.gic.ericsson.se
+      kubeapi_external_ip: 10.143.139.66
+      cr_hostname: container-registry.ingress.n280-eccd2.sero.gic.ericsson.se
+      kubernetes_ca_cert: |
+        -----BEGIN CERTIFICATE-----
+        MIIDEzCCAfugAwIBAgIUcz1oJlsJnKqmT5huFH2n2r90vt0wDQYJKoZIhvcNAQEL
+        BQAwGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTAgFw0yMzAzMDcwMjUzMjNaGA8y
+        MDUwMDcyMzAyNTMyM1owGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTCCASIwDQYJ
+        KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKPr5Yza+vc0D8q3YRdLOnK7lRCSZakj
+        ldPSWB3OMWGIwopuOftPj2LxgWdaRvE2lkyF96isxktUA/8thxCEtaRgt57AxNSq
+        EXAJSQiJmZzqqqu4s+oQc/8gsI/Fl0mjVRYvgIUwdxqK+h0ZN/K2E/jM/odKNm5i
+        w+RDhvelk2yNnvxNFoYSp/FuRMNdCRr8SnWWJrO2s5rdMLNLb2/nXwg56qL37xui
+        WRnd2rsijPpHGNDT4M04UWkGgm+I50pH6YktTud31hFCtOMyi2Cmoab8/7msu1vu
+        6cYNxQB6jrbVGAVCA2ZmTQ3iJ+AKVCGlM9hkfk40i83Sm/WIh0uBtr0CAwEAAaNT
+        MFEwHQYDVR0OBBYEFN/T8l2+u8ZpkwlJb2BUzgGj27k4MB8GA1UdIwQYMBaAFN/T
+        8l2+u8ZpkwlJb2BUzgGj27k4MA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL
+        BQADggEBAC0SNroHZaNriAR4b0lDVVS96ASQ3Y8VzdFZjIwlHP7TGkgeOl/WN4jL
+        QjrogXJOeQMwjuN90QZoJZSpEeKh2iujH4P4AYXcsnVmzpH73bUIitz3ijqRRxTb
+        A6GjAubqpQTwMvziA/DdXPiddU4+LmIg7+8x8JVHKlv+K3rcueBEUBxehtoFyPL3
+        HNSWO72KmhK8BqU4Q64PEQuEVYHgqagNpdgIATVf3fbPBgnOINHqlh61bklHAbKQ
+        pnKFsxyopQ0mKoN/O9j++89d0liTEj/MojO7Ra1L/NppO2JOt9kFlYXfeDYVrS3F
+        df6gSSpb83sMcUtQelNPUEcTAuS46d0=
+        -----END CERTIFICATE-----
+      kubernetes_ca_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEpAIBAAKCAQEAo+vljNr69zQPyrdhF0s6cruVEJJlqSOV09JYHc4xYYjCim45
+        +0+PYvGBZ1pG8TaWTIX3qKzGS1QD/y2HEIS1pGC3nsDE1KoRcAlJCImZnOqqq7iz
+        6hBz/yCwj8WXSaNVFi+AhTB3Gor6HRk38rYT+Mz+h0o2bmLD5EOG96WTbI2e/E0W
+        hhKn8W5Ew10JGvxKdZYms7azmt0ws0tvb+dfCDnqovfvG6JZGd3auyKM+kcY0NPg
+        zThRaQaCb4jnSkfpiS1O53fWEUK04zKLYKahpvz/uay7W+7pxg3FAHqOttUYBUID
+        ZmZNDeIn4ApUIaUz2GR+TjSLzdKb9YiHS4G2vQIDAQABAoIBAFD03U7+i3nxVWdJ
+        wALQHZKygAFKPDkXoRSXSvuVbR/9eg8CN1KdzXQRUFap6GWTDxHGDDVa9ygW2054
+        vr7yu/7t4WHfVJavU6Nggphb1OkBoL7knr6X16IGFA09ieVNbGVjmnatI/WQ88vR
+        O6d8M0rqez538X/8+UBP9WVzeebfFDJpgB7vqi5jmUpHPfWNhaGJ2KYgMOtQsiNx
+        O6ARB2/Vr2CAGSCF76lxr3PFcTnAP9b3e8zykckr8u5BS0hyvgyfF92wfAVD1HZf
+        i4v1ExBiaFsvCIaeaJDE+vwWEeUU51QvSrAE7tG1Rr/UCcB1pUxfauT4MGLW7pfT
+        idv/18ECgYEA1ysUvpEEKgOiwrHX9HR+DhB3aDOurqit/IpgefZ85kDO5jRJ3cb5
+        dDA539T3/cYYvryPVZlyEsqohQ5DUIM9/YemJD1JU1r2zkq/gM8yrEgEJr0dpf8E
+        vV75yHqGiSUUNjdKncn7Vj6bDR8o5xhEkQ9TzMpcy4PCddp/fYJzU80CgYEAwwc8
+        Kt7vnvs8DUnqsoV73Jbbm81irN06UhRf24+ixigZqSJJy/IL1H1uSOOUq6LeKa42
+        LKazjJUhlfDOz5eLE6DuQqnMnJfg5/JGbvsFcRmsz0sCEi2iLn9Iuj4tDEJotsT3
+        96dR4Io6mKcXDeJJYGcQPY/PEmM0Rmq+fNx93rECgYEAnr5zBJF60AB0sU2CNSFI
+        6tltLxyKMOPT0TDKMtEOntWLj71eDdhBrF30JNY7zCe9k+MLoKyfw4tuvxOhyCG7
+        t3O/uJbapTvEQLhXBxJWoVJUdbwqxpAaEBilEiqLXV1UxxcN3tHos11nCUxG4hA+
+        bgMv4TQfOCrSah601oVKzrUCgYBOYwkO3h4Hk0kWuj/n0vjut3+7BnkDq8N2HBRP
+        JlMxPArcTRjGLRoOJP//seEef062B/xkQ/hkp8ghAPHOxEU09XjuOFsyEWVnNJyU
+        nLYaOEyZ4LcLYWYPND+iA72NcN+vnklgM9MX4dcdZgNBJFODuMjxRWzgIhlvuBWq
+        D+FTcQKBgQCOdPV2DOBTMzxQt9hJvht6I/V1DyxzCMu6XAaO6T/K/rVDAHqtrQOE
+        H2EL8bQuNBfdhtk740g2655nYp9eToJ66wYISd5X0F9jDZ1swi6anaKmsNU/YSep
+        gI23JbcHFLK27qZdtR54nOFnm+mbMp0XT4bjVOMixVviVT3tD7DgxA==
+        -----END RSA PRIVATE KEY-----
+
+      virtio_networks:
+      - { name: ccd-oam, vlan: 221, cidr: 10.117.54.64/28, tags: [ccd] }
+      - { name: primary-oam, vlan: 2343, cidr: 10.255.43.0/24, tags: [ecfe] }
+
+      ecfe_config:
+      - peers: [10.255.43.2, 10.255.43.3]
+        peer_asn: 4251100003
+        local_asn: 4221120003
+        address_pools:
+        - { name: ingress, addresses: [10.143.139.66/32] }
+        - { name: evnfm1, addresses: [10.143.139.70/32] }
+
+      pm_vmselect_ingress: monitoring-vmselect.ingress.n280-eccd2.sero.gic.ericsson.se
+      pm_alertmanager_ingress: monitoring-alertmanager.ingress.n280-eccd2.sero.gic.ericsson.se
+
+      worker_pools:
+      - name: pool1
+        flavor: management-cluster_worker
+        count: 4
+        initial_deployment_count: 4
+        external_networks:
+        - name: primary-oam
+####################################################################################################
+# n280 eccd3 cluster
+####################################################################################################
+    # cluster id
+    n280-eccd3:
+      # output directory to save ccd configuration files
+      output_dir: lab/n280/eccd3/eccd
+      ## default cluser name equals cluster id
+      cluster_name: n280-eccd3
+      # Range: traffic, management, dmz
+      cluster_type: dmz
+      ephemeral_image: ccdcapo_eph_2.26.0
+      node_image: ccdcapo_node_2.26.0
+      ephemeral_flavor: ephemeral_node
+      control_plane_external_vip: 10.117.54.94
+      control_plane_flavor: dmz-cluster_controlplane
+      kubeapi_external_ingress: kubeapi.ingress.n280-eccd3.sero.gic.ericsson.se
+      kubeapi_external_ip: 10.143.139.67
+      cr_hostname: container-registry.ingress.n280-eccd3.sero.gic.ericsson.se
+      kubernetes_ca_cert: |
+        -----BEGIN CERTIFICATE-----
+        MIIDEzCCAfugAwIBAgIUU66sBFbG6sggdEH/ngKkAf5rHN8wDQYJKoZIhvcNAQEL
+        BQAwGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTAgFw0yMzA1MTUwNDMzMDlaGA8y
+        MDUwMDkzMDA0MzMwOVowGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTCCASIwDQYJ
+        KoZIhvcNAQEBBQADggEPADCCAQoCggEBAN2fKome14AO1ddhPdett+5sym+qJB3G
+        yTUZ2vZYJmUeR0HtaHpl3pU7xAKk6G2R1umEjx/2nOPsYXX3+NM/Z6VNd9ddDyOX
+        XQ4BDeKUSE3aUElFRCoONgUJRkAOOuBy9SS60m1GwS6PzFfSXArq1Jrj9d0/HovE
+        MCWeeUvm0vT7k2gXTjTV8aNMZt97R2RYUBE7rCOTwD+w82ZvvH5TcUdNt6UKlN+5
+        XNBhiZGG00xVpat42ah4j5Oy+xr+tzjIdLtgl8amgVTYXvZTdaqHX2t8/+BHthB0
+        DEf0a0n9M2J2y/Xq593h+chREpugdvh/f0ozL8HO1+7bmxD62UhMDS0CAwEAAaNT
+        MFEwHQYDVR0OBBYEFGD3i5hm4R+W+tjPe7pKP1BSSHbTMB8GA1UdIwQYMBaAFGD3
+        i5hm4R+W+tjPe7pKP1BSSHbTMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL
+        BQADggEBADnx9Jn2Zlsgcn/psp0qrBywoSd2CIoWcbpTs4eFnar3KdXYZVOGmGcP
+        SsePMh2BjrzvHBBp4T0rl1PizfHmlun3yhWysCJLtQ25d7c3UJMH8oxYbeviTbEA
+        BZw+akdm+8DuAZR1StHRtHF4isZ9IDKE7l2o0WRMMokpa/iMZ36ifnuG53LFrakr
+        4aK2Y1WST1ZlFmYoife6846oB9hyAehmkhoxcCXIbFAI7UfaR3kEi+yEKQoUBch7
+        cgP2QW8+q1ENTnVLuafcD6sbYUfvORarkbSODbsKBjdo0v2Iv+k1H74CQuNBg27g
+        qKNm+PbQpZ7r93QVZMdYAcgHJrXrE7s=
+        -----END CERTIFICATE-----
+      kubernetes_ca_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEpAIBAAKCAQEA3Z8qiZ7XgA7V12E916237mzKb6okHcbJNRna9lgmZR5HQe1o
+        emXelTvEAqTobZHW6YSPH/ac4+xhdff40z9npU13110PI5ddDgEN4pRITdpQSUVE
+        Kg42BQlGQA464HL1JLrSbUbBLo/MV9JcCurUmuP13T8ei8QwJZ55S+bS9PuTaBdO
+        NNXxo0xm33tHZFhQETusI5PAP7DzZm+8flNxR023pQqU37lc0GGJkYbTTFWlq3jZ
+        qHiPk7L7Gv63OMh0u2CXxqaBVNhe9lN1qodfa3z/4Ee2EHQMR/RrSf0zYnbL9ern
+        3eH5yFESm6B2+H9/SjMvwc7X7tubEPrZSEwNLQIDAQABAoIBACzwPmbjf50m5POk
+        cy7NufMtuirEXEhxa5FJ6d1z6G0uo5JZuoq/J1Apa0iB+eNl5Cc7yu3XSt7oqqaK
+        HrlvLOwW9ksEQrKb2bGiQxeDq9mlgAwrcHP6p7eDtuv8NrIWfWDyRQMFityPKgdQ
+        z3sjPPMfcFZpmx8KLB0kskHSz0n/bL25dszP+qwriLqn48IZX9SCb4MOuhyDSU6P
+        OoOCI6WE8USrMSDfdsKNkm4XnSdfnEsRuKYV4TE6ik3XxwwZfWcSWEuqpiAZ7qy4
+        les+4v4wb45rqM/+7VCOJeEkWBlFDg888kKBvouxIkldpq+bAKx4S8ZJkjJsyFwl
+        y3iWH30CgYEA7+lQdGkOwuMRuPp/XgrTSriD7jl/EfjMr1UnKzP66jULeNkz7dF2
+        1526kuVKCvqes2qeteJQlTgCQFMMxDWENziQvuN2iPlDrTupMB/m92MTgFQj1Im3
+        PHXwywgca2hRLUAGRIxCzVoFW2WbLm5ftxu1lGjYlaLQNheJkogZGg8CgYEA7Hvd
+        Ku5NsbR+UTsQK1k6ZK/EUiRKyk0u79Qq5kTrh1QNrYOlr+9oHI4he7eBjOi65t/b
+        eXHsbWuWndbLzv3JBIlPCmpEmx/hY4YWqHwkzbnw/Lpepq5oQYHssYMo3NQKKY9n
+        RvVO8BFy/tgq2OZAN51zwhh1kNYv+yOW2T8eUQMCgYB967ncv9+Njt0Yd/IuDASG
+        rX4hpW/6oNneFRWv6WKDV0AkN+y3oD9+QD1TKKHKTWzKwuV2lcix6WnVFUIYIfa5
+        fSkL6BupHRvWawAMUFJL+mab7o232mighU7TYfh4r5Ib7ATeKbhOTDePly7yGeCH
+        HTYbJUS4lXIvUf9VN7XlJQKBgQDlRUktgBBPQ0BcHLkWbdGRIF9ji8/+xknFNpvI
+        1/TJJRKFsOaH5cG4PYv01/p/1Hqvr0SnP24Kv44sxLyfl6i1/zFkVZbiFkx8ItoA
+        yysbUTR0sXNmghyNthr2FsUdI24e0Os9/kJjuWcV8BnKY6DKypoaCYChxSaLgvuS
+        8ADCZQKBgQDTVf/XTQDDyVWd2GAKMbn/rBHQFuiDRoVsidw4xuddzEO4Oc14vKpK
+        sxOiH08YSTfJ4m6iRea0MND+6x0bZtBkjINoUzhzl5QRBdPW0KjuDbdzlsKXVGri
+        1Ij804TSCAWTdiluvSwMUPmJChgx1A93FObH3dXRydIG0wNV8P8RZA==
+        -----END RSA PRIVATE KEY-----
+
+      # neutron static route for primary networks
+      primary_oam_routes: &ccd3_primary_oam_routes
+      - { dest: 10.63.0.0/16, desc: Terminal Server }
+      - { dest: 10.86.0.0/16, desc: Terminal Server }
+      - { dest: 10.117.91.0/24, desc: Terminal Server }
+      - { dest: 132.196.0.0/16, desc: Terminal Server }
+      - { dest: 10.155.142.68/32, desc: Centralized NeLS Server }
+      - { dest: 10.143.139.64/26, desc: n280 Shared CNF OAM services }
+      - { dest: 10.255.43.0/24, desc: n280-eccd2 ECFE OAM link for EVNFM }
+      - { dest: 10.155.138.0/26, desc: n99 Shared CNF OAM services }
+      - { dest: 10.255.38.0/24, desc: n99-eccd2 ECFE OAM link for EVNFM }
+      - { dest: 172.30.32.0/24, desc: n280/n99 tool services 1 }
+      - { dest: 172.30.36.0/24, desc: n280/n99 tool services 2 }
+
+      virtio_networks:
+      - { name: ccd-oam, vlan: 222, cidr: 10.117.54.80/28, tags: [ccd] }
+      - { name: primary-oam, vlan: 2353, cidr: 10.255.44.0/24, tags: [ecfe], routes: *ccd3_primary_oam_routes }
+      - { name: primary-signaling, vlan: 2352, cidr: 172.21.162.0/24, tags: [ecfe] }
+      - { name: primary-signaling-ext, vlan: 2358, cidr: 172.21.226.0/24, tags: [ecfe] }
+
+      ecfe_config:
+      - peers: [10.255.44.2, 10.255.44.3]
+        peer_asn: 4251100003
+        local_asn: 4221130003
+        address_pools:
+        - { name: ingress, addresses: [10.143.139.67/32] }
+        - { name: sc1-oam, addresses: [10.143.139.89/32] }
+      - peers: [172.21.162.2, 172.21.162.3]
+        peer_asn: 4251100002
+        local_asn: 4221130002
+        address_pools:
+        - { name: sc1-sepp-internal-sig, addresses: [172.17.133.1/32] }
+      - peers: [172.21.226.2, 172.21.226.3]
+        peer_asn: 4251100008
+        local_asn: 4221130008
+        address_pools:
+        - { name: sc1-sepp-external-sig, addresses: [172.16.133.1/32] }
+
+      pm_vmselect_ingress: monitoring-vmselect.ingress.n280-eccd3.sero.gic.ericsson.se
+      pm_alertmanager_ingress: monitoring-alertmanager.ingress.n280-eccd3.sero.gic.ericsson.se
+
+      worker_pools:
+      - name: pool1
+        flavor: dmz-cluster_worker
+        count: 4
+        initial_deployment_count: 4
+        external_networks:
+        - name: primary-signaling
+        - name: primary-oam
+        - name: primary-signaling-ext
+####################################################################################################
+# n280 eccd4 cluster
+####################################################################################################
+    # cluster id
+    n280-eccd4:
+      # output directory to save ccd configuration files
+      output_dir: lab/n280/eccd4/eccd
+      ## default cluser name equals cluster id
+      cluster_name: n280-eccd4
+      # Range: traffic, management, dmz, custom1
+      cluster_type: traffic
+      ephemeral_image: ccdcapo_eph_2.27.0
+      node_image: ccdcapo_node_2.27.0
+      tgpp_dns_server: 172.30.36.50
+      control_plane_external_vip: 10.117.54.110
+      kubeapi_external_ingress: kubeapi.ingress.n280-eccd4.sero.gic.ericsson.se
+      kubeapi_external_ip: 10.143.139.68
+      cr_hostname: container-registry.ingress.n280-eccd4.sero.gic.ericsson.se
+      kubernetes_ca_cert: |
+        -----BEGIN CERTIFICATE-----
+        MIIDEzCCAfugAwIBAgIUEba5v1FJs+o8spoMIVAjc7j9NXowDQYJKoZIhvcNAQEL
+        BQAwGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTAgFw0yMzA3MDYwOTA1NDBaGA8y
+        MDUwMTEyMTA5MDU0MFowGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTCCASIwDQYJ
+        KoZIhvcNAQEBBQADggEPADCCAQoCggEBALdyL4qaNww0KK96Ujt+1cdUbY5iZ4rt
+        52GoTMnmiplyF4l3xjR+//eM/122Gek+pmEKT6hA/VkQL6ejGVMIVj3itCwQn197
+        0/56jFXipuBCveq/xfu/xSX/S2PuXMnKjX6tdRL6gqyVjtRp/1Xm+SGwRaa7SXIG
+        owRJfsZHv2DlkpefY+kMY8EHGgYIQfpoPxgGbP+y5SlHfVSCh8olKx0vtslTHX6K
+        qbvJPGkLnOgj7Tt7UhY92/PUZNgMnQkNHmklGn6ggOs80czDpSg3OKdWlZjdVP54
+        5ThoCcbyJHI9M+QMLOISz715yDfPob8mWCV62t/vGPN9xo+8QoLzr3UCAwEAAaNT
+        MFEwHQYDVR0OBBYEFLNWQxPy6K1caQmkDbSAlG3kJmQsMB8GA1UdIwQYMBaAFLNW
+        QxPy6K1caQmkDbSAlG3kJmQsMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL
+        BQADggEBAAxl51rkeq0v4p2vDMC05W2iTQ8Vh8b7iULvkTS2KCqy6ag1L1fo8/dB
+        s9Mf89nk13saah2YxYclsaAAukLWTTLdH7XdGIUDZZRgJiTDKXOxxb9HI2Ik/2/y
+        cDkaAqP9ywGRPmYW8bud6prDp1pYFw/qMbHdahqw7y+TEJxxoZRK+1jNyl4RcXER
+        OAUm0ECCyvVLijx4EouvcylbORZ9d/mRcivC08KrDDtTr/gtYu1S4TxHZQSIx3WT
+        QqmIj+mo9BK2r4NTa1Qkn8IxIeon1pVfRQXB1f2GB8TlsmfsHFQUzZYDV1SjQl9M
+        nfkRCbDLmLil6CXXz5euWJ6U0tBvIYA=
+        -----END CERTIFICATE-----
+      kubernetes_ca_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEpAIBAAKCAQEAt3Ivipo3DDQor3pSO37Vx1RtjmJniu3nYahMyeaKmXIXiXfG
+        NH7/94z/XbYZ6T6mYQpPqED9WRAvp6MZUwhWPeK0LBCfX3vT/nqMVeKm4EK96r/F
+        +7/FJf9LY+5cycqNfq11EvqCrJWO1Gn/Veb5IbBFprtJcgajBEl+xke/YOWSl59j
+        6QxjwQcaBghB+mg/GAZs/7LlKUd9VIKHyiUrHS+2yVMdfoqpu8k8aQuc6CPtO3tS
+        Fj3b89Rk2AydCQ0eaSUafqCA6zzRzMOlKDc4p1aVmN1U/njlOGgJxvIkcj0z5Aws
+        4hLPvXnIN8+hvyZYJXra3+8Y833Gj7xCgvOvdQIDAQABAoIBAEYyRYruFB5xXxg2
+        4HyvvjI2Vm3jred1vdKayjeAJo0tIWCTGp8/8cbSh21en2+nb5c2kOC7bbbFANdP
+        DAO/7vBjbbpm6fVptudsEYNT5bNvFqlblPEOouw1Uq38qjj1b0uIKIKIpbRQzoTt
+        wq0mYzLG9wAkLqiZbYvYa9CH5+21hXlBRtMrGF9EWQPjzxnlt2ASh2iCNhSBZZzN
+        ew97gxzW1oelCgEoaooDnrNrpFOrQkRU6kkzh+Fg6IfMp6DswLL6G8cpG5iN9l0L
+        Udn5X4KY+TORR5IlEHWQiYsxIi8n99wBXvV8h2vFCzGkd7NxJM8sErG2B7AH87HC
+        yCqc2kkCgYEA4PpGwuPQctmk7GwUCw32dBV170akUiFg7wj90rkCXvbJnA7kh/yH
+        H0iQFsE3iqCzb8Da2RAMXmAW55R247OtfyHX8Q/TD143HD0V/LgTZ56N7lrDEbcM
+        ylyFxcGQ+OsbFHZsyReLg5ZNLfmYJAshqkpf2ztIaVxTNZ5f5Wg+2XsCgYEA0L3X
+        X2CjhIKPeqExfoGTxe2zLwch+/adA97UzUVVpf0D+D19FUqev6aMVhKKeSS3LArl
+        k1wrEZs+zp2hClmDnrWp58gNtNN2im6Gh/u77FoD7IJzko+1vYeTJCdoGPdr4GII
+        tSlohVYGX5R6pZ40fdVhQKFlxKjUfm2cCvnI788CgYEA2RJjKDQrskUxjjSR+kCU
+        pVj3m9FrRxuRrdHdJm8ATKSNzpfIBTWxIowfCvWPI6D+wTsxbfLAHGdWckeblwSM
+        yHfdJWkBWnircAG4r0jk4Dvp8it8wCEApFg1cqPbv3EJherl9/lR0bs56LxFAbID
+        3403hA5lRdOhLcEMAgtdaPUCgYA39XykTALqBhoytL3Q/SnBWNy9UbsxkcY8AGOp
+        99ljGzYSOWGr8IooNJzQgj3vBgG4497xpzbAjI7E0wsV/DNFu8uloELUZBAWQlT8
+        ZWbWkLcWk04qTy5YddzjR1EnyER6La3J6yTjAdHJk8NhXM0Tor1klx/yHZSBpB69
+        7oKIjwKBgQDbWB3MFJzi1rEDZEZWCmFElSW2AoQ3vZeb/SytOpV7lo0zxrPQOrim
+        sHub1UeYBjO7l76Swdlla+n/aHFqPnNPCO9Fr43kewr24tEVB1f1ZDHLeRUL0a2B
+        d0tOS86wssRH1l+p6YY7ATAZwVyKfR553e4yk70AFpJ+QL6aBERPBA==
+        -----END RSA PRIVATE KEY-----
+
+      # neutron static route for primary networks
+      primary_oam_routes: &ccd4_primary_oam_routes
+      - { dest: 10.63.0.0/16, desc: Terminal Server }
+      - { dest: 10.86.0.0/16, desc: Terminal Server }
+      - { dest: 10.117.91.0/24, desc: Terminal Server }
+      - { dest: 132.196.0.0/16, desc: Terminal Server }
+      - { dest: 10.155.142.68/32, desc: Centralized NeLS Server }
+      - { dest: 10.143.139.64/26, desc: n280 Shared CNF OAM services }
+      - { dest: 10.255.43.0/24, desc: n280-eccd2 ECFE OAM link for EVNFM }
+      - { dest: 10.155.138.0/26, desc: n99 Shared CNF OAM services }
+      - { dest: 10.255.38.0/24, desc: n99-eccd2 ECFE OAM link for EVNFM }
+      - { dest: 10.255.40.0/24, desc: n99-eccd4 ECFE OAM link for EDA PROV }
+      - { dest: 172.30.32.0/24, desc: n280/n99 tool services 1 }
+      - { dest: 172.30.36.0/24, desc: n280/n99 tool services 2 }
+
+      primary_intersite_routes: &ccd4_primary_intersite_routes
+      - { dest: 172.17.206.0/24, desc: n99-eccd4-ccdm1 primary-intersite VIP pool }
+      - { dest: 172.21.199.0/24, desc: n99-eccd4-ccdm1 primary-intersite link }
+
+      virtio_networks:
+      - { name: ccd-oam, vlan: 223, cidr: 10.117.54.96/28, tags: [ccd] }
+      - { name: primary-oam, vlan: 2363, cidr: 10.255.45.0/24, tags: [ecfe], routes: *ccd4_primary_oam_routes }
+      - { name: primary-signaling, vlan: 2362, cidr: 172.21.163.0/24, tags: [ecfe] }
+      - { name: primary-intersite, vlan: 2370, cidr: 172.21.195.0/24, tags: [ecfe], routes: *ccd4_primary_intersite_routes }
+      - { name: pcc1-pc-mm-oam, vlan: 2063, cidr: 172.20.166.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-ran-1, vlan: 2064, cidr: 172.20.70.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-ran-2, vlan: 2069, cidr: 172.20.134.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-signaling-1, vlan: 2062, cidr: 172.20.38.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-signaling-2, vlan: 2070, cidr: 172.20.102.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-mm-media, vlan: 2061, cidr: 172.20.6.0/24, tags: [pcc, pc-mm, macvlan] }
+      - { name: pcc1-pc-sm-media, vlan: 2161, cidr: 172.21.6.0/24, tags: [pcc, pc-sm, macvlan] }
+      - { name: pcc1-pc-sm-signaling, vlan: 2162, cidr: 172.21.38.0/24, tags: [pcc, pc-sm, macvlan] }
+      - { name: pcc1-pc-sm-intra, vlan: 2170, cidr: 172.21.128.0/24, tags: [pcc, pc-sm, macvlan, internal] }
+      sriov_networks:
+      - { name: pcg1-pc-up-ran, vlan: 2264, cidr: 172.22.70.0/24, tags: [pcg, sriov, macvlan] }
+      - { name: pcg1-pc-up-signaling, vlan: 2262, cidr: 172.22.38.0/24, tags: [pcg, sriov, macvlan] }
+      - { name: pcg1-pc-up-media, vlan: 2261, cidr: 172.22.6.0/24, tags: [pcg, sriov, macvlan] }
+      - { name: pcg1-pc-up-open1, vlan: 2265, cidr: 172.22.134.0/24, tags: [pcg, sriov, macvlan] }
+      - { name: pcg1-pc-up-intra, vlan: 2270, cidr: 172.21.129.0/24, tags: [pcg, sriov, internal, macvlan] }
+
+      ecfe_config:
+      - peers: [172.21.163.2, 172.21.163.3]
+        peer_asn: 4251100002
+        local_asn: 4221111002
+        address_pools:
+        - { name: pcc1-amf-sbi, addresses: [172.17.134.1/32] }
+        - { name: pcc1-smf-nsmf, addresses: [172.17.134.2/32] }
+        - { name: pcc1-smf-notification, addresses: [172.17.134.3/32] }
+        - { name: ccdm1-5g-traffic, addresses: [172.17.134.4/32] }
+        - { name: cces1-5g-sbi-traffic, addresses: [172.17.134.5/32] }
+        - { name: cces1-5g-nbi-trust-traffic, addresses: [172.17.134.6/32] }
+        - { name: ccpc1-5g-traffic, addresses: [172.17.134.7/32] }
+        - { name: ccpc1-4g-traffic, addresses: [172.17.134.8/32] }
+        - { name: ccrc1-nrf-sig, addresses: [172.17.134.9/32] }
+        - { name: ccrc1-nssf-sig, addresses: [172.17.134.10/32] }
+        - { name: ccsm1-ausf-5g-sig, addresses: [172.17.134.12/32] }
+        - { name: ccsm1-udm-5g-sig, addresses: [172.17.134.13/32] }
+        - { name: ccsm1-dia-sig, addresses: [172.17.134.14/32] }
+        - { name: ccsm1-eir-5g-sig, addresses: [172.17.134.15/32] }
+        - { name: ccsm1-hss-epc-http-sig, addresses: [172.17.134.16/32] }
+        - { name: sc1-bsf-dia-sig, addresses: [172.17.134.17/32] }
+        - { name: sc1-bsf-sig, addresses: [172.17.134.18/32] }
+        - { name: sc1-scp-sig, addresses: [172.17.134.19/32] }
+
+      - peers: [172.21.195.2, 172.21.195.3]
+        peer_asn: 4251100010
+        local_asn: 4221111010
+        address_pools:
+        - { name: ccdm1-intersite, addresses: [172.17.198.1/32] }
+        - { name: ccdm1-4g-traffic, addresses: [172.17.198.2/32] }
+
+      - peers: [10.255.45.2, 10.255.45.3]
+        peer_asn: 4251100003
+        local_asn: 4221111003
+        address_pools:
+        - { name: ingress, addresses: [10.143.139.68/32] }
+        - { name: pcc1-oam, addresses: [10.143.139.102/32] }
+        - { name: pcg1-oam, addresses: [10.143.139.104/32] }
+        - { name: ccrc1-oam, addresses: [10.143.139.105/32] }
+        - { name: ccsm1-oam, addresses: [10.143.139.109/32] }
+        - { name: ccdm1-oam, addresses: [10.143.139.110/32] }
+        - { name: ccdm1-5g-prov, addresses: [10.143.139.111/32] }
+        - { name: ccdm1-4g-prov, addresses: [10.143.139.112/32] }
+        - { name: cces1-oam, addresses: [10.143.139.113/32] }
+        - { name: cces1-5g-prov, addresses: [10.143.139.114/32] }
+        - { name: ccpc1-oam, addresses: [10.143.139.115/32] }
+        - { name: ccpc1-5g-prov, addresses: [10.143.139.116/32] }
+        - { name: eda1-oam, addresses: [10.143.139.117/32] }
+        - { name: sc1-oam, addresses: [10.143.139.118/32] }
+
+      pm_vmselect_ingress: monitoring-vmselect.ingress.n280-eccd4.sero.gic.ericsson.se
+      pm_alertmanager_ingress: monitoring-alertmanager.ingress.n280-eccd4.sero.gic.ericsson.se
+
+      ## PCC MM/SM controller worker nodes label script
+      ## when worker count is 4, the count should be 2
+      pcmm_controller_worker_nodes_count: 2
+      pcsm_controller_worker_nodes_count: 2
+
+      worker_pools:
+      - name: pool1
+        flavor: traffic-cluster_STD2worker
+        initial_deployment_count: 4
+        count: 4
+        type: standard
+        subports:
+        - network_id: 'null'
+          vlan_id: 'null'
+        external_networks:
+        - name: primary-signaling
+        - name: primary-oam
+        - name: primary-intersite
+        - name: macvlan-parent-1
+          trunk: true
+          nic_subport_sets: [subportset1]
+      - name: pool3
+        flavor: traffic-cluster_HTworker
+        initial_deployment_count: 4
+        count: 4
+        type: high-throughput
+        reserved_cpus: '0,1'
+        external_networks:
+        - { name: primary-oam, type: virtio }
+        - { name: sriov-flat-left, type: sriov }
+        - { name: sriov-flat-right, type: sriov }
+        - { name: sriov-flat-left, type: sriov }
+        - { name: sriov-flat-right, type: sriov }
+        - { name: sriov-flat-left, type: sriov }
+        - { name: sriov-flat-right, type: sriov }
+        - { name: sriov-flat-left, type: sriov }
+        - { name: sriov-flat-right, type: sriov }

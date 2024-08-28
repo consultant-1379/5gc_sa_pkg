@@ -1,0 +1,174 @@
+vnflcm:
+  vnfInstanceName: n280-eccd1-ccdm1
+  vnfProductName: ERIC-CCDM
+  vnfSoftwareVersion: 1.10.25+1
+  instantiate_file: instantiate.json
+  values_file: values.yaml
+  clusterName: n280-eccd1
+  namespace: ccdm1
+
+skip-instantiation: false
+
+day0:
+  k8s-secret:
+  # 1. Create Secret for LDAP Admin User
+  - name: eric-sec-ldap-server-creds
+    sources:
+    - { type: literal, key: adminuser, value: sysadmin }
+    - { type: literal, key: passwd, value: sysAdm1n@Day0 }
+    - type: literal
+      key: adminpasswd
+      value: $6$fzLPYlRZCpweJMJC$AiNfP0WYE3npY8Za6GxMFoGj75TOl.TS6tmnnky2Bv5wY0Ek8RIoJlr9pyj0LF3wMMaNsNTUH4jp2lIHviJGS0
+  # 2. Create the SNMP Alarm Provider Secret
+  - name: snmp-alarm-provider-config
+    sources:
+    - { type: file, key: config.json, file: snmp-config.json }
+  # 3. Create the Distributed Coordinator ED Service Secret
+  - name: eric-data-distributed-coordinator-creds
+    sources:
+    - { type: literal, key: etcdpasswd, value: sysAdm1n@Day0 }
+  # 4. Create Identity and Access Management Credentials Secret
+  - name: eric-sec-access-mgmt-creds
+    sources:
+    - { type: literal, key: kcadminid, value: admin }
+    - { type: literal, key: kcpasswd, value: sysAdm1n@Day0 }
+
+verify-running: true
+ignore-not-running:
+- eric-data-search-engine-curator
+- eric-udr-app-counters
+- eric-udr-bulk-data-synchronizer
+- eric-udr-cmmanager
+- eric-udr-consistency-check-orchestrator
+- eric-udr-dbmanager
+- eric-udr-dbmonitor
+- eric-udr-gudrestfe
+- eric-udr-import-export-orchestrator
+- eric-udr-ldap-balancer
+- eric-udr-ldapfe
+- eric-udr-migration-orchestrator
+- eric-udr-migration-task
+- eric-udr-notificationsubscription
+- eric-udr-nrfproxy
+- eric-udr-nudrfe
+- eric-udr-provisioningfe
+- eric-udr-rest-notifchecker
+- eric-udr-rest-notifsender
+- eric-udr-soap-notifchecker
+- eric-udr-soap-notifsender
+- eric-udr-prov-sync-fe
+
+day1:
+  access:
+    oam: ccdm1-oam.n280-eccd1.sero.gic.ericsson.se
+    ldap-admin:
+      user: sysadmin
+      pass: sysAdm1n@Day0
+    users:
+    - user: ccdm-admin
+      pass: Dm5GC@S0lut!on
+      pass_init: Changeme@1st
+    - user: ccdm-sec
+      pass: Dm5GC@S0lut!on
+      pass_init: Changeme@1st
+    configs:
+    - file: user-config.xml
+      proto: netconf
+      pre-verify-pods-ready:
+        check-interval: 5
+        deployments:
+        - eric-cm-yang-provider
+      post-delay: 30
+      retry-interval: 30
+
+  k8s-config:
+  - name: Create networkpolicy to allow accessing eric-pm-server and eric-data-search-engine
+    cmd: |
+      apply -f {file1}
+      apply -f {file2}
+    inline-files:
+      file1: network-policy/eric-pm-server-allow.yaml
+      file2: network-policy/eric-data-search-engine-allow.yaml
+  - name: Create pm server ingress
+    cmd: |-
+      create ingress eric-pm-server --rule="eric-pm-server-ccdm.ingress.n280-eccd1.sero.gic.ericsson.se/*=eric-pm-server:9090"
+
+  app-config:
+  - file: external-certificates.xml
+    user-id: 1
+    proto: netconf
+    post-delay: 10
+  - file: nrfagent-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 10
+  - file: udr-config.xml
+    user-id: 0
+    proto: netconf
+    post-verify-pods-ready:
+      check-interval: 30
+      deployments:
+      - eric-udr-nudrfe
+      statefulsets:
+      - eric-udr-kvdb-ag-server
+    post-delay: 10
+  - file: schema/hssepc-schema.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 10
+  - file: schema/eir-schema.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 10
+  - file: ddc-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 10
+  - file: hssepc-application-counters.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 30
+  - file: eir-application-counters.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 30
+  - file: consistency-config.xml
+    user-id: 0
+    proto: netconf
+    post-delay: 30
+  - name: Set udr subscription expire time to 7 days
+    user-id: 0
+    commands: |-
+      config
+      udr nudr-dr-notifications maximum-subscription-duration 604800
+      commit
+      end
+    post-delay: 10
+#  post-day1-k8s-config:
+#    - name: Remove PCF service in udr-nrf-agent-targetnfprofiles
+#      cmd: |-
+#        patch configmap udr-nrf-agent-targetnfprofiles --type=json -p='[{"op": "remove", "path": "/data/udr-nrf-agent-targetnfprofiles-ccdm.json/targetNfProfiles/"}]'
+#    - name: Adding ldap configuration for EIR
+#      cmd: |-
+#        cp {file1} eric-sec-ldap-server-0:/opt/ldap/tmp/eir-main-branches-setting.ldif
+#        cp {file2} eric-sec-ldap-server-0:/opt/ldap/tmp/eir-search-order-setting.ldif
+#        exec -it eric-sec-ldap-server-0 -c ldap -- ldapadd -H ldap://10.143.139.82:389 -c -x -D "cn=manager,dc=operator,dc=com" -w normal -f /opt/ldap/tmp/eir-main-branches-setting.ldif
+#        exec -it eric-sec-ldap-server-0 -c ldap -- ldapadd -H ldap://10.143.139.82:389 -c -x -D "cn=manager,dc=operator,dc=com" -w normal -f /opt/ldap/tmp/eir-search-order-setting.ldif
+#      inline-files:
+#        file1: eir-main-branches-setting.ldif
+#        file2: eir-search-order-setting.ldif
+
+# No need to restore CCDM data when another CCDM was normally running with full data.
+  ccdm-data-backup-restore:
+    sftp-server: 172.30.32.50
+    sftp-port: 22
+    sftp-path: /opt/home/sftp-user/ccdm-backup/ccdm-data/n280-ccdm-data-160w-full
+    sftp-user: sftp-user
+    sftp-pass: Sftp@S0lut\!on
+    user-id: 0
+    udr-status-check:
+      check-interval: 30
+      api-path-and-status:
+        "/udr/status": 'OK'
+        "/udr/reporting/dbManager/status": 'STARTED'
+        "/udr/reporting/dbMonitor/status": 'OK'

@@ -1,0 +1,230 @@
+- hosts: director
+  gather_facts: no
+  vars:
+    resolv_file: /etc/hosts
+    ssh_config_file: /home/eccd/.ssh/config
+  vars_files:
+  - ../config/site.yaml
+  - /var/lib/eccd/container-images.d/erikube/ansible/common/container-list.json
+  tasks:
+  - name: display current CCD version
+    set_fact:
+      ccd_version: "{{ erikube_version }}"
+    run_once: yes
+
+  - debug:
+      msg: "current CCD version is {{ erikube_version }}"
+    run_once: yes
+
+  - name: get node host resolv
+    command: kubectl get node -owide -o=jsonpath='{range .items[*]}{.status.addresses[0].address}{"\t"}{.status.addresses[1].address}{"\n"}{end}'
+    register: output
+    run_once: yes
+
+  - name: add host resolv to {{ resolv_file }}
+    blockinfile:
+      dest: "{{ resolv_file }}"
+      block: |
+        {{ output.stdout }}
+    when: output.changed
+    become: yes
+
+  - name: disable ssh Hostkey checking - Lab only
+    blockinfile:
+      dest: "{{ ssh_config_file }}"
+      block: |
+        host *
+          StrictHostKeyChecking no
+          UserKnownHostsFile=/dev/null
+      create: yes
+      mode: 0600
+
+  - name: create additional ingress host
+    shell: |
+      export ns=monitoring
+      export svc=eric-pm-server
+      export port=9090
+      export cluster=$(hostname | sed 's/director-[01]-//')
+      export host=${ns}-${svc}.ingress.${cluster}.sero.gic.ericsson.se
+
+      kubectl -n $ns create ingress $svc --rule="$host/*=$svc:$port"
+
+      export ns=monitoring
+      export svc=eric-pm-server-external
+      export port=9090
+      export cluster=$(hostname | sed 's/director-[01]-//')
+      export host=${ns}-${svc}.ingress.${cluster}.sero.gic.ericsson.se
+
+      kubectl -n $ns create ingress $svc --rule="$host/*=$svc:$port"
+
+      export ns=monitoring
+      export svc=eric-pm-server-pushgateway
+      export port=9091
+      export cluster=$(hostname | sed 's/director-[01]-//')
+      export domain=$([[ $cluster =~ ^pod[0-9]+-eccd[0-9]+$ ]] && echo seln.ete.ericsson.se || echo sero.gic.ericsson.se)
+      export host=${ns}-${svc}.ingress.${cluster}.${domain}
+
+      kubectl -n $ns create ingress $svc --rule="$host/*=$svc:$port"
+    ignore_errors: yes
+    run_once: yes
+
+  - name: Add Ingress Service IP static route on director - Lab only
+    block:
+    - name: fetch master_invernal_vip
+      shell: cat /etc/hosts | grep nodelocal-api.eccd.local | cut -d' ' -f1
+      register: master_invernal_vip
+      become: yes
+      run_once: yes
+    - name: fetch ingress_svc_ip
+      command: kubectl -n ingress-nginx get svc ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+      register: ingress_svc_ip
+      run_once: yes
+    - name: add route from CLI
+      command: "ip route add {{ ingress_svc_ip.stdout }} via {{ master_invernal_vip.stdout }}"
+      become: yes
+      ignore_errors: yes
+
+    - name: add route to ifroute-eth0 conf file
+      blockinfile:
+        dest: "/etc/sysconfig/network/ifroute-eth0"
+        block: |
+          {{ ingress_svc_ip.stdout }} {{ master_invernal_vip.stdout }} - -
+        create: yes
+        mode: 0644
+      become: yes
+
+  - name: Patch CCD system daemonset to allow scheduling on HT workers
+    block:
+    - name: get current kube-multus-ds-amd64 tolerations
+      command: |
+        kubectl get daemonsets.apps -n kube-system kube-multus-ds-amd64 -ojsonpath={.spec.template.spec.tolerations[*].key}
+      register: multus_toleration
+    - name: apply kube-multus-ds-amd64 patch to add toleration for HT worker
+      command: |
+        kubectl -n kube-system patch daemonsets kube-multus-ds-amd64 --type='json' -p='
+          [
+            {
+              "op": "add",
+              "path": "/spec/template/spec/tolerations/0",
+              "value": {
+                "effect": "NoSchedule",
+                "key": "high-throughput",
+                "operator": "Equal",
+                "value": "true"
+              }
+            }
+          ]
+          '
+      when: not 'high-throughput ' in multus_toleration.stdout
+    # kucero daemonset app supporting automatic rotation of Kubernetes PKI
+    # and Kubelet certificates which enabled by default since CCD 2.20
+    - name: get current kucero tolerations
+      command: |
+        kubectl get daemonsets.apps -n kube-system kucero -ojsonpath={.spec.template.spec.tolerations[*].key}
+      register: kucero_toleration
+    - name: apply kucero patch to add toleration for HT worker
+      command: |
+        kubectl -n kube-system patch daemonsets kucero --type='json' -p='
+          [
+            {
+              "op": "add",
+              "path": "/spec/template/spec/tolerations/0",
+              "value": {
+                "effect": "NoSchedule",
+                "key": "high-throughput",
+                "operator": "Equal",
+                "value": "true"
+              }
+            }
+          ]
+          '
+      when: not 'high-throughput ' in kucero_toleration.stdout
+    when:
+    - cluster_type is defined
+    - cluster_type == 'traffic_cluster'
+    run_once: yes
+
+  - name: "Update CCD pm server resources( WA for CCD-11333 in eccd 2.20 )"
+    block:
+    - name: fetch pm external server default resources values
+      command: |
+        kubectl get sts -n monitoring eric-pm-server-external -ojsonpath="{.spec.template.spec.containers[0].resources}"
+      register: pm_external_resources
+    - name: fetch pm internal server default resources values
+      command: |
+        kubectl get sts -n monitoring eric-pm-server -ojsonpath="{.spec.template.spec.containers[0].resources}"
+      register: pm_internal_resources
+    - name: set fact for pm external server
+      set_fact:
+        pm_external_resources_default: "{{ pm_external_resources.stdout | from_json }}"
+    - name: set fact for pm internal server
+      set_fact:
+        pm_internal_resources_default: "{{ pm_internal_resources.stdout | from_json }}"
+
+    - name: set facts for pm server
+      set_fact:
+        pm_external_limit_cpu: "{{ pods['eric-pm-server-external'][cluster_type].limit.cpu | default(pm_external_resources_default.limits.cpu) }}"
+        pm_external_limit_mem: "{{ pods['eric-pm-server-external'][cluster_type].limit.memory | default(pm_external_resources_default.limits.memory) }}"
+        pm_external_requests_cpu: "{{ pods['eric-pm-server-external'][cluster_type].requests.cpu | default(pm_external_resources_default.requests.cpu) }}"
+        pm_external_requests_mem: "{{ pods['eric-pm-server-external'][cluster_type].requests.memory | default(pm_external_resources_default.requests.memory) }}"
+        pm_internal_limit_cpu: "{{ pods['eric-pm-server'][cluster_type].limit.cpu | default(pm_internal_resources_default.limits.cpu) }}"
+        pm_internal_limit_mem: "{{ pods['eric-pm-server'][cluster_type].limit.memory | default(pm_internal_resources_default.limits.memory) }}"
+        pm_internal_requests_cpu: "{{ pods['eric-pm-server'][cluster_type].requests.cpu | default(pm_internal_resources_default.requests.cpu) }}"
+        pm_internal_requests_mem: "{{ pods['eric-pm-server'][cluster_type].requests.memory | default(pm_internal_resources_default.requests.memory) }}"
+    - name: apply patch for pm server to adjust CPU/MEM
+      shell: |
+        kubectl -n monitoring patch sts eric-pm-server-external --type='json' -p='
+        [
+          {
+            "op": "replace",
+            "path": "/spec/template/spec/containers/0/resources",
+            "value": {
+              "limits": {
+                "cpu": "{{ pm_external_limit_cpu }}",
+                "memory": "{{ pm_external_limit_mem }}"
+              },
+              "requests": {
+                "cpu": "{{ pm_external_requests_cpu }}",
+                "memory": "{{ pm_external_requests_mem }}"
+              }
+            }
+          }
+        ]
+        '
+        kubectl -n monitoring patch sts eric-pm-server --type='json' -p='
+        [
+          {
+            "op": "replace",
+            "path": "/spec/template/spec/containers/0/resources",
+            "value": {
+              "limits": {
+                "cpu": "{{ pm_internal_limit_cpu }}",
+                "memory": "{{ pm_internal_limit_mem }}"
+              },
+              "requests": {
+                "cpu": "{{ pm_internal_requests_cpu }}",
+                "memory": "{{ pm_internal_requests_mem }}"
+              }
+            }
+          }
+        ]
+        '
+    when:
+    - cluster_type is defined
+    - ccd_version is version('2.20.0', '=')
+    run_once: yes
+
+- hosts: director[0]
+  gather_facts: no
+  vars:
+    install_grafana: false
+    install_crd: false
+  vars_files:
+  - ../config/site.yaml
+  tasks:
+  - name: install grafana
+    include_tasks: install_grafana.yml
+    when: install_grafana | bool
+  - name: install crd
+    include_tasks: install_crd.yml
+    when: install_crd | bool

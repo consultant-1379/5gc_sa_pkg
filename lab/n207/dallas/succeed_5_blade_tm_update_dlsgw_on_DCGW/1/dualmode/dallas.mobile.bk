@@ -1,0 +1,518 @@
+{total_number_of_subscribers, 1505535}.
+%%{total_number_of_subscribers, 1000}.
+
+
+{apn, 11, 'internet', [{ipv4, dynamic, '21.0.0.0/10'}], []}.
+{apn, 12, 'ims', [{ipv4, dynamic, '21.64.0.0/10'}], []}.
+{apn, 101, 'mqf', [{ipv4, dynamic, '22.0.0.0/16'}], []}.
+
+%%{apn, 1001, 'internet', [{ipv4, dynamic, '21.0.0.0/10'},{ipv6, dynamic,'fd21:1::/44'}], []}.
+%%{apn, 1002, 'ims', [{ipv4, dynamic, '21.64.0.0/10'},{ipv6, dynamic,'fd21:1:0200::/44'}], []}.
+
+
+{default_dualstack_ipv6_perc, 0}.
+
+{sim_5g_ue, true}.
+
+%{ue_ambr, 1, 100000000, 200000000, []}.
+
+{ms_group_gtp,
+ 101, nr, 10000,
+ [{1,11,1,40,1,[{ssc_mode,1},{nssai, [{2, 2},{1, 2}]}]},
+  {2,12,1,40,1,[{ssc_mode,1},{nssai, [{2, 2},{1, 2}]}]}],
+ [],
+ [{pco_params,false,false,true},
+  {mico_mode, false},
+  {tm_name, nr_multitm},
+  {subs_reg_timer, 600},
+  {reg_id_type, suci_null_scheme},{imsi_series,24081},
+  {msisdn_series,49172},{imei_series, 1234},
+  {cipher, [{nr, nea0}]}, {integrity, [{nr, nia1}]},
+  {defaultDnnIndicator,true},{lboRoamingAllowed,true},{iwkEpsInd,false},{ladnIndicator,false} 
+  ]}.
+
+
+{ms_group_gtp, 
+102, lte, 5000, 
+[{1,11,100,41,1,[]},
+ {2,12,100,41,1,[]}],
+[],
+[{imsi_series,24081},{msisdn_series,49172},
+{imei_series, 1234},{cipher, [{gsm,gea3},{lte,eea1}]}, 
+{integrity, [{lte,eia1}]},{non_3gpp_allowed, true}, 
+{rrc_cause, delayTolerantAccess},{n1_mode,true},
+{s1_mode,true},{iwk_45g_ind,true},{tm_name,lte}]}.
+
+{ms_group_gtp,
+103, lte, 4000,
+[{1,11,100,41,1,[]}],
+[],
+[{imsi_series,24081},{msisdn_series,49172},
+{imei_series, 1234},{cipher, [{gsm,gea3},{lte,eea1}]},
+{integrity, [{lte,eia1}]},{non_3gpp_allowed, true},
+{rrc_cause, delayTolerantAccess},{n1_mode,false},
+{s1_mode,true},{iwk_45g_ind,false},{tm_name,lte}]}.
+
+
+{ms_group_gtp,
+104, lte, 1000,
+[{1,11,100,41,1,[]},
+ {2,12,100,41,1,[]}],
+[],
+[{imsi_series,24081},{msisdn_series,49172},
+{imei_series, 1234},{cipher, [{gsm,gea3},{lte,eea1}]},
+{integrity, [{lte,eia1}]},{non_3gpp_allowed, true},
+{rrc_cause, delayTolerantAccess},{n1_mode,false},
+{s1_mode,true},{iwk_45g_ind,false},{tm_name,lte}]}.
+
+{ms_group_gtp,
+ 1001, nr, 66,
+ [{1,101,1,40,1,[{ssc_mode,1},{nssai, [{2, 2},{1, 2}]}]}],
+ [],
+ [{pco_params,false,false,true},
+  {mico_mode, false},
+  {tm_name, nr_multitm},
+  {subs_reg_timer, 600},
+  {reg_id_type, suci_null_scheme},{imsi_series,24081},
+  {msisdn_series,49172},{imei_series, 1234},
+  {cipher, [{nr, nea0}]}, {integrity, [{nr, nia1}]},
+  {defaultDnnIndicator,true},{lboRoamingAllowed,true},{iwkEpsInd,false},{ladnIndicator,false}
+  ]}.
+
+
+{qos_weighted_profile,
+ 1,                  %% Index
+ [{4, 5000},
+  {7, 5000}], []}.
+{qos_weighted_profile,
+ 2,                  %% Index
+ [{8, 10000}], []}.
+{qos_weighted_profile,
+ 3,                  %% Index
+ [{19, 5000},
+  {20, 5000}], []}.
+{qos_weighted_profile,
+ 4,                  %% Index
+  [{4, 10000}], []}.
+{qos_weighted_profile,
+    5,                  %% Index add by efengju for mpg
+    [{40, 10000}], []}.
+{qos_weighted_profile,
+    6,                  %% Index add by efengju for mpg
+    [{41, 10000}], []}.
+{qos_weighted_profile,
+    7,                  %% Index add by efengju for mpg
+    [{42, 10000}], []}.
+{qos_weighted_profile,
+    8,                  %% Index add by efengju for mpg
+    [{43, 10000}], []}.
+{qos_weighted_profile,
+    44,                  %% Index
+    [{44, 10000}]          %% Qos-profile Id, Weight
+, []}.
+{qos_profile, 1, 1, 1,3,3,1,31,
+                 conversational,2,1,150,32,32,
+                 8,4,15,1,32,32,
+                 0,0,9,[]}.
+{qos_profile, 2, 1, 1,3,4,1,31,
+                 streaming,2,1,150,64,64,
+                 8,4,15,1,64,64,
+                 0,0,9,[]}.
+{qos_profile, 3, 1, 1,3,9,1,31,
+                 interactive,2,1,150,8000,16000,
+                 8,4,15,1,8000,16000,
+                 0,0,9,[]}.
+{qos_profile, 4, 1, 1,3,6,1,31,
+                 interactive,2,1,150,64,384,
+                 8,4,15,1,384,384,
+                 0,0,9,[]}.
+{qos_profile, 5, 1, 1,3,5,1,31,
+                 interactive,2,1,150,64,128,
+                 8,4,15,1,64,128,
+                 0,0,9,[]}.
+{qos_profile, 6, 1, 1,3,4,1,31,
+                 interactive,2,1,150,32,64,
+                 8,4,15,1,32,64,
+                 0,0,9,[]}.
+{qos_profile, 7, 1, 4,3,6,1,31,
+                 background,2,1,150,64,384,
+                 8,4,15,1,384,384,
+                 0,0,9,[]}.
+
+{qos_profile, 8, 1, 4,3,6,1,31,
+                 background,2,1,150,8000,8640,
+                 8,4,15,1,8000,8640,
+                 0,0,9,[]}.
+{qos_profile, 15, 1, 1,3,9,1,31,
+                 interactive,2,1,150,8000,8700,
+                 8,4,15,1,8000,8700,
+                 0,0,9,[]}.
+{qos_profile, 16, 1, 1,3,9,1,31,
+                 interactive,2,1,150,8000,8640,
+                 8,4,15,1,8000,8640,
+                 0,0,9,[]}.
+{qos_profile, 17, 1, 1,3,9,1,31,
+                 interactive,2,1,150,4096,4096,
+                 8,4,15,1,4096,4096,
+                 0,0,9,[]}.
+{qos_profile, 18, 1, 1,3,9,1,31,
+                 interactive,2,1,150,2048,2048,
+                 8,4,15,1,2048,2048,
+                 0,0,9,[]}.
+{qos_profile, 19, 1, 1,3,4,1,31,
+                 streaming,2,1,150,8000,8700,
+                 8,4,15,1,8000,8700,
+                 0,0,9,[]}.
+{qos_profile, 20, 1, 1,3,4,1,31,
+                 streaming,2,1,150,8000,48000,
+                 8,4,15,1,8000,48000,
+                 0,0,9,[]}.
+{qos_profile, 40, 1, 1,3,4,1,31,
+                 interactive,2,1,150,8000,48000,
+                 8,4,15,1,8000,48000,
+                 0,0,9,[]}.
+{qos_profile_4g,
+ 40,   %% QoS-index
+        {1,true,true},  %% AllocRetention {Prio Level 1-15, Pre-emption Capability (boolean), Pre-emption Vulnerability (boolean)}
+        8000,      %% MaxBRUp 1-4294967295
+        48000,     %% MaxBRDown 1-4294967295
+        0,      %% GuarBRUp 1-4294967295
+        0,     %% GuarBRDown 1-4294967295
+        8000,    %% Aggregate MaxBRUp 1-4294967295
+        48000,    %% Aggregate MaxBRDown 1-4294967295
+        5        %% QCI 1-9
+, []}.
+{qos_profile_4g,
+ 41,   %% QoS-index
+        {1,true,true},  %% AllocRetention {Prio Level 1-15, Pre-emption Capability (boolean), Pre-emption Vulnerability (boolean)}
+        8000,      %% MaxBRUp 1-4294967295
+        48000,     %% MaxBRDown 1-4294967295
+        8000,      %% GuarBRUp 1-4294967295
+        48000,     %% GuarBRDown 1-4294967295
+        8000,      %% Aggregate MaxBRUp 1-4294967295
+        48000,     %% Aggregate MaxBRDown 1-4294967295
+        1          %% QCI 1-9
+, []}.
+{qos_profile_4g,
+ 42,   %% QoS-index
+        {1,true,true},  %% AllocRetention {Prio Level 1-15, Pre-emption Capability (boolean), Pre-emption Vulnerability (boolean)}
+        8000,      %% MaxBRUp 1-4294967295
+        48000,     %% MaxBRDown 1-4294967295
+        8000,      %% GuarBRUp 1-4294967295
+        48000,     %% GuarBRDown 1-4294967295
+        8000,      %% Aggregate MaxBRUp 1-4294967295
+        48000,     %% Aggregate MaxBRDown 1-4294967295
+ 	2          %% QCI 1-9
+, []}.
+{qos_profile_4g,
+ 43,   %% QoS-index
+        {1,true,true},  %% AllocRetention {Prio Level 1-15, Pre-emption Capability (boolean), Pre-emption Vulnerability (boolean)}
+        150,            %% MaxBRUp 1-4294967295
+        1000,           %% MaxBRDown 1-4294967295
+        0,            %% GuarBRUp 1-4294967295
+        0,           %% GuarBRDown 1-4294967295
+        150,            %% Aggregate MaxBRUp 1-4294967295
+        1000,           %% Aggregate MaxBRDown 1-4294967295
+        5               %% QCI 1-9
+, []}.
+{qos_profile_4g,
+ 44,   %% QoS-index
+        {1,true,true},  %% AllocRetention {Prio Level 1-15, Pre-emption Capability (boolean), Pre-emption Vulnerability (boolean)}
+        150,            %% MaxBRUp 1-4294967295
+        1000,           %% MaxBRDown 1-4294967295
+        150,            %% GuarBRUp 1-4294967295
+        1000,           %% GuarBRDown 1-4294967295
+        150,            %% Aggregate MaxBRUp 1-4294967295
+        1000,           %% Aggregate MaxBRDown 1-4294967295
+        1               %% QCI 1-9 (QCI=1-4 GBR. QCI=5-9 Non-GBR)
+, []}.
+
+
+
+%%%%
+{qos_weighted_profile,
+ 100,                  %% Index
+ [{66, 10000}], []}.
+{qos_profile_4g, 66, {1,true,true}, 4096, 4096, 0, 0, 4096, 4096, 5, []}.
+%%%%
+
+
+{weighted_payload_profile,
+ 40,   %% Identifier
+%% [{z, 1, 10000}], []}.
+ [{u, 26, 10000}], []}.
+
+{weighted_payload_profile,
+ 41,   %% Identifier
+%% [{z, 1, 10000}], []}.
+ [{u, 29, 10000}], []}.
+
+{silent_payload_profile, 1, 26, 1, []}.
+
+{weighted_payload_profile,2,[{u,26,1}], []}.
+
+
+{udp_payload_profile,
+ 1,           %% 'Payload-profile-index'
+ 508,     %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 10,        %% 'MTU-packets per session' %% "The large packet side"
+ 10,        %% 'ACK-packets per session' %% "The small packet side"
+ 560,       %% 'MTU packet size'
+ 70,        %% 'ACK packet size'
+ 0.1, %1.225, %0.7, %0.1,     %% 'MS bandwidth uplink   (kbps)'
+ 0.36, %7.2, %4.8, %0.36,         %% 'MS bandwidth downlink (kbps)'
+ 1,           %% 'MS download/upload ratio (download < 0.5 <= upload)'
+ 1,       %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 0, []}.
+{udp_payload_profile,
+ 2,           %% 'Payload-profile-index'
+ 520,     %% 'Payload session life time' %% (Integer 0 ..       3600). Note that '0' means that packets per session will be used instead.
+ 736,       %% 'MTU-packets     per session' %% "The large packet side"
+ 736,       %% 'ACK-packets     per session' %% "The small packet side"
+ 700,    %% 'MTU       packet size'
+ 700,       %% 'ACK     packet size'
+ 128, %1.225, %0.7, %0.1,     %% 'MS bandwidth uplink   (kbps)'
+ 128, %7.2, %4.8, %0.36,         %% 'MS bandwidth downlink (kbps)'
+ 0.5,           %% 'MS download/upload ratio (download < 0.5 <=   upload)'
+ 1,       %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 0, []}.
+{udp_payload_profile,
+ 3,           %% 'Payload-profile-index'
+ 508,     %% 'Payload session life time' %% (Integer 0 ..       3600). Note that '0' means that packets per session will be used instead.
+ 736,           %% 'MTU-packets per session' %% "The large packet side"
+ 736,       %% 'ACK-packets     per session' %% "The small packet side"
+ 1400,          %% 'MTU packet size'
+ 56,      %% 'ACK       packet size'
+ 0.1, %1.225, %0.7, %0.1,     %% 'MS bandwidth uplink   (kbps)'
+ 0.36, %7.2, %4.8, %0.36,         %% 'MS bandwidth downlink (kbps)'
+ 1,           %% 'MS download/upload ratio (download < 0.5 <=   upload)'
+ 1,       %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 4,           %% 'Payload-profile-index'
+ 500,     %% 'Payload session life time' %% (Integer 0 ..       3600). Note that '0' means that packets per session will be used instead.
+ 736,       %% 'MTU-packets     per session' %% "The large packet side"
+ 736,       %% 'ACK-packets     per session' %% "The small packet side"
+ 600,       %% 'MTU     packet size'
+ 160,       %% 'ACK     packet size'
+ 0.1, %1.225, %0.7, %0.1,     %% 'MS bandwidth uplink   (kbps)'
+ 0.36, %7.2, %4.8, %0.36,         %% 'MS bandwidth downlink (kbps)'
+ 0,           %% 'MS download/upload ratio (download < 0.5 <=   upload)'
+ 1,       %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 5,           %% 'Payload-profile-index'
+ 600,           %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 736,       %% 'MTU-packets     per session' %% "The large packet side"
+ 736,       %% 'ACK-packets     per session' %% "The small packet side"
+ 1400,    %% 'MTU       packet size'
+ 56,      %% 'ACK       packet size'
+ 0.36, %7.2, %4.8, %0.36,         %% 'MS bandwidth uplink       (kbps)'
+ 0.1, %1.225, %0.7, %0.1,     %% 'MS bandwidth downlink (kbps)'
+ 0,           %% 'MS download/upload ratio (download < 0.5 <=   upload)'
+ 1,       %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 6,      %% 'Payload-profile-index'
+ 600,    %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 50,     %% 'MTU-packets per session' %% "The large packet side"
+ 50,     %% 'ACK-packets per session' %% "The small packet side"
+ 1400,   %% 'MTU packet size'
+ 56,     %% 'ACK packet size'
+ 384,    %% 'MS bandwidth uplink (kbps)'
+ 384,    %% 'MS bandwidth downlink (kbps)'
+ 0,      %% 'MS download/upload ratio (download < 0.5 <= upload)'
+ 1,     %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 7,      %% 'Payload-profile-index'
+ 0,      %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 5,      %% 'MTU-packets per session' %% "The large packet side"
+ 5,      %% 'ACK-packets per session' %% "The small packet side"
+ 56,     %% 'MTU packet size'
+ 56,     %% 'ACK packet size'
+ 64,     %% 'MS bandwidth uplink (kbps)'
+ 384,    %% 'MS bandwidth downlink (kbps)'
+ 1,      %% 'MS download/upload ratio (download < 0.5 <= upload)'
+ 1,      %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 9,     %% 'Payload-profile-index'
+ 10800, %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 1,     %% 'MTU-packets per session' %% "The large packet side"
+ 1,     %% 'ACK-packets per session' %% "The small packet side"
+ 300,   %% 'MTU packet size'
+ 1200,  %% 'ACK packet size'
+ 1.5,   %% 'MS bandwidth uplink (kbps)'
+ 12,   %% 'MS bandwidth downlink (kbps)'
+ 1.0,   %% 'MS download/upload ratio (download < X <= upload)'
+ 1.0,   %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 10,      %% 'Payload-profile-index'
+ 10800,  %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 1,      %% 'MTU-packets per session' %% "The large packet side"
+ 1,      %% 'ACK-packets per session' %% "The small packet side"
+ 604,    %% 'MTU packet size'
+ 123,   %% 'ACK packet size'
+ 0.043,    %% 'MS bandwidth uplink (kbps)'
+ 0.0213,    %% 'MS bandwidth downlink (kbps)'
+ 1.0,    %% 'MS download/upload ratio (download < X <= upload)'
+ 1.0,    %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 11,      %% 'Payload-profile-index'
+ 10800,  %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 1,      %% 'MTU-packets per session' %% "The large packet side"
+ 1,      %% 'ACK-packets per session' %% "The small packet side"
+ 604,    %% 'MTU packet size'
+ 123,   %% 'ACK packet size'
+ 0.043,    %% 'MS bandwidth uplink (kbps)'
+ 0.0213,    %% 'MS bandwidth downlink (kbps)'
+ 1.0,    %% 'MS download/upload ratio (download < X <= upload)'
+ 1.0,    %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 12,      %% 'Payload-profile-index'
+ 36000,      %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 5,      %% 'MTU-packets per session' %% "The large packet side"
+ 5,      %% 'ACK-packets per session' %% "The small packet side"
+ 1000,     %% 'MTU packet size'
+ 220,     %% 'ACK packet size'
+ 0.0792,     %% 'MS bandwidth uplink (kbps)'
+ 0.44,    %% 'MS bandwidth downlink (kbps)'
+ 1,      %% 'MS download/upload ratio (download < 0.5 <= upload)'
+ 1,      %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 13,         %% 'Payload-profile-index'
+ 36000,      %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 5,          %% 'MTU-packets per session' %% "The large packet side"
+ 5,          %% 'ACK-packets per session' %% "The small packet side"
+ 800,       %% 'MTU packet size'
+ 100,        %% 'ACK packet size'
+ 0.0792,     %% 'MS bandwidth uplink (kbps)'
+ 0.44,       %% 'MS bandwidth downlink (kbps)'
+ 1,          %% 'MS download/upload ratio (download < 0.5 <= upload)'
+ 1,          %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 2, []}.
+{udp_payload_profile,
+ 14,         %% 'Payload-profile-index'
+ 36000,      %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 5,          %% 'MTU-packets per session' %% "The large packet side"
+ 5,          %% 'ACK-packets per session' %% "The small packet side"
+ 1000,       %% 'MTU packet size'
+ 220,        %% 'ACK packet size'
+ 0.0792,     %% 'MS bandwidth uplink (kbps)'
+ 0.44,       %% 'MS bandwidth downlink (kbps)'
+ 1,          %% 'MS download/upload ratio (download < 0.5 <= upload)'
+ 1,          %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 2, []}.
+{udp_payload_profile,
+ 15,         %% 'Payload-profile-index'
+ 36000,      %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 5,          %% 'MTU-packets per session' %% "The large packet side"
+ 5,          %% 'ACK-packets per session' %% "The small packet side"
+ 1000,       %% 'MTU packet size'
+ 220,        %% 'ACK packet size'
+ 0.0792,     %% 'MS bandwidth uplink (kbps)'
+ 0.44,       %% 'MS bandwidth downlink (kbps)'
+ 1,          %% 'MS download/upload ratio (download < 0.5 <= upload)'
+ 1,          %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 5, []}.
+{udp_payload_profile,
+ 16,           %% 'Payload-profile-index'
+ 508,     %% 'Payload session life time' %% (Integer 0 .. 3600). Note that '0' means that packets per session will be used instead.
+ 10,        %% 'MTU-packets per session' %% "The large packet side"
+ 10,        %% 'ACK-packets per session' %% "The small packet side"
+ 1050,       %% 'MTU packet size'
+ 160,        %% 'ACK packet size'
+ 2.8, %1.225, %0.7, %0.1,     %% 'MS bandwidth uplink   (kbps)'
+ 22.5, %7.2, %4.8, %0.36,         %% 'MS bandwidth downlink (kbps)'
+ 1,           %% 'MS download/upload ratio (download < 0.5 <= upload)'
+ 1,       %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 25,     %% 'Payload-profile-index'
+ 10800,  %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 1,      %% 'MTU-packets per session' %% "The large packet side"
+ 1,      %% 'ACK-packets per session' %% "The small packet side"
+ 525,    %% 'MTU packet size'
+ 80,     %% 'ACK packet size'
+ 1.83,   %% 'MS bandwidth uplink (kbps)'
+ 14.65,  %% 'MS bandwidth downlink (kbps)
+ 1.0,    %% 'MS download/upload ratio (download < X <= upload)
+ 1.0,    %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 26,    %% 'Payload-profile-index'
+ %%25, %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 16, %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 1,     %% 'MTU-packets per session' %% "The large packet side"
+ 1,     %% 'ACK-packets per session' %% "The small packet side"
+ 1050,  %% 'MTU packet size'
+ 170,   %% 'ACK packet size'
+ 93,  %% 'MS bandwidth uplink (kbps)'
+ 794, %% 'MS bandwidth downlink (kbps)'
+ %%40,  %% 'MS bandwidth uplink (kbps)'
+ %%200, %% 'MS bandwidth downlink (kbps)'
+ 1.0,   %% 'MS download/upload ratio (download < X <= upload)'
+ 0.63,   %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 27,    %% 'Payload-profile-index'
+ 10800, %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 1,     %% 'MTU-packets per session' %% "The large packet side"
+ 1,     %% 'ACK-packets per session' %% "The small packet side"
+ 2100,  %% 'MTU packet size'
+ 160,   %% 'ACK packet size'
+ 3.66,  %% 'MS bandwidth uplink (kbps)'
+ 29.28, %% 'MS bandwidth downlink (kbps)'
+ 1.0,   %% 'MS download/upload ratio (download < X <= upload)'
+ 1.0,   %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+{udp_payload_profile,
+ 28,    %% 'Payload-profile-index'
+ 10800, %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 1,     %% 'MTU-packets per session' %% "The large packet side"
+ 1,     %% 'ACK-packets per session' %% "The small packet side"
+ 56,  %% 'MTU packet size'
+ 56,   %% 'ACK packet size'
+ 3.66,  %% 'MS bandwidth uplink (kbps)'
+ 29.28, %% 'MS bandwidth downlink (kbps)'
+ 1.0,   %% 'MS download/upload ratio (download < X <= upload)'
+ 1.0,   %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+
+{udp_payload_profile,
+ 29,    %% 'Payload-profile-index'
+ 15, %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ %%25, %% 'Payload session life time' %% (Integer 0 .. 36000). Note that '0' means that packets per session will be used instead.
+ 1,     %% 'MTU-packets per session' %% "The large packet side"
+ 1,     %% 'ACK-packets per session' %% "The small packet side"
+ 1050,  %% 'MTU packet size'
+ 170,   %% 'ACK packet size'
+ 93,  %% 'MS bandwidth uplink (kbps)'
+ 794, %% 'MS bandwidth downlink (kbps)'
+%% 24,  %% 'MS bandwidth uplink (kbps)'
+%% 150, %% 'MS bandwidth downlink (kbps)'
+ 1.0,   %% 'MS download/upload ratio (download < X <= upload)'
+ 0.63,   %% 'MS/NW starting point ratio (MS < 0.5 <= NW)'
+ 1, []}.
+
+{gi_net, 1,   [{'194.0.0.0',8, '2A00:0194:0::', 32}], []}.
+{gi_net, 2,   [{'195.0.0.0',8, '2A00:0195:0::', 32}], []}.
+{gi_net, 3,   [{'196.0.0.0',8, '2A00:0196:0::', 32}], []}.
+{gi_net, 4,   [{'197.0.0.0',8, '2A00:0197:0::', 32}], []}.
+{gi_net, 5,   [{'198.0.0.0',8, '2A00:0198:0::', 32}], []}.
+{gi_net, 6,   [{'199.0.0.0',8, '2A00:0199:0::', 32}], []}.
+{gi_net, 7,   [{'200.0.0.0',8, '2A00:0200:0::', 32}], []}.
+{gi_net, 8,   [{'201.0.0.0',8, '2A00:0201:0::', 32}], []}.
+{gi_net, 9,   [{'202.0.0.0',8, '2A00:0202:0::', 32}], []}.
+{gi_net, 10,  [{'203.0.0.0',8, '2A00:0203:0::', 32}], []}.
+{gi_net, 11,  [{'204.0.0.0',8, '2A00:0204:0::', 32}], []}.
+{gi_net, 12,  [{'205.0.0.0',8, '2A00:0205:0::', 32}], []}.
+{gi_net, 13,  [{'206.0.0.0',8, '2A00:0206:0::', 32}], []}.
+
+{sms_profile, 1, 46990000005, international, 1, 140, []}.
+

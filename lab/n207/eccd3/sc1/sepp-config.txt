@@ -1,0 +1,148 @@
+autowizard false
+config
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Base Configuration, adapt the IP address and ports     !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+sepp-function nf-instance SEPP_1
+  ingress-connection-profile-ref default_ingress_connection_profile
+  egress-connection-profile-ref  default_egress_connection_profile
+  ingress-connection-profile default_ingress_connection_profile
+  egress-connection-profile default_egress_connection_profile
+!
+sepp-function nf-instance SEPP_1
+  asymmetric-key external_traffic_key
+  private-key sc-traf-default-key2-external
+  certificate sc-traf-default-cert2-external
+!
+sepp-function nf-instance SEPP_1
+  asymmetric-key internal_traffic_key
+  private-key sc-traf-default-key1-internal
+  certificate sc-traf-default-cert1-internal
+!
+
+sepp-function nf-instance SEPP_1
+  service-address externalAddress
+    fqdn sc1-sepp-external-sig.site1-cluster3.5gc.mnc081.mcc240.3gppnetwork.org
+    tls-port 443
+    ipv4-address 172.16.133.1
+	asymmetric-key-ref external_traffic_key
+  !
+  service-address internalAddress
+    fqdn sc1-sepp-internal-sig.site1-cluster3.5gc.mnc081.mcc240.3gppnetwork.org
+    tls-port 443
+    ipv4-address 172.17.133.1
+	asymmetric-key-ref internal_traffic_key
+  !
+!
+sepp-function nf-instance SEPP_1
+  own-network internalNetwork
+    service-address-ref internalAddress
+    routing-case-ref routing_from_internal
+    trusted-certificate-list sc-trusted-default-cas
+  !
+!
+sepp-function nf-instance SEPP_1
+  external-network externalNetwork
+    service-address-ref externalAddress
+    routing-case-ref routing_from_external
+  !
+!
+
+sepp-function nf-instance SEPP_1
+ nf-pool dummy_nf_pool
+  own-network-ref internalNetwork
+  nf-pool-discovery default
+   nrf-query nudm
+    requester-nf-type sepp
+    nf-type           udm
+   !
+  !
+ !
+!
+
+sepp-function nf-instance SEPP_1
+ message-data target_apiroot_data
+  header          3gpp-sbi-target-apiRoot
+  extractor-regex "(?P<nf>\w+)\.5gc\.mnc(?P<mnc>\d+)\.mcc(?P<mcc>\d+)"
+ !
+
+ routing-case routing_from_external
+  message-data-ref [ target_apiroot_data ]
+  routing-rule rule1
+   condition true
+   routing-action a1
+    action-route-preferred from-target-api-root-header
+    action-route-preferred failover-profile-ref fop_ext
+    action-route-preferred target-nf-pool nf-pool-ref dummy_nf_pool
+   !
+  !
+ !
+
+   routing-case routing_from_internal
+    message-data-ref [ target_apiroot_data ]
+    routing-rule rule1
+     condition true
+     routing-action RP_A_rr
+     action-route-round-robin target-nf-pool nf-pool-ref dummy_nf_pool
+     action-route-round-robin failover-profile-ref fop_int
+     !
+    !
+  !
+!
+
+
+  failover-profile fop_int
+    request-time-budget 10000
+    target-timeout 2000
+    preferred-host-retries-max   0
+    target-nf-pool-reselects-max 1
+  !
+
+  failover-profile fop_ext
+    request-time-budget 10000
+    target-timeout 2000
+    preferred-host-retries-max   0
+    target-nf-pool-reselects-max 1
+  !
+!
+
+sepp-function nf-instance SEPP_1
+ nf-profile SEPP_profile
+  service-address-ref internalAddress
+  nf-type             sepp
+  admin-state         active
+  allowed-nf-type     [ udm ]
+  service-priority    1
+  capacity            100
+  locality            seli
+  plmn 262 80
+  !
+  nf-service nsepp-telescopic
+   service-name nsepp-telescopic
+   scheme       http
+  !
+ !
+!
+
+sepp-function nf-instance SEPP_1
+ nrf-service nf-management nrf-group-ref [ NRF-RegGroup-1 ]
+ nrf-service nf-discovery nrf-group-ref NRF-RegGroup-1
+!
+
+sepp-function nf-instance SEPP_1
+ nrf-group NRF-RegGroup-1
+  nf-profile-ref SEPP_profile
+   nrf primary
+   priority      10
+   fqdn          ccrc1-nrf-sig.site1-cluster1.5gc.mnc081.mcc240.3gppnetwork.org
+   scheme        https
+   retry-timeout 2000
+   max-retries   2
+   ip-endpoint nrf1_ep
+    port         443
+    ipv4-address 172.17.128.9
+
+commit
+end

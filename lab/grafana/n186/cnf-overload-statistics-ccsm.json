@@ -1,0 +1,656 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 36,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-ccsm1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 5
+              },
+              {
+                "color": "blue",
+                "value": 25
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "mean",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "max:eric_udm_nudm_ueau_overload_unsuccessful_ratio:rate1m",
+          "interval": "",
+          "legendFormat": "",
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "max:eric_udm_nudm_uecm_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "max:eric_udm_nudm_sdm_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "C"
+        }
+      ],
+      "title": "max:eric_udm_nudm_overload_unsuccessful_ratio:rate1m",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-ccsm1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 5
+              },
+              {
+                "color": "blue",
+                "value": 25
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "mean",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "max:eric_ccsm_aspect_authentication_overload_unsuccessful_ratio:rate1m",
+          "interval": "",
+          "legendFormat": "",
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "max:eric_ccsm_aspect_ueregistration_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "max:eric_ccsm_aspect_pdusessionmngmt_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "C",
+          "timeField": "@timestamp"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "max:eric_ccsm_aspect_nudrnotifications_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "D"
+        }
+      ],
+      "title": "max:eric_ccsm_aspect_overload_unsuccessful_ratio:rate1m",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-ccsm1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 5
+              },
+              {
+                "color": "blue",
+                "value": 25
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "mean",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_sdm_amdata_overload_unsuccessful_ratio:rate1m",
+          "interval": "",
+          "legendFormat": "",
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_sdm_multipledataset_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_sdm_notify_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_sdm_nssai_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_sdm_smdata_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_sdm_smfselectdata_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_sdm_subscriptions_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_sdm_uectxtsmfdata_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_ueau_generateauth_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "I"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_uecm_amfdereg_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "J"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_uecm_amfget_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "K"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_uecm_amfreg_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "L"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_uecm_amfregupdate_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "M"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_uecm_smfdereg_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "N"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-ccsm1"
+          },
+          "exemplar": true,
+          "expr": "sum:eric_udm_nudm_uecm_smfreg_overload_unsuccessful_ratio:rate1m",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "O"
+        }
+      ],
+      "title": "sum:eric_udm_nudm_overload_unsuccessful_ratio:rate1m",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 33,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Europe/Stockholm",
+  "title": "CNF-Overload-Statistics-CCSM",
+  "uid": "SmYqIdZ4k",
+  "version": 20,
+  "weekStart": ""
+}

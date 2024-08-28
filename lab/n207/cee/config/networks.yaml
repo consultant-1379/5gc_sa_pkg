@@ -1,0 +1,282 @@
+---
+networks:
+#
+# Control networks
+#
+  - name: lcm_ctrl_sp
+    segmentationId: 22
+    taggedVlan: false
+    subnets:
+      - name: lcm-ipv4
+        cidr: 192.168.0.10/24
+        ipAllocationPools:
+          - 192.168.0.20-192.168.0.252
+        ipAllocations:
+          - hostname: controlhost1
+            ipAddress: 192.168.0.101
+          - hostname: controlhost2
+            ipAddress: 192.168.0.102
+          - hostname: controlhost3
+            ipAddress: 192.168.0.103
+          - hostname: infra1
+            ipAddress: 192.168.0.201
+          - hostname: infra2
+            ipAddress: 192.168.0.202
+          - hostname: infra3
+            ipAddress: 192.168.0.203
+          - hostname: csc1
+            ipAddress: 192.168.0.204
+          - hostname: csc2
+            ipAddress: 192.168.0.205
+          - hostname: csc3
+            ipAddress: 192.168.0.206
+        vips:
+          - name: lcm_int_vip
+            address: 192.168.0.11
+            hostname: lcm-int-vip.cee.tld
+            # loadBalancer: infra_internal_haproxy
+    # serviceComponent:
+    #   #- lcm-api
+    #   - cee-lcm
+    #   - chrony
+    #   - chrony-server
+  - name: cee_ctrl_sp
+    segmentationId: 21
+    taggedVlan: true
+    subnets:
+      - name: cee-ipv4
+        cidr: 192.168.2.11/24
+        ipAllocationPools:
+          - 192.168.2.20-192.168.2.252
+        vips:
+          - name: openstack_int_vip
+            address: 192.168.2.18
+            hostname: os-int-vip.cee.tld
+            # loadBalancer: openstack_internal_haproxy
+          - name: sdnc_nbi_vip
+            address: 192.168.2.19
+            hostname: sdnc-nbi-vip.n280vpod1cee.sc.sero.gic.ericsson.se
+            #         - name: vxsds_int_vip
+            #           address: 192.168.2.16
+            #           hostname: vxsds-int-vip
+            # loadBalancer: sdnc_nbi_haproxy
+            #  - name: oobm_ctrl_sp
+            #    segmentationId: 3
+            #    taggedVlan: true
+            #    subnets:
+            #      - name: oobm-ipv4
+            #        cidr: 10.243.0.132/24
+            #        ipAllocationPools:
+            #          - 10.243.0.31-10.243.0.35
+    # serviceComponent:
+    #   - barbican-api
+    #   - barbican-keystone-listener
+    #   - barbican-worker
+    #   - cinder-api
+    #   - cinder-backup
+    #   - cinder-scheduler
+    #   - cinder-volume
+    #   - collectd
+    #   - cmpclient
+    #   - ejbca
+    #   - hacluster-corosync
+    #   - hacluster-pacemaker
+    #   - hacluster-pacemaker-remote
+    #   - haproxy
+    #   - heat-api
+    #   - heat-api-cfn
+    #   - heat-engine
+    #   - horizon
+    #   - keystone
+    #   - manila-api
+    #   - manila-data
+    #   - manila-scheduler
+    #   - manila-share
+    #   - mariadb
+    #   - memcached
+    #   - neutron-dhcp-agent
+    #   - neutron-metadata-agent
+    #   - neutron-openvswitch-agent
+    #   - neutron-server
+    #   - neutron-sriov-agent
+    #   - nova-api
+    #   - nova-compute
+    #   - nova-conductor
+    #   - nova-novncproxy
+    #   - nova-scheduler
+    #   - openvswitch
+    #   - placement-api
+    #   - rabbitmq
+    #   - rally
+    #   - robot
+    #   - rsyslog-log-aggregator
+    #   - rsyslog-log-generator
+    #   - tempest
+#
+# Management networks
+#
+  - name: cee_om_sp
+    segmentationId: 201
+    taggedVlan: true
+    subnets:
+      - name: cee-om-ipv4
+        cidr: 10.155.215.192/28               # 214.13.180.160/28
+        ipAllocationPools:
+          - 10.155.215.196-10.155.215.201     #214.13.180.164-214.13.180.169
+        vips:
+          - name: openstack_ext_vip
+            address: 10.155.215.202           #214.13.180.170
+            hostname: os-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se
+            # loadBalancer: openstack_external_haproxy
+  - name: lcm_om_sp
+    segmentationId: 204
+    taggedVlan: true
+    subnets:
+      - name: lcm-om-ipv4
+        cidr: 10.155.200.240/28
+        ipAllocationPools:
+          - 10.155.200.244-10.155.200.250
+        vips:
+          - name: lcm_ext_vip
+            address: 10.155.200.251
+            hostname: lcm-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se
+            # loadBalancer: infra_external_haproxy
+#
+# Storage networks
+#
+  - name: swift_san_sp
+    segmentationId: 1004
+    taggedVlan: true
+    subnets:
+      - name: swift-ipv4
+        cidr: 192.168.13.0/29
+        ipAllocationPools:
+          - 192.168.13.1-192.168.13.6
+    # serviceComponent:
+    #   - swift-proxy-server
+    #   - swift-account-server
+    #   - swift-rsyncd
+    #   - swift-container-server
+    #   - swift-object-server
+    #   - swift-object-expirer
+## Mandatory network used for NexentaStar (NexentaStar is used as backend for Cinder and Manilla)
+#  - name: nfs_san_sp
+    ## Configure the VLAN ID as defined by the site specific IP and VLAN plan.
+#    segmentationId: <TO.BE.FILLED>
+#    taggedVlan: true
+#    subnets:
+#      - name: nfs-san-ipv4
+#      cidr: 192.168.19.0/24
+#      ipAllocationPools:
+#        - 192.168.19.20-192.168.19.255
+##
+  - name: migration_san_sp
+    segmentationId: 1005
+    taggedVlan: true
+    subnets:
+      - name: migration-ipv4
+        cidr: 192.168.14.0/24
+        ipAllocationPools:
+          - 192.168.14.20-192.168.14.254
+  - name: vxsds_be_san_pda
+    segmentationId: 1011
+    taggedVlan: true
+    subnets:
+      - name: vxsds-bel-ipv4
+        cidr: 192.168.15.0/24
+        ipAllocationPools:
+          - 192.168.15.20-192.168.15.254
+  - name: vxsds_be_san_pdb
+    segmentationId: 1012
+    taggedVlan: true
+    subnets:
+      - name: vxsds-ber-ipv4
+        cidr: 192.168.16.0/24
+        ipAllocationPools:
+          - 192.168.16.20-192.168.16.254
+  - name: vxsds_fe_san_pda
+    segmentationId: 1013
+    taggedVlan: true
+    subnets:
+      - name: vxsds-fel-ipv4
+        cidr: 192.168.17.0/24
+        ipAllocationPools:
+          - 192.168.17.20-192.168.17.99
+  - name: vxsds_fe_san_pdb
+    segmentationId: 1014
+    taggedVlan: true
+    subnets:
+      - name: vxsds-fer-ipv4
+        cidr: 192.168.18.0/24
+        ipAllocationPools:
+          - 192.168.18.20-192.168.18.99
+  - name: glance_san_sp
+    segmentationId: 1009
+    taggedVlan: true
+    subnets:
+      - name: glance-ipv4
+        cidr: 192.168.19.0/24
+        ipAllocationPools:
+          - 192.168.19.20-192.168.19.253
+        vips:
+          - name: glance_int_vip
+            address: 192.168.19.254
+            hostname: glance-int-vip.cee.tld
+            # loadBalancer: glance_internal_haproxy
+    # serviceComponent:
+    #   - glance-api
+  - name: gluster_san_sp
+    segmentationId: 1010
+    taggedVlan: true
+    subnets:
+      - name: gluster-ipv4
+        cidr: 192.168.120.0/24
+        ipAllocationPools:
+          - 192.168.120.20-192.168.120.254
+    # serviceComponent:
+    #   - glusterfs
+
+#
+# SDN specific networks
+#
+  - name: sdnc_internal_sp
+    segmentationId: 1000
+    taggedVlan: true
+    subnets:
+      - name: sdnc-internal-ipv4
+        cidr: 192.168.70.0/21
+        ipAllocationPools:
+          - 192.168.70.20-192.168.71.250
+        vips:
+          - name: sdnc_internal_vip
+            address: 192.168.70.19
+            hostname: sdnc-int-vip.cee.tld
+            # loadBalancer: sdnc_internal_haproxy
+  - name: sdnc_sbi_sp
+    segmentationId: 1001
+    taggedVlan: true
+    subnets:
+      - name: sdnc-sbi-ipv4
+        cidr: 192.168.40.0/24
+        ipAllocationPools:
+          - 192.168.40.20-192.168.40.253
+        vips:
+          - name: sdnc_sbi_vip
+            address: 192.168.40.254
+            hostname: sdnc-sbi-vip.cee.tld
+            # loadBalancer: sdnc_sbi_haproxy
+  - name: sdn_ul
+    segmentationId: auto
+    taggedVlan: true
+    subnets:
+      - name: sdn-ul-ipv4-1
+        cidr: auto
+  - name: sdi_agent_nw
+    segmentationId: 20
+    taggedVlan: true
+    subnets:
+      - name: sdi-agent-ipv4
+        cidr: 192.168.32.4/24
+        ipAllocationPools:
+            - 192.168.32.20-192.168.32.253
+...

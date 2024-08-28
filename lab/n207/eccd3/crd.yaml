@@ -1,0 +1,15 @@
+# Edit 'csar-list' to update the required CSAR package
+# Then in the same directory run: cnat --install-crd
+clusterName: n280-eccd3
+namespace: eric-crd-ns
+registry:
+  host: docker-registry.evnfm1.n280-eccd2.sero.gic.ericsson.se
+  username: vnfm
+  password: Dm5GC@S0lut!on
+pullSecret: regcred
+csar-list:
+- /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/VNF/eric-sc-1.12.0+43.csar
+
+additional-values:
+  eric-tm-ingress-controller-cr-crd:
+    rbac.create: true

@@ -1,0 +1,133 @@
+heat_template_version: 2017-09-01
+description: >
+  This HOT file is used to create NFS and SoapUI VM on CEE 9 for 5GC SA solution. It can also be used for other VM creation
+
+parameters:
+
+  nova_availability_zone:
+    type: string
+  flavor:
+    type: string
+  disk:
+    type: number
+  image:
+    type: string
+  security_groups_enabled:
+    type: boolean
+  internet_network:
+    type: string
+  internet_subnet:
+    type: string
+  internet_ip:
+    type: string
+  traffic_network:
+    type: string
+  traffic_subnet:
+    type: string
+  traffic_ip:
+    type: string
+  public_key:
+    type: string
+  enable_volume:
+    type: boolean
+    default: true
+    
+
+conditions:
+
+  enable_volume: { get_param: enable_volume }
+  local_disk: { not: { get_param: enable_volume } }
+
+
+resources:
+
+  internet_port: 
+    type: OS::Neutron::Port
+    properties:
+      fixed_ips: 
+        - ip_address: { get_param: internet_ip }
+          subnet: { get_param: internet_subnet }
+      network: { get_param: internet_network }
+      port_security_enabled: { get_param: security_groups_enabled }
+      name:
+        str_replace:
+          template: "<prefix>-internet-port"
+          params:
+            "<prefix>": { get_param: "OS::stack_name" }
+
+  traffic_port: 
+    type: OS::Neutron::Port
+    properties:
+      fixed_ips: 
+        - ip_address: { get_param: traffic_ip }
+          subnet: { get_param: traffic_subnet }
+      network: { get_param: traffic_network }
+      port_security_enabled: { get_param: security_groups_enabled }
+      name:
+        str_replace:
+          template: "<prefix>-traffic-port"
+          params:
+            "<prefix>": { get_param: "OS::stack_name" }
+
+  ssh_keypair:
+    type: OS::Nova::KeyPair
+    properties:
+      name:
+        str_replace:
+          template: "<prefix>-ssh-key"
+          params:
+            "<prefix>": { get_param: "OS::stack_name" }
+      public_key: { get_param: public_key }
+      save_private_key: false
+
+  root_volume:
+    condition: enable_volume
+    type: OS::Cinder::Volume
+    properties:
+      name:
+        str_replace:
+          template: "<prefix>-volume"
+          params:
+            "<prefix>": { get_param: "OS::stack_name" }
+      image: {get_param: image}
+      size: {get_param: disk}
+
+  server_with_volume:
+    condition: enable_volume
+    type: OS::Nova::Server
+    properties:
+      availability_zone: { get_param: nova_availability_zone }
+      config_drive: true
+      name:
+        str_replace:
+          template: "<prefix>-server"
+          params:
+            "<prefix>": { get_param: "OS::stack_name" }
+      flavor: { get_param: flavor }
+      key_name: { get_resource: ssh_keypair }
+      networks:
+      - port: {get_resource: internet_port}
+      - port: {get_resource: traffic_port}
+      block_device_mapping_v2:
+      - device_type: disk
+        delete_on_termination: true
+        volume_id: { get_resource: root_volume }
+        boot_index: 0
+
+  server_without_volume:
+    condition: local_disk
+    type: OS::Nova::Server
+    properties:
+      availability_zone: { get_param: nova_availability_zone }
+      config_drive: true
+      name:
+        str_replace:
+          template: "<prefix>-server"
+          params:
+            "<prefix>": { get_param: "OS::stack_name" }
+      flavor: { get_param: flavor }
+      key_name: { get_resource: ssh_keypair }
+      networks:
+      - port: {get_resource: internet_port}
+      - port: {get_resource: traffic_port}
+      image: { get_param: image }

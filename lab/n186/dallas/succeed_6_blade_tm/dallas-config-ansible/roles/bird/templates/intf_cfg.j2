@@ -1,0 +1,25 @@
+{% if intf.vlan is defined %}
+DEVICE={{ intf.name }}.{{ intf.vlan }}
+VLAN=yes
+{% else %}
+DEVICE={{ intf.name }}
+{% endif %}
+BOOTPROTO=none
+ONBOOT=yes
+HOTPLUG=yes
+TYPE=Ethernet
+PEERDNS=no
+NM_CONTROLLED=no
+
+# IPv4
+IPADDR={{ intf.ip_addr }}
+PREFIX={{ intf.ip_prefix }}
+
+{% if intf.ipv6_addr is defined %}
+IPv6INIT=yes
+IPV6_AUTOCONF=no
+IPV6_DEFROUTE=no
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+IPV6ADDR={{ intf.ipv6_addr }}
+{% endif %}

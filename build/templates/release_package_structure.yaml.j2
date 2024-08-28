@@ -1,0 +1,69 @@
+# Dual-mode 5gc on nfvi release package structure Jinja2 template
+package:
+  name: {{ pkg_name }}
+  fnd: .files_not_distributed
+  content:
+  - {{ pkg_name }}:
+    - type: version.txt
+      config_path: lab/version.txt
+    - type: 5gc_sa_net_hot
+      config_path: 5gc_sa_net_hot
+    - config:
+      {% for uc in usecases %}
+      {% if usecases | length > 1 %}
+      - {{ uc.name }}:
+      {% endif %}
+        - site1:
+          {% if 'mgmt-cluster' in uc.site1 %}
+          - mgmt-cluster:
+            {% for cp in uc.site1.mgmt-cluster.caas %}
+            - {{ cp }}
+            {% endfor %}
+            {% if 'cnfs' in uc.site1.mgmt-cluster %}
+            {% for cnf in uc.site1.mgmt-cluster.cnfs %}
+            - {{ cnf }}
+            {% endfor %}
+            {% endif %}
+          {% endif %}
+          {% if 'traffic-cluster' in uc.site1 %}
+          - traffic-cluster:
+            {% for cp in uc.site1.traffic-cluster.caas %}
+            - {{ cp }}
+            {% endfor %}
+            {% if 'cnfs' in uc.site1.traffic-cluster %}
+            {% for cnf in uc.site1.traffic-cluster.cnfs %}
+            - {{ cnf }}
+            {% endfor %}
+            {% endif %}
+          {% endif %}
+          {% if 'legacy_vnfs' in uc.site1 %}
+          - legacy_vnfs:
+            {% for vnf in uc.site1.legacy_vnfs %}
+            - {{ vnf }}
+            {% endfor %}
+          {% endif %}
+        - site2:
+          {% if 'mgmt-cluster' in uc.site2 %}
+          - mgmt-cluster:
+            {% for cp in uc.site2.mgmt-cluster.caas %}
+            - {{ cp }}
+            {% endfor %}
+          {% endif %}
+          {% if 'traffic-cluster' in uc.site2 %}
+          - traffic-cluster:
+            {% for cp in uc.site2.traffic-cluster.caas %}
+            - {{ cp }}
+            {% endfor %}
+            {% if 'cnfs' in uc.site2.traffic-cluster %}
+            {% for cnf in uc.site2.traffic-cluster.cnfs %}
+            - {{ cnf }}
+            {% endfor %}
+            {% endif %}
+          {% endif %}
+          {% if 'legacy_vnfs' in uc.site2 %}
+          - legacy_vnfs:
+            {% for vnf in uc.site2.legacy_vnfs %}
+            - {{ vnf }}
+            {% endfor %}
+          {% endif %}
+      {% endfor %}

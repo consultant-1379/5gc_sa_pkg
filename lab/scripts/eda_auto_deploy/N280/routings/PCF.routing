@@ -1,0 +1,6 @@
+{
+  "networkElementType": "PCF",
+  "routingMethod": "UnconditionalRouting",
+  "instance": "CCDM_PF_MAPI",
+  "instanceType": "NetworkElementGroup"
+}

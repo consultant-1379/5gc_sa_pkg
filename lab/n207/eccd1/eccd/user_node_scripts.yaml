@@ -1,0 +1,233 @@
+control_plane:
+  post_network_init: |
+    #!/usr/bin/env bash
+    set -ue
+
+    echo -e "Adding Target Solution Dual-mode 5GC Self-signed RootCA"
+    rootca_file=/etc/pki/trust/anchors/tsdm5gc-self-signed-rootca.crt
+    cat <<EOF > $rootca_file
+    -----BEGIN CERTIFICATE-----
+    MIIGDTCCA/WgAwIBAgIUZLr11v37tmlXMG0eJ0EM+iftWUMwDQYJKoZIhvcNAQEL
+    BQAwgYwxCzAJBgNVBAYTAlNFMQswCQYDVQQIDAJWRzERMA8GA1UEBwwIR290ZWJv
+    cmcxETAPBgNVBAoMCEVyaWNzc29uMQ0wCwYDVQQLDAR2ZXBjMTswOQYDVQQDDDJU
+    YXJnZXQgU29sdXRpb24gRHVhbC1Nb2RlIDVHIENvcmUgTXVsdGlWZXJzZVJvb3RD
+    QTAgFw0yMzA1MDYwODIwNTdaGA8yMDUxMDUxOTA4MjA1N1owgYwxCzAJBgNVBAYT
+    AlNFMQswCQYDVQQIDAJWRzERMA8GA1UEBwwIR290ZWJvcmcxETAPBgNVBAoMCEVy
+    aWNzc29uMQ0wCwYDVQQLDAR2ZXBjMTswOQYDVQQDDDJUYXJnZXQgU29sdXRpb24g
+    RHVhbC1Nb2RlIDVHIENvcmUgTXVsdGlWZXJzZVJvb3RDQTCCAiIwDQYJKoZIhvcN
+    AQEBBQADggIPADCCAgoCggIBALXGi23iW+Rlz2u20Vn8cd2X46kH6WpnXB0GYzDm
+    qaDI9hDjRsQs3ngyIujrb9r8xnfmlVMIWmqlVLSCwqc/PUe5aMnbhlU3G0HaR16a
+    eI8JRBn0oj9G1B9F8xr40XaM1RCy7NE4kXRTR0jEPctJ00j/u9XMwttbfAbCZEvu
+    gewFDd4fVx8MuTmNiNjDv66WeRw/eMFWYZBT9Mr6sPRGT2AGLtMomPFP3U7RVZRL
+    GLqAQj5/P4+dspzuBam3uoBXLYhUD8pILVgvZ2mE+igzbJ05sOd+LizN2va1nggj
+    AIyPSxGBpfFmiWkITT1V+8zTuA/lN7NZvSw0jfdIjIvBW2s02xeKjUsiIes95aW5
+    yX1g3OAE0ndI4WZcQ49ZhBy0f7D5ZSt8Jy4nukjf3N5e9wUtzEoell65FS2zr/qT
+    vIM3kFwuD8JkXpO8iFf/5RT9fO3emE3PC+gZy6XLrjlXYny5JIgFBzilIyE+i77S
+    lP+1o+B6+clC5Ny+Jn6N8PL8PxzcwxPNqqQMYRtoxH8/Xlnw1lPHtvBO/nKQbU//
+    B96fRcyTj2+XFPSpbz9PKYQkRezTn7dgj79C8sZyNK/YXfZ3ZeFX0inti7/RlJN8
+    iRBwzXTq6tQAKs+Bcd3HxurC8r0aGmsS22qKx8CquTPvijAaOpZo8+jnoOXP4+Nz
+    sDQTAgMBAAGjYzBhMB0GA1UdDgQWBBTuIsONl7IngwPClz+btbR1YSnk6DAfBgNV
+    HSMEGDAWgBTuIsONl7IngwPClz+btbR1YSnk6DAPBgNVHRMBAf8EBTADAQH/MA4G
+    A1UdDwEB/wQEAwIBhjANBgkqhkiG9w0BAQsFAAOCAgEAtRgndBH7YyUZoBxuWWVK
+    orGPSXNZhUOQxyfIKASS3tDnAmD+4JVSy6W4AzOv7cF8KofcDZpNjw2wstKhePRT
+    ztTtM0CPBY4QvXyHNNKlXQDEUqp9OeEvzi04zEefsiF2N3e717oSqmz9zoELO6Uw
+    V1ICrhZwrv+Af+CT4ZUhM+JaqNxaXkwur8Ypafhe+cDSj1CLMeL7g7lql0sBTE0E
+    WcR9NYx4OlkQC9hHTqYWToJXvjcuUFbVE/QuoARG+tea+/CNM+ayB5UUlV40OqXK
+    iQ2l4M+NDVDJauuZpJsl63OUWSdTw0bnj4S4EHaJmnHQUfQAtZO2dmwCzr7G15zJ
+    2LeRnhUfATRYJXiMXDveJAxQPwipHpC39pGK0bOQIHiHe84KP/8yo1ALJZGoqRbv
+    RwR5VHbCN4PsWlT5Te/TJZ416GUiod+v+8a6aYTaUe5dz+qv/ufRianxHNPnaXTr
+    /QZ1i2Pzo8ulMiSGA2KstPIRXS/cCXavIPfzqddHfOzk/ct5+MbRKao+2ZtCeZHl
+    aayaeFYfs1UrEu6tnGh/ER+5NVH0NZvGBdnl5xBmuarGGdz+zJjXf+9iEhq2P8mg
+    SrjnOH3hYYcNRgg9kHTw6qlHCTDzUs95zzbLT5QE/hvA1DrsuzpNbQKHKpUKg7s3
+    Ypc901s9BWoNxqjOdWJ5o3c=
+    -----END CERTIFICATE-----
+    EOF
+    chmod 400 $rootca_file
+high-throughput:
+  post_kubeadm_init: |
+    #!/usr/bin/env bash
+    set -ue
+
+    ### PCG 1.19 EP3 workaround for performance affected by Linux kernel feature THP (Transparent Huge Pages)
+    ### This WA is only applied for CCD 2.24, 2.25 and 2.26
+    # update proactiveness
+    cat << EOF >> /etc/sysctl.conf
+    vm.compaction_proactiveness = 0
+    EOF
+
+    # update ptes
+    cat << EOF >> /root/ptes_update.sh
+    echo 127 > /sys/kernel/mm/transparent_hugepage/khugepaged/max_ptes_none
+    EOF
+    chmod +x /root/ptes_update.sh
+
+    # create auto start service for ptes updating
+    cat << EOF >> /etc/systemd/system/ptes_update.service
+    [Unit]
+    Description=Update max_ptes_none
+    Before=containerd.service
+    [Service]
+    Type=oneshot
+    ExecStart=/bin/bash -c "/root/ptes_update.sh"
+    [Install]
+    WantedBy=multi-user.target
+    EOF
+    systemctl enable ptes_update.service
+    systemctl start ptes_update.service
+  post_network_init: |
+    #!/usr/bin/env bash
+    set -ue
+
+    echo -e "Adding Target Solution Dual-mode 5GC Self-signed RootCA"
+    rootca_file=/etc/pki/trust/anchors/tsdm5gc-self-signed-rootca.crt
+    cat <<EOF > $rootca_file
+    -----BEGIN CERTIFICATE-----
+    MIIGDTCCA/WgAwIBAgIUZLr11v37tmlXMG0eJ0EM+iftWUMwDQYJKoZIhvcNAQEL
+    BQAwgYwxCzAJBgNVBAYTAlNFMQswCQYDVQQIDAJWRzERMA8GA1UEBwwIR290ZWJv
+    cmcxETAPBgNVBAoMCEVyaWNzc29uMQ0wCwYDVQQLDAR2ZXBjMTswOQYDVQQDDDJU
+    YXJnZXQgU29sdXRpb24gRHVhbC1Nb2RlIDVHIENvcmUgTXVsdGlWZXJzZVJvb3RD
+    QTAgFw0yMzA1MDYwODIwNTdaGA8yMDUxMDUxOTA4MjA1N1owgYwxCzAJBgNVBAYT
+    AlNFMQswCQYDVQQIDAJWRzERMA8GA1UEBwwIR290ZWJvcmcxETAPBgNVBAoMCEVy
+    aWNzc29uMQ0wCwYDVQQLDAR2ZXBjMTswOQYDVQQDDDJUYXJnZXQgU29sdXRpb24g
+    RHVhbC1Nb2RlIDVHIENvcmUgTXVsdGlWZXJzZVJvb3RDQTCCAiIwDQYJKoZIhvcN
+    AQEBBQADggIPADCCAgoCggIBALXGi23iW+Rlz2u20Vn8cd2X46kH6WpnXB0GYzDm
+    qaDI9hDjRsQs3ngyIujrb9r8xnfmlVMIWmqlVLSCwqc/PUe5aMnbhlU3G0HaR16a
+    eI8JRBn0oj9G1B9F8xr40XaM1RCy7NE4kXRTR0jEPctJ00j/u9XMwttbfAbCZEvu
+    gewFDd4fVx8MuTmNiNjDv66WeRw/eMFWYZBT9Mr6sPRGT2AGLtMomPFP3U7RVZRL
+    GLqAQj5/P4+dspzuBam3uoBXLYhUD8pILVgvZ2mE+igzbJ05sOd+LizN2va1nggj
+    AIyPSxGBpfFmiWkITT1V+8zTuA/lN7NZvSw0jfdIjIvBW2s02xeKjUsiIes95aW5
+    yX1g3OAE0ndI4WZcQ49ZhBy0f7D5ZSt8Jy4nukjf3N5e9wUtzEoell65FS2zr/qT
+    vIM3kFwuD8JkXpO8iFf/5RT9fO3emE3PC+gZy6XLrjlXYny5JIgFBzilIyE+i77S
+    lP+1o+B6+clC5Ny+Jn6N8PL8PxzcwxPNqqQMYRtoxH8/Xlnw1lPHtvBO/nKQbU//
+    B96fRcyTj2+XFPSpbz9PKYQkRezTn7dgj79C8sZyNK/YXfZ3ZeFX0inti7/RlJN8
+    iRBwzXTq6tQAKs+Bcd3HxurC8r0aGmsS22qKx8CquTPvijAaOpZo8+jnoOXP4+Nz
+    sDQTAgMBAAGjYzBhMB0GA1UdDgQWBBTuIsONl7IngwPClz+btbR1YSnk6DAfBgNV
+    HSMEGDAWgBTuIsONl7IngwPClz+btbR1YSnk6DAPBgNVHRMBAf8EBTADAQH/MA4G
+    A1UdDwEB/wQEAwIBhjANBgkqhkiG9w0BAQsFAAOCAgEAtRgndBH7YyUZoBxuWWVK
+    orGPSXNZhUOQxyfIKASS3tDnAmD+4JVSy6W4AzOv7cF8KofcDZpNjw2wstKhePRT
+    ztTtM0CPBY4QvXyHNNKlXQDEUqp9OeEvzi04zEefsiF2N3e717oSqmz9zoELO6Uw
+    V1ICrhZwrv+Af+CT4ZUhM+JaqNxaXkwur8Ypafhe+cDSj1CLMeL7g7lql0sBTE0E
+    WcR9NYx4OlkQC9hHTqYWToJXvjcuUFbVE/QuoARG+tea+/CNM+ayB5UUlV40OqXK
+    iQ2l4M+NDVDJauuZpJsl63OUWSdTw0bnj4S4EHaJmnHQUfQAtZO2dmwCzr7G15zJ
+    2LeRnhUfATRYJXiMXDveJAxQPwipHpC39pGK0bOQIHiHe84KP/8yo1ALJZGoqRbv
+    RwR5VHbCN4PsWlT5Te/TJZ416GUiod+v+8a6aYTaUe5dz+qv/ufRianxHNPnaXTr
+    /QZ1i2Pzo8ulMiSGA2KstPIRXS/cCXavIPfzqddHfOzk/ct5+MbRKao+2ZtCeZHl
+    aayaeFYfs1UrEu6tnGh/ER+5NVH0NZvGBdnl5xBmuarGGdz+zJjXf+9iEhq2P8mg
+    SrjnOH3hYYcNRgg9kHTw6qlHCTDzUs95zzbLT5QE/hvA1DrsuzpNbQKHKpUKg7s3
+    Ypc901s9BWoNxqjOdWJ5o3c=
+    -----END CERTIFICATE-----
+    EOF
+    chmod 400 $rootca_file
+standard:
+  post_kubeadm_init: |
+    #!/usr/bin/env bash
+    set -ue
+
+    # Label the worker nodes for PCC
+    # ADD LABEL START
+    echo -e "Adding PCC CNF labels ...."
+    # set worker nodes count of PC-MM controller or PC-SM controller to 3 when it supports HA
+    export MM_CONTROLLERS=3
+    export MM_CTRL_LABEL="pcc-mm-pod=controller"
+    export MM_NON_CTRL_LABEL="pcc-mm-pod=non-controller"
+    export SM_CONTROLLERS=2
+    export SM_CTRL_LABEL="pcc-sm-pod=controller"
+    export SM_NON_CTRL_LABEL="pcc-sm-pod=non-controller"
+
+    get_label_count() {
+      LABEL=$1
+      COUNT=$(/usr/local/bin/kubectl --kubeconfig /etc/kubernetes/kubelet.conf get node -l ${LABEL} | egrep -v "^NAME" | wc -l)
+      echo $COUNT
+    }
+
+    ### MAIN
+    NODE_NAME=$(hostname -s)
+    if [ $(get_label_count $MM_CTRL_LABEL) -lt $MM_CONTROLLERS ]
+    then
+        /usr/local/bin/kubectl --kubeconfig /etc/kubernetes/kubelet.conf label node $NODE_NAME $MM_CTRL_LABEL
+        /usr/local/bin/kubectl --kubeconfig /etc/kubernetes/kubelet.conf label node $NODE_NAME $SM_NON_CTRL_LABEL
+    elif [ $(get_label_count $SM_CTRL_LABEL) -lt $SM_CONTROLLERS ]
+    then
+        /usr/local/bin/kubectl --kubeconfig /etc/kubernetes/kubelet.conf label node $NODE_NAME $SM_CTRL_LABEL
+        /usr/local/bin/kubectl --kubeconfig /etc/kubernetes/kubelet.conf label node $NODE_NAME $MM_NON_CTRL_LABEL
+    else
+        /usr/local/bin/kubectl --kubeconfig /etc/kubernetes/kubelet.conf label node $NODE_NAME $MM_NON_CTRL_LABEL
+        /usr/local/bin/kubectl --kubeconfig /etc/kubernetes/kubelet.conf label node $NODE_NAME $SM_NON_CTRL_LABEL
+    fi
+    echo -e "END PCC CNF labels"
+    # ADD LABEL END
+  post_network_init: |
+    #!/usr/bin/env bash
+    set -ue
+
+    echo -e "Adding Target Solution Dual-mode 5GC Self-signed RootCA"
+    rootca_file=/etc/pki/trust/anchors/tsdm5gc-self-signed-rootca.crt
+    cat <<EOF > $rootca_file
+    -----BEGIN CERTIFICATE-----
+    MIIGDTCCA/WgAwIBAgIUZLr11v37tmlXMG0eJ0EM+iftWUMwDQYJKoZIhvcNAQEL
+    BQAwgYwxCzAJBgNVBAYTAlNFMQswCQYDVQQIDAJWRzERMA8GA1UEBwwIR290ZWJv
+    cmcxETAPBgNVBAoMCEVyaWNzc29uMQ0wCwYDVQQLDAR2ZXBjMTswOQYDVQQDDDJU
+    YXJnZXQgU29sdXRpb24gRHVhbC1Nb2RlIDVHIENvcmUgTXVsdGlWZXJzZVJvb3RD
+    QTAgFw0yMzA1MDYwODIwNTdaGA8yMDUxMDUxOTA4MjA1N1owgYwxCzAJBgNVBAYT
+    AlNFMQswCQYDVQQIDAJWRzERMA8GA1UEBwwIR290ZWJvcmcxETAPBgNVBAoMCEVy
+    aWNzc29uMQ0wCwYDVQQLDAR2ZXBjMTswOQYDVQQDDDJUYXJnZXQgU29sdXRpb24g
+    RHVhbC1Nb2RlIDVHIENvcmUgTXVsdGlWZXJzZVJvb3RDQTCCAiIwDQYJKoZIhvcN
+    AQEBBQADggIPADCCAgoCggIBALXGi23iW+Rlz2u20Vn8cd2X46kH6WpnXB0GYzDm
+    qaDI9hDjRsQs3ngyIujrb9r8xnfmlVMIWmqlVLSCwqc/PUe5aMnbhlU3G0HaR16a
+    eI8JRBn0oj9G1B9F8xr40XaM1RCy7NE4kXRTR0jEPctJ00j/u9XMwttbfAbCZEvu
+    gewFDd4fVx8MuTmNiNjDv66WeRw/eMFWYZBT9Mr6sPRGT2AGLtMomPFP3U7RVZRL
+    GLqAQj5/P4+dspzuBam3uoBXLYhUD8pILVgvZ2mE+igzbJ05sOd+LizN2va1nggj
+    AIyPSxGBpfFmiWkITT1V+8zTuA/lN7NZvSw0jfdIjIvBW2s02xeKjUsiIes95aW5
+    yX1g3OAE0ndI4WZcQ49ZhBy0f7D5ZSt8Jy4nukjf3N5e9wUtzEoell65FS2zr/qT
+    vIM3kFwuD8JkXpO8iFf/5RT9fO3emE3PC+gZy6XLrjlXYny5JIgFBzilIyE+i77S
+    lP+1o+B6+clC5Ny+Jn6N8PL8PxzcwxPNqqQMYRtoxH8/Xlnw1lPHtvBO/nKQbU//
+    B96fRcyTj2+XFPSpbz9PKYQkRezTn7dgj79C8sZyNK/YXfZ3ZeFX0inti7/RlJN8
+    iRBwzXTq6tQAKs+Bcd3HxurC8r0aGmsS22qKx8CquTPvijAaOpZo8+jnoOXP4+Nz
+    sDQTAgMBAAGjYzBhMB0GA1UdDgQWBBTuIsONl7IngwPClz+btbR1YSnk6DAfBgNV
+    HSMEGDAWgBTuIsONl7IngwPClz+btbR1YSnk6DAPBgNVHRMBAf8EBTADAQH/MA4G
+    A1UdDwEB/wQEAwIBhjANBgkqhkiG9w0BAQsFAAOCAgEAtRgndBH7YyUZoBxuWWVK
+    orGPSXNZhUOQxyfIKASS3tDnAmD+4JVSy6W4AzOv7cF8KofcDZpNjw2wstKhePRT
+    ztTtM0CPBY4QvXyHNNKlXQDEUqp9OeEvzi04zEefsiF2N3e717oSqmz9zoELO6Uw
+    V1ICrhZwrv+Af+CT4ZUhM+JaqNxaXkwur8Ypafhe+cDSj1CLMeL7g7lql0sBTE0E
+    WcR9NYx4OlkQC9hHTqYWToJXvjcuUFbVE/QuoARG+tea+/CNM+ayB5UUlV40OqXK
+    iQ2l4M+NDVDJauuZpJsl63OUWSdTw0bnj4S4EHaJmnHQUfQAtZO2dmwCzr7G15zJ
+    2LeRnhUfATRYJXiMXDveJAxQPwipHpC39pGK0bOQIHiHe84KP/8yo1ALJZGoqRbv
+    RwR5VHbCN4PsWlT5Te/TJZ416GUiod+v+8a6aYTaUe5dz+qv/ufRianxHNPnaXTr
+    /QZ1i2Pzo8ulMiSGA2KstPIRXS/cCXavIPfzqddHfOzk/ct5+MbRKao+2ZtCeZHl
+    aayaeFYfs1UrEu6tnGh/ER+5NVH0NZvGBdnl5xBmuarGGdz+zJjXf+9iEhq2P8mg
+    SrjnOH3hYYcNRgg9kHTw6qlHCTDzUs95zzbLT5QE/hvA1DrsuzpNbQKHKpUKg7s3
+    Ypc901s9BWoNxqjOdWJ5o3c=
+    -----END CERTIFICATE-----
+    EOF
+    chmod 400 $rootca_file
+
+    cat << EOF > apparmor-docker-pcc
+    #include <tunables/global>
+
+    profile docker-pcc flags=(attach_disconnected,mediate_deleted) {
+      #include <abstractions/base>
+      network,
+      capability,
+      file,
+      mount,
+      umount,
+      ptrace peer=@{profile_name},
+    }
+    EOF
+
+    mv apparmor-docker-pcc /etc/apparmor.d/
+    systemctl restart apparmor
+
+    function load_kernel_module() {
+      for m in $@; do
+        modprobe $m && echo $m >> /etc/modules-load.d/dm5gc_nfvi_preload.conf
+      done
+    }
+    load_kernel_module ip6table_mangle fou
+
+    # adjust kernel parameters for DM 5GC CNFs
+    cat << EOF >> /etc/sysctl.conf
+    ## update to kernel parameters required by Search Engine
+    vm.max_map_count = 262144
+    EOF
+    sysctl -p

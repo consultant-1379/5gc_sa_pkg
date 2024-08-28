@@ -1,0 +1,49 @@
+pre_install:
+    - name: disable_puppet_due_to_PCGW-4936
+      executable: "/usr/bin/puppet agent"
+      arg: "--disable 'Disable puppet Dallas 1 installed - PCGW-4936'"
+      host: [pccc-node280-dallas-1-202,pccc-node280-misc-1-01,pccc-node280-misc-1-03,pccc-node280-misc-1-02,pccc-node280-dallas-1-201]
+
+    - name: bind_dpdk
+      executable: "/lab/testtools/dallas/rhel764/Release/3R159B02/3pp/ltt/dpdk/lts_bind_dpdk -d /lab/testtools/rhel764/eyanpho/dpdk-stable-18.11.11"
+      arg: "/var/dallas/tap.conf"
+      host: [pccc-node280-dallas-1-202,pccc-node280-misc-1-01,pccc-node280-misc-1-03,pccc-node280-misc-1-02,pccc-node280-dallas-1-201]
+      debug: on
+
+    - name: upload route script
+      executable: "cd /root/dallas-config-ansible && ansible-playbook playbooks/create-dallas-network.yml"
+      host: [pccc-node280-dallas-1-202]
+      debug: on
+
+    - name: start bird
+      executable: "/root/dallas-config-ansible/bird_manager.sh --start && sleep 60"
+      host: [pccc-node280-dallas-1-202]
+      debug: on
+
+
+post_install:
+    - name: run route script
+      executable: "/root/add_dm_5gc_route.sh"
+      host: [pccc-node280-dallas-1-202,pccc-node280-misc-1-01,pccc-node280-misc-1-03,pccc-node280-misc-1-02,pccc-node280-dallas-1-201]
+      debug: on
+
+
+post_uninstall:
+    - name: stop bird
+      executable: "/root/dallas-config-ansible/bird_manager.sh --stop"
+      host: [pccc-node280-dallas-1-202]
+      debug: on
+    - name: unbind_dpdk
+      executable: "/lab/testtools/dallas/rhel764/Release/3R159B02/3pp/ltt/dpdk/lts_unbind_dpdk"
+      host: [pccc-node280-dallas-1-202,pccc-node280-misc-1-01,pccc-node280-misc-1-03,pccc-node280-misc-1-02,pccc-node280-dallas-1-201]
+
+    - name: enable_puppet
+      executable: "/usr/bin/puppet agent"
+      arg: "--enable"
+      host: [pccc-node280-dallas-1-202,pccc-node280-misc-1-01,pccc-node280-misc-1-03,pccc-node280-misc-1-02,pccc-node280-dallas-1-201]
+
+    - name: run_puppet
+      executable: "/usr/sbin/call_home || true"
+      host: [pccc-node280-dallas-1-202,pccc-node280-misc-1-01,pccc-node280-misc-1-03,pccc-node280-misc-1-02,pccc-node280-dallas-1-201]
+      debug: on
+

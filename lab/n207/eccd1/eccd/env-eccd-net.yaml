@@ -1,0 +1,189 @@
+#
+## The ccd external network environment file for CCD External Network Heat Stack
+#
+
+parameters:
+  prefix: n280-eccd1
+  phynet_virtio: n280vpod1-dcgw
+  l2gw_dcgw_id: <External L2GW UUID>
+  phynet_sriov_left:  N280-CEE1-PHY0_100
+  phynet_sriov_right: N280-CEE1-PHY1_100
+  l2gw_sriov_left_id: <UUID of L2 Gateway L2GW_FLAT_LEFT>
+  l2gw_sriov_right_id: <UUID of L2 Gateway L2GW_FLAT_RIGHT>
+  macvlan_parent_networks:
+  - name: macvlan-parent-1
+    cidr: 172.31.200.0/24
+
+  virtio_networks:
+  - name: ccd-oam
+    vlan: 220
+    vxlan: 4220
+    cidr: 10.117.54.48/28
+    enable_dhcp: false
+    gateway: 10.117.54.49
+    allocation_pools: { start: 10.117.54.52, end: 10.117.54.62 }
+    routes: []
+
+  - name: primary-signaling
+    vlan: 2302
+    vxlan: 6302
+    cidr: 172.21.160.0/24
+    enable_dhcp: false
+    gateway: 172.21.160.1
+    allocation_pools: { start: 172.21.160.21, end: 172.21.160.84 }
+    routes: []
+
+  - name: primary-oam
+    vlan: 2303
+    vxlan: 6303
+    cidr: 10.255.42.0/24
+    enable_dhcp: false
+    gateway: 10.255.42.1
+    allocation_pools: { start: 10.255.42.21, end: 10.255.42.84 }
+    routes:
+    - { destination: 10.63.0.0/16, nexthop: 10.255.42.1 } # Terminal Server
+    - { destination: 10.86.0.0/16, nexthop: 10.255.42.1 } # Terminal Server
+    - { destination: 10.117.91.0/24, nexthop: 10.255.42.1 } # Terminal Server
+    - { destination: 132.196.0.0/16, nexthop: 10.255.42.1 } # Terminal Server
+    - { destination: 10.155.142.68/32, nexthop: 10.255.42.1 } # Centralized NeLS Server
+    - { destination: 10.143.139.64/26, nexthop: 10.255.42.1 } # n280 Shared CNF OAM services
+    - { destination: 10.255.43.0/24, nexthop: 10.255.42.1 } # n280-eccd2 ECFE OAM link for EVNFM
+    - { destination: 10.155.138.0/26, nexthop: 10.255.42.1 } # n99 Shared CNF OAM services
+    - { destination: 10.255.38.0/24, nexthop: 10.255.42.1 } # n99-eccd2 ECFE OAM link for EVNFM
+    - { destination: 172.30.32.0/24, nexthop: 10.255.42.1 } # n280/n99 tool services 1
+    - { destination: 172.30.36.0/24, nexthop: 10.255.42.1 } # n280/n99 tool services 2
+
+  - name: primary-intersite
+    vlan: 2310
+    vxlan: 6310
+    cidr: 172.21.192.0/24
+    enable_dhcp: false
+    gateway: 172.21.192.1
+    allocation_pools: { start: 172.21.192.21, end: 172.21.192.84 }
+    routes:
+    - { destination: 172.17.200.0/24, nexthop: 172.21.192.1 } # n99-eccd1-ccdm1 primary-intersite VIP pool
+    - { destination: 172.21.196.0/24, nexthop: 172.21.192.1 } # n99-eccd1-ccdm1 primary-intersite link
+
+  - name: pcc1-pc-mm-oam
+    vlan: 2003
+    vxlan: 6003
+    cidr: 172.20.160.0/24
+    enable_dhcp: false
+    gateway: 172.20.160.1
+    allocation_pools: { start: 172.20.160.21, end: 172.20.160.84 }
+    routes: []
+
+  - name: pcc1-pc-mm-ran-1
+    vlan: 2004
+    vxlan: 6004
+    cidr: 172.20.64.0/24
+    enable_dhcp: false
+    gateway: 172.20.64.1
+    allocation_pools: { start: 172.20.64.21, end: 172.20.64.84 }
+    routes: []
+
+  - name: pcc1-pc-mm-ran-2
+    vlan: 2009
+    vxlan: 6009
+    cidr: 172.20.128.0/24
+    enable_dhcp: false
+    gateway: 172.20.128.1
+    allocation_pools: { start: 172.20.128.21, end: 172.20.128.84 }
+    routes: []
+
+  - name: pcc1-pc-mm-signaling-1
+    vlan: 2002
+    vxlan: 6002
+    cidr: 172.20.32.0/24
+    enable_dhcp: false
+    gateway: 172.20.32.1
+    allocation_pools: { start: 172.20.32.21, end: 172.20.32.84 }
+    routes: []
+
+  - name: pcc1-pc-mm-signaling-2
+    vlan: 2010
+    vxlan: 6010
+    cidr: 172.20.96.0/24
+    enable_dhcp: false
+    gateway: 172.20.96.1
+    allocation_pools: { start: 172.20.96.21, end: 172.20.96.84 }
+    routes: []
+
+  - name: pcc1-pc-mm-media
+    vlan: 2001
+    vxlan: 6001
+    cidr: 172.20.0.0/24
+    enable_dhcp: false
+    gateway: 172.20.0.1
+    allocation_pools: { start: 172.20.0.21, end: 172.20.0.84 }
+    routes: []
+
+  - name: pcc1-pc-sm-media
+    vlan: 2101
+    vxlan: 6101
+    cidr: 172.21.0.0/24
+    enable_dhcp: false
+    gateway: 172.21.0.1
+    allocation_pools: { start: 172.21.0.21, end: 172.21.0.94 }
+    routes: []
+
+  - name: pcc1-pc-sm-signaling
+    vlan: 2102
+    vxlan: 6102
+    cidr: 172.21.32.0/24
+    enable_dhcp: false
+    gateway: 172.21.32.1
+    allocation_pools: { start: 172.21.32.21, end: 172.21.32.94 }
+    routes: []
+
+  - name: pcc1-pc-sm-intra
+    vlan: 2110
+    vxlan: 6110
+    cidr: 172.21.128.0/24
+    enable_dhcp: false
+    gateway: null
+    allocation_pools: { start: 172.21.128.1, end: 172.21.128.124 }
+    routes: []
+
+
+  sriov_networks:
+  - name: pcg1-pc-up-ran
+    vlan: 2204
+    vxlan: 6204
+    cidr: 172.22.64.0/24
+    enable_dhcp: false
+    gateway: 172.22.64.1
+    allocation_pools: { start: 172.22.64.21, end: 172.22.64.154 }
+    routes: []
+  - name: pcg1-pc-up-signaling
+    vlan: 2202
+    vxlan: 6202
+    cidr: 172.22.32.0/24
+    enable_dhcp: false
+    gateway: 172.22.32.1
+    allocation_pools: { start: 172.22.32.21, end: 172.22.32.154 }
+    routes: []
+  - name: pcg1-pc-up-media
+    vlan: 2201
+    vxlan: 6201
+    cidr: 172.22.0.0/24
+    enable_dhcp: false
+    gateway: 172.22.0.1
+    allocation_pools: { start: 172.22.0.21, end: 172.22.0.154 }
+    routes: []
+  - name: pcg1-pc-up-open1
+    vlan: 2205
+    vxlan: 6205
+    cidr: 172.22.128.0/24
+    enable_dhcp: false
+    gateway: 172.22.128.1
+    allocation_pools: { start: 172.22.128.21, end: 172.22.128.154 }
+    routes: []
+  - name: pcg1-pc-up-intra
+    vlan: 2210
+    vxlan: 6210
+    cidr: 172.21.129.0/24
+    enable_dhcp: false
+    gateway: null
+    allocation_pools: { start: 172.21.129.1, end: 172.21.129.124 }
+    routes: []

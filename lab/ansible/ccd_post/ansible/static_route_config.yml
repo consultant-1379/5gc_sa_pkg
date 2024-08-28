@@ -1,0 +1,13 @@
+static_routes:
+- dest: 11.1.20.0/24
+  nh: 11.21.95.254
+  intf: eth2 # om_cn
+- dest: 11.1.45.0/24
+  nh: 11.21.95.254
+  intf: eth2 # om_cn
+- dest: 11.1.18.0/24
+  nh: 11.21.43.254
+  intf: eth3 # sig_data
+- dest: 5.8.6.32/28
+  nh: 11.21.43.254
+  intf: eth3 # sig_data

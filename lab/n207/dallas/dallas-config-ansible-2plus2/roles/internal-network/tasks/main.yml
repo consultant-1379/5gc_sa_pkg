@@ -1,0 +1,11 @@
+- name: Create {{ intra_parent_port }} config file
+  template:
+    src: "ifcfg-intra-parent.j2"
+    dest: "/etc/sysconfig/network-scripts/ifcfg-{{intra_parent_port}}"
+  notify: bringing up intra_parent_port interface
+
+- name: "Create VLAN interface {{intra_parent_port}}.{{intra_vlan}} config file"
+  template:
+    src: "ifcfg-intra.j2"
+    dest: "/etc/sysconfig/network-scripts/ifcfg-{{intra_parent_port}}.{{intra_vlan}}"
+  notify: bringing up internal VLAN interface

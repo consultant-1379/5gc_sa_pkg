@@ -1,0 +1,12 @@
+---
+firewallProfile:
+  - name: enable_ssh
+    enable: True
+    customRules:
+     - name: allow_ssh
+       destination:
+        - address: cee-om-ipv4
+          type: withvip
+       protocols: tcp
+       ports: 22
+...

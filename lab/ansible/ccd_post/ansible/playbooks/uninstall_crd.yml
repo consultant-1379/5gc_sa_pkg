@@ -1,0 +1,7 @@
+---
+- hosts: director[0]
+  gather_facts: no
+  tasks:
+  - name: uninstall ALL eric crd
+    shell: |
+      helm list -n eric-crd-ns | grep -v NAME | awk '{print $1}' | xargs -I {} helm uninstall {} -n eric-crd-ns && kubectl delete ns eric-crd-ns

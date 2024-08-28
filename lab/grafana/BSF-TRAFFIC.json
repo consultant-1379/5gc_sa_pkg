@@ -1,0 +1,1335 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 27,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "min",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "100*sum(rate(bsf_out_answers_total{method=~\"POST\",status=\"201 Created\"}[5m]))by(method) / sum(rate(bsf_in_requests_total{method=~\"POST\"}[5m]))by(method)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Registrations",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "100*sum(rate(bsf_out_answers_total{method=~\"DELETE\",status=\"204 No Content\"}[5m]))by(method)  / sum(rate(bsf_in_requests_total{method=~\"DELETE\"}[5m]))by(method)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Deregistrations",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "100*(sum(rate(bsf_out_answers_total{nf='bsf',status=~'2.*'}[5m])) / sum(rate(bsf_in_requests_total{nf='bsf'}[5m])))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Total",
+          "refId": "C"
+        }
+      ],
+      "title": "BSF-Reply-Register-successful-Rate",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "min",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "rate(bsf_out_answers_total{method=~\"POST\",status!=\"201 Created\"}[5m])",
+          "interval": "",
+          "legendFormat": "{{instance}}_{{method}}_{{status}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "rate(bsf_out_answers_total{method=~\"DELETE\",status!=\"204 No Content\"}[5m])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{instance}}_{{method}}_{{status}}",
+          "refId": "B"
+        }
+      ],
+      "title": "BSF-Reply-Register-unsuccessful-Rate",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "100*(irate(container_cpu_usage_seconds_total{name!=\"\",namespace=\"sc\",container=~\"eric-bsf-diameter.*|eric-bsf-worker.*|eric-stm-diameter.*\"}[2m]))/on(pod,container)group_left()((container_spec_cpu_quota{name!=\"\",namespace=\"sc\"})/100000)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "SC_{{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "SC-Critical-Pod-CPU",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "100*(irate(container_cpu_usage_seconds_total{name!=\"\",namespace=\"sc\",container=~\"eric-bsf-manager.*|eric-cm-mediator.*|eric-cm-yang-provider.*|eric-cnom.*|eric-ctrl-bro.*|eric-data.*|eric-fh.*|eric-lm.*|eric-log.*|eric-odca.*|eric-pm.*|eric-sc.*|eric-sw.*|eric-sec.*|eric-tm.*\"}[2m]))/on(pod,container)group_left()((container_spec_cpu_quota{name!=\"\",namespace=\"sc\"})/100000)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "SC_{{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "SC-non-Critical-Pod-CPU",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "(container_memory_usage_bytes{name!=\"\",namespace=\"sc\",container=~\"eric-bsf-diameter.*|eric-bsf-worker.*|eric-stm-diameter.*\"} - on(pod,container)container_memory_cache{name!=\"\",namespace=\"sc\",container=~\"eric-bsf-diameter.*|eric-bsf-worker.*|eric-stm-diameter.*\"})/on(pod,container)group_left()(container_spec_memory_limit_bytes{name!=\"\",namespace=\"sc\"})*100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "SC_{{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "SC-Critical-Pod-Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "(container_memory_usage_bytes{name!=\"\",namespace=\"sc\",container=~\"eric-bsf-manager.*|eric-cm-mediator.*|eric-cm-yang-provider.*|eric-cnom.*|eric-ctrl-bro.*|eric-data.*|eric-fh.*|eric-lm.*|eric-log.*|eric-odca.*|eric-pm.*|eric-sc-hcagent.*|eric-sc-manager.*|eric-stm.*|eric-sec.*|eric-tm.*\"} - on(pod,container)container_memory_cache{name!=\"\",namespace=\"sc\",container=~\"eric-bsf-manager.*|eric-cm-mediator.*|eric-cm-yang-provider.*|eric-cnom.*|eric-ctrl-bro.*|eric-data.*|eric-fh.*|eric-lm.*|eric-log.*|eric-odca.*|eric-pm.*|eric-sc-hcagent.*|eric-sc-manager.*|eric-stm.*|eric-sec.*|eric-tm.*\"})/on(pod,container)group_left()(container_spec_memory_limit_bytes{name!=\"\",namespace=\"sc\"})*100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "SC_{{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "SC-non-Critical-Pod-Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "min",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(bsf_in_requests_total{nf='bsf',method=~'GET'})",
+          "interval": "",
+          "legendFormat": "Discovery requests",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(bsf_out_answers_total{nf='bsf',method=~'GET',status=~'200 OK'})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Discovery success answers",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(bsf_out_answers_total{nf='bsf',method=~'GET',status!='200 OK'})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Discovery failed answers",
+          "refId": "C"
+        }
+      ],
+      "title": "BSF-discovery-Request-answer",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [
+            "sum",
+            "delta"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(bsf_in_requests_total{nf='bsf'}[1m]))",
+          "interval": "",
+          "legendFormat": "Total",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(bsf_in_requests_total{nf='bsf',method=~'POST'}[1m]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Registrations",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(bsf_in_requests_total{nf='bsf',method=~'DELETE'}[1m]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Deregistrations",
+          "refId": "C"
+        }
+      ],
+      "title": "BSF-Delta-Request-number (extrapolated)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "min",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(bsf_in_requests_total{nf='bsf'}[10s]))",
+          "interval": "",
+          "legendFormat": "Total",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(bsf_in_requests_total{nf='bsf',method=~'POST'}[10s]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Registrations",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(bsf_in_requests_total{nf='bsf',method=~'DELETE'}[10s]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Deregistrations",
+          "refId": "C"
+        }
+      ],
+      "title": "BSF-Offered-Load",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [
+            "sum",
+            "delta"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(bsf_in_requests_total{nf='bsf'}) - sum(bsf_in_requests_total{nf='bsf'} offset 1m)",
+          "interval": "",
+          "legendFormat": "Total",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(bsf_in_requests_total{nf='bsf',method='POST'}) - sum(bsf_in_requests_total{nf='bsf',method='POST'} offset 1m)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Registrations",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(bsf_in_requests_total{nf='bsf',method='DELETE'}) - sum(bsf_in_requests_total{nf='bsf',method='DELETE'} offset 1m)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Deregistrations",
+          "refId": "C"
+        }
+      ],
+      "title": "BSF-Delta-Request-number",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 40
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [
+            "sum",
+            "lastNotNull",
+            "delta"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(Diameter_TransTerm_Ordered{dsl_class='DiaApp',DiaApp='16777236'})",
+          "interval": "",
+          "legendFormat": "AF to BSF requests",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(Diameter_TransInit_Issued{dsl_class='DiaApp',DiaApp='16777236'})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "BSF to PCF requests",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(Diameter_TransInit_Failed{dsl_class='DiaApp',DiaApp='16777236'})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "PCF to BSF rejected",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(Diameter_TransTerm_Failed{dsl_class='DiaApp',DiaApp='16777236'})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "BSF to AF rejected",
+          "refId": "D"
+        }
+      ],
+      "title": "BSF-PCF-Diameter-request-reject",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-sc1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 40
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "min",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(bsf_in_requests_total{nf='bsf',method=~'GET'}[10s])) ",
+          "interval": "",
+          "legendFormat": "BSF HTTP [TPS] for discovery",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-sc1"
+          },
+          "exemplar": true,
+          "expr": "(sum(rate(bsf_out_answers_total{nf='bsf',method=~'GET',status=~'2.*'}[10s])) / sum(rate(bsf_in_requests_total{nf='bsf',method=~'GET'}[10s]))) * 100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "BSF HTTP Success Rate [%} for discovery",
+          "refId": "B"
+        }
+      ],
+      "title": "BSF-HTTP-Discovery-Request",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 33,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Europe/Stockholm",
+  "title": "BSF",
+  "uid": "5q5f2J-nz",
+  "version": 17,
+  "weekStart": ""
+}

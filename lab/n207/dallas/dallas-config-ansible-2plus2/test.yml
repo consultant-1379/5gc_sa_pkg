@@ -1,0 +1,5 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: set facts dallas_host_fe_internal_ips
+    debug: msg="{{groups['cs']}}"

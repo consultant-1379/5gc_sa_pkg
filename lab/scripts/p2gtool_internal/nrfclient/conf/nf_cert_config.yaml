@@ -1,0 +1,6 @@
+certs:
+  n280:
+    ca_cert: ca.crt
+    client_cert: nrf-sig-pythonclient.crt
+    client_key: nrf-sig-pythonclient.key
+    nrf_fqdn: ccrc1-nrf-sig.site1-cluster1.5gc.mnc081.mcc240.3gppnetwork.org

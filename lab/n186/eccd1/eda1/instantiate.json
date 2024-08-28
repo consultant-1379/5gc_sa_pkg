@@ -1,0 +1,9 @@
+{
+  "clusterName": "n186-eccd1",
+  "additionalParams": {
+    "namespace": "eda1",
+     "applicationTimeOut": "1800",
+     "skipJobVerification": "false",
+     "skipVerification": "false"
+  }
+}

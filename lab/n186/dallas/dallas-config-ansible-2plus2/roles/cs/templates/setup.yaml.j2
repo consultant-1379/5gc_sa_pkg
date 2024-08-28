@@ -1,0 +1,10 @@
+log_server: {{ groups['cs'][0] }}
+system_file_dir: '{{ dallas_system_dir }}'
+config_file_dir: '{{ dallas_config_dir }}'
+replay_file_dir: /lab/epg_st_utils/captures/latest
+erlport_dir: /lab/testtools/dallas/3pp/RHEL7/erlport/0.9.8/otp24.2.2/erlport-0.9.8
+otp_dir: /lab/testtools/dallas/3pp/RHEL7/otp/24.2.2/lib/erlang
+#otp_dir: /lab/epg_st_utils/testtools/dallas/rhel7.x86_64/erlang_otp/OTP19_2/lib/erlang/
+#erlport_dir: /lab/epg_st_utils/testtools/dallas/rhel6.x86_64/erlport/
+max_otp_proc: 5000000
+auth_key: /lab/epg_st_utils/lao/etc/testlab_dsakey

@@ -1,0 +1,10 @@
+- name: set intf facts
+  set_fact: intfs="{{ intfs | default([]) + [ instance.intf ] }}"
+  loop: "{{ bird.values() }}"
+  loop_control:
+    loop_var: "instance"
+- name: configuring bird interfaces
+  include_tasks: create_intf_config.yml
+  loop: "{{ intfs }}"
+  loop_control:
+    loop_var: "intf"

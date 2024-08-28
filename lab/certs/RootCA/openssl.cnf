@@ -1,0 +1,96 @@
+[ ca ]
+# `man ca`
+default_ca = CA_default
+
+[ CA_default ]
+# Directory and file locations.
+#dir = /home/eccd/hammers/tls-cert
+dir = /home/etbbccg/CA/tls-cert
+certs = $dir/certs
+crl_dir = $dir/crl
+new_certs_dir = $dir/newcerts
+database = $dir/index.txt
+serial = $dir/serial
+RANDFILE = $dir/private/.rand
+# The root key and root certificate.
+private_key = $dir/ca.key
+certificate = $dir/ca.crt
+# For certificate revocation lists.
+crlnumber = $dir/crlnumber
+crl = $dir/crl/ca.crl.pem
+#crl_extensions = crl_ext
+default_crl_days = 30
+# SHA-1 is deprecated, so use SHA-2 instead.
+default_md = sha256
+name_opt = ca_default
+cert_opt = ca_default
+default_days = 375
+preserve = no
+policy = policy_strict
+copy_extensions = copy
+
+[ policy_strict ]
+countryName = match
+stateOrProvinceName = match
+localityName = match
+organizationName = match
+organizationalUnitName = optional
+commonName = supplied
+
+[ req ]
+# Options for the `req` tool (`man req`).
+default_bits = 2048
+prompt = no
+distinguished_name = req_distinguished_name
+string_mask = utf8only
+x509_extensions = v3_ca
+
+[ req_distinguished_name ]
+C=SE
+ST=VG
+L=Goteborg
+O=vepc
+OU=vepc
+
+[req_ext]
+#subjectAltName = @alt_names
+
+[ v3_ca ]
+# Extensions for a typical CA (`man x509v3_config`).
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+#subjectAltName = @alt_names
+
+[ v3_intermediate_ca ]
+# Extensions for a typical intermediate CA (`man x509v3_config`).
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[ server_cert ]
+# Extensions for server certificates (`man x509v3_config`).
+basicConstraints = CA:FALSE
+nsCertType = server
+nsComment = "OpenSSL Generated Server Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer:always
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+#subjectAltName = @alt_names
+
+[ usr_cert ]
+# Extensions for client certificates (`man x509v3_config`).
+basicConstraints = CA:FALSE
+nsCertType = client
+nsComment = "OpenSSL Generated Client Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth
+#subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = nrf.5gc.mnc081.mcc240.3gppnetwork.org

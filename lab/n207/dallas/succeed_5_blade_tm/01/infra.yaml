@@ -1,0 +1,260 @@
+pccc-node280-dallas-1-202:
+  AP-N:
+    - otp:
+        cores: [55]
+      raw:
+        cores: [55]
+    - otp:
+        cores: [55]
+      raw:
+        cores: [55]
+    - otp:
+        cores: [3]
+      raw:
+        cores: [3]
+    - otp:
+        cores: [5]
+      raw:
+        cores: [5]
+    - otp:
+        cores: [7]
+      raw:
+        cores: [7]
+    - otp:
+        cores: [9]
+      raw:
+        cores: [9]
+    - otp:
+        cores: [2]
+      raw:
+        cores: [2]
+    - otp:
+        cores: [4]
+      raw:
+        cores: [4]
+    - otp:
+        cores: [6]
+      raw:
+        cores: [6]
+    - otp:
+        cores: [8]
+      raw:
+        cores: [8]
+  DP-N:
+    - otp:
+        cores: [12]
+      raw:
+        cores: [16, 13, 14, 15]
+  LTT:
+    oam:
+        [[17, 19],[18, 20, 22, 24],[19, 21, 23, 53, 54]]
+
+    ports:
+      tap0: [25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51]
+      tap1: [26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52]
+
+
+pccc-node280-misc-1-01:
+  AP-N:
+    - otp:
+        cores: [55]
+      raw:
+        cores: [55]
+    - otp:
+        cores: [3]
+      raw:
+        cores: [3]
+    - otp:
+        cores: [5]
+      raw:
+        cores: [5]
+    - otp:
+        cores: [7]
+      raw:
+        cores: [7]
+    - otp:
+        cores: [9]
+      raw:
+        cores: [9]
+    - otp:
+        cores: [2]
+      raw:
+        cores: [2]
+    - otp:
+        cores: [4]
+      raw:
+        cores: [4]
+    - otp:
+        cores: [6]
+      raw:
+        cores: [6]
+    - otp:
+        cores: [8]
+      raw:
+        cores: [8]
+  DP-N:
+    - otp:
+        cores: [12]
+      raw:
+        cores: [16, 13, 14, 15]
+  LTT:
+    oam:
+        [[17, 19],[18, 20, 22, 24],[19, 21, 23, 53, 54]]
+
+    ports:
+      tap0: [25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51]
+      tap1: [26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52]
+
+pccc-node280-misc-1-03:
+  AP-N:
+    - otp:
+        cores: [55]
+      raw:
+        cores: [55]
+    - otp:
+        cores: [4]
+      raw:
+        cores: [4]
+    - otp:
+        cores: [6]
+      raw:
+        cores: [6]
+    - otp:
+        cores: [8]
+      raw:
+        cores: [8]
+    - otp:
+        cores: [10]
+      raw:
+        cores: [10]
+    - otp:
+        cores: [12]
+      raw:
+        cores: [12]
+    - otp:
+        cores: [14]
+      raw:
+        cores: [14]
+    - otp:
+        cores: [16]
+      raw:
+        cores: [16]
+    - otp:
+        cores: [18]
+      raw:
+        cores: [18]
+  DP-N:
+    - otp:
+        cores: [24]
+      raw:
+        cores: [26, 28, 30, 32]
+  LTT:
+    oam:
+        [[34, 36],[38, 40, 42, 44],[46, 48, 50, 52, 54]]
+
+    ports:
+      tap0: [29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53]
+      tap1: [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27]
+
+pccc-node280-misc-1-02:
+  AP-N:
+    - otp:
+        cores: [55]
+      raw:
+        cores: [55]
+    - otp:
+        cores: [3]
+      raw:
+        cores: [3]
+    - otp:
+        cores: [5]
+      raw:
+        cores: [5]
+    - otp:
+        cores: [7]
+      raw:
+        cores: [7]
+    - otp:
+        cores: [9]
+      raw:
+        cores: [9]
+    - otp:
+        cores: [2]
+      raw:
+        cores: [2]
+    - otp:
+        cores: [4]
+      raw:
+        cores: [4]
+    - otp:
+        cores: [6]
+      raw:
+        cores: [6]
+    - otp:
+        cores: [8]
+      raw:
+        cores: [8]
+  DP-N:
+    - otp:
+        cores: [12]
+      raw:
+        cores: [16, 13, 14, 15]
+  LTT:
+    oam:
+        [[17, 19],[18, 20, 22, 24],[19, 21, 23, 53, 54]]
+
+    ports:
+      tap0: [25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51]
+      tap1: [26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52]
+
+pccc-node280-dallas-1-201:
+  AP-N:
+    - otp:
+        cores: [55]
+      raw:
+        cores: [55]
+    - otp:
+        cores: [3]
+      raw:
+        cores: [3]
+    - otp:
+        cores: [5]
+      raw:
+        cores: [5]
+    - otp:
+        cores: [7]
+      raw:
+        cores: [7]
+    - otp:
+        cores: [9]
+      raw:
+        cores: [9]
+    - otp:
+        cores: [2]
+      raw:
+        cores: [2]
+    - otp:
+        cores: [4]
+      raw:
+        cores: [4]
+    - otp:
+        cores: [6]
+      raw:
+        cores: [6]
+    - otp:
+        cores: [8]
+      raw:
+        cores: [8]
+  DP-N:
+    - otp:
+        cores: [12]
+      raw:
+        cores: [16, 13, 14, 15]
+  LTT:
+    oam:
+        [[17, 19],[18, 20, 22, 24],[19, 21, 23, 53, 54]]
+
+    ports:
+      tap0: [25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51]
+      tap1: [26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52]
+

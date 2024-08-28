@@ -1,0 +1,46 @@
+export LC_ALL=en_US.UTF-8
+export VEPC_SCRIPTS=/lab/pccc_utils/scripts
+export KUBECTL_CMD=/lab/pccc_utils/kubectl
+export HELM_CMD=/lab/pccc_utils/helm
+export PATH=${KUBECTL_CMD}:${HELM_CMD}:$VEPC_SCRIPTS:$PATH
+
+
+module add git
+module add openssl/1.1.1t
+module add tmux
+module add python
+module add jq
+module add sshpass
+module add geckodriver/0.31.0
+module add firefox/110.0
+
+alias l='conn'
+complete -W "$(conn node_list)" conn l
+
+alias py2venv='source /lab/pccc_utils/scripts/csdp_python2_venv/bin/activate'
+alias py3venv='source /lab/pccc_utils/scripts/csdp_python3_venv/bin/activate'
+alias cnatvenv='source /lab/pccc_utils/scripts/py3venv_cnat/bin/activate'
+alias condapy3venv='source /lab/pccc_utils/scripts/csdp_python3_anaconda/anaconda3/bin/activate'
+
+parse_git_branch() {
+  #git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+  git branch --show-current 2>/dev/null | sed -e 's/\(.*\)/ (\1)/'
+}
+export PS1="\u@\h[\A] \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+## useful aliases
+alias cdtl='cd /lab/pccc_archive/5GC'
+alias cdimages='cd /lab/pccc_builds/images'
+
+## alias for support package utils ##, stop to use due to security issue needs to remove Anonymous access, 20230422
+sp_cmds=($(sputils cmdslist 2>/dev/null | grep -v Error:) adc)
+#sp_cmds=($(sputils cmdslist 2>/dev/null | grep -v Error:))
+complete -W "${sp_cmds[*]}" sputils
+for cmd in ${sp_cmds[@]}
+do
+  eval "
+    function $cmd()
+    {
+      $VEPC_SCRIPTS/sputils $cmd \"\$@\"
+    }"
+done

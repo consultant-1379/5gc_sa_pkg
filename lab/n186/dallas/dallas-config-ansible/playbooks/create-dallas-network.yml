@@ -1,0 +1,31 @@
+#---
+- hosts: all
+  gather_facts: no
+  vars_files:
+  - ../network-config.yaml
+  vars:
+    route_script: /root/add_dm_5gc_route.sh
+    dallas_ansible_basedir: /root/dallas-config-ansible
+  tasks:
+  - name: create networks
+    vars:
+      networks: "{{ global[item] | default([]) }}"
+      script_path: "{{ global.script_path }}"
+      dallas_role: "{{ item }}"
+    include_tasks: create-networks.yml
+    with_items: "{{ group_names }}"
+  - name: ensure /etc/rc.local will be executed during boot
+    file: dest=/etc/rc.d/rc.local mode=a+x
+  - name: enable to run the script at startup
+    blockinfile:
+      dest: /etc/rc.local
+      block: |
+        /root/add_dm_5gc_route.sh
+    when: "'cs' not in group_names"
+  - name: enable to run the bird daemon at startup
+    blockinfile:
+      dest: /etc/rc.local
+      block: |
+        {{ route_script }}
+        {{ dallas_ansible_basedir }}/bird_manager.sh --start
+    when: "'cs' in group_names"

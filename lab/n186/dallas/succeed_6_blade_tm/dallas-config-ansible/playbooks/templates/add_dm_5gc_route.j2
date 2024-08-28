@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Date: 2022-01-22
+# Initial: Wallance Hou
+# Purpose:
+# common script to add dallas host vlan interface and routes
+# the script should be same content on each dallas host
+
+
+function logging()
+{
+
+  level=${1:-INFO}
+  declare -A loglevel
+  loglevel=(["DEBUG"]=10 ["INFO"]=20 ["WARN"]=30 ["ERROR"]=40 ["CRITICAL"]=50)
+  shift
+  #echo $(date +"%Y/%m/%d %H:%M:%S") $level: $@
+  if [ ${loglevel[$level]} -gt 20 ];then
+    echo $level: $@ 1>&2
+  else
+    echo $level: $@
+  fi
+}
+
+function add_vlan_link()
+{
+  local interface vlan_id ip dev
+  interface=$1
+  vlan_id=$2
+  ip=$3
+  dev=vlan$(printf "%04d" $vlan_id)
+  ip6=$(echo $@ | awk -F'--' '{print $2}')
+
+  if $overwrite;then
+    logging WARN "Deleting the existing $dev interface"
+    del_vlan_link $vlan_id
+  fi
+
+  if ! check_link_exist $dev;then
+    logging INFO "Creating $dev vlan interface"
+    ip link add link $interface name $dev type vlan id $vlan_id
+    # add ipv4
+    for _ip in $(echo $ip | tr ',' ' ')
+    do
+      ip addr add $_ip dev $dev
+    done
+    # add ipv6
+    for _ip6 in $(echo $ip6 | tr ',' ' ')
+    do
+      ip addr add $_ip6 dev $dev
+    done
+    ip link set $dev up
+  else
+    # make sure the vlan device is UP
+    ip link set $dev up
+    logging WARN "Adding $dev interface [SKIPPED] as it already exists"
+  fi
+}
+
+function check_link_exist()
+{
+  ip link show $1 >/dev/null 2>&1
+  return $?
+}
+
+function del_vlan_link()
+{
+  local dev vlan_id
+  vlan_id=$1
+  dev=vlan$(printf "%04d" $vlan_id)
+  if check_link_exist $dev;then
+    ip link del $dev
+  fi
+}
+
+function add_route()
+{
+  local IP_PREFIX GW
+  IP_PREFIX=$1
+  GW=$2
+  # remove the old on
+  ip route del $IP_PREFIX 2>/dev/null || true
+  ip route add $IP_PREFIX via $GW || true
+#  echo "#####add route####"
+#  echo "ip route add ${IP_PREFIX} via ${GW}"
+}
+
+function add_frwd_intf()
+{
+  local PHY_INTF
+  PHY_INTF=$1
+  INTF_VLAN=$2
+  INTF_IP=$3
+  INTF_GW=$4
+  INTF_IP6=$(echo $@ | awk -F'--' '{print $2}' | awk '{print $1}')
+  INTF_GW6=$(echo $@ | awk -F'--' '{print $2}' | awk '{print $2}')
+  INTF_ROUTES=$(echo $@ | awk -F'--' '{print $3}')
+
+  ## Set eth port link up
+  ip link set ${PHY_INTF} up || true
+
+  ## Add vlan link
+  add_vlan_link $PHY_INTF $INTF_VLAN $INTF_IP -- $INTF_IP6
+
+  ## Add routes
+  for r in ${INTF_ROUTES[@]};do add_route $r $INTF_GW;done
+}
+
+function remove_dallas_links()
+{
+  {% for net in networks %}
+  del_vlan_link {{ net.vlan }}
+  {% endfor %}
+}
+
+function main()
+{
+  if [[ $1 == "remove" ]];then
+    remove_dallas_links
+    return 0
+  fi
+  {% for net in networks %}
+  # Routing-instance: {{ net.routing_instance }}
+  # Add vlan {{ net.vlan }} interface and static routes
+  overwrite={{ net.overwrite | default(false) | lower }}
+  static_routes=(
+  {% for route in net.static_routes %}
+    {{ route.prefix }}
+  {% endfor %}
+  )
+  {% if net.node_ips[host_index] %}
+  {% if net.node_ips6 is defined %}
+  {% set node_ips6 = net.node_ips6 %}
+  {% endif %}
+  add_frwd_intf {{ net.interface }} {{ net.vlan }} {{ net.node_ips[host_index] }} {{ net.gateway }} -- {{ node_ips6[host_index] | default('') }} {{ net.gateway6 | default('') }} -- ${static_routes[@]}
+  {% endif %}
+  {% endfor %}
+}
+
+main $@

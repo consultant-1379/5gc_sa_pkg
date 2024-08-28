@@ -1,0 +1,50 @@
+- name: check if grafana already installed
+  command: kubectl get ns grafana
+  register: check_grafana_installed
+  ignore_errors: yes
+
+- name: check if grafana directory exists in /home/eccd/ccd_post/
+  command: ls /home/eccd/ccd_post/grafana
+
+- name: install grafana
+  shell: |
+    set -ex
+    cd $HOME/ccd_post/5gc_sa_pkg/lab/grafana
+
+    # Create namespace
+    kubectl create ns grafana
+
+    # Create datasource
+    kubectl -n grafana create configmap grafana-datasources --from-file datasource.yaml
+
+    # Create dashboards
+    for f in $(ls -1 *json); do kubectl -n grafana create cm grafana-dashboad-$(echo $f | sed 's/.json$//g' |sed 's/[A-Z]/\l&/g') --from-file $f; done
+
+    export cluster=$(hostname | sed 's/director-[01]-//')
+    export domain=$([[ $cluster =~ ^pod[0-9]+-eccd[0-9]+$ ]] && echo seln.ete.ericsson.se || echo sero.gic.ericsson.se)
+    registry=container-registry.ingress.${cluster}.${domain}
+
+    sudo docker login ${registry} --username=admin --password='c0ntainerReg!stry'
+
+    cd $HOME/ccd_post/grafana
+    sudo docker load -i grafana-8.3.0.tar
+    sudo docker load -i k8s-sidecar-1.14.2.tar
+    sudo docker tag grafana/grafana:8.3.0 ${registry}/grafana:8.3.0
+    sudo docker tag quay.io/kiwigrid/k8s-sidecar:1.14.2 ${registry}/k8s-sidecar:1.14.2
+    sudo docker push ${registry}/k8s-sidecar:1.14.2
+    sudo docker push ${registry}/grafana:8.3.0
+
+    ingress_host=grafana.ingress.${cluster}.${domain}; echo ${ingress_host}
+    helm -n grafana install grafana grafana-6.18.1.tgz \
+        --set ingress.enabled=true \
+        --set ingress.hosts[0]=${ingress_host} \
+        --set adminPassword=grafana \
+        --set image.repository=${registry}/grafana \
+        --set sidecar.datasources.enabled=true \
+        --set sidecar.datasources.searchNamespace=grafana \
+        --set sidecar.datasources.label=null \
+        --set sidecar.dashboards.enabled=true \
+        --set sidecar.dashboards.searchNamespace=grafana \
+        --set sidecar.dashboards.label=null \
+        --set sidecar.image.repository=${registry}/k8s-sidecar
+  when: check_grafana_installed.rc != 0

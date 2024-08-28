@@ -1,0 +1,457 @@
+---
+outOfBandManagers:
+  - name: SDI-M
+    oobm:
+      oobmAddress: https://10.155.205.148/f933560e-d4b4-4e68-9f2f-bfc5bddb546d/e6c2133a-cd4f-45f9-b33a-6105faee9d46
+      oobmUser: n280vpod1user
+      oobmPassword: vP0dIus3r@n280
+      oobmType: sdi
+      oobmExtra:
+        certVerify: false
+physicalHosts:
+  # Dell R650
+  # n280srv-1-8023
+  - hostname: controlhost1
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-004b-4a10-8059-cac04f485433
+    portProfile: DELL_R650_nic_assignment_control
+    hostProfile: DELL_R650_Xeon6330N_512GB_control
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      # Dell R650
+      # n280srv-1-8024
+  - hostname: controlhost2
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-004b-4a10-8059-c2c04f485433
+    portProfile: DELL_R650_nic_assignment_control
+    hostProfile: DELL_R650_Xeon6330N_512GB_control
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      # Dell R650
+      # n280srv-1-8025
+  - hostname: controlhost3
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0031-5410-8057-cac04f485433
+    portProfile: DELL_R650_nic_assignment_control
+    hostProfile: DELL_R650_Xeon6330N_512GB_control
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      # Dell R650 G10 with vxsds_mdm
+      # dc259srv13
+  - hostname: compute-vxsds-1-8026
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0031-5410-8057-c6c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB_vxsds_mdm_hc_1
+    cluster: openstack
+    serviceProfiles:
+      - sds_pd1
+      - write_only_log_generator
+      - cee_logrotate
+      # Dell R650 with vxsds_mdm
+      # dc259srv14
+  - hostname: compute-vxsds-1-8027
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0031-5410-8057-c7c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB_vxsds_mdm_hc_2
+    cluster: openstack
+    serviceProfiles:
+      - sds_pd1
+      - write_only_log_generator
+      - cee_logrotate
+      # Dell R650 with vxsds_mdm
+      # dc259srv15
+  - hostname: compute-vxsds-1-8028
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0031-5410-8057-c3c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB_vxsds_mdm_hc_2
+    cluster: openstack
+    serviceProfiles:
+      - sds_pd1
+      - write_only_log_generator
+      - cee_logrotate
+      # Dell R650 with vxsds_tb
+      # dc259srv18
+  - hostname: compute-vxsds-1-8029
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0031-5410-8057-c2c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB_vxsds_tb_hc_1
+    cluster: openstack
+    serviceProfiles:
+      - sds_pd1
+      - write_only_log_generator
+      - cee_logrotate
+      # Dell R650 with vxsds_tb
+      # dc259srv19
+  - hostname: compute-vxsds-1-8030
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-004b-4a10-8059-b9c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB_vxsds_tb_hc
+    cluster: openstack
+    serviceProfiles:
+      - sds_pd1
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8031
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0051-4a10-8059-b4c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8032
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0051-4a10-8059-b1c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8033
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-004d-4a10-8059-c3c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8034
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0052-4a10-8059-cac04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8035
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0032-5410-8057-b5c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8036
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0051-4a10-8059-b5c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8037
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-004c-4a10-8059-b1c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      #highBW
+  - hostname: compute-1-8052
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0044-3110-8042-b2c04f435233
+    portProfile: DELL_R650_nic_assignment_compute_highBW
+    hostProfile: DELL_R650_Xeon6330N_512GB-high-BW
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      #highBW
+  - hostname: compute-1-8053
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0044-3110-8042-b1c04f435233
+    portProfile: DELL_R650_nic_assignment_compute_highBW
+    hostProfile: DELL_R650_Xeon6330N_512GB-high-BW
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      #highBW
+  - hostname: compute-1-8054
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0044-3110-8042-b5c04f435233
+    portProfile: DELL_R650_nic_assignment_compute_highBW
+    hostProfile: DELL_R650_Xeon6330N_512GB-high-BW
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8038
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0039-4d10-8038-b7c04f475233
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8039
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0051-4a10-8059-b3c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8040
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-004b-4a10-8059-c3c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8041
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0053-4a10-8059-b4c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8042
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0033-5410-8057-c2c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8043
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0032-5410-8057-b7c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8044
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0032-5410-8057-b1c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8045
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0031-5410-8057-c4c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8046
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0032-5410-8057-b2c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8047
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0031-5410-8057-c8c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8048
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0033-5410-8057-c6c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8320
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-004b-4a10-8059-c4c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      #highBW
+  - hostname: compute-1-8049
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0044-3110-8042-b4c04f435233
+    portProfile: DELL_R650_nic_assignment_compute_highBW
+    hostProfile: DELL_R650_Xeon6330N_512GB-high-BW
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      #highBW
+  - hostname: compute-1-8050
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0044-3110-8042-b3c04f435233
+    portProfile: DELL_R650_nic_assignment_compute_highBW
+    hostProfile: DELL_R650_Xeon6330N_512GB-high-BW
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+      #highBW
+  - hostname: compute-1-8051
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0044-3110-8042-b6c04f435233
+    portProfile: DELL_R650_nic_assignment_compute_highBW
+    hostProfile: DELL_R650_Xeon6330N_512GB-high-BW
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8018
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0033-5410-8057-b7c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8019
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0053-4a10-8059-b1c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8020
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0050-4a10-8059-c8c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: compute-1-8021
+    oobm:
+      manager: SDI-M
+    id: 4c4c4544-0033-5410-8057-c4c04f485433
+    portProfile: DELL_R650_nic_assignment_compute_std
+    hostProfile: DELL_R650_Xeon6330N_512GB
+    cluster: openstack
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+virtualHosts:
+  - hostname: infra1
+    hypervisor: controlhost1
+    portProfile: VIRTUAL_INFRA
+    hostProfile: infra
+    cluster: infra
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: infra2
+    hypervisor: controlhost2
+    portProfile: VIRTUAL_INFRA
+    hostProfile: infra
+    cluster: infra
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: infra3
+    hypervisor: controlhost3
+    portProfile: VIRTUAL_INFRA
+    hostProfile: infra
+    cluster: infra
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: csc1
+    hypervisor: controlhost1
+    portProfile: VIRTUAL_CSC
+    hostProfile: csc
+    cluster: csc
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: csc2
+    hypervisor: controlhost2
+    portProfile: VIRTUAL_CSC
+    hostProfile: csc
+    cluster: csc
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate
+  - hostname: csc3
+    hypervisor: controlhost3
+    portProfile: VIRTUAL_CSC
+    hostProfile: csc
+    cluster: csc
+    serviceProfiles:
+      - write_only_log_generator
+      - cee_logrotate

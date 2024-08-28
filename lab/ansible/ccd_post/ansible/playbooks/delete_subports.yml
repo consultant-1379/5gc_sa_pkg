@@ -1,0 +1,27 @@
+---
+- hosts: master[0]
+  gather_facts: no
+  tasks:
+  - name: fetch subport controller clusterIP
+    command: kubectl -n kube-system get svc subport-controller -o jsonpath={.spec.clusterIP}
+    register: fetch_clusterIP_res
+
+  - set_fact:
+      clusterIP: "{{ fetch_clusterIP_res.stdout }}"
+
+  - name: fetch worker nodes that has subports
+    uri:
+      url: "http://{{ clusterIP }}:5678/subport/{{ pool }}"
+      method: GET
+      return_content: yes
+      status_code: [202, 404]
+    register: fetch_workers_res
+
+
+  - debug: msg="{{ fetch_workers_res.json | json_query('[*].name') }}"
+
+  - name: "delete subport for pool {{ pool }} in batch 5"
+    vars:
+      workers: "{{ item }}"
+    include_tasks: delete_subports_via_rest.yml
+    loop: "{{ fetch_workers_res.json | batch(5) | list }}"

@@ -1,0 +1,78 @@
+- set_fact:
+    eric_crd_path: "{{ eric_crd.path }}"
+
+- name: check if {{ eric_crd_path }} directory exists 
+  stat:
+    path: "{{ eric_crd_path }}"
+  register: stat_eric_crd_path
+
+- name: install crd
+  block: 
+  - name: set evnfm registry
+    set_fact:
+      evnfm_registry: "{{ evnfm[evnfm_id].registry }}"
+      evnfm_reguser: "{{ evnfm[evnfm_id].user }}"
+      evnfm_regpass: "{{ evnfm[evnfm_id].pass }}"
+
+  - name: collect ericsson CRD charts
+    find:
+      paths: "{{ eric_crd_path }}"
+      patterns: '^(.+)-[0-9]+\.[0-9]+\.[0-9]+(\+[0-9]+)?\.tgz$'
+      use_regex: true
+      recurse: no
+    register: found_crd_charts
+
+  - name: set fact for {{ found_crd_charts.files | length }} collected CRD charts info
+    set_fact:
+      crd_charts: "{{ crd_charts |default([]) + [ {'helm_name': item.path | basename | regex_replace('^(.+)-[0-9]+\\.[0-9]+\\.[0-9]+(\\+[0-9]+)?\\.tgz$','\\1'), 'chart_basename': item.path | basename, 'chart_path': item.path}] }}"
+    loop: "{{ found_crd_charts.files }}"
+    loop_control:
+      loop_var: "item"
+      label: "{{ item.path }}"
+  - name: printout all charts that will be installed
+    debug:
+     msg: "{{ crd_charts }}"
+
+  - name: create namesapce and image secret
+    shell: |
+      # create namespace
+      if ! kubectl get ns eric-crd-ns >/dev/null 2>&1;then
+        kubectl create ns  eric-crd-ns
+      fi
+      if ! kubectl get secret regcred -n eric-crd-ns >/dev/null 2>&1;then
+        kubectl create secret docker-registry regcred \
+        --namespace eric-crd-ns \
+        --docker-server={{ evnfm_registry }} \
+        --docker-username={{ evnfm_reguser }} \
+        --docker-password={{ evnfm_regpass }}
+      fi
+
+  - name: install each CRD
+    shell: |
+      set -ex
+      # Define helm install base command
+      helm_install_cmd=(helm upgrade --install --atomic {{ crd_chart.helm_name }} {{ crd_chart.chart_path }}
+        --namespace eric-crd-ns
+        --set global.registry.url={{ evnfm_registry }}
+        --set global.pullSecret=regcred
+        --set global.registry.pullSecret=regcred)
+
+      if [[ {{ crd_chart.helm_name }} == "eric-tm-ingress-controller-cr-crd" ]];then
+        helm_install_cmd+=(--set rbac.create=true)
+      fi
+      echo "${helm_install_cmd[@]}"
+      ${helm_install_cmd[@]}
+    loop: "{{ crd_charts }}"
+    loop_control:
+      loop_var: "crd_chart"
+      label: "{{ crd_chart.chart_path }}"
+    register: helm_install_outputs
+  always:
+  - name: printout helm cmds to install CRDs
+    debug:
+      msg: "{{ res.stdout_lines }}"
+    loop: "{{ helm_install_outputs.results }}"
+    loop_control:
+      loop_var: res
+      label: "{{ res.crd_chart.chart_path }}"
+  when: stat_eric_crd_path.stat.exists

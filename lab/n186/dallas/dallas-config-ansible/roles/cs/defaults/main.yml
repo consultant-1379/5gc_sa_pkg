@@ -1,0 +1,6 @@
+---
+
+dallas_basedir: /var/dallas
+dallas_config_dir: /var/dallas/dualmode5gc
+dallas_system_dir: /var/dallas/dualmode5gc
+dallas_hook_dir: /var

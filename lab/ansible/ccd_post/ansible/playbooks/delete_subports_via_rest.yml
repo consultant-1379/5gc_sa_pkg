@@ -1,0 +1,41 @@
+- name: delete subports with curl
+  uri:
+    url: "http://{{ clusterIP }}:5678/subport/{{ async_item.name }}?type=delete"
+    method: DELETE
+    return_content: yes
+    status_code: 202
+  async: 900
+  poll: 0
+  loop: "{{ workers }}"
+  loop_control:
+    loop_var: "async_item"
+    label: "{{ async_item.name }}"
+  register: async_results
+
+- block:
+  - name: Check async job status
+    async_status:
+      jid: "{{ async_result_item.ansible_job_id }}"
+    loop: "{{ async_results.results }}"
+    loop_control:
+      loop_var: "async_result_item"
+    register: async_poll_results
+    delay: 10
+    until: async_poll_results.finished
+    retries: 90
+  always:
+  - name: Cleanup async job cache
+    async_status:
+      jid: "{{ async_result_item.ansible_job_id }}"
+      mode: cleanup
+    loop: "{{ async_results.results }}"
+    loop_control:
+      loop_var: "async_result_item"
+
+- block:
+  - name: Printout rest return results
+    debug:
+      msg: "{{ res.json }}"
+    loop: "{{ async_poll_results.results }}"
+    loop_control:
+      loop_var: res

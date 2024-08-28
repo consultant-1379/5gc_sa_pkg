@@ -1,0 +1,11 @@
+- name: generate interface config file '/etc/sysconfig/network-scripts/ifcfg-{{ intf.name }}.{{ intf.vlan }}'
+  template:
+    src: intf_cfg.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ intf.name }}.{{ intf.vlan }}
+  register: intf_file
+
+- name: bringing up interface {{ intf.name }}.{{ intf.vlan }}
+  shell: |
+    ifdown {{ intf.name }}.{{ intf.vlan }}
+    ifup {{ intf.name }}.{{ intf.vlan }}
+  when: intf_file.changed

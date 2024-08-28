@@ -1,0 +1,815 @@
+#
+## The CCDADM Configuration YAML file for CCD Cluster deployment in Target Solution Dual Mode 5GC on NFVI
+##
+## Note:
+## 1. The root volume need to be set when HA-policy is enabled
+## 2. Configure user node scripts according to "Deploy the Dual-mode 5G Core in the Ericsson NFVI" CPI document
+## 3. The placeholder <description for the parameter> must be replaced with actual value
+#
+
+#######################################################################################################
+# infra
+#######################################################################################################
+infra:
+  audit:
+    log_level: detailed
+  ###################################### Target Cloud #################################################
+  iaas:
+    type: capo
+    # configure the delay between two VMs boot
+    provisioning_load_spread_delay: 20
+    nameservers: ['10.221.16.10', '10.221.16.11']
+    ntp_servers: ['10.221.17.6', '10.221.17.46']
+    ntp_parameters:
+      ntp_minpoll: 3
+      ntp_maxpoll: 8
+      ntp_version: 4
+      ntp_max_offset: "1.2"
+    timezone: "CET"
+    capo:
+      clouds:
+        nfvi:
+          auth:
+            auth_url: https://os-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se:5000/v3
+            username: tsdm5gc
+            password: "<TO.BE.FILLED>"
+            project_name: tsdm5gc
+            project_domain_name: default
+            user_domain_name: default
+          regions:
+          - name: CEERegion
+      target_cloud: nfvi
+      ## For NFVI7, CEE external cacert can be obtained from file /etc/kolla/certificates/ca/ca_ext.crt
+      ## on CEE control host.
+      ## Copy the content of the cert file above and paste below to replace <CEE external ca certificate>.
+      ## See example configuration below for target_cloud_cacert:
+      ## target_cloud_cacert: |
+      ##   -----BEGIN CERTIFICATE-----
+      ##   <...>
+      ##   -----END CERTIFICATE-----
+      target_cloud_cacert: |
+        <CEE external ca certificate>
+      oam_network:
+        name: n280-eccd1-ccd-oam
+      internal_network:
+        subnet_ipv4:
+          cidr: "10.0.1.0/24"
+        enable_port_security: false
+      election_network:
+        subnet_ipv4:
+          cidr: "20.0.0.0/24"
+      instance_create_timeout: 15
+      node_image:
+        name: eccd-2.26.0-000393-fc474230-node-image.raw
+
+  ## Custom root password for console access
+  ##
+  ## This field is a sha256 or sha512 hash of the root password which is applied for all pools.
+  ## The salt of the password must only contain characters from the set a-zA-Z0-9. The minimum
+  ## required length of the salt is 10 characters. The validity of the salt is verified with
+  ## the following regex: ^[a-zA-Z0-9]{10,}$.
+  ##
+  ## For example, one can use mkpasswd to generate a sha512 hash from a password and salt as
+  ## follows:
+  ## $ mkpasswd -m sha-512 testPassword -s ccdsalt1234567
+  ## $6$ccdsalt1234567$Lssr6CqKyQ4L/kPMROLBVal5vHezxLPLcUzrmAWE9.dm4UyHnHHt38TpyscIAcWQSP37PslE7RAiBDCaUCmwX/
+  ## Note: mkpasswd can be installed through 'apt install whois' on a Ubuntu OS.
+  console_password_hash: "<root password hash string>"
+  # deleting the value for session_timeout or setting to zero will default to 900
+  session_timeout: 800
+  # deleting the value for ssh_inactivity or setting to zero will default to 300
+  ssh_inactivity: 200
+  ###################################### Ephermeral Node ##############################################
+  bootstrap:
+    authorized_keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAjXPfGUC8fBvYN0cx6icqvRTaSTIdBZNHxz6ufPALT67g7ARXT5BhyQyT6KTSnsFW+SniFjz2ls3u9bx86OXWWs2R40Jch7rMXbKx4gR3VSaNfkiKxGlTp+aEpwjnPlO3TyNMrfbZUe57UJrLo7oo7ZsnJfKZ1z9N+NVGCks8Jp9oa2OBG9viG5vYB4o/3Tdl5/LiLHYm74AAsuTXnOWVOOowzvT3v2SMkLeyvTd/LBpVEvEXfG1kK+hdxfyRlpqERlOM10CeeYeBd5UrN8+xt5XDoTlnZjp2W3GWJeL3ZjMIU3MxOpmrNksqR6qeZQNF2BGGINs032/QMwYa1M/1 TS Dual-Mode 5GC CCD Deployment
+    capo:
+      ephemeral_root_volume:
+        size: 50
+        availability_zone: nova
+      ephemeral_flavor: EPH_2vcpu_4096MBmem_0GBdisk
+      ephemeral_image:
+        name: eccd-2.26.0-000393-fc474230-ephemeral-image.raw
+      ephemeral_availability_zone: nova
+      ephemeral_metadata:
+        ha-policy: ha-offline
+  ###################################### Control Plane Node ###########################################
+  controlplane:
+    control_plane_external_vip: "10.117.54.62"
+    control_plane_internal_vip: "10.0.1.2"
+    control_plane_registry_vip: "10.0.1.3"
+    control_plane_port: 6443
+    pool_cfg:
+      name: cp
+      count: 3
+      node_labels:
+      - "ecfe-speaker=false"
+      capo:
+        flavor: MGMT_10vcpu_32768MBmem_50GBdisk
+        availability_zones: ['nova']
+      authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAjXPfGUC8fBvYN0cx6icqvRTaSTIdBZNHxz6ufPALT67g7ARXT5BhyQyT6KTSnsFW+SniFjz2ls3u9bx86OXWWs2R40Jch7rMXbKx4gR3VSaNfkiKxGlTp+aEpwjnPlO3TyNMrfbZUe57UJrLo7oo7ZsnJfKZ1z9N+NVGCks8Jp9oa2OBG9viG5vYB4o/3Tdl5/LiLHYm74AAsuTXnOWVOOowzvT3v2SMkLeyvTd/LBpVEvEXfG1kK+hdxfyRlpqERlOM10CeeYeBd5UrN8+xt5XDoTlnZjp2W3GWJeL3ZjMIU3MxOpmrNksqR6qeZQNF2BGGINs032/QMwYa1M/1 TS Dual-Mode 5GC CCD Deployment
+      user_node_scripts:
+        post_network_init: ZWNobyBkdW1teSBzY3JpcHQgZm9yIHBvc3QgbmV0d29yayBpbml0IHNjcmlwdAo=
+      kubelet_options:
+        housekeeping_interval: 10
+        allowed_unsafe_sysctls:
+        - "kernel.shm*"
+        - "kernel.msg*"
+      machine_health_check:
+        max_unhealthy: 30%
+        node_startup_timeout: 15m
+        timeout: 5m
+        unhealthy_range: "[0-3]"
+    host_workloads: false
+  ###################################### Worker Nodes #################################################
+  worker_pools:
+  - pool_cfg:
+      name: pool1
+      # The initial count of nodes in one pool
+      initial_deployment_count: 5
+      max_pods_per_node: 200
+      count: 15
+      node_labels:
+      - "type=standard"
+      - "ecfe-speaker=true"
+      disable_sctp_kernel_module: true
+      capo:
+        flavor: STD_104vcpu_409600MBmem_250GBdisk
+        availability_zones: ['nova']
+        subport_sets:
+          subportset1:
+          - network_id: 15ad1a65-aaaf-4794-91ea-1fdcb209d8a6
+            vlan_id: 2110
+          - network_id: 209fd95f-8a5f-4e77-a5f8-b526f4e36b20
+            vlan_id: 2002
+          - network_id: 326a3c78-0131-463e-b3a7-77dc37872deb
+            vlan_id: 2201
+          - network_id: 358751b5-1016-481d-b2f6-e25c032e4157
+            vlan_id: 2202
+          - network_id: 3dd89e41-9b07-4539-a5a1-624458b0a5ec
+            vlan_id: 2001
+          - network_id: 3f504d38-21e6-443f-820f-0ca2c45ee33b
+            vlan_id: 2205
+          - network_id: 63a8c923-270e-4f58-ac3d-ad6fd2b6449e
+            vlan_id: 2102
+          - network_id: 76e02229-99df-40ac-9814-991836bdc640
+            vlan_id: 2010
+          - network_id: 8675d989-20ed-4282-b796-a1caa6e18351
+            vlan_id: 2003
+          - network_id: 8b26dc09-f6f5-43f4-a769-595a94f49b6f
+            vlan_id: 2009
+          - network_id: aea013f7-c947-42b6-9cb5-8957f034ea1f
+            vlan_id: 2204
+          - network_id: e2db5c68-434d-4e43-8617-92d240b2e079
+            vlan_id: 2004
+          - network_id: fec40caf-e998-42aa-9cb2-def3fc78fcae
+            vlan_id: 2101
+        traffic_networks:
+        # worker node eth1
+        - network: n280-eccd1-primary-signaling
+          subnets:
+          - n280-eccd1-primary-signaling_subnet
+          enable_port_security: false
+        # worker node eth2
+        - network: n280-eccd1-primary-oam
+          subnets:
+          - n280-eccd1-primary-oam_subnet
+          enable_port_security: false
+        # worker node eth3
+        - network: n280-eccd1-primary-intersite
+          subnets:
+          - n280-eccd1-primary-intersite_subnet
+          enable_port_security: false
+        # worker node eth4
+        - network: n280-eccd1-macvlan-parent-1
+          subnets:
+          - n280-eccd1-macvlan-parent-1_subnet
+          trunk: true
+          nic_subport_sets: ['subportset1']
+          enable_port_security: false
+        server_group_policies:
+        - anti-affinity
+      cpu_isolation_config:
+        reserved_cpus: ""
+        cpu_manager_policy: none
+        isolation_interrupts: false
+      user_node_scripts:
+        post_network_init: IyEvdXNyL2Jpbi9lbnYgYmFzaApzZXQgLXVlCgoKY2F0IDw8IEVPRiA+IGFwcGFybW9yLWRvY2tlci1wY2MKI2luY2x1ZGUgPHR1bmFibGVzL2dsb2JhbD4KCnByb2ZpbGUgZG9ja2VyLXBjYyBmbGFncz0oYXR0YWNoX2Rpc2Nvbm5lY3RlZCxtZWRpYXRlX2RlbGV0ZWQpIHsKICAjaW5jbHVkZSA8YWJzdHJhY3Rpb25zL2Jhc2U+CiAgbmV0d29yaywKICBjYXBhYmlsaXR5LAogIGZpbGUsCiAgbW91bnQsCiAgdW1vdW50LAogIHB0cmFjZSBwZWVyPUB7cHJvZmlsZV9uYW1lfSwKfQpFT0YKCm12IGFwcGFybW9yLWRvY2tlci1wY2MgL2V0Yy9hcHBhcm1vci5kLwpzeXN0ZW1jdGwgcmVzdGFydCBhcHBhcm1vcgoKZnVuY3Rpb24gbG9hZF9rZXJuZWxfbW9kdWxlKCkgewogIGZvciBtIGluICRAOyBkbwogICAgbW9kcHJvYmUgJG0gJiYgZWNobyAkbSA+PiAvZXRjL21vZHVsZXMtbG9hZC5kL2RtNWdjX25mdmlfcHJlbG9hZC5jb25mCiAgZG9uZQp9CmxvYWRfa2VybmVsX21vZHVsZSBpcDZ0YWJsZV9tYW5nbGUgZm91CgojIGFkanVzdCBrZXJuZWwgcGFyYW1ldGVycyBmb3IgRE0gNUdDIENORnMKY2F0IDw8IEVPRiA+PiAvZXRjL3N5c2N0bC5jb25mCiMjIHVwZGF0ZSB0byBrZXJuZWwgcGFyYW1ldGVycyByZXF1aXJlZCBieSBTZWFyY2ggRW5naW5lCnZtLm1heF9tYXBfY291bnQgPSAyNjIxNDQKRU9GCnN5c2N0bCAtcAo=
+        post_kubeadm_init: IyEvdXNyL2Jpbi9lbnYgYmFzaApzZXQgLXVlCgojIExhYmVsIHRoZSB3b3JrZXIgbm9kZXMgZm9yIFBDQwojIEFERCBMQUJFTCBTVEFSVAplY2hvIC1lICJBZGRpbmcgUENDIENORiBsYWJlbHMgLi4uLiIKIyBzZXQgd29ya2VyIG5vZGVzIGNvdW50IG9mIFBDLU1NIGNvbnRyb2xsZXIgb3IgUEMtU00gY29udHJvbGxlciB0byAzIHdoZW4gaXQgc3VwcG9ydHMgSEEKZXhwb3J0IE1NX0NPTlRST0xMRVJTPTMKZXhwb3J0IE1NX0NUUkxfTEFCRUw9InBjYy1tbS1wb2Q9Y29udHJvbGxlciIKZXhwb3J0IE1NX05PTl9DVFJMX0xBQkVMPSJwY2MtbW0tcG9kPW5vbi1jb250cm9sbGVyIgpleHBvcnQgU01fQ09OVFJPTExFUlM9MgpleHBvcnQgU01fQ1RSTF9MQUJFTD0icGNjLXNtLXBvZD1jb250cm9sbGVyIgpleHBvcnQgU01fTk9OX0NUUkxfTEFCRUw9InBjYy1zbS1wb2Q9bm9uLWNvbnRyb2xsZXIiCgpnZXRfbGFiZWxfY291bnQoKSB7CiAgTEFCRUw9JDEKICBDT1VOVD0kKC91c3IvbG9jYWwvYmluL2t1YmVjdGwgLS1rdWJlY29uZmlnIC9ldGMva3ViZXJuZXRlcy9rdWJlbGV0LmNvbmYgZ2V0IG5vZGUgLWwgJHtMQUJFTH0gfCBlZ3JlcCAtdiAiXk5BTUUiIHwgd2MgLWwpCiAgZWNobyAkQ09VTlQKfQoKIyMjIE1BSU4KTk9ERV9OQU1FPSQoaG9zdG5hbWUgLXMpCmlmIFsgJChnZXRfbGFiZWxfY291bnQgJE1NX0NUUkxfTEFCRUwpIC1sdCAkTU1fQ09OVFJPTExFUlMgXQp0aGVuCiAgICAvdXNyL2xvY2FsL2Jpbi9rdWJlY3RsIC0ta3ViZWNvbmZpZyAvZXRjL2t1YmVybmV0ZXMva3ViZWxldC5jb25mIGxhYmVsIG5vZGUgJE5PREVfTkFNRSAkTU1fQ1RSTF9MQUJFTAogICAgL3Vzci9sb2NhbC9iaW4va3ViZWN0bCAtLWt1YmVjb25maWcgL2V0Yy9rdWJlcm5ldGVzL2t1YmVsZXQuY29uZiBsYWJlbCBub2RlICROT0RFX05BTUUgJFNNX05PTl9DVFJMX0xBQkVMCmVsaWYgWyAkKGdldF9sYWJlbF9jb3VudCAkU01fQ1RSTF9MQUJFTCkgLWx0ICRTTV9DT05UUk9MTEVSUyBdCnRoZW4KICAgIC91c3IvbG9jYWwvYmluL2t1YmVjdGwgLS1rdWJlY29uZmlnIC9ldGMva3ViZXJuZXRlcy9rdWJlbGV0LmNvbmYgbGFiZWwgbm9kZSAkTk9ERV9OQU1FICRTTV9DVFJMX0xBQkVMCiAgICAvdXNyL2xvY2FsL2Jpbi9rdWJlY3RsIC0ta3ViZWNvbmZpZyAvZXRjL2t1YmVybmV0ZXMva3ViZWxldC5jb25mIGxhYmVsIG5vZGUgJE5PREVfTkFNRSAkTU1fTk9OX0NUUkxfTEFCRUwKZWxzZQogICAgL3Vzci9sb2NhbC9iaW4va3ViZWN0bCAtLWt1YmVjb25maWcgL2V0Yy9rdWJlcm5ldGVzL2t1YmVsZXQuY29uZiBsYWJlbCBub2RlICROT0RFX05BTUUgJE1NX05PTl9DVFJMX0xBQkVMCiAgICAvdXNyL2xvY2FsL2Jpbi9rdWJlY3RsIC0ta3ViZWNvbmZpZyAvZXRjL2t1YmVybmV0ZXMva3ViZWxldC5jb25mIGxhYmVsIG5vZGUgJE5PREVfTkFNRSAkU01fTk9OX0NUUkxfTEFCRUwKZmkKZWNobyAtZSAiRU5EIFBDQyBDTkYgbGFiZWxzIgojIEFERCBMQUJFTCBFTkQK
+      machine_health_check:
+        max_unhealthy: 30%
+        node_startup_timeout: 10m
+        timeout: 5m
+        unhealthy_range: "[0-3]"
+  - pool_cfg:
+      name: pool3
+      # The initial count of nodes in one pool
+      initial_deployment_count: 5
+      count: 8
+      node_labels:
+      - "type=high-throughput"
+      - "ecfe-speaker=false"
+      node_taints:
+      - key: "high-throughput=true"
+        effect: NoSchedule
+      capo:
+        flavor: HT_52vcpu_81920MBmem_50GBdisk
+        availability_zones: ['nova']
+        traffic_networks:
+        # worker node eth1
+        - network: n280-eccd1-primary-oam
+          subnets:
+          - n280-eccd1-primary-oam_subnet
+          enable_port_security: false
+        # worker node eth2
+        - network: sriov-flat-left
+          subnets:
+          - sriov-flat-left_subnet
+          vnic_type: direct
+          binding_profile_trusted: true
+          enable_port_security: false
+        # worker node eth3
+        - network: sriov-flat-right
+          subnets:
+          - sriov-flat-right_subnet
+          vnic_type: direct
+          binding_profile_trusted: true
+          enable_port_security: false
+        # worker node eth4
+        - network: sriov-flat-left
+          subnets:
+          - sriov-flat-left_subnet
+          vnic_type: direct
+          binding_profile_trusted: true
+          enable_port_security: false
+        # worker node eth5
+        - network: sriov-flat-right
+          subnets:
+          - sriov-flat-right_subnet
+          vnic_type: direct
+          binding_profile_trusted: true
+          enable_port_security: false
+        # worker node eth6
+        - network: sriov-flat-left
+          subnets:
+          - sriov-flat-left_subnet
+          vnic_type: direct
+          binding_profile_trusted: true
+          enable_port_security: false
+        # worker node eth7
+        - network: sriov-flat-right
+          subnets:
+          - sriov-flat-right_subnet
+          vnic_type: direct
+          binding_profile_trusted: true
+          enable_port_security: false
+        # worker node eth8
+        - network: sriov-flat-left
+          subnets:
+          - sriov-flat-left_subnet
+          vnic_type: direct
+          binding_profile_trusted: true
+          enable_port_security: false
+        # worker node eth9
+        - network: sriov-flat-right
+          subnets:
+          - sriov-flat-right_subnet
+          vnic_type: direct
+          binding_profile_trusted: true
+          enable_port_security: false
+        server_group_policies:
+        - soft-anti-affinity
+      hugepage_config:
+        type: 1GB
+        pagecount_1gb: 4
+      cpu_isolation_config:
+        topology_manager_policy: single-numa-node
+        reserved_cpus: "0,1"
+        cpu_manager_policy: static
+        isolation_interrupts: true
+      user_node_scripts:
+        post_network_init: ZWNobyBkdW1teSBzY3JpcHQgZm9yIHBvc3QgbmV0d29yayBpbml0IHNjcmlwdAo=
+        post_kubeadm_init: IyEvdXNyL2Jpbi9lbnYgYmFzaApzZXQgLXVlCgojIyMgUENHIDEuMTkgRVAzIHdvcmthcm91bmQgZm9yIHBlcmZvcm1hbmNlIGFmZmVjdGVkIGJ5IExpbnV4IGtlcm5lbCBmZWF0dXJlIFRIUCAoVHJhbnNwYXJlbnQgSHVnZSBQYWdlcykKIyMjIFRoaXMgV0EgaXMgb25seSBhcHBsaWVkIGZvciBDQ0QgMi4yNCwgMi4yNSBhbmQgMi4yNgojIHVwZGF0ZSBwcm9hY3RpdmVuZXNzCmNhdCA8PCBFT0YgPj4gL2V0Yy9zeXNjdGwuY29uZgp2bS5jb21wYWN0aW9uX3Byb2FjdGl2ZW5lc3MgPSAwCkVPRgoKIyB1cGRhdGUgcHRlcwpjYXQgPDwgRU9GID4+IC9yb290L3B0ZXNfdXBkYXRlLnNoCmVjaG8gMTI3ID4gL3N5cy9rZXJuZWwvbW0vdHJhbnNwYXJlbnRfaHVnZXBhZ2Uva2h1Z2VwYWdlZC9tYXhfcHRlc19ub25lCkVPRgpjaG1vZCAreCAvcm9vdC9wdGVzX3VwZGF0ZS5zaAoKIyBjcmVhdGUgYXV0byBzdGFydCBzZXJ2aWNlIGZvciBwdGVzIHVwZGF0aW5nCmNhdCA8PCBFT0YgPj4gL2V0Yy9zeXN0ZW1kL3N5c3RlbS9wdGVzX3VwZGF0ZS5zZXJ2aWNlCltVbml0XQpEZXNjcmlwdGlvbj1VcGRhdGUgbWF4X3B0ZXNfbm9uZQpCZWZvcmU9Y29udGFpbmVyZC5zZXJ2aWNlCltTZXJ2aWNlXQpUeXBlPW9uZXNob3QKRXhlY1N0YXJ0PS9iaW4vYmFzaCAtYyAiL3Jvb3QvcHRlc191cGRhdGUuc2giCltJbnN0YWxsXQpXYW50ZWRCeT1tdWx0aS11c2VyLnRhcmdldApFT0YKc3lzdGVtY3RsIGVuYWJsZSBwdGVzX3VwZGF0ZS5zZXJ2aWNlCnN5c3RlbWN0bCBzdGFydCBwdGVzX3VwZGF0ZS5zZXJ2aWNlCg==
+      machine_health_check:
+        max_unhealthy: 30%
+        node_startup_timeout: 10m
+        timeout: 5m
+        unhealthy_range: "[0-3]"
+
+#######################################################################################################
+# kubernetes
+#######################################################################################################
+kubernetes:
+  ip_version: 4
+  ingress_cluster_ip: 10.96.255.200
+  apiserver_extra_sans:
+  - kubeapi.ingress.n280-eccd1.sero.gic.ericsson.se
+  pod_cidr_blocks:
+  - 192.168.0.0/16
+  ## Generate Self-Signed Certificate for Kubernetes Cluster
+  ## Refer to the script scripts/common/generate-certs.sh in CCD VMD image to generate self-signed certificate for
+  ## kubernetes cluster. The root CA certificate is generated under scripts/common/credentials directory.
+  ##
+  ## See example configuration below for the two parameters ca_cert and ca_key:
+  ## ca_cert: |
+  ##   -----BEGIN CERTIFICATE-----
+  ##   <...>
+  ##   -----END CERTIFICATE-----
+  ##
+  ## ca_key: |
+  ##   -----BEGIN RSA PRIVATE KEY-----
+  ##   <...>
+  ##   -----END RSA PRIVATE KEY-----
+  ca_cert: |
+    <kubernetes CA certificate>
+  ca_key: |
+    <kubernetes CA key>
+  # Some NFs include a requirement on CoreDNS cache TTL
+  coredns_cfg:
+      kube_dns_success_ttl: 5
+      kube_dns_denial_ttl: 5
+  nodelocalDNS_config_map_fwdzones:
+  - domain: 3gppnetwork.org
+    dns_server: 172.30.32.50
+  featuregates:
+    bound_service_account_token_volume: false
+  etcd_config:
+    election_timeout: 3000
+    heartbeat_interval: 300
+    snapshot_count: 10000
+    enable_pprof: true
+
+#######################################################################################################
+# license
+#######################################################################################################
+license:
+  nels_host: "<Hostname/ip of NeLS server>"
+  licensing_domains:
+  - customer_id: "<CustomerId from license key file>"
+    product_type: "<Product type from Cloud Container Distribution license key data>"
+    swlt_id: "<SwltId from license key file>"
+
+#######################################################################################################
+# Addons
+#######################################################################################################
+addons:
+- name: calico
+  spec:
+    mtu: 2090
+    interface_name: _calico_interface
+    ipv4_pool_ipip_mode: Never
+- name: cr-registry
+  spec:
+    storage_class: csi-cinder-sc-delete
+    storage_size: 50Gi
+    user_id: admin
+    ## container registry b64-encoded password
+    ##
+    ## Note: no newline character allowed at the end of the password.
+    ## for example: printf "<password string>" | base64
+    password: <base64 encoded password>
+    hostname: container-registry.ingress.n280-eccd1.sero.gic.ericsson.se
+    replicas_count: 1
+- name: ingress
+  spec:
+    ingress_service:
+      allocate_node_port: true
+      annotations:
+        metallb.universe.tf/address-pool: ingress
+      type: LoadBalancer
+      loadbalancer_ip: 10.143.139.65
+- name: metrics-server
+  spec: { }
+- name: multus
+  spec: { }
+- name: sriov-network-device-plugin
+  spec:
+    pool:
+      sriov-dpdk-100g:
+        node_selectors:
+          "node-pool": "pool3"
+        sriov_network_device_plugin_configmap_name: sriov-dpdk-100g-dp-configmap
+        sriov_network_device_plugin_configmap_data: |-
+          {
+            "resourceList":
+            [
+              {
+                "resourceName": "dp_sriov_mlx5_left",
+                "selectors": {
+                    "pciAddresses": ["0000:00:06.0","0000:00:08.0","0000:00:0a.0","0000:00:0c.0"],
+                    "vendors": ["15b3"],
+                    "drivers": ["mlx5_core"],
+                    "isRdma": true
+                }
+              },
+              {
+                "resourceName": "dp_sriov_mlx5_right",
+                "selectors": {
+                    "pciAddresses": ["0000:00:07.0", "0000:00:09.0", "0000:00:0b.0", "0000:00:0d.0"],
+                    "vendors": ["15b3"],
+                    "drivers": ["mlx5_core"],
+                    "isRdma": true
+                }
+              }
+            ]
+          }
+- name: ecfe
+  spec:
+    node_selectors:
+      speaker:
+        ecfe-speaker: true
+    speakers_allowed_on_control_plane: false
+    allocate_speakers: true
+    config: |
+      bgp-bfd-peers:
+      - peer-address: 172.21.160.2
+        peer-asn: 4251100002
+        my-asn: 4221110002
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - pcc1-amf-sbi
+        - pcc1-smf-nsmf
+        - pcc1-smf-notification
+        - ccdm1-5g-traffic
+        - cces1-5g-sbi-traffic
+        - cces1-5g-nbi-trust-traffic
+        - ccpc1-5g-traffic
+        - ccpc1-4g-traffic
+        - ccrc1-nrf-sig
+        - ccrc1-nssf-sig
+        - ccsm1-ausf-5g-sig
+        - ccsm1-udm-5g-sig
+        - ccsm1-dia-sig
+        - ccsm1-eir-5g-sig
+        - ccsm1-hss-epc-http-sig
+        - sc1-bsf-dia-sig
+        - sc1-bsf-sig
+        - sc1-scp-sig
+      - peer-address: 172.21.160.3
+        peer-asn: 4251100002
+        my-asn: 4221110002
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - pcc1-amf-sbi
+        - pcc1-smf-nsmf
+        - pcc1-smf-notification
+        - ccdm1-5g-traffic
+        - cces1-5g-sbi-traffic
+        - cces1-5g-nbi-trust-traffic
+        - ccpc1-5g-traffic
+        - ccpc1-4g-traffic
+        - ccrc1-nrf-sig
+        - ccrc1-nssf-sig
+        - ccsm1-ausf-5g-sig
+        - ccsm1-udm-5g-sig
+        - ccsm1-dia-sig
+        - ccsm1-eir-5g-sig
+        - ccsm1-hss-epc-http-sig
+        - sc1-bsf-dia-sig
+        - sc1-bsf-sig
+        - sc1-scp-sig
+      - peer-address: 10.255.42.2
+        peer-asn: 4251100003
+        my-asn: 4221110003
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - ingress
+        - pcc1-oam
+        - pcc2-oam
+        - pcg1-oam
+        - ccrc1-oam
+        - ccsm1-oam
+        - ccdm1-oam
+        - ccdm1-5g-prov
+        - ccdm1-4g-prov
+        - cces1-oam
+        - cces1-5g-prov
+        - ccpc1-oam
+        - ccpc1-5g-prov
+        - eda1-oam
+        - sc1-oam
+      - peer-address: 10.255.42.3
+        peer-asn: 4251100003
+        my-asn: 4221110003
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - ingress
+        - pcc1-oam
+        - pcc2-oam
+        - pcg1-oam
+        - ccrc1-oam
+        - ccsm1-oam
+        - ccdm1-oam
+        - ccdm1-5g-prov
+        - ccdm1-4g-prov
+        - cces1-oam
+        - cces1-5g-prov
+        - ccpc1-oam
+        - ccpc1-5g-prov
+        - eda1-oam
+        - sc1-oam
+      - peer-address: 172.21.192.2
+        peer-asn: 4251100010
+        my-asn: 4221110010
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - ccdm1-intersite
+        - ccdm1-4g-traffic
+      - peer-address: 172.21.192.3
+        peer-asn: 4251100010
+        my-asn: 4221110010
+        hold-time: 180s
+        min-rx: 100ms
+        min-tx: 100ms
+        multiplier: 9
+        my-address-pools:
+        - ccdm1-intersite
+        - ccdm1-4g-traffic
+      address-pools:
+      - name: pcc1-amf-sbi
+        protocol: bgp
+        addresses:
+        - 172.17.128.1/32
+        auto-assign: false
+      - name: pcc1-smf-nsmf
+        protocol: bgp
+        addresses:
+        - 172.17.128.2/32
+        auto-assign: false
+      - name: pcc1-smf-notification
+        protocol: bgp
+        addresses:
+        - 172.17.128.3/32
+        auto-assign: false
+      - name: ccdm1-5g-traffic
+        protocol: bgp
+        addresses:
+        - 172.17.128.4/32
+        auto-assign: false
+      - name: cces1-5g-sbi-traffic
+        protocol: bgp
+        addresses:
+        - 172.17.128.5/32
+        auto-assign: false
+      - name: cces1-5g-nbi-trust-traffic
+        protocol: bgp
+        addresses:
+        - 172.17.128.6/32
+        auto-assign: false
+      - name: ccpc1-5g-traffic
+        protocol: bgp
+        addresses:
+        - 172.17.128.7/32
+        auto-assign: false
+      - name: ccpc1-4g-traffic
+        protocol: bgp
+        addresses:
+        - 172.17.128.8/32
+        auto-assign: false
+      - name: ccrc1-nrf-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.9/32
+        auto-assign: false
+      - name: ccrc1-nssf-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.10/32
+        auto-assign: false
+      - name: ccsm1-ausf-5g-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.12/32
+        auto-assign: false
+      - name: ccsm1-udm-5g-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.13/32
+        auto-assign: false
+      - name: ccsm1-dia-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.14/32
+        auto-assign: false
+      - name: ccsm1-eir-5g-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.15/32
+        auto-assign: false
+      - name: ccsm1-hss-epc-http-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.16/32
+        auto-assign: false
+      - name: sc1-bsf-dia-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.17/32
+        auto-assign: false
+      - name: sc1-bsf-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.18/32
+        auto-assign: false
+      - name: sc1-scp-sig
+        protocol: bgp
+        addresses:
+        - 172.17.128.19/32
+        auto-assign: false
+      - name: ingress
+        protocol: bgp
+        addresses:
+        - 10.143.139.65/32
+        auto-assign: false
+      - name: pcc1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.72/32
+        auto-assign: false
+      - name: pcc2-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.73/32
+        auto-assign: false
+      - name: pcg1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.74/32
+        auto-assign: false
+      - name: ccrc1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.75/32
+        auto-assign: false
+      - name: ccsm1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.79/32
+        auto-assign: false
+      - name: ccdm1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.80/32
+        auto-assign: false
+      - name: ccdm1-5g-prov
+        protocol: bgp
+        addresses:
+        - 10.143.139.81/32
+        auto-assign: false
+      - name: ccdm1-4g-prov
+        protocol: bgp
+        addresses:
+        - 10.143.139.82/32
+        auto-assign: false
+      - name: cces1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.83/32
+        auto-assign: false
+      - name: cces1-5g-prov
+        protocol: bgp
+        addresses:
+        - 10.143.139.84/32
+        auto-assign: false
+      - name: ccpc1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.85/32
+        auto-assign: false
+      - name: ccpc1-5g-prov
+        protocol: bgp
+        addresses:
+        - 10.143.139.86/32
+        auto-assign: false
+      - name: eda1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.87/32
+        auto-assign: false
+      - name: sc1-oam
+        protocol: bgp
+        addresses:
+        - 10.143.139.88/32
+        auto-assign: false
+      - name: ccdm1-intersite
+        protocol: bgp
+        addresses:
+        - 172.17.192.1/32
+        auto-assign: false
+      - name: ccdm1-4g-traffic
+        protocol: bgp
+        addresses:
+        - 172.17.192.2/32
+        auto-assign: false
+- name: openstack-cloud-controller-manager
+  spec:
+    timeout: 50h
+- name: openstack-cinder
+  spec:
+    #Default value is 25 in CCD 2.26.0RC2
+    volume_attach_limit: 30
+    storage_classes:
+    - name: csi-cinder-sc-delete
+      spec:
+        reclaim_policy: Delete
+        allow_volume_expansion: true
+      default: true
+    - name: csi-cinder-sc-retain
+      spec:
+        reclaim_policy: Retain
+    openstack_hosts:
+    - https://os-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se:5000/v3
+    openstack_ports:
+    - 5000 # identity
+    - 8774 # compute
+    - 8776 # block storage
+    - 9696 # neutron
+    - 8786 # manila
+    - 13000
+    - 13774
+    - 13776
+    - 13786
+    - 13696
+- name: ccd-licensing
+  spec:
+    storage_class: csi-cinder-sc-delete
+    #db_ha_disabled: true
+    ccd_licensing_lm_db_migration_cpu_req: "100m"
+    ccd_app_sys_info:
+      nels:
+        host_ip: "<The IP address of Application Info Collection Service in the NeLS>"
+        host_name: "<The hostname of Application Info Collection Service (hosted on NeLS node>"
+- name: pm
+  spec:
+    victoria_metrics:
+      #deploy_in_workers: true
+      collect_only_ccd_namespace_metrics: false
+      vmselect:
+        #ha_enabled: "false"
+        resources:
+          limits:
+            cpu: "2"
+            memory: 4Gi
+            ephemeral_storage: 8Gi
+          requests:
+            cpu: 500m
+            memory: 256Mi
+            ephemeral_storage: 512Mi
+        ingress:
+          enable: "true"
+          hostname: "monitoring-vmselect.ingress.n280-eccd1.sero.gic.ericsson.se"
+      vmstorage:
+        #ha_enabled: "false"
+        resources:
+          limits:
+            memory: 7Gi
+        volume:
+          size: 200Gi
+          storage_class: csi-cinder-sc-delete
+        retention_time: 30d
+      vmagent:
+        scrape_interval: 60s
+        maxscrape_size: 256MB
+        resources:
+          limits:
+            memory: 700Mi
+        # remote_write_urls:
+        #   - url: http://10.117.58.8:1111/receive
+        #     username: abc
+        #     password: 123
+        #   - url: http://10.117.58.8:1234/receive
+        #     username:
+        #     password:
+      vmalert:
+        #ha_enabled: "false"
+    alertmanager:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 200Mi
+        requests:
+          cpu: 10m
+          memory: 100Mi
+      ingress:
+        enable: "true"
+        hostname: "monitoring-alertmanager.ingress.n280-eccd1.sero.gic.ericsson.se"
+    node_exporter:
+      default_collectors_disabled: false
+- name: subport-controller-manager
+  spec: {}

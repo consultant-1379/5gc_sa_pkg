@@ -1,0 +1,13 @@
+- block:
+  - name: "upload network script to {{ inventory_hostname }} (role: {{ dallas_role }})"
+    template:
+      src: templates/add_dm_5gc_route.j2
+      dest: "{{ script_path }}"
+      mode: 0755
+      lstrip_blocks: true
+  - name: "run network script on {{ inventory_hostname }} (role: {{ dallas_role }})"
+    shell: "{{ script_path }}"
+    when:
+    - run_script is defined
+    - run_script | bool is true
+  when: networks | length > 0

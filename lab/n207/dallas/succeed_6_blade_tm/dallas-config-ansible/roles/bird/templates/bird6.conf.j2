@@ -1,0 +1,40 @@
+router id  172.31.255.30;
+
+listen bgp v6only;
+
+protocol direct {
+        interface "vlan-12*"; 
+}
+
+protocol device {
+}
+
+
+# BGP Routing Protocol
+protocol static TOEXT_OPEN1_STATIC_2_BGP {
+        route 2a00:194::/38 via 2a00:172:30:64::101;
+        route 2a00:194:400::/38 via 2a00:172:30:66::101;
+        route 2a00:194:800::/38 via 2a00:172:30:64::102;
+        route 2a00:194:c00::/38 via 2a00:172:30:66::102;
+        route 2a00:194:1000::/38 via 2a00:172:30:64::103;
+        route 2a00:194:1400::/38 via 2a00:172:30:66::103;
+        route 2a00:194:1800::/38 via 2a00:172:30:64::104;
+        route 2a00:194:1c00::/38 via 2a00:172:30:66::104;
+        route 2a00:194:2000::/38 via 2a00:172:30:64::105;
+        route 2a00:194:2400::/38 via 2a00:172:30:66::105;
+        route 2a00:194:2800::/38 via 2a00:172:30:64::106;
+        route 2a00:194:2c00::/38 via 2a00:172:30:66::106;
+}
+
+
+protocol bgp {
+        import filter {
+                accept;
+        };
+        export where proto = "TOEXT_OPEN1_STATIC_2_BGP";
+        bfd off;
+        local 2a00:172:30:64::101 as 4281000005;
+        neighbor 2a00:172:30:64::1 as 4271000005;
+        multihop 3;
+        next hop keep;
+}

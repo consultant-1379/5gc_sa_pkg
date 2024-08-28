@@ -1,0 +1,118 @@
+# This file is being maintained by Ansible.
+# DO NOT EDIT
+#
+# add_dm_5gc_route.sh
+
+#!/bin/bash
+
+# Date: 2022-01-22
+# Initial: Wallance Hou
+# Purpose:
+# common script to add dallas host vlan interface and routes on each dallas hosts
+
+
+function logging()
+{
+
+  level=${1:-INFO}
+  declare -A loglevel
+  loglevel=(["DEBUG"]=10 ["INFO"]=20 ["WARN"]=30 ["ERROR"]=40 ["CRITICAL"]=50)
+  shift
+  #echo $(date +"%Y/%m/%d %H:%M:%S") $level: $@
+  if [ ${loglevel[$level]} -gt 20 ];then
+    echo $level: $@ 1>&2
+  else
+    echo $level: $@
+  fi
+}
+
+function add_vlan_link()
+{
+  local interface vlan ip dev
+  interface=$1
+  vlan_id=$2
+  ip=$3
+  dev=vlan$(printf "%04d" $vlan_id)
+
+  if check_link_exist $dev && $overwrite;then
+    logging WARN "Deleting the existing $dev interface"
+    del_vlan_link $dev
+  fi
+
+  if ! check_link_exist $dev;then
+    logging INFO "Creating $dev vlan interface"
+    ip link add link $interface name $dev type vlan id $vlan_id
+    for _ip in $(echo $ip | tr ',' ' ')
+    do
+      ip addr add $_ip dev $dev
+    done
+    ip link set $dev up
+  else
+    # make sure the vlan device is UP
+    ip link set $dev up
+    logging WARN "Adding $dev interface [SKIPPED] as it already exists"
+  fi
+}
+
+function check_link_exist()
+{
+  ip link show $1 >/dev/null 2>&1
+  return $?
+}
+
+function del_vlan_link()
+{
+  local dev
+  dev=$1
+  ip link del $dev
+}
+
+function add_route()
+{
+  local IP_PREFIX GW
+  IP_PREFIX=$1
+  GW=$2
+  # remove the old on
+  ip route del $IP_PREFIX 2>/dev/null || true
+  ip route add $IP_PREFIX via $GW || true
+#  echo "#####add route####"
+#  echo "ip route add ${IP_PREFIX} via ${GW}"
+}
+
+function add_frwd_intf()
+{
+  local PHY_INTF
+  PHY_INTF=$1
+  INTF_VLAN=$2
+  INTF_IP=$3
+  INTF_GW=$4
+  shift 4
+  INTF_ROUTES=($@)
+
+  ## Set eth port link up
+  ip link set ${PHY_INTF} up || true
+
+  ## Add vlan link
+  add_vlan_link $PHY_INTF $INTF_VLAN $INTF_IP
+
+  ## Add routes
+  for r in ${INTF_ROUTES[@]};do add_route $r $INTF_GW;done
+}
+
+
+function main()
+{
+  {% for net in networks %}
+  # Routing-instance: {{ net.routing_instance }}
+  # Add vlan {{ net.vlan }} interface and static routes
+  overwrite={{ net.overwrite | default(false) | lower }}
+  static_routes=(
+  {% for route in net.static_routes %}
+    {{ route.prefix }}
+  {% endfor %}
+  )
+  add_frwd_intf {{ net.interface }} {{ net.vlan }} {{ net.node_ips[host_index] }} {{ net.gateway }} ${static_routes[@]}
+  {% endfor %}
+}
+
+main $@

@@ -1,0 +1,28 @@
+---
+version: R6A
+name: N2801
+ntpConfig:
+  servers:
+  - 10.221.17.6
+  - 10.221.17.46
+  - 10.221.17.134
+  - 10.221.17.174
+  orphanModeStratum: 7
+dnsConfig:
+  internalDomain: cee.tld
+  externalDnsServers:
+  - 10.221.16.10
+  - 10.221.16.11
+timezone: Europe/Stockholm
+legaltext:
+  local: "Attention! Prototype system. You are not authorized to login to this system N280vPOD1 NFVI PDUPC.\n"
+  remote: "\nAttention! Prototype system. For sure, you are not authorized to login to this system N280vPOD1 NFVI PDUPC.\n\n"
+hostCredentials:
+  hostUsername: ceeinfra
+  hostPassword: r00tme
+  rootPassword: r00tme
+  grubUsername: grubuser
+  grubPassword: GrUbUs#R321
+  recoveryUsername: ceerecovery
+  recoveryUserPassword: r00tme
+...

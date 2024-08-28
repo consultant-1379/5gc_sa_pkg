@@ -1,0 +1,29 @@
+heat_template_version: 2017-09-01
+
+description: >
+
+parameters:
+  pool_index:
+    type: number
+  networks_on_trunks:
+    type: json
+
+
+resources:
+
+  port_resource_group_2:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: 
+        yaql:
+          expression: $.data.len()
+          data: { get_param: [ networks_on_trunks, { get_param: pool_index }, networks ] }
+      resource_def:
+        type: port-per-net.yaml
+        properties:
+          network_index: "%index%"
+          networks: { get_param: [ networks_on_trunks, { get_param: pool_index }, networks ] }
+          trunks: { get_param: [ networks_on_trunks, { get_param: pool_index }, trunks ] }
+
+
+

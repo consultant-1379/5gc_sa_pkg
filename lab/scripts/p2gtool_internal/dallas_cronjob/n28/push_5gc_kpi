@@ -1,0 +1,22 @@
+#*/1 * * * * root /root/push_5gc_kpi.py -d selnpctool-1096-01-001 -g http://monitoring-eric-pm-server-pushgateway.ingress.n28-eccd1.sero.gic.ericsson.se --push
+
+# Push metrics to Prometheus pushgateway regually
+PYTHON_INTER=/lab/pccc_utils/scripts/csdp_python3_anaconda/anaconda3/bin/python
+PUSH_SCRIPT_DIR=/lab/pccc_utils/scripts/src/p2gtool_internal
+
+## Pushing dm5gc SMF N11 HTTP Outgoing return code
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_5gc_smf.py --host n28-smf1.sero.gic.ericsson.se -g http://monitoring-eric-pm-server-pushgateway.ingress.n28-eccd1.sero.gic.ericsson.se -i N28 --push | logger -p local3.debug -t "PUSH_5GC_N11"
+
+## Pushing dm5gc dallas KPI
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_5gc_dls.py --host selnpctool-1096-01-001 --dlstype 5gcdls -g http://monitoring-eric-pm-server-pushgateway.ingress.n28-eccd1.sero.gic.ericsson.se -i N28 --push | logger -p local3.debug -t "PUSH_5GC_DLS"
+
+## Pushing dm5gc NRF Status
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_5gc_nrf.py --pod n28 -i N28 -g http://monitoring-eric-pm-server-pushgateway.ingress.n28-eccd1.sero.gic.ericsson.se --push | logger -p local3.debug -t "PUSH_5GC_NRF"
+
+## Pushing dm5gc Active Alarms
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_5gc_alarms.py --pod n28 -i N28 -g http://monitoring-eric-pm-server-pushgateway.ingress.n28-eccd1.sero.gic.ericsson.se --push --save-alarms | logger -p local3.debug -t "PUSH_5GC_ALARMS"
+
+
+## Pushing dm5gc Check_redis
+*/1 * * * * root $PYTHON_INTER $PUSH_SCRIPT_DIR/push_redis.py --pod n28 -n pcc,pcg -g http://monitoring-eric-pm-server-pushgateway.ingress.n28-eccd1.sero.gic.ericsson.se -i n28 --push
+

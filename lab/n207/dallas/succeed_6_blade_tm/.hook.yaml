@@ -1,0 +1,57 @@
+pre_install:
+    - name: disable_puppet_due_to_PCGW-4936
+      executable: "/usr/bin/puppet agent"
+      arg: "--disable 'Disable puppet Dallas 1 installed - PCGW-4936'"
+      host: [pccc-node280-dallas-01,pccc-node280-dallas-02,pccc-node280-dallas-03,pccc-node280-dallas-04,pccc-node280-dallas-05,pccc-node280-dallas-06]
+
+    - name: bind_dpdk
+      executable: "/lab/testtools/dallas/testRelease/eguazho/packages/3R192A22-2.0/3pp/ltt/dpdk/lts_bind_dpdk"
+      arg: "/var/dallas/tap.conf"
+      host: [pccc-node280-dallas-01,pccc-node280-dallas-02,pccc-node280-dallas-03,pccc-node280-dallas-04,pccc-node280-dallas-05,pccc-node280-dallas-06]
+      debug: on
+
+    # run this task on master only
+    - name: upload route script
+      executable: "cd /root/dallas-config-ansible && ansible-playbook playbooks/create-dallas-network.yml"
+      host: [pccc-node280-dallas-01]
+      debug: on
+
+    - name: start bird
+      executable: "/root/dallas-config-ansible/bird_manager.sh --start && sleep 60"
+      host: [pccc-node280-dallas-01]
+      debug: on
+
+
+post_install:
+    - name: run route script
+      executable: "/root/add_dm_5gc_route.sh"
+      host: [pccc-node280-dallas-01,pccc-node280-dallas-02,pccc-node280-dallas-03,pccc-node280-dallas-04,pccc-node280-dallas-05,pccc-node280-dallas-06]
+      debug: on
+
+
+post_uninstall:
+    - name: stop bird
+      executable: "/root/dallas-config-ansible/bird_manager.sh --stop"
+      host: [pccc-node280-dallas-01]
+      debug: on
+
+    # run this task on master only
+    - name: upload route script
+      executable: "cd /root/dallas-config-ansible && ansible-playbook playbooks/remove-dallas-network.yml"
+      host: [pccc-node280-dallas-01]
+      debug: on
+
+    - name: unbind_dpdk
+      executable: "/lab/testtools/dallas/testRelease/eguazho/packages/3R192A22-2.0/3pp/ltt/dpdk/lts_unbind_dpdk"
+      host: [pccc-node280-dallas-01,pccc-node280-dallas-02,pccc-node280-dallas-03,pccc-node280-dallas-04,pccc-node280-dallas-05,pccc-node280-dallas-06]
+
+    - name: enable_puppet
+      executable: "/usr/bin/puppet agent"
+      arg: "--enable"
+      host: [pccc-node280-dallas-01,pccc-node280-dallas-02,pccc-node280-dallas-03,pccc-node280-dallas-04,pccc-node280-dallas-05,pccc-node280-dallas-06]
+
+    - name: run_puppet
+      executable: "/usr/sbin/call_home || true"
+      host: [pccc-node280-dallas-01,pccc-node280-dallas-02,pccc-node280-dallas-03,pccc-node280-dallas-04,pccc-node280-dallas-05,pccc-node280-dallas-06]
+      debug: on
+

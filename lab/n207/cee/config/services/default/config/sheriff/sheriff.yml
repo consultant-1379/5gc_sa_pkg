@@ -1,0 +1,19 @@
+licenseManagement:
+  # List of license servers (NeLS)
+  licenseServers:
+    # the first license server is mandatory
+    - name: n280_primary     # used in logs, but no meaning for the code
+      licenseService:           # parameters specific to the NeLS Client API
+        remoteServer: 10.155.142.68     # name of a remote TLS server instance managed via the LCM API
+        tlsProtocols: TLSv1.2
+        tlsCipherSuites: 'AES256-GCM-SHA384:AES256-SHA256:AES128-GCM-SHA256:AES128-SHA256'
+    # the second license server is optional, needed when NeLS is geo-redundant
+#    - name: secondary
+#      licenseService:
+#        remoteServer: <SECONDARY_LICENSE_SERVER>
+#        tlsProtocols: <OPENSSL_PROTOCOLS>
+#        tlsCipherSuites: <OPENSSL_CIPHERSUITES>
+  customerId: '946060'  # from SW Supply
+  swltId:                    # Software License Target IDs
+    cee: STA-CEE-31_CEE       # mandatory
+    csc: STA-SDN-28_CSC       # conditional, required when CSC is present

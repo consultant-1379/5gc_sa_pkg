@@ -1,0 +1,377 @@
+# Dual-mode 5gc on nfvi release package build configuration file
+
+#############################################################################
+## Release package name and usecases definition
+#############################################################################
+pkg_name: 'dm_5gc_on_nfvi_sp'
+usecases:
+- basic
+- advanced
+
+
+#############################################################################
+## ECCD/VNFs/CNFs config files list for two site of each use case
+## include_files : file pattern, support wildcards ("*, ?, [ranges])
+## config_path   : the relative path to "5gc_sa_pkg" repo root directory
+## cluster       : mgmt_cluster|traffic_cluster
+## site          : site1|site2
+## tags          : <usecases list> e.g. all|basic|advanced|...
+#############################################################################
+
+## -------------------------------------------------------------------------
+## eccd configuration list
+## -------------------------------------------------------------------------
+caas:
+- eccd:
+  - include_files:
+    - env-eccd-net.yaml
+    - env-eccd.yaml
+    config_path: lab/n99/eccd2/eccd
+    cluster: mgmt_cluster
+    site: site1
+    tags:
+    - all
+  - include_files:
+    - env-eccd-net.yaml
+    - env-eccd.yaml
+    config_path: lab/n99/eccd1/eccd
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - all
+  - include_files:
+    - env-eccd-net.yaml
+    - env-eccd.yaml
+    config_path: lab/n28/eccd5/eccd
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - all
+
+
+cnfs:
+## -------------------------------------------------------------------------
+## pcc configuraton list
+## -------------------------------------------------------------------------
+- pcc:
+  - include_files:
+    - instantiate.json
+    - user-config.txt
+    - pc-sm-config.txt
+    - vpngw-config.txt
+    - ddc-config.txt
+    - values.yaml
+    config_path: lab/n99/eccd1/pcc/basic
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - instantiate.json
+    - user-config.txt
+    - pc-sm-config.txt
+    - vpngw-config.txt
+    - ddc-config.txt
+    - values.yaml
+    config_path: lab/n99/eccd1/pcc/advanced
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - advanced
+## -------------------------------------------------------------------------
+## pcg configuraton list
+## -------------------------------------------------------------------------
+- pcg:
+  - include_files:
+    - user-config.txt
+    - pcg-config.txt
+    - values.yaml
+    - instantiate.json
+    - ddc-config.txt
+    config_path: lab/n99/eccd1/pcg/basic
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - user-config.txt
+    - pcg-config.txt
+    - values.yaml
+    - instantiate.json
+    - ddc-config.txt
+    config_path: lab/n99/eccd1/pcg/advanced
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - advanced
+## -------------------------------------------------------------------------
+## ccrc configuraton list
+## -------------------------------------------------------------------------
+- ccrc:
+  - include_files:
+    - ddc-config.xml
+    - external-certificates.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - nrf-config.xml
+    - nssf-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccrc/basic
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - ddc-config.xml
+    - external-certificates.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - nrf-config.xml
+    - nssf-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccrc/advanced
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - advanced
+  - include_files:
+    - ddc-config.xml
+    - external-certificates.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - nrf-config.xml
+    - nssf-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n28/eccd5/ccrc/advanced
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - advanced
+## -------------------------------------------------------------------------
+## ccsm configuraton list
+## -------------------------------------------------------------------------
+- ccsm:
+  - include_files:
+    - ausf-config.xml
+    - ccsm-common-config.xml
+    - ddc-config.xml
+    - diameter-config.xml
+    - external-certificates.xml
+    - hss-config.xml
+    - hssepc-config.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - udm-config.xml
+    - udm-remote-nf-profile.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccsm/basic
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - ausf-config.xml
+    - ccsm-common-config.xml
+    - ddc-config.xml
+    - diameter-config.xml
+    - eir-config.xml
+    - external-certificates.xml
+    - hss-config.xml
+    - hssepc-config.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - udm-config.xml
+    - udm-remote-nf-profile.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccsm/advanced
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - advanced
+  - include_files:
+    - ausf-config.xml
+    - ccsm-common-config.xml
+    - ddc-config.xml
+    - diameter-config.xml
+    - eir-config.xml
+    - external-certificates.xml
+    - hss-config.xml
+    - hssepc-config.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - udm-config.xml
+    - udm-remote-nf-profile.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n28/eccd5/ccsm/advanced
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - advanced
+## -------------------------------------------------------------------------
+## ccdm configuraton list
+## -------------------------------------------------------------------------
+- ccdm:
+  - include_files:
+    - ddc-config.xml
+    - external-certificates.xml
+    - hss-application-counters.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - udr-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccdm/basic
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - ddc-config.xml
+    - external-certificates.xml
+    - hss-application-counters.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - udr-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n28/eccd5/ccdm/basic
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - basic
+  - include_files:
+    - ddc-config.xml
+    - eir-application-counters.xml
+    - eir-main-branches-setting.ldif
+    - eir-search-order-setting.ldif
+    - external-certificates.xml
+    - hss-application-counters.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - udr-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n99/eccd1/ccdm/advanced
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - advanced
+  - include_files:
+    - ddc-config.xml
+    - eir-application-counters.xml
+    - eir-main-branches-setting.ldif
+    - eir-search-order-setting.ldif
+    - external-certificates.xml
+    - hss-application-counters.xml
+    - instantiate.json
+    - nrfagent-config.xml
+    - udr-config.xml
+    - user-config.xml
+    - values.yaml
+    config_path: lab/n28/eccd5/ccdm/advanced
+    cluster: traffic_cluster
+    site: site2
+    tags:
+    - advanced
+## -------------------------------------------------------------------------
+## eda configuraton list
+## -------------------------------------------------------------------------
+- eda:
+  - include_files:
+    - values.yaml
+    - instantiate.json
+    config_path: lab/n99/eccd1/eda/basic
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - instantiate.json
+    - values.yaml
+    config_path: lab/n99/eccd1/eda/advanced
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - advanced
+## -------------------------------------------------------------------------
+## sc configuraton list
+## -------------------------------------------------------------------------
+- sc:
+  - include_files:
+    - instantiate.json
+    - values.yaml
+    - bsf-config.xml
+    - external-certificates.xml
+    - snmp-config.json
+    - user-config.xml
+    config_path: lab/n99/eccd1/sc/basic
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - values.yaml
+    - instantiate.json
+    - bsf-config.xml
+    - external-certificates.xml
+    - snmp-config.json
+    - user-config.xml
+    config_path: lab/n99/eccd1/sc/advanced
+    cluster: traffic_cluster
+    site: site1
+    tags:
+    - advanced
+
+legacy_vnfs:
+## -------------------------------------------------------------------------
+## sapc configuraton list
+## -------------------------------------------------------------------------
+- sapc:
+  - include_files:
+    - adapt_cluster_template.cfg
+    - cliss_config
+    - DNS_server_config
+    - policy_profile.conf
+    - SAPC.cfg
+    - mtls_config
+    config_path: lab/n99/sapc/basic
+    site: site1
+    tags:
+    - basic
+  - include_files:
+    - mtls_config
+    - cliss_config
+    - SAPC.cfg
+    - DNS_server_config
+    - adapt_cluster_template.cfg
+    - policy_profile.conf
+    config_path: lab/n99/sapc/advanced
+    site: site1
+    tags:
+    - advanced
+
+
+#############################################################################
+## GIT Repo configuration
+#############################################################################
+build:
+  # the Git repository URL; the {user} variable will be automatically replaced with the current user
+  git_repo: https://{user}@gerrit.ericsson.se/a/5gc_config/5gc_sa_pkg
+
+  # the Git branch to be used to generate the dist package
+  git_branch:
+
+  # A specific commit can be specified, if needed (the branch will be ignored if a commit was specified)
+  git_commit:
+
+  # A release version MUST be defined when a specific commit is specified.
+  release_version:
+
+  # the name of the directory where the source code is stored in the Git repo
+  git_src_dir:

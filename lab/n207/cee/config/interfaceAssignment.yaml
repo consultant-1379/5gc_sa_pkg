@@ -1,0 +1,1615 @@
+---
+interfaceSchemes:
+  - name: lcm
+    networkInterfaceList:
+      - name: lcm
+        assignIp:
+          - lcm-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+      - name: control
+        assignIp:
+          - cee-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        #      - name: oobm
+        #        assignIp:
+        #          - oobm-ipv4
+        #        type: port
+        #        provider: linux
+        #        firewallZone: cee
+        #        mtu: 1500
+      - name: data
+        assignIp:
+          - lcm-om-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        txChecksumming: off
+      - name: gluster
+        assignIp:
+          - gluster-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+  - name: infra
+    networkInterfaceList:
+      - name: lcm
+        assignIp:
+          - lcm-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+      - name: control
+        assignIp:
+          - cee-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        #      - name: oobm
+        #        assignIp:
+        #          - oobm-ipv4
+        #        type: port
+        #        provider: linux
+        #        firewallZone: cee
+        #        mtu: 1500
+      - name: data
+        assignIp:
+          - lcm-om-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        txChecksumming: off
+      - name: gluster
+        assignIp:
+          - gluster-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+    ## Network Interface Scheme for virtual OpenStack Network host.
+  - name: vnetworkhost
+    networkInterfaceList:
+      - name: lcm
+        assignIp:
+          - lcm-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+      - name: control
+        assignIp:
+          - cee-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+      - name: br_prv
+        type: bridge
+        provider: openvswitch
+        firewallZone: cee
+        mtu: 1500
+      - name: br_ex
+        type: bridge
+        provider: openvswitch
+        firewallZone: cee
+        mtu: 1500
+      - name: data
+        type: port
+        firewallZone: cee
+        provider: openvswitch
+        bridge: br_prv
+      - name: exter
+        type: port
+        firewallZone: cee
+        provider: openvswitch
+        bridge: br_ex
+    ## Network Interface Scheme for virtual Service Assurance host.
+  - name: vserviceassurance
+    networkInterfaceList:
+      - name: lcm
+        assignIp:
+          - lcm-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+      - name: control
+        assignIp:
+          - cee-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+      - name: data
+        assignIp:
+          - lcm-om-ipv4
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+    ## Network Interface Scheme for virtual Cloud SDN Controller (CSC) host.
+  - name: csc
+    networkInterfaceList:
+      - name: lcm
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        assignIp:
+          - lcm-ipv4
+      - name: control
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        assignIp:
+          - cee-ipv4
+      - name: sdn_sbi
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        assignIp:
+          - sdnc-sbi-ipv4
+      - name: sdn_int
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        assignIp:
+          - sdnc-internal-ipv4
+  - name: control
+    networkInterfaceList:
+      - name: control0
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        ringBuffer:
+          size: max
+          count: auto
+      - name: control1
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        ringBuffer:
+          size: max
+          count: auto
+      - name: bond_lcm_ctrl
+        type: bond
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bondProperties:
+          mode: active-backup
+          miimonInterval: 200
+          #primaryInterface: control0
+          bondSlaves:
+            - name: control0
+            - name: control1
+      - name: br_lcm_ctrl
+        type: bridge
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bridgedInterfaces:
+          - name: bond_lcm_ctrl
+        assignIp:
+          - lcm-ipv4
+      - name: cee0
+        type: vlan
+        sourceInterface: control0
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        network: cee_ctrl_sp
+      - name: cee1
+        type: vlan
+        sourceInterface: control1
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        network: cee_ctrl_sp
+      - name: bond_cee_ctrl
+        type: bond
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bondProperties:
+          mode: active-backup
+          miimonInterval: 200
+          #primaryInterface: cee0
+          bondSlaves:
+            - name: cee0
+            - name: cee1
+      - name: br_cee_ctrl
+        type: bridge
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bridgedInterfaces:
+          - name: bond_cee_ctrl
+        assignIp:
+          - cee-ipv4
+    ## Network Interface Scheme for Non Redundant Control network connectivity on physical host.
+  - name: control_nonredundant
+    networkInterfaceList:
+      - name: control0
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        ## Set physical interface ring buffer size with using an integer number or the 'max' string.
+        ## Set physical interface ring buffer count with using an integer number or the 'max' or 'auto' string.
+        ringBuffer:
+          size: max
+          count: max
+      - name: br_lcm_ctrl
+        assignIp:
+          - lcm-ipv4
+        type: bridge
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bridgedInterfaces:
+          - name: control0
+      - name: cee0
+        type: vlan
+        sourceInterface: control0
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        network: cee_ctrl_sp
+      - name: br_cee_ctrl
+        assignIp:
+          - cee-ipv4
+        type: bridge
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bridgedInterfaces:
+          - name: cee0
+    ## Network Interface Scheme for Out Of Band Management network
+    ## connectivity on physical host.
+    #  - name: oobm
+    #    networkInterfaceList:
+    #      - name: oobm0
+    #        type: vlan
+    #        sourceInterface: control0
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        network: oobm_ctrl_sp
+    #      - name: oobm1
+    #        type: vlan
+    #        sourceInterface: control1
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        network: oobm_ctrl_sp
+    #      - name: bond_oobm_ctrl
+    #        type: bond
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        bondProperties:
+    #          mode: active-backup
+    #          miimonInterval: 200
+    #          bondSlaves:
+    #            - name: oobm0
+    #            - name: oobm1
+    #      - name: br_oobm_ctrl
+    #        type: bridge
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        bridgedInterfaces:
+    #          - name: bond_oobm_ctrl
+    ## Network Interface Scheme for Non Redundant Out Of Band Management
+    ## network connectivity on physical host.
+    #  - name: oobm_nonredundant
+    #    networkInterfaceList:
+    #      - name: oobm0
+    #        type: vlan
+    #        sourceInterface: control0
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        network: oobm_ctrl_sp
+    #      - name: br_oobm_ctrl
+    #        type: bridge
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        bridgedInterfaces:
+    #         - name: oobm0
+    #  - name: lcm_om_on_control
+    #    networkInterfaceList:
+    #      - name: lcm0
+    #        type: vlan
+    #        sourceInterface: control0
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        network: lcm_om_sp
+    #      - name: lcm1
+    #        type: vlan
+    #        sourceInterface: control1
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        network: lcm_om_sp
+    #      - name: bond_lcm_om
+    #        type: bond
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        bondProperties:
+    #          mode: active-backup
+    #          miimonInterval: 200
+    #          bondSlaves:
+    #            - name: lcm0
+    #           - name: lcm1
+    #      - name: br_lcm_om
+    #        type: bridge
+    #        provider: linux
+    #        firewallZone: cee
+    #        mtu: 1500
+    #        bridgedInterfaces:
+    #          - name: bond_lcm_om
+  - name: data_ovs
+    networkInterfaceList:
+      - name: data0
+        type: port
+        firewallZone: cee
+        provider: openvswitch
+      - name: data1
+        type: port
+        firewallZone: cee
+        provider: openvswitch
+      - name: bond_prv
+        type: bond
+        firewallZone: cee
+        provider: openvswitch
+        mtu: 2140
+        bridge: br_prv
+        bondProperties:
+          mode: balance-slb
+          miimonInterval: 200
+          lacpMode: active
+          bondSlaves:
+            - name: data0
+            - name: data1
+      - name: br_prv
+        type: bridge
+        firewallZone: cee
+        mtu: 2140
+        provider: openvswitch
+    ## Network Interface Scheme for Non Redundant Data network connectivity
+    ## provided by OVS kernel datapath on physical host.
+  - name: data_ovs_nonredundant
+    networkInterfaceList:
+      - name: data0
+        type: port
+        bridge: br_prv
+        firewallZone: cee
+        provider: openvswitch
+      - name: br_prv
+        type: bridge
+        firewallZone: cee
+        mtu: 2140
+        provider: openvswitch
+  - name: data_dpdk_common
+    networkInterfaceList:
+      - name: data0
+        type: port
+        provider: ovsdpdk
+        options:
+          - dpdk-lsc-interrupt: true
+          - n_rxq: 4
+          - n_rxq_desc: 2048
+          - n_txq_desc: 2048
+        other_config:
+          - cross-numa-polling: true
+      - name: data1
+        type: port
+        provider: ovsdpdk
+        options:
+          - dpdk-lsc-interrupt: true
+          - n_rxq: 4
+          - n_rxq_desc: 2048
+          - n_txq_desc: 2048
+        other_config:
+          - cross-numa-polling: true
+      - name: bond_prv
+        type: bond
+        provider: ovsdpdk
+        mtu: 2140
+        bridge: br_prv
+        bondProperties:
+#          downDelay: 200
+#          upDelay: 200
+           ## Only applicable if bond mode is balance-tcp. Balance TCP is applicable and recommended
+           ## in deployments using overlay tunnels like VXLAN, which is normally the case in
+           ## CEE deployments using SDN as networking backend.
+#          balanceTcpLBOutputAction: false
+          mode: balance-slb
+          miimonInterval: 100
+          lacpMode: passive
+          lacpTime: fast
+          lacpSystemPriority: 1024
+          bondSlaves:
+            - name: data0
+            - name: data1
+  - name: data_dpdk_common_2plus2
+    networkInterfaceList:
+      - name: data0
+        type: port
+        provider: ovsdpdk
+        options:
+          - dpdk-lsc-interrupt: true
+          - n_rxq: 8
+          - n_rxq_desc: 2048
+          - n_txq_desc: 2048
+        other_config:
+          - cross-numa-polling: true
+      - name: data1
+        type: port
+        provider: ovsdpdk
+        options:
+          - dpdk-lsc-interrupt: true
+          - n_rxq: 8
+          - n_rxq_desc: 2048
+          - n_txq_desc: 2048
+        other_config:
+          - cross-numa-polling: true
+      - name: bond_prv
+        type: bond
+        provider: ovsdpdk
+        mtu: 2140
+        bridge: br_prv
+        bondProperties:
+          mode: balance-slb
+          miimonInterval: 100
+          lacpMode: passive
+          lacpTime: fast
+          lacpSystemPriority: 1024
+          bondSlaves:
+            - name: data0
+            - name: data1
+  - name: data_dpdk_common_mlx
+    networkInterfaceList:
+      - name: data0
+        type: port
+        provider: ovsdpdk
+        options:
+          - dpdk-lsc-interrupt: true
+          - n_rxq: 4
+          - n_rxq_desc: 2048
+          - n_txq_desc: 2048
+        other_config:
+          - cross-numa-polling: true
+      - name: data1
+        type: port
+        provider: ovsdpdk
+        options:
+          - dpdk-lsc-interrupt: true
+          - n_rxq: 4
+          - n_rxq_desc: 2048
+          - n_txq_desc: 2048
+        other_config:
+          - cross-numa-polling: true
+      - name: bond_prv
+        type: bond
+        provider: ovsdpdk
+        mtu: 2140
+        bridge: br_prv
+        bondProperties:
+          mode: balance-slb
+          miimonInterval: 100
+          lacpMode: passive
+          lacpTime: fast
+          lacpSystemPriority: 1024
+          bondSlaves:
+            - name: data0
+            - name: data1
+  - name: data_dpdk_DELL_R650_computes_common_mlx
+    networkInterfaceList:
+      - name: data0
+        type: port
+        provider: ovsdpdk
+        options:
+          - dpdk-lsc-interrupt: true
+          - n_rxq: 4
+          - n_rxq_desc: 2048
+          - n_txq_desc: 2048
+        other_config:
+          - cross-numa-polling: true
+          - pmd-rxq-affinity: "0:2,1:3,2:58,3:59"
+      - name: data1
+        type: port
+        provider: ovsdpdk
+        options:
+          - dpdk-lsc-interrupt: true
+          - n_rxq: 4
+          - n_rxq_desc: 2048
+          - n_txq_desc: 2048
+        other_config:
+          - cross-numa-polling: true
+          - pmd-rxq-affinity: "0:2,1:3,2:58,3:59"
+      - name: bond_prv
+        type: bond
+        provider: ovsdpdk
+        mtu: 2140
+        bridge: br_prv
+        bondProperties:
+          mode: balance-slb
+          miimonInterval: 100
+          lacpMode: passive
+          lacpTime: fast
+          lacpSystemPriority: 1024
+          bondSlaves:
+            - name: data0
+            - name: data1
+  - name: data_dpdk_br_prv
+    networkInterfaceList:
+      - name: br_prv
+        type: bridge
+        firewallZone: cee
+        mtu: 2140
+        provider: ovsdpdk
+        network: sdn_ul
+        assignIp:
+          - sdn-ul-ipv4-1
+        physicalNetwork: default
+  - name: cee_om
+    networkInterfaceList:
+      - name: br_cee_om
+        type: bridge
+        mtu: 1500
+        provider: ovsdpdk
+        firewallZone: cee
+        assignIp:
+          - cee-om-ipv4
+      - name: cee_om_patch
+        type: patch
+        mtu: 1500
+        patchedBridges:
+          - name: br_cee_om
+          - name: br_prv
+            network: cee_om_sp
+        provider: ovsdpdk
+        firewallZone: cee
+  - name: lcm_om
+    networkInterfaceList:
+      - name: br_lcm_om
+        type: bridge
+        mtu: 1500
+        provider: ovsdpdk
+        firewallZone: cee
+        network: lcm_om_sp
+      - name: lcm_om_patch
+        type: patch
+        mtu: 1500
+        provider: ovsdpdk
+        firewallZone: cee
+        patchedBridges:
+          - name: br_lcm_om
+          - name: br_prv
+            network: lcm_om_sp
+    ## Network Interface Scheme with Northbound LCM connectivity on physical host with kernel OVS.
+  - name: lcm_om_ovs
+    networkInterfaceList:
+      - name: br_lcm_om
+        assignIp:
+          - lcm-om-ipv4
+        type: bridge
+        mtu: 1500
+        provider: openvswitch
+        firewallZone: cee
+      - name: lcm_om_patch
+        type: patch
+        mtu: 1500
+        provider: openvswitch
+        firewallZone: cee
+        patchedBridges:
+          - name: br_lcm_om
+          - name: br_prv
+            network: lcm_om_sp
+  - name: sdnc_sbi
+    networkInterfaceList:
+      - name: br_sdnc_sbi
+        type: bridge
+        mtu: 1500
+        provider: ovsdpdk
+        firewallZone: cee
+        assignIp:
+          - sdnc-sbi-ipv4
+      - name: sdnc_sbi_patch
+        type: patch
+        mtu: 1500
+        provider: ovsdpdk
+        firewallZone: cee
+        patchedBridges:
+          - name: br_sdnc_sbi
+          - name: br_prv
+            network: sdnc_sbi_sp
+  - name: sdnc_internal
+    networkInterfaceList:
+      - name: br_sdnc_internal
+        type: bridge
+        mtu: 1500
+        provider: ovsdpdk
+        firewallZone: cee
+      - name: sdnc_internal_patch
+        type: patch
+        mtu: 1500
+        provider: ovsdpdk
+        firewallZone: cee
+        patchedBridges:
+          - name: br_sdnc_internal
+          - name: br_prv
+            network: sdnc_internal_sp
+  - name: storage
+    networkInterfaceList:
+      - name: storage0
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        ringBuffer:
+          size: max
+          count: max
+      - name: storage1
+        type: port
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        ringBuffer:
+          size: max
+          count: max
+      - name: glance0
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage0
+        network: glance_san_sp
+      - name: glance1
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage1
+        network: glance_san_sp
+      - name: bond_glance
+        type: bond
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        bondProperties:
+          mode: active-backup
+          miimonInterval: 200
+          primaryInterface: glance0
+          bondSlaves:
+            - name: glance0
+            - name: glance1
+        assignIp:
+          - glance-ipv4
+    ## Network Interface Scheme for Storage connectivity applicable to all
+    ## types of physical hosts.
+    # - name: nfs_san
+    # networkInterfaceList:
+    #   - name: nfs0
+    #     type: vlan
+    #     mtu: 1500
+    #     provider: linux
+    #     firewallZone: cee
+    #     sourceInterface: storage0
+    #     network: nfs_san_sp
+    #   - name: nfs1
+    #     type: vlan
+    #     mtu: 1500
+    #     provider: linux
+    #     firewallZone: cee
+    #     sourceInterface: storage1
+    #     network: nfs_san_sp
+    #   - name: bond_nfs
+    #     assignIp:
+    #       - nfs-san-ipv4
+    #     type: bond
+    #     mtu: 1500
+    #     provider: linux
+    #     firewallZone: cee
+    #     bondProperties:
+    #       mode: active-backup
+    #       miimonInterval: 200
+    #       primaryInterface: nfs0
+    #       bondSlaves:
+    #       - name: nfs0
+    #       - name: nfs1
+    ## Network Interface Scheme for Storage connectivity applicable to
+    ## physical OpenStack Controller hosts.
+  - name: control_storage
+    networkInterfaceList:
+      - name: swift0
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage0
+        network: swift_san_sp
+      - name: swift1
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage1
+        network: swift_san_sp
+      - name: bond_swift
+        assignIp:
+          - swift-ipv4
+        type: bond
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        bondProperties:
+          mode: active-backup
+          miimonInterval: 200
+          bondSlaves:
+            - name: swift0
+            - name: swift1
+      - name: gluster0
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage0
+        network: gluster_san_sp
+      - name: gluster1
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage1
+        network: gluster_san_sp
+      - name: bond_gluster
+        type: bond
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        bondProperties:
+          mode: active-backup
+          miimonInterval: 200
+          bondSlaves:
+            - name: gluster0
+            - name: gluster1
+      - name: br_gluster
+        type: bridge
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bridgedInterfaces:
+          - name: bond_gluster
+    ## Network Interface Scheme for Storage connectivity applicable to
+    ## physical OpenStack Compute hosts.
+  - name: compute_storage
+    networkInterfaceList:
+      - name: migration0
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage0
+        network: migration_san_sp
+      - name: migration1
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage1
+        network: migration_san_sp
+      - name: bond_migration
+        assignIp:
+          - migration-ipv4
+        type: bond
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        bondProperties:
+          mode: active-backup
+          miimonInterval: 200
+          bondSlaves:
+            - name: migration0
+            - name: migration1
+  - name: passthrough
+    networkInterfaceList:
+      - name: pt0
+        mtu: 9000
+        type: passthrough
+        vf_count: 16
+        physicalNetwork: N280-CEE1-PHY0
+        ringBuffer:
+#EEDHESE MOD BEGIN (agreed with PC)
+          count: 1
+#         size: max
+#          count: auto
+#EEDHESE MOD END
+      - name: pt1
+        mtu: 9000
+        type: passthrough
+        vf_count: 16
+        physicalNetwork: N280-CEE1-PHY1
+        ringBuffer:
+#EEDHESE MOD BEGIN (agreed with PC)
+          count: 1
+#          size: max
+#          count: auto
+#EEDHESE MOD END
+  - name: passthrough_10
+    networkInterfaceList:
+      - name: pt0
+        mtu: 9000
+        type: passthrough
+        vf_count: 16
+        physicalNetwork: N280-CEE1-PHY0
+        ringBuffer:
+#EEDHESE MOD BEGIN (agreed with PC)
+          count: 1
+#          size: max
+#          count: auto
+#EEDHESE MOD END
+      - name: pt1
+        mtu: 9000
+        type: passthrough
+        vf_count: 16
+        physicalNetwork: N280-CEE1-PHY1
+        ringBuffer:
+#EEDHESE MOD BEGIN (agreed with PC)
+          count: 1
+#          size: max
+#          count: auto
+#EEDHESE MOD END
+#hub added
+  - name: passthrough_100
+    networkInterfaceList:
+      - name: pt0
+        mtu: 9000
+        type: passthrough
+        vf_count: 16
+        physicalNetwork: N280-CEE1-PHY0
+        ringBuffer:
+#EEDHESE MOD BEGIN (agreed with PC)
+          count: 1
+#          size: max
+#          count: auto
+#EEDHESE MOD END
+      - name: pt1
+        mtu: 9000
+        type: passthrough
+        vf_count: 16
+        physicalNetwork: N280-CEE1-PHY1
+        ringBuffer:
+#EEDHESE MOD BEGIN (agreed with PC)
+          count: 1
+#          size: max
+#          count: auto
+#EEDHESE MOD END
+    ## Network Interface Scheme for SmartVF connectivity on physical OpenStack Compute Hosts with
+    ## SmartNIC.
+  - name: data_ovs_kernel_nvidia_smartvf
+    networkInterfaceList:
+      - name: pt0
+        type: passthrough
+        physicalNetwork: default
+        vf_count: 16
+        mtu: 2140
+        ## Set physical interface ring buffer size with using an integer number or the 'max' string.
+        ## Set physical interface ring buffer count with using an integer number or the 'max' or 'auto' string.
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt1
+        type: passthrough
+        physicalNetwork: default
+        vf_count: 16
+        mtu: 2140
+        ## Set physical interface ring buffer size with using an integer number or the 'max' string.
+        ## Set physical interface ring buffer count with using an integer number or the 'max' or 'auto' string.
+        ringBuffer:
+          size: max
+          count: max
+      - name: bond_prv
+        mtu: 2140
+        type: sn_bond
+        firewallZone: cee
+        provider: linux
+        bondProperties:
+          mode: 802.3ad
+          miimonInterval: 100
+          lacpRate: fast
+          xmitHashPolicy: layer3+4
+          bondSlaves:
+            - name: pt0
+            - name: pt1
+      - name: br_prv
+        type: bridge
+        firewallZone: cee
+        mtu: 2140
+        physInterface: bond_prv
+        provider: openvswitch
+    ## Network Interface Scheme for configuration of integration bridge. The usage
+    ## of the int_bridge configuration is dependent on the Neutron backend and might
+    ## be needed for example in some SDN deployments.
+  - name: int_bridge
+    networkInterfaceList:
+      - name: br-int
+        type: bridge
+        mtu: 2140
+        provider: ovsdpdk
+        firewallZone: cee
+        failMode: secure
+        options:
+          - external_ids:flow-restore=true
+        other_config:
+          - disable-in-band: true
+  - name: int_prv_patch_port
+    networkInterfaceList:
+      - name: br_int_patch
+        type: patch
+        mtu: 2140
+        provider: ovsdpdk
+        firewallZone: cee
+        patchedBridges:
+          - name: br-int
+          - name: br_prv
+  - name: neutron_l3_network_scheme
+    networkInterfaceList:
+      - name: br-ex
+        type: bridge
+        mtu: 2140
+        provider: ovsdpdk
+        firewallZone: cee
+        physicalNetwork: default
+      - name: l3_prv_patch
+        type: patch
+        mtu: 2140
+        patchedBridges:
+        - name: br-ex
+        - name: br_prv
+        provider: ovsdpdk
+        firewallZone: cee
+  - name: vxsds_frontend
+    networkInterfaceList:
+      - name: vxsds_fe0
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage0
+        network: vxsds_fe_san_pda
+        assignIp:
+          - vxsds-fel-ipv4
+      - name: vxsds_fe1
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage1
+        network: vxsds_fe_san_pdb
+        assignIp:
+          - vxsds-fer-ipv4
+  - name: vxsds_backend
+    networkInterfaceList:
+      - name: vxsds_be0
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage0
+        network: vxsds_be_san_pda
+        assignIp:
+          - vxsds-bel-ipv4
+      - name: vxsds_be1
+        type: vlan
+        mtu: 1500
+        provider: linux
+        firewallZone: cee
+        sourceInterface: storage1
+        network: vxsds_be_san_pdb
+        assignIp:
+          - vxsds-ber-ipv4
+  - name: sdi_agent
+    networkInterfaceList:
+      - name: sdi_agent0
+        type: vlan
+        sourceInterface: control0
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        network: sdi_agent_nw
+      - name: sdi_agent1
+        type: vlan
+        sourceInterface: control1
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        network: sdi_agent_nw
+      - name: bond_sdi_agent
+        type: bond
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bondProperties:
+          mode: active-backup
+          miimonInterval: 200
+          #primaryInterface: sdi_agent0
+          bondSlaves:
+            - name: sdi_agent0
+            - name: sdi_agent1
+      - name: br_sdi_agent
+        type: bridge
+        assignIp:
+          - sdi-agent-ipv4
+        provider: linux
+        firewallZone: cee
+        mtu: 1500
+        bridgedInterfaces:
+          - name: bond_sdi_agent
+  - name: DELL_R640_sriov
+    networkInterfaceList:
+      - name: pt0
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_25
+        pci_address: "0000:d8:00.0"
+        mtu: 9000
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: auto
+      - name: pt1
+        mtu: 9000
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY1_25
+        pci_address: "0000:d8:00.1"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: auto
+  - name: DELL_R640_mlag
+    networkInterfaceList:
+      - name: pt0
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_25
+        pci_address: "0000:d8:00.0"
+        mtu: 9000
+        vf_count: 8
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt1
+        mtu: 9000
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY1_25
+        pci_address: "0000:d8:00.1"
+        vf_count: 8
+        ringBuffer:
+          size: max
+          count: max
+  - name: DELL_R740_mellanox_100G_sriov_mlag
+    networkInterfaceList:
+      - name: pt0
+        mtu: 9000
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_25
+        pci_address: "0000:d8:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt1
+        type: passthrough
+        mtu: 9000
+        physicalNetwork: N280-CEE1-PHY1_25
+        pci_address: "0000:d8:00.1"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt2
+        mtu: 9000
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_100
+        pci_address: "0000:3b:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt3
+        mtu: 9000
+        type: passthrough
+        pci_address: "0000:3b:00.1"
+        physicalNetwork: N280-CEE1-PHY1_100
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+  - name: DELL_R650_pfpt
+    networkInterfaceList:
+      - name: pt0
+        mtu: 2140
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_100
+        pci_address: "0000:b1:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt1
+        type: passthrough
+        mtu: 2140
+        physicalNetwork: N280-CEE1-PHY1_100
+        pci_address: "0000:b1:00.1"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt2
+        mtu: 2140
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_100
+        pci_address: "0000:4b:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt3
+        mtu: 2140
+        type: passthrough
+        pci_address: "0000:4b:00.1"
+        physicalNetwork: N280-CEE1-PHY1_100
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+  - name: DELL_R650_sriov
+    networkInterfaceList:
+      - name: pt0
+        mtu: 2140
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_100
+        pci_address: "0000:b1:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt1
+        type: passthrough
+        mtu: 2140
+        physicalNetwork: N280-CEE1-PHY1_100
+        pci_address: "0000:b1:00.1"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt2
+        mtu: 2140
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_100
+        pci_address: "0000:4b:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt3
+        mtu: 2140
+        type: passthrough
+        pci_address: "0000:4b:00.1"
+        physicalNetwork: N280-CEE1-PHY1_100
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+  - name: DELL_R650_sriov_mlag
+    networkInterfaceList:
+      - name: pt0
+        mtu: 2140
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_100
+        pci_address: "0000:4b:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt1
+        type: passthrough
+        mtu: 2140
+        physicalNetwork: N280-CEE1-PHY1_100
+        pci_address: "0000:4b:00.1"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt2
+        mtu: 2140
+        type: passthrough
+        physicalNetwork: N280-CEE1-MLAG_LEFT
+        pci_address: "0000:b1:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt3
+        mtu: 2140
+        type: passthrough
+        pci_address: "0000:b1:00.1"
+        physicalNetwork: N280-CEE1-MLAG_RIGHT
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+  - name: HPE_DL360G10_sriov
+    networkInterfaceList:
+      - name: pt0
+        mtu: 9000
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_25
+        pci_address: "0000:2b:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt1
+        type: passthrough
+        mtu: 9000
+        physicalNetwork: N280-CEE1-PHY1_25
+        pci_address: "0000:2b:00.1"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt2
+        mtu: 9000
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_100
+        pci_address: "0000:a2:00.0"
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt3
+        mtu: 9000
+        type: passthrough
+        pci_address: "0000:a2:00.1"
+        physicalNetwork: N280-CEE1-PHY1_100
+        vf_count: 16
+        ringBuffer:
+          size: max
+          count: max
+  - name: HPE_DL360G10_sriov_mlag
+    networkInterfaceList:
+      - name: pt0
+        mtu: 9000
+        type: passthrough
+        physicalNetwork: N280-CEE1-PHY0_25
+        pci_address: "0000:2b:00.0"
+        vf_count: 0
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt1
+        type: passthrough
+        mtu: 9000
+        physicalNetwork: N280-CEE1-PHY1_25
+        pci_address: "0000:2b:00.1"
+        vf_count: 0
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt2
+        mtu: 9000
+        type: passthrough
+        physicalNetwork: N280-CEE1-MLAG_LEFT
+        pci_address: "0000:a2:00.0"
+        vf_count: 0
+        ringBuffer:
+          size: max
+          count: max
+      - name: pt3
+        mtu: 9000
+        type: passthrough
+        pci_address: "0000:a2:00.1"
+        physicalNetwork: N280-CEE1-MLAG_RIGHT
+        vf_count: 0
+        ringBuffer:
+          size: max
+          count: max
+ovsConfigurations:
+  - name: css
+    ovsConfig:
+      other_config:
+        - emc-insert-inv-prob: 0
+        - smc-enable: true
+        - pmd-auto-lb: true
+        - pmd-auto-lb-rebal-interval: 5
+        - pmd-rxq-isolate: false
+        - pmd-rxq-assign: group
+        - cross-numa-polling: true
+  - name: smartVF_offload
+    ovsConfig:
+      other_config:
+        - hw-offload: 'true'
+
+interfaceAssignments:
+  - name: HPE_DL380G10_control_compute_infra
+    interfaceScheme:
+      - control
+      - data_dpdk_common_mlx
+      - data_dpdk_br_prv
+      - cee_om
+      - lcm_om
+      - storage
+      - control_storage
+      - vxsds_frontend
+      - vxsds_backend
+      - sdnc_sbi
+      - sdnc_internal
+      - int_bridge
+      - sdi_agent
+    routes:
+      - destination: 0.0.0.0
+        nextHop: 10.155.215.193     #214.13.180.161
+ #     - destination: 10.255.0.0/16
+ #       nextHop: 10.2.240.1
+    ovsConfiguration: css
+  - name: HPE_DL380G10_SRIOV_ASSIGN
+    interfaceScheme:
+      - control
+      - data_dpdk_common_mlx
+      - data_dpdk_br_prv
+      - storage
+      - compute_storage
+      - HPE_DL360G10_sriov
+      - vxsds_frontend
+      - vxsds_backend
+      - sdnc_sbi
+      - int_bridge
+      - sdi_agent
+ #   routes:
+ #    - destination: 10.255.0.0/16
+ #      nextHop: 10.2.240.1
+    ovsConfiguration: css
+  - name: HPE_DL380G10_sriov_mlag
+    interfaceScheme:
+      - control
+      - data_dpdk_common_mlx
+      - data_dpdk_br_prv
+      - storage
+      - compute_storage
+      - HPE_DL360G10_sriov_mlag
+      - vxsds_frontend
+      - vxsds_backend
+      - sdnc_sbi
+      - int_bridge
+      - sdi_agent
+ #   routes:
+ #     - destination: 10.255.0.0/16
+ #       nextHop: 10.2.240.1
+    ovsConfiguration: css
+  - name: DELL_R650_standard_compute_interfaces
+    interfaceScheme:
+       - control
+       - data_dpdk_DELL_R650_computes_common_mlx
+       - data_dpdk_br_prv
+       - storage
+       - compute_storage
+       - vxsds_frontend
+       - vxsds_backend
+       - sdnc_sbi
+       - int_bridge
+       - sdi_agent
+    ovsConfiguration: css
+  - name: DELL_R650_control_compute_infra
+    interfaceScheme:
+      - control
+      - data_dpdk_common_mlx
+      - data_dpdk_br_prv
+      - cee_om
+      - lcm_om
+      - storage
+      - control_storage
+      - compute_storage  #added eedhub
+      - vxsds_frontend
+      - vxsds_backend
+      - sdnc_sbi
+      - sdnc_internal
+      - int_bridge
+      - sdi_agent
+    routes:
+      - destination: 0.0.0.0
+        nextHop: 10.155.215.193     #214.13.180.161
+ #     - destination: 10.255.0.0/16
+ #       nextHop: 10.2.240.1
+    ovsConfiguration: css
+  - name: control_infra
+    interfaceScheme:
+      - control
+        #      - oobm
+      - data_dpdk_common
+      - data_dpdk_br_prv
+      - cee_om
+      - lcm_om
+      - storage
+      - control_storage
+    ovsConfiguration: css
+    routes:
+      - destination: 0.0.0.0
+        nextHop: 10.155.215.193 #214.13.180.161
+  - name: control_infra_with_neutron_l3
+    interfaceScheme:
+      - control
+        #      - oobm
+      - data_dpdk_common
+      - data_dpdk_br_prv
+      - cee_om
+      - lcm_om
+      - storage
+      - control_storage
+      - neutron_l3_network_scheme
+    ovsConfiguration: css
+    routes:
+      - destination: 0.0.0.0
+        nextHop: 10.155.215.193   #214.13.180.161
+  - name: control_compute_infra
+    interfaceScheme:
+      - control
+        #      - oobm
+      - data_dpdk_common
+      - data_dpdk_br_prv
+      - cee_om
+      - lcm_om
+      - storage
+      - control_storage
+      - compute_storage
+    ovsConfiguration: css
+    routes:
+      - destination: 0.0.0.0
+        nextHop: 10.155.215.193  #214.13.180.161
+  - name: control_compute_infra_with_neutron_l3
+    interfaceScheme:
+      - control
+        #      - oobm
+      - data_dpdk_common
+      - data_dpdk_br_prv
+      - cee_om
+      - lcm_om
+      - storage
+      - control_storage
+      - compute_storage
+      - neutron_l3_network_scheme
+    ovsConfiguration: css
+    routes:
+      - destination: 0.0.0.0
+        nextHop: 10.155.215.193   #214.13.180.161
+
+  - name: DELL_R650_pfpt
+    interfaceScheme:
+      - control
+      - data_dpdk_common_mlx
+      - data_dpdk_br_prv
+      - storage
+      - compute_storage
+      - DELL_R650_pfpt
+      - vxsds_frontend
+      - vxsds_backend
+      - sdnc_sbi
+      - int_bridge
+      - sdi_agent
+ #   routes:
+ #     - destination: 10.255.0.0/16
+ #       nextHop: 10.2.240.1
+    ovsConfiguration: css
+  - name: DELL_R650_sriov
+    interfaceScheme:
+      - control
+      - data_dpdk_DELL_R650_computes_common_mlx
+      - data_dpdk_br_prv
+      - storage
+      - compute_storage
+      - DELL_R650_pfpt
+      - vxsds_frontend
+      - vxsds_backend
+      - sdnc_sbi
+      - int_bridge
+      - sdi_agent
+ #   routes:
+ #     - destination: 10.255.0.0/16
+ #       nextHop: 10.2.240.1
+    ovsConfiguration: css
+  - name: DELL_R650_SRIOV_ASSIGN
+    interfaceScheme:
+       - control
+       - data_dpdk_common_mlx
+       - data_dpdk_br_prv
+       - storage
+       - compute_storage
+       - DELL_R650_sriov_mlag
+       - vxsds_frontend
+       - vxsds_backend
+       - sdnc_sbi
+       - int_bridge
+       - sdi_agent
+ #   routes:
+ #    #    - destination: 10.255.0.0/16
+ #     #      nextHop: 10.2.240.1
+    ovsConfiguration: css
+  - name: DELL_R650_sriov_mlag
+    interfaceScheme:
+      - control
+      - data_dpdk_common_mlx
+      - data_dpdk_br_prv
+      - storage
+      - compute_storage
+      - DELL_R650_sriov_mlag
+      - vxsds_frontend
+      - vxsds_backend
+      - sdnc_sbi
+      - int_bridge
+      - sdi_agent
+  #  routes:
+  #    - destination: 10.255.0.0/16
+  #      nextHop: 10.2.240.1
+    ovsConfiguration: css
+  - name: DELL_R650_vxsds_interfaces
+    interfaceScheme:
+       - control
+       - vxsds_frontend
+       - vxsds_backend
+    ovsConfiguration: css
+  - name: DELL_R650_vxsds_hc_interfaces
+    interfaceScheme:
+       - control
+       - data_dpdk_DELL_R650_computes_common_mlx
+       - data_dpdk_br_prv
+       - storage
+       - compute_storage
+       - vxsds_frontend
+       - vxsds_backend
+       - sdnc_sbi
+       - int_bridge
+       - sdi_agent
+ #      - nfs_san
+    ovsConfiguration: css
+
+  - name: infra
+    interfaceScheme:
+      - infra
+    routes:
+      - destination: 0.0.0.0
+        nextHop: 10.155.200.241
+  - name: lcm
+    interfaceScheme:
+      - lcm
+    routes:
+      - destination: 0.0.0.0
+        nextHop: 10.155.200.241
+  - name: vnetwork
+    interfaceScheme:
+      - vnetworkhost
+  - name: csc
+    interfaceScheme:
+      - csc
+...
+
+

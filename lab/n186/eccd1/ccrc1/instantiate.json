@@ -1,0 +1,14 @@
+{
+  "clusterName": "n186-eccd1",
+  "additionalParams": {
+    "namespace": "ccrc1",
+    "applicationTimeOut": "3600",
+    "disableOpenapiValidation": false,
+    "skipVerification": true,
+    "skipJobVerification": true,
+    "cleanUpResources": true,
+    "manoControlledScaling": false,
+    "helmNoHooks": false,
+    "helm_client_version": "3.8"
+  }
+}

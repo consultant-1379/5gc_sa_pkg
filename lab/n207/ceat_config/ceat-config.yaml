@@ -1,0 +1,365 @@
+openstack:
+  #auth_url: https://<Keystone Public URL>/v3
+  auth_url: https://os-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se:5000/v3
+  password: TsDm5gc@NFVI
+  tenant: tsdm5gc
+  user: tsdm5gc
+  identity_api_version: 3
+  domain: default
+  quotas:
+    compute: {cores: -1, ram: -1, instances: -1, server_groups: -1, server_group_members: -1}
+    network: {port: -1,  subnet: -1, network: -1}
+    volume: {gigabytes: -1, volumes: -1}
+  l2gw_dcgw_name: L2GW_BORDER_LEAF
+  l2gw_sriov_left_name: L2GW_LEAF_PHY0
+  l2gw_sriov_right_name: L2GW_LEAF_PHY1
+
+cloud:
+  openstack_version: victoria
+  target_cloud_system: cee
+
+zones:
+  MGMT_HA:
+    compute_hosts:
+    - compute-vxsds-1-8026.cee.tld
+    - compute-vxsds-1-8027.cee.tld
+    - compute-vxsds-1-8028.cee.tld
+    - compute-vxsds-1-8029.cee.tld
+    - compute-vxsds-1-8030.cee.tld
+    name: MGMT
+    meta:
+      type: management
+  STD_HA:
+    compute_hosts:
+    - compute-1-8018.cee.tld
+    - compute-1-8019.cee.tld
+    - compute-1-8020.cee.tld
+    - compute-1-8021.cee.tld
+    - compute-1-8031.cee.tld
+    - compute-1-8032.cee.tld
+    - compute-1-8033.cee.tld
+    - compute-1-8034.cee.tld
+    - compute-1-8035.cee.tld
+    - compute-1-8036.cee.tld
+    - compute-1-8037.cee.tld
+    - compute-1-8038.cee.tld
+    - compute-1-8039.cee.tld
+    - compute-1-8040.cee.tld
+    - compute-1-8041.cee.tld
+    - compute-1-8042.cee.tld
+    - compute-1-8043.cee.tld
+    - compute-1-8044.cee.tld
+    - compute-1-8045.cee.tld
+    - compute-1-8046.cee.tld
+    - compute-1-8047.cee.tld
+    - compute-1-8048.cee.tld
+    - compute-1-8320.cee.tld
+    name: STD
+    meta:
+      type: standard
+
+  HT_HA:
+    compute_hosts:
+    - compute-1-8049.cee.tld
+    - compute-1-8050.cee.tld
+    - compute-1-8051.cee.tld
+    - compute-1-8052.cee.tld
+    - compute-1-8053.cee.tld
+    - compute-1-8054.cee.tld
+    name: HT
+    meta:
+      type: high-throughput
+      hw_desc: highBW
+
+flavors:
+  ephemeral_node:
+    name: EPH_2vcpu_4096MBmem_0GBdisk
+    vcpus: 2
+    mem: 4096
+    disk: 0
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+  controlplane1:
+    name: MGMT_4vcpu_6144MBmem_0GBdisk
+    vcpus: 4
+    mem: 6144
+    disk: 0
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+  controlplane2:
+    name: MGMT_8vcpu_16384MBmem_0GBdisk
+    vcpus: 8
+    mem: 16384
+    disk: 0
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+  management-cluster_worker:
+    name: MGMT_12vcpu_49152MBmem_0GBdisk
+    vcpus: 12
+    mem: 49152
+    disk: 0
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+  traffic-cluster_STDworker:
+    name: STD_72vcpu_327680MBmem_0GBdisk
+    vcpus: 72
+    mem: 327680
+    disk: 0
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'hw:numa_nodes': '2'
+      'aggregate_instance_extra_specs:type': 'standard'
+  traffic-cluster_HTworker:
+    name: HT_46vcpu_81920MBmem_0GBdisk
+    vcpus: 46
+    mem: 81920
+    disk: 0
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'hw:emulator_threads_policy': 'isolate'
+      'aggregate_instance_extra_specs:type': 'high-throughput'
+      'aggregate_instance_extra_specs:hw_desc': 'highBW'
+  dmz-cluster_worker:
+    name: MGMT_38vcpu_51200MBmem_0GBdisk
+    vcpus: 38
+    mem: 51200
+    disk: 0
+    meta:
+      'hw:cpu_policy': 'dedicated'
+      'hw:mem_page_size': '1048576'
+      'hw:watchdog_action': 'reset'
+      'aggregate_instance_extra_specs:type': 'management'
+
+images:
+  ccd_eph_2.25.1:
+    name: eccd-2.25.1-000037-9faa38a1-ephemeral-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.25.1-000037-9faa38a1/ephemeral-images/ephemeral.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+
+  ccd_node_2.25.1:
+    name: eccd-2.25.1-000037-9faa38a1-node-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.25.1-000037-9faa38a1/node-images/node.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+    properties: hw_vif_multiqueue_enabled=true,hw_disk_bus=scsi,hw_scsi_model=virtio-scsi
+
+  ccd_eph_2.26.0:
+    name: eccd-2.26.0-000868-4b712218-ephemeral-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.26.0-000868-4b712218/ephemeral-images/ephemeral.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+
+  ccd_node_2.26.0:
+    name: eccd-2.26.0-000868-4b712218-node-image.raw
+    file: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/CCD-CAPO/2.26.0-000868-4b712218/node-images/node.img
+    ## image disk format in openstack, range: raw, qcow2
+    store_format: raw
+    properties: hw_vif_multiqueue_enabled=true,hw_disk_bus=scsi,hw_scsi_model=virtio-scsi
+
+
+networks:
+  EXT_SRIOV-FLAT-1:
+    physical_network: N280-CEE1-PHY0_100
+    network_type: flat
+    name: sriov-flat-left
+    cidr: 172.31.192.0/24
+    enable_dhcp: false
+    existing: flase
+
+  EXT_SRIOV-FLAT-2:
+    physical_network: N280-CEE1-PHY1_100
+    network_type: flat
+    name: sriov-flat-right
+    cidr: 172.31.193.0/24
+    enable_dhcp: false
+    existing: flase
+
+
+vnfs:
+# ---------------------------------------------------------------------------
+# Traffic Cluster 1
+# ---------------------------------------------------------------------------
+  ccd1-cluster:
+    version: 2.25.1
+    vnf_id: n280-eccd1
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: n280-eccd1.sero.gic.ericsson.se
+    day1_parameters:
+      cluster_type: traffic
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$yhb.znT05bMCsdE5$DHsF6c8FPutNN7hUkaN8mwsdTmo.YnqjSckRJmLrnrjs8upOe9PqK3IA215avLP5TcXY0B7JmlkNCRrHOA/cf1'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/ccd_director_rsa.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      #add_ccd_ingress_ip_static_route: true
+      #allow_ccd_app_to_ht_workers:
+      #- app: kube-multus-ds-amd64
+      #  toleration_key: "high-throughput"
+      #- app: kucero
+      #  toleration_key: "high-throughput"
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n280-eccd1.sero.gic.ericsson.se
+        port: '8880'
+        ssl: false
+      #- namespace: monitoring
+      #  service: eric-victoria-metrics-cluster-vmselect
+      #  host: monitoring-eric-victoria-metrics-cluster-vmselect.ingress.n280-eccd1.sero.gic.ericsson.se
+      #  port: '8481'
+      #  ssl: false
+      #- namespace: monitoring
+      #  service: eric-pm-pushgateway
+      #  host: monitoring-eric-pm-pushgateway.ingress.n280-eccd1.sero.gic.ericsson.se
+      #  port: '9091'
+      #  ssl: false
+
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana
+      grafana_registry_url: container-registry.ingress.n280-eccd1.sero.gic.ericsson.se
+      grafana_registry_password: 'c0ntainerReg!stry'
+      grafana_ingress_host: grafana.ingress.n280-eccd1.sero.gic.ericsson.se
+    deployment_stack:
+    - stack: network
+      hot_file:
+        template_file: 5gc_sa_net_hot/5gc_sa_net.yaml
+        env_file: lab/n280/eccd1/eccd/env-eccd-net.yaml
+
+# ---------------------------------------------------------------------------
+# Management Cluster
+# ---------------------------------------------------------------------------
+  ccd2-cluster:
+    version: 2.25.1
+    vnf_id: n280-eccd2
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: n280-eccd2.sero.gic.ericsson.se
+    day1_parameters:
+      cluster_type: management
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$yhb.znT05bMCsdE5$DHsF6c8FPutNN7hUkaN8mwsdTmo.YnqjSckRJmLrnrjs8upOe9PqK3IA215avLP5TcXY0B7JmlkNCRrHOA/cf1'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/ccd_director_rsa.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      add_ccd_ingress_ip_static_route: true
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n280-eccd2.sero.gic.ericsson.se
+        port: '8880'
+        ssl: false
+
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana
+      grafana_registry_url: container-registry.ingress.n280-eccd2.sero.gic.ericsson.se
+      grafana_registry_password: 'c0ntainerReg!stry'
+      grafana_ingress_host: grafana.ingress.n280-eccd2.sero.gic.ericsson.se
+    deployment_stack:
+    - stack: network
+      hot_file:
+        template_file: 5gc_sa_net_hot/5gc_sa_net.yaml
+        env_file: lab/n280/eccd2/eccd/env-eccd-net.yaml
+
+# ---------------------------------------------------------------------------
+# DMZ Cluster
+# ---------------------------------------------------------------------------
+  ccd3-cluster:
+    version: 2.25.1
+    vnf_id: n280-eccd3
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: n280-eccd3.sero.gic.ericsson.se
+    day1_parameters:
+      cluster_type: dmz
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$yhb.znT05bMCsdE5$DHsF6c8FPutNN7hUkaN8mwsdTmo.YnqjSckRJmLrnrjs8upOe9PqK3IA215avLP5TcXY0B7JmlkNCRrHOA/cf1'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/ccd_director_rsa.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      add_ccd_ingress_ip_static_route: true
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n280-eccd3.sero.gic.ericsson.se
+        port: '8880'
+        ssl: false
+
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana
+      grafana_registry_url: container-registry.ingress.n280-eccd3.sero.gic.ericsson.se
+      grafana_registry_password: 'c0ntainerReg!stry'
+      grafana_ingress_host: grafana.ingress.n280-eccd3.sero.gic.ericsson.se
+    deployment_stack:
+    - stack: network
+      hot_file:
+        template_file: 5gc_sa_net_hot/5gc_sa_net.yaml
+        env_file: lab/n280/eccd3/eccd/env-eccd-net.yaml
+
+# ---------------------------------------------------------------------------
+# Traffic Cluster
+# ---------------------------------------------------------------------------
+  ccd4-cluster:
+    version: 2.25.1
+    vnf_id: n280-eccd4
+    vnf_type: eccd
+    day0_parameters:
+      director_external_vip: n280-eccd4.sero.gic.ericsson.se
+    day1_parameters:
+      cluster_type: management
+      # custom parameters for director user auth
+      director_username: eccd
+      director_password_hash: '$6$yhb.znT05bMCsdE5$DHsF6c8FPutNN7hUkaN8mwsdTmo.YnqjSckRJmLrnrjs8upOe9PqK3IA215avLP5TcXY0B7JmlkNCRrHOA/cf1'
+      # ssh key file can be specified here or CLI option, CLI option will overwrite this
+      director_ssh_keyfile: ~/.ssh/ccd_director_rsa.key
+      enable_worker_name_resolution: true
+      disable_ssh_hostkey_checking: true
+      add_ccd_ingress_ip_static_route: true
+      create_additional_ingress:
+      - namespace: monitoring
+        service: eric-victoria-metrics-alert-server
+        host: monitoring-alertserver.ingress.n280-eccd3.sero.gic.ericsson.se
+        port: '8880'
+        ssl: false
+
+      # install grafana
+      enable_grafana: true
+      grafana_image: /lab/pccc_builds/images/TS_DM_5GC_NFVI_images/1.11/grafana
+      grafana_configmaps: lab/grafana
+      grafana_registry_url: container-registry.ingress.n280-eccd4.sero.gic.ericsson.se
+      grafana_registry_password: 'c0ntainerReg!stry'
+      grafana_ingress_host: grafana.ingress.n280-eccd4.sero.gic.ericsson.se
+    deployment_stack:
+    - stack: network
+      hot_file:
+        template_file: 5gc_sa_net_hot/5gc_sa_net.yaml
+        env_file: lab/n280/eccd4/eccd/env-eccd-net.yaml

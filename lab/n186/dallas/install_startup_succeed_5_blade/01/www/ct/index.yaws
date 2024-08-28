@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Your site description here" />
+    <meta name="keywords" content="your, site, keywords, here" />
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    <title>
+      DALLAS O&M
+    </title>
+  </head>
+
+
+<body>
+<div id="container">
+
+<div id="top"></div>
+
+<h1>Common Test with DALLAS</h1>
+<h2>The Load Testing Tool for mobile core network</h2>
+<br />
+
+
+<div class="navmenu"><a href="../index.html">Home</a></div>
+
+
+<!-- Article Start -->
+
+<div class="outsidebox">
+<br />
+
+<div class="insidebox">
+
+<div class="title">
+Test Suites List
+</div>
+
+<div class="date">
+13th March, 2007
+</div>
+
+<div class="nav_test"><a href="./load_suite.yaws?suite=erp_SUITE">erp_SUITE</a></div>
+<br /><br />
+<br /><br />
+
+</div>
+</div>
+
+<!-- End of article -->
+
+
+
+<!-- Article Start -->
+
+<div class="outsidebox">
+<br />
+
+
+<div class="insidebox">
+
+<div class="title">
+Logs
+</div>
+
+<div class="date">
+10th January, 2007
+</div>
+<erl>
+out(Arg) ->
+[
+{ehtml, f("Chose one test SUITE from above,~n and you'll get the results here", [])}
+].
+</erl>
+<br /><br />
+
+<br /><br />
+
+
+</div>
+</div>
+
+<!-- End of article -->
+
+
+
+<br />
+<div class="archive"><a href="#">News Archive</a></div>
+<br /><br /><br /><br />
+
+<div class="footer">
+          &copy;2007 Yoursite.com <br />
+		Template by <a href="http://krneky.com" target="_blank">Krneky</a>
+</div>
+
+
+
+
+
+</div>
+
+
+</body>
+
+
+</html>

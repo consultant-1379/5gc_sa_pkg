@@ -1,0 +1,17 @@
+dummy_dns_resolv:
+- name: 'nrf1.pod56.5gc.mnc081.mcc240.3gppnetwork.org'
+  ip: [5.8.6.6]
+- name: 'nrf1.n28.5gc.mnc081.mcc240.3gppnetwork.org'
+  ip: [5.8.6.6]
+- name: 'nrf2.n28.5gc.mnc081.mcc240.3gppnetwork.org'
+  ip: [5.8.6.53]
+- name: 'nrf1.n84.5gc.mnc081.mcc240.3gppnetwork.org'
+  ip: [5.8.6.6]
+- name: 'nrf1.n87.5gc.mnc081.mcc240.3gppnetwork.org'
+  ip: [5.8.6.6]
+- name: 'nrf1.n99.5gc.mnc081.mcc240.3gppnetwork.org'
+  ip: [5.8.6.134]
+- name: 'nrf2.n99.5gc.mnc081.mcc240.3gppnetwork.org'
+  ip: [5.8.6.181]
+- name: 'test.ericsson.com'
+  ip: [1.1.1.1, 1.1.1.2, 1.1.1.3, 1.1.1.4, 1.1.1.5]

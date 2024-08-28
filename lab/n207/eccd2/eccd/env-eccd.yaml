@@ -1,0 +1,340 @@
+parameters:
+  ################################### Network variables #######################
+  timezone: CET
+  ntp_server_ips: [10.221.17.6]
+  dns_server_ips: [10.221.16.10]
+  os_endpoint_ips: [10.155.215.202, 10.155.142.68]
+  director_external_network: eccd2-ccd-oam
+  director_external_subnet: eccd2-ccd-oam_subnet
+  security_groups_enabled: false
+  # The list of remote CIDRs allowed to SSH to directors when SG are enabled
+  #director_ssh_allowed_cidrs: [<fill>]
+  # VRRP traffic might need to be specifically enabled when security groups are
+  # enabled on deployments running Openstack older than Pike release
+  # allow_vrrp_address_by_mac: true
+  #receive_packet_steering: false
+
+  ### Ingress/egress via LB ###################################################
+  lb_enabled: False
+  lb_external_network: <fill>
+  lb_external_subnet: <fill>
+  # lb_external_security_groups: [<fill>]
+
+  ##################################### L4LB variables ########################
+
+  lb_image: node-image
+  lb_flavor: m1.medium
+
+  lb_root_volume_size: 20
+
+  ################################### Master variables ########################
+  master_image: eccd-2.24.0-001462-f952778e-node-image
+  master_flavor: MGMT_4vcpu_6144MBmem_0GBdisk
+  masters_count: 3
+
+  master_root_volume_size: 50
+  master_config_volume_size: 15
+
+  # managed-on-host, ha-offline, unmanaged
+  master_metadata:
+    ha-policy: ha-offline
+
+  ################################### Director variables ######################
+  director_image: eccd-2.24.0-001462-f952778e-director-image
+  director_flavor: MGMT_2vcpu_4096MBmem_0GBdisk
+  directors_count: 2
+
+  director_root_volume_size: 150
+  director_config_volume_size: 24
+
+  director_virtual_router_id: 50
+  director_external_vip: 10.117.54.78
+  director_ssh_allowed_cidrs: [0.0.0.0/0]
+
+  # managed-on-host, ha-offline, unmanaged
+  director_metadata:
+    ha-policy: ha-offline
+
+  ################################## Licensing variables ######################
+  ccd_licensing_domains:
+  - productType: ECCD
+    swltId: STA-CCD-1
+    customerId: 946060
+  ccd_licensing_nels_host: nelsaas-vnf1-thrift.sero.gic.ericsson.se
+
+  ################################## Ansible variables ######################
+  ansible_variables:
+    openstack_auth_url: https://os-ext-vip.n280vpod1cee.sc.sero.gic.ericsson.se:5000
+    kube_manager_kube_api_burst: 100
+    kube_manager_kube_api_qps: 100
+    kube_manager_attach_detach_reconcile_sync_period: 5m0s
+    kube_manager_disable_attach_detach_reconcile_sync: True
+    openstack_username: admin
+    openstack_user_password: RA8BCoDLlD5rIt4iKVnizVkhnZttK7qsWpapRYOQ
+    openstack_project_name: admin
+    openstack_domain_name: Default
+    openstack_region: CEERegion
+    ecfe_enabled: true
+    ingressctrl_service_annotations: 'metallb.universe.tf/address-pool: system-pool'
+    ecfe_config_map_raw:
+      bgp-bfd-peers:
+      - peer-address: 172.21.177.2
+        peer-asn: 4251100003
+        my-asn: 4221121003
+        hold-time: 180s
+        min-rx: 300ms
+        min-tx: 300ms
+        multiplier: 3
+      - peer-address: 172.21.177.3
+        peer-asn: 4251100003
+        my-asn: 4221121003
+        hold-time: 180s
+        min-rx: 300ms
+        min-tx: 300ms
+        multiplier: 3
+      address-pools:
+      - addresses:
+        - 10.143.139.66/32
+        auto-assign: false
+        name: system-pool
+        protocol: bgp
+      - addresses:
+        - 10.143.139.70/32
+        auto-assign: false
+        name: evnfm-iccr
+        protocol: bgp
+    ipv4pool_ipip_mode: "Off"
+    openstack_node_volume_attach_limit: 23
+    kube_api_ingress_host: kubeapi.ingress.n280-eccd2.sero.gic.ericsson.se
+    container_registry_hostname: container-registry.ingress.n280-eccd2.sero.gic.ericsson.se
+    container_registry_custom_pw: c0ntainerReg!stry
+    container_registry_storage_size: 50Gi
+    prometheus_webhook_snmp_enabled: True
+    snmp_trap_receiver_host: 10.155.146.237 #TO.BE.UPDATED
+
+    # Victoria resources parameters
+    pm_vmstorage_retention_time: 30d
+    pm_vmstorage_volume_size: 84Gi
+
+    # Other monitor component parameters
+    pm_server_nodeExporter_default_collectors_disabled: false
+
+    # The following ansible variables can be used to configure the licensing application
+    ccd_app_sys_info_nels_host_ip: 10.155.142.68 #The IP address of Application Info Collection Service in the NeLS
+    ccd_app_sys_info_nels_host_name: nelsaasvnf1.nels.ericsson.com #valid hostname of Application Info Collection Service
+
+
+  ################################### Worker variables ########################
+
+  node_pools:
+  - name: pool1
+    image: eccd-2.24.0-001462-f952778e-node-image
+    flavor: MGMT_12vcpu_49152MBmem_0GBdisk
+    count: 4
+    root_volume_size: 100
+    # managed-on-host, ha-offline, unmanaged
+    metadata:
+      ha-policy: ha-offline
+
+    external_networks:
+
+    - network: eccd2-ecfe-oam
+      subnet: eccd2-ecfe-oam_subnet
+      port_extra_properties:
+        port_security_enabled: false
+
+    labels: ""
+    node_role: "worker"
+    server_group_policies: ['anti-affinity']
+    nova_availability_zone: nova
+    cinder_availability_zone: nova
+    cpu_manager_policy: "none"
+    reserved_cpus: ""
+    isolate_interrupts: false
+    pre_join_user_script: |
+      #!/usr/bin/env bash
+
+      set -ue
+
+      # adjust kernel parameters for DM 5GC CNFs
+      cat << EOF >> /etc/sysctl.conf
+      ## update to kernel parameters required by Search Engine
+      vm.max_map_count = 262144
+      EOF
+      sysctl -p
+
+
+  ################################### Logger variables ########################
+  logger_enabled: False
+
+  ################################### Other variables #########################
+  nova_availability_zone: nova
+  master_server_group_policies: ['anti-affinity']
+  director_server_group_policies: ['anti-affinity']
+  cinder_availability_zone: nova
+  # Modify the default range used by Kubernetes services
+  #service_node_port_min: 30000
+  #service_node_port_max: 32767
+
+  os_cacert: |
+    -----BEGIN CERTIFICATE-----
+    MIIFgjCCA2qgAwIBAgIQXfAZDd+9XJpFa1GJ2eqreDANBgkqhkiG9w0BAQsFADAV
+    MRMwEQYDVQQDEwpFR0FEUm9vdENBMB4XDTE4MDIwOTE1MzMyM1oXDTM4MDIwOTE1
+    NDAwMlowFTETMBEGA1UEAxMKRUdBRFJvb3RDQTCCAiIwDQYJKoZIhvcNAQEBBQAD
+    ggIPADCCAgoCggIBAM5hqGswhA9sZstmTwCCp18z7Y+OSUGzFSrJ/ocI4h9UsusA
+    40yOvmt4XnNxb6oGFsEOE+8eHzaCE00TlwS9nLGq6x+cj8nDuLYI66KEimR1xdkt
+    3mwJbSZ/4tuulgvyUcARB+xcRSsyLWraboxFa41VY6yCeBfs4FKyrkmGmhFxzknN
+    jKQQRkfRQz3wyggWebSa1Aa2DZdMa0BSn+ZnFcMyhOamLxj5RVvTLwuoqhSCfVU5
+    QW5ioLQ85DFg4667VClP+gDQ0F2XoLBmUPDmSXrlHZ3x+yA+ls0rdh79N84dq9hU
+    2Y3zApqyohjeFCj9F0DiGMRwQ8cj9PhMHp9mCreuS6ZMXk5Phqil5gyyf1Blqg9Y
+    21JWUoag+CKFlTbL6yRRauhbLCFTxZxpc6noG0B5fXTEftIl040jQ0XFcx6BOBru
+    DESkdhCuT4LZw4tOU79v5OVxLAcZOWsC+l/gt2gRRToz3HFFR4R7vDzVJKom5d22
+    dwy7v17kVcIsbMNndJMELz8UXK7tbHioBNnW8Sp7sRFrxz/lPzUF6eJFucgrpnng
+    n8xBoiBbZOWu7EFttTOE2pKpPPGFbl+c0EbyUa71RxidRsBKjy3aTDwT967q1h/v
+    uZDecSQH3JDPqH66MvP31YvLOLxSczWYYLC0+R23SslEgRFOxmtF4YODM4KPAgMB
+    AAGjgc0wgcowCwYDVR0PBAQDAgGGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYE
+    FFZFQloUqLksRP6bNcTb7i85gk3QMBAGCSsGAQQBgjcVAQQDAgEAMHkGA1UdIARy
+    MHAwbgYEVR0gADBmMGQGCCsGAQUFBwICMFgeVgBUAGgAaQBzACAAUABLAEkAIABp
+    AHMAIABpAG4AdABlAG4AZABlAGQAIABmAG8AcgAgAGkAbgB0AGUAcgBuAGEAbAAg
+    AHUAcwBlACAAbwBuAGwAeQAuMA0GCSqGSIb3DQEBCwUAA4ICAQBiBuc9JLpv0+nx
+    eY5Np7X0HPODG4AdPepVpwh/JUh07G8eClq6ZFoejjiIGpLvMN+Lhfg8Q+hoh7Yb
+    z2Gf96TpyAsjx4lmqIgDNfBdf7G0wDf+irP6pifCPBzu2T5519WztvaiZfQoPEz+
+    CXm3/yiSKBQUx705fPctx91TjkQEbiBFU3hN9bmw5VkM+2HN7eDJUIUVNXXaTec0
+    6M1RhLB2vLVinACpamylLIzShLZpDyk1VI2tniyia+sJulDdpu6kY3LuMr7s97Gj
+    UqFHn3PO8lXwYqueJ5xeOjMIKzaliw5n58mDYzpt1uu0u9i0w/8nJpGl4iYwcgBn
+    ZPmKet3KG+9LIh/JUdR2KMFv706E4Z24B/QCjbRFqjzS4BDXKmcZV84/HwA48hwa
+    yUTWsWZXIibEmvyQcZo9+943o3jkiFYDZZfmQ2a2bzvcHsrNa4ptJYWaBEm2NQWa
+    F6pPdUr9uerqyOjRHPkPyd711P7gYC6MWlEKi9JME6lbvanFOwwwh+4nhNnk1iw8
+    335Q2U+S8WCzPo7Mzn2DGfa6bdO6sOChXgM//QbaL9GH0LYO8O6XWfS0HSztnBFB
+    etCUFffhDdzPkIxfmd7ylGgZSbls2+KFjIgF2M9gKkglmzf5qjNhA1jjHiaUyRTZ
+    tRq4ImVO9Ddg1VngqJRZvro+zlH3pQ==
+    -----END CERTIFICATE-----
+    -----BEGIN CERTIFICATE-----
+    MIIGhTCCBG2gAwIBAgITJAAAAAgZo51IZLn3FgAAAAAACDANBgkqhkiG9w0BAQsF
+    ADAVMRMwEQYDVQQDEwpFR0FEUm9vdENBMB4XDTE5MDUwMjEwNTgzNVoXDTI5MDUw
+    MjExMDgzNVowRzESMBAGCgmSJomT8ixkARkWAnNlMRgwFgYKCZImiZPyLGQBGRYI
+    ZXJpY3Nzb24xFzAVBgNVBAMTDkVHQURJc3N1aW5nQ0EzMIICIjANBgkqhkiG9w0B
+    AQEFAAOCAg8AMIICCgKCAgEAorS/FxfmNVug9Q963xTydgf5JD/XHEQ0HAypY0Mw
+    omgZA1Sj1cRFjFzqVbZlQB/d0RUeN8K9+wzpXl2sDiDTYFKc4v3sesmVrT+VHOtf
+    2G1Wuw+7OjMURFhoGNz56vDEL10KH86ViPF0Rx3R5/myKYgn/AX6rdVPSsBPyhAe
+    YDdsNX3yWrvxr6x3P5Ze8L5cfgDmw1NR3sR3j9mJSKxEpJHo/6z+wh1xOgV7z8Kj
+    Tzdl0+103ZvPw8wpnX3JGwOy5O/lIXMFctMEvZoD/eIerPtYEdjk8HrGbWWu66VK
+    EoXopl0/3MbPypVdizPcRBq7ldaCDDdLMi2LjFvZbD0UwHHjR/piIE/YsdPLxi1o
+    KSO2vPJHSPjpQ0JtP0gcAGR1wSFQCiOzklupMzZ1PMSySbT04woRnUDdTu9BMzIi
+    OV5scI+KtJ1JmPqHq3nCS2nkA0grSNbsbB0bz/mrJLX+wH3CXNj0r0gBIDKlaPQb
+    8UzrahG3uuIGk4/x8gnU/wh5WYeU89o+3neIgXySK5chnjfevWBwYVF1vddYltpf
+    DFZYuFwT+zefeMEiPnseW6JSnRvNljz1XsBlPC++UydVJDGkp+WzeCR46J6iCVeK
+    kWKoLv+BtNIbue7SJw0GdGWBJ0DzKdPBmp+Ya5YPDE1g8SqrfdlO61ykJQ1L6EGf
+    Sb0CAwEAAaOCAZowggGWMBAGCSsGAQQBgjcVAQQDAgEAMB0GA1UdDgQWBBSBekIQ
+    iZ64URB+VptBwt+veMU9JDB5BgNVHSAEcjBwMG4GBFUdIAAwZjBkBggrBgEFBQcC
+    AjBYHlYAVABoAGkAcwAgAFAASwBJACAAaQBzACAAaQBuAHQAZQBuAGQAZQBkACAA
+    ZgBvAHIAIABpAG4AdABlAHIAbgBhAGwAIAB1AHMAZQAgAG8AbgBsAHkALjAZBgkr
+    BgEEAYI3FAIEDB4KAFMAdQBiAEMAQTALBgNVHQ8EBAMCAYYwEgYDVR0TAQH/BAgw
+    BgEB/wIBADAfBgNVHSMEGDAWgBRWRUJaFKi5LET+mzXE2+4vOYJN0DA/BgNVHR8E
+    ODA2MDSgMqAwhi5odHRwOi8vcGtpLmVyaWNzc29uLnNlL0NlcnREYXRhL0VHQURS
+    b290Q0EuY3JsMEoGCCsGAQUFBwEBBD4wPDA6BggrBgEFBQcwAoYuaHR0cDovL3Br
+    aS5lcmljc3Nvbi5zZS9DZXJ0RGF0YS9FR0FEUm9vdENBLmNydDANBgkqhkiG9w0B
+    AQsFAAOCAgEAk6hklv9NPua9UImj08ILq43l9SgFhg5+y1pRsrUwdTmFANkL0dxi
+    TOF93QwFTfwOs1xJr2nzvCsoJ2Rvc04VQlONwiTqn1kMs9vJr2fuQg9hf2O9l0ss
+    AftlHq+UxbeIhloGTyJgleJUc2/+pm4UJn8fhZvNZywL8ok4xr5HQRH5xQz21X4i
+    VF9RJlvZbsdWLX1iJMs8+oZJQmhRxoHsPylg+24xLuKFuva7BevDub4HpF6utXeE
+    qRMN8Yd1HPg55abf8wEqt1VqNp2erZfLETdf59aXdznqeI+ZJl8gQZwBsOlSANct
+    n0nj306BlYm6jthXb7T/Bgau48qyrH/vEnwawZ+RH2q1UvGiAMY1/L5PAP4LGubP
+    q5VHsibvoQz+jld2bWM4X8y7Z93s33/elZo26pNuYWiE67IVmZntoHJZmq0RfI7V
+    cG27eExeNXYc7T0HheK32CguyDsDUURHOMfMzUJBzDnZ8zQWWeOsKCut9xcpxpPW
+    7XQB+iH59lFgRF0WW3H4Z3jh7Kvfbr6XsbzEx/onzLaEVrXBf1xKlXgV5rZW69w1
+    It5HdRmqOsfW32Bdz9JehI+Z/Iql9UFDsM1lS9dWfMj4Kv3ALpmG5uS3SjU5y1+e
+    7EaQhOp85z15UYt9yoS7KqaNZ07bZb2uzBs32lN/Bn1vwPoLA60kI48=
+    -----END CERTIFICATE-----
+    # evnfm self-singed CA certificate
+    -----BEGIN CERTIFICATE-----
+    MIIGCTCCA/GgAwIBAgIBADANBgkqhkiG9w0BAQsFADCBnjELMAkGA1UEBhMCU0Ux
+    EjAQBgNVBAgMCVN0b2NraG9sbTESMBAGA1UEBwwJU3RvY2tob2xtMREwDwYDVQQK
+    DAhFcmljc3NvbjEVMBMGA1UECwwMUEMgU29sdXRpb25zMRgwFgYDVQQDDA9UZWFt
+    Qmx1ZXNSb290Q0ExIzAhBgkqhkiG9w0BCQEWFGtlbi5zaGlAZXJpY3Nzb24uY29t
+    MB4XDTIwMTEwMjA5MzMxNloXDTQwMTAyODA5MzMxNlowgZ4xCzAJBgNVBAYTAlNF
+    MRIwEAYDVQQIDAlTdG9ja2hvbG0xEjAQBgNVBAcMCVN0b2NraG9sbTERMA8GA1UE
+    CgwIRXJpY3Nzb24xFTATBgNVBAsMDFBDIFNvbHV0aW9uczEYMBYGA1UEAwwPVGVh
+    bUJsdWVzUm9vdENBMSMwIQYJKoZIhvcNAQkBFhRrZW4uc2hpQGVyaWNzc29uLmNv
+    bTCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALpFSt2RPftYwPHaaX0O
+    li/g52VnHmyACmG1egnPA4efRptfFqsm9lHH2byigSech+zfLXCarVErdu1/yvRG
+    zYaLgH/76XtOVXpGYa3aXBksBbkTnIRmgtq11iIdOKXUrVbVt4HZ20EJxrFrMs9n
+    mxy7dvhWM1KrSVSUqN840DSWJxeFWWgEZ7vTgRhnuAD2FUqsZ6CRvt2iL31ZNIco
+    dqOUQF9chZLWgprEDgRmJD4oLjVoWe0kS/zRR2G3GB9J28xs9ZjSp38CtTgqBzyv
+    gWua4Im5KyFIJUeH4a9NRYZWry6I9sxAzIYVt7ki3TAP+K2YsGg9dD1GwKDR+5Zy
+    7EVuri9hqR5YFrvvdNAjWrJvymQXaDdmXUGa7Og8p9IzM+lNL86dDf3BsyeqHJrq
+    m31OMHM3MCVfc0zUu96LnLj2wqTdKa7MaWyfA7KO38wIACBvO/SNCCzCXpADJRED
+    A3n219y6QxmM+DH35XVBTvJkM5UxPHoa8rhZsuLhobIyNU/Kuk6JAm/lueYzOG9k
+    lLmaaSasdlNJ/Pqf4MBOB1UKPVsJsravFaQ7BmOLp3R0XyhoNrnmd/OOxU6r1TH1
+    wh5vx2CAOO4tujvnihgeADU8yQdwDKBkOtjjV0TdY0MFxecLowtmEnrKfIO9kSS3
+    tpnAgdBgfq7eOYvsrKw31AqxAgMBAAGjUDBOMB0GA1UdDgQWBBTqkIEarX28jATB
+    MBsv/Vse5jCebDAfBgNVHSMEGDAWgBTqkIEarX28jATBMBsv/Vse5jCebDAMBgNV
+    HRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4ICAQB73tG3G1mZt93j5MoRXimsB6sO
+    q47A/lZiyJKqJiLIeSq1V8GOPwqfQyNAe40inhLWHYky5rPfhhXw+FlyW4zotv7W
+    ZygTjtCwa7EbawUMOoG9YcMhK9NZx/EoPT0cs4BK6UvajpH28Kl5+fyvSLN5ZY7K
+    arBIMUWNVs7m3O9e5doLx6e98soj2U5PkGq1AB2xgwX7F0spIj3Yg3WS4C5z5KkF
+    b1cviVgHuFnxJNGu5nY+h08+i5cZNu/Uc1M9pkYthlfnhpyPlONxD9rTpDm5LEkU
+    3af9zyqwJuuunWDJMfKKZGPB5BCgfM6hBw4D3iLWTWxrHfjNghNVqCh6K+L+GdfD
+    hzT/LVSHW/bOjHh+wAVGFcFxxXedXxq/prj1ZwflPI7XvxuCwj1EVA630FIBSC6/
+    xWq8mHoECXXp839Gccd3tmeauELrchkty6OaBpwHg/dB44GEByJz/T+lbLIOZLXd
+    K+kpgaN4TmA5wtlQPMq0HQLvEax+cCUYtE78QSe+86mV/2Q1EeJNEesT7p5C2U4c
+    aQZbPQ6YgvRZtvPD/3CrQS9CD0DJwaCrj2dEISb4lEj/fz5wlLETyS7X/0KYUMKR
+    UmqyKwz2Zs9jM7By0HxM1i+0f/ovMDuKuQ6IQTROEu0TZZVH6KRsDuujv+/VJ2Nb
+    szlrRw3la1H71eU9UQ==
+    -----END CERTIFICATE-----
+  ca_cert: |
+   -----BEGIN CERTIFICATE-----
+   MIIDEzCCAfugAwIBAgIUcz1oJlsJnKqmT5huFH2n2r90vt0wDQYJKoZIhvcNAQEL
+   BQAwGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTAgFw0yMzAzMDcwMjUzMjNaGA8y
+   MDUwMDcyMzAyNTMyM1owGDEWMBQGA1UEAwwNS3ViZXJuZXRlcy1jYTCCASIwDQYJ
+   KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKPr5Yza+vc0D8q3YRdLOnK7lRCSZakj
+   ldPSWB3OMWGIwopuOftPj2LxgWdaRvE2lkyF96isxktUA/8thxCEtaRgt57AxNSq
+   EXAJSQiJmZzqqqu4s+oQc/8gsI/Fl0mjVRYvgIUwdxqK+h0ZN/K2E/jM/odKNm5i
+   w+RDhvelk2yNnvxNFoYSp/FuRMNdCRr8SnWWJrO2s5rdMLNLb2/nXwg56qL37xui
+   WRnd2rsijPpHGNDT4M04UWkGgm+I50pH6YktTud31hFCtOMyi2Cmoab8/7msu1vu
+   6cYNxQB6jrbVGAVCA2ZmTQ3iJ+AKVCGlM9hkfk40i83Sm/WIh0uBtr0CAwEAAaNT
+   MFEwHQYDVR0OBBYEFN/T8l2+u8ZpkwlJb2BUzgGj27k4MB8GA1UdIwQYMBaAFN/T
+   8l2+u8ZpkwlJb2BUzgGj27k4MA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL
+   BQADggEBAC0SNroHZaNriAR4b0lDVVS96ASQ3Y8VzdFZjIwlHP7TGkgeOl/WN4jL
+   QjrogXJOeQMwjuN90QZoJZSpEeKh2iujH4P4AYXcsnVmzpH73bUIitz3ijqRRxTb
+   A6GjAubqpQTwMvziA/DdXPiddU4+LmIg7+8x8JVHKlv+K3rcueBEUBxehtoFyPL3
+   HNSWO72KmhK8BqU4Q64PEQuEVYHgqagNpdgIATVf3fbPBgnOINHqlh61bklHAbKQ
+   pnKFsxyopQ0mKoN/O9j++89d0liTEj/MojO7Ra1L/NppO2JOt9kFlYXfeDYVrS3F
+   df6gSSpb83sMcUtQelNPUEcTAuS46d0=
+   -----END CERTIFICATE-----
+  ca_key: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpAIBAAKCAQEAo+vljNr69zQPyrdhF0s6cruVEJJlqSOV09JYHc4xYYjCim45
+    +0+PYvGBZ1pG8TaWTIX3qKzGS1QD/y2HEIS1pGC3nsDE1KoRcAlJCImZnOqqq7iz
+    6hBz/yCwj8WXSaNVFi+AhTB3Gor6HRk38rYT+Mz+h0o2bmLD5EOG96WTbI2e/E0W
+    hhKn8W5Ew10JGvxKdZYms7azmt0ws0tvb+dfCDnqovfvG6JZGd3auyKM+kcY0NPg
+    zThRaQaCb4jnSkfpiS1O53fWEUK04zKLYKahpvz/uay7W+7pxg3FAHqOttUYBUID
+    ZmZNDeIn4ApUIaUz2GR+TjSLzdKb9YiHS4G2vQIDAQABAoIBAFD03U7+i3nxVWdJ
+    wALQHZKygAFKPDkXoRSXSvuVbR/9eg8CN1KdzXQRUFap6GWTDxHGDDVa9ygW2054
+    vr7yu/7t4WHfVJavU6Nggphb1OkBoL7knr6X16IGFA09ieVNbGVjmnatI/WQ88vR
+    O6d8M0rqez538X/8+UBP9WVzeebfFDJpgB7vqi5jmUpHPfWNhaGJ2KYgMOtQsiNx
+    O6ARB2/Vr2CAGSCF76lxr3PFcTnAP9b3e8zykckr8u5BS0hyvgyfF92wfAVD1HZf
+    i4v1ExBiaFsvCIaeaJDE+vwWEeUU51QvSrAE7tG1Rr/UCcB1pUxfauT4MGLW7pfT
+    idv/18ECgYEA1ysUvpEEKgOiwrHX9HR+DhB3aDOurqit/IpgefZ85kDO5jRJ3cb5
+    dDA539T3/cYYvryPVZlyEsqohQ5DUIM9/YemJD1JU1r2zkq/gM8yrEgEJr0dpf8E
+    vV75yHqGiSUUNjdKncn7Vj6bDR8o5xhEkQ9TzMpcy4PCddp/fYJzU80CgYEAwwc8
+    Kt7vnvs8DUnqsoV73Jbbm81irN06UhRf24+ixigZqSJJy/IL1H1uSOOUq6LeKa42
+    LKazjJUhlfDOz5eLE6DuQqnMnJfg5/JGbvsFcRmsz0sCEi2iLn9Iuj4tDEJotsT3
+    96dR4Io6mKcXDeJJYGcQPY/PEmM0Rmq+fNx93rECgYEAnr5zBJF60AB0sU2CNSFI
+    6tltLxyKMOPT0TDKMtEOntWLj71eDdhBrF30JNY7zCe9k+MLoKyfw4tuvxOhyCG7
+    t3O/uJbapTvEQLhXBxJWoVJUdbwqxpAaEBilEiqLXV1UxxcN3tHos11nCUxG4hA+
+    bgMv4TQfOCrSah601oVKzrUCgYBOYwkO3h4Hk0kWuj/n0vjut3+7BnkDq8N2HBRP
+    JlMxPArcTRjGLRoOJP//seEef062B/xkQ/hkp8ghAPHOxEU09XjuOFsyEWVnNJyU
+    nLYaOEyZ4LcLYWYPND+iA72NcN+vnklgM9MX4dcdZgNBJFODuMjxRWzgIhlvuBWq
+    D+FTcQKBgQCOdPV2DOBTMzxQt9hJvht6I/V1DyxzCMu6XAaO6T/K/rVDAHqtrQOE
+    H2EL8bQuNBfdhtk740g2655nYp9eToJ66wYISd5X0F9jDZ1swi6anaKmsNU/YSep
+    gI23JbcHFLK27qZdtR54nOFnm+mbMp0XT4bjVOMixVviVT3tD7DgxA==
+    -----END RSA PRIVATE KEY-----
+  public_key: >
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAjXPfGUC8fBvYN0cx6icqvRTaSTIdBZNHxz6ufPALT67g7ARXT5BhyQyT6KTSnsFW+SniFjz2ls3u9bx86OXWWs2R40Jch7rMXbKx4gR3VSaNfkiKxGlTp+aEpwjnPlO3TyNMrfbZUe57UJrLo7oo7ZsnJfKZ1z9N+NVGCks8Jp9oa2OBG9viG5vYB4o/3Tdl5/LiLHYm74AAsuTXnOWVOOowzvT3v2SMkLeyvTd/LBpVEvEXfG1kK+hdxfyRlpqERlOM10CeeYeBd5UrN8+xt5XDoTlnZjp2W3GWJeL3ZjMIU3MxOpmrNksqR6qeZQNF2BGGINs032/QMwYa1M/1 TS Dual-Mode 5GC CCD Deployment
+
+  ################################### Optional variables #########################
+  # Custom root password for console access
+  # must be sha-256 or sha-512 password hash type
+  # update the below value to set the root password
+  console_password_hash: '$6$riMvNtbPehi.s.rs$vM07tC/sCQ365l9FAVYXMNHZZe6sFdy.aNMCtTO4u36pmehasvntocVfGKpeV.5aDzgle0lqSsGDBRd6YXZdd/'

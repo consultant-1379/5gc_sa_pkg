@@ -1,0 +1,34 @@
+Third-Parties:
+  - infra: 'infra://pccc-node280-dallas-1-202/dp_n/1?type=raw'
+    service:
+      ltt_drv: 'infra://pccc-node280-dallas-1-202/ltt/1'
+
+DPs:
+  - infra: 'infra://pccc-node280-dallas-1-202/dp_n/1?type=raw'
+    capability:
+      diameter: 'app://dp/local'
+      ess: 'app://dp/local'
+      http: 'app://dp/local'
+      ltt_cp: 'app://third-parties/1'
+      ltt_up: 'app://third-parties/1'
+      pfcp: 'app://dp/local'
+      tcp: 'app://dp/local'
+
+
+V-DPs:
+  - infra: {'infra://pccc-node280-dallas-1-202/dp_n/1?type=otp', 'infra://pccc-node280-dallas-1-202/dp_n/1?type=raw'}
+CS:
+  infra: 'infra://pccc-node280-dallas-1-202/ap_n/1?type=otp'
+
+Subsystems:
+  - infra: 'infra://pccc-node280-dallas-1-202/ap_n/2?type=otp'
+    vdp: 'app://vdp/1'
+    APs:
+    - infra: {'infra://pccc-node280-dallas-1-202/ap_n/3?type=otp', 'infra://pccc-node280-dallas-1-202/ap_n/3?type=raw'}
+    - infra: {'infra://pccc-node280-dallas-1-202/ap_n/4?type=otp', 'infra://pccc-node280-dallas-1-202/ap_n/4?type=raw'}
+    - infra: {'infra://pccc-node280-dallas-1-202/ap_n/5?type=otp', 'infra://pccc-node280-dallas-1-202/ap_n/5?type=raw'}
+    - infra: {'infra://pccc-node280-dallas-1-202/ap_n/6?type=otp', 'infra://pccc-node280-dallas-1-202/ap_n/6?type=raw'}
+    - infra: {'infra://pccc-node280-dallas-1-202/ap_n/7?type=otp', 'infra://pccc-node280-dallas-1-202/ap_n/7?type=raw'}
+    - infra: {'infra://pccc-node280-dallas-1-202/ap_n/8?type=otp', 'infra://pccc-node280-dallas-1-202/ap_n/8?type=raw'}
+    - infra: {'infra://pccc-node280-dallas-1-202/ap_n/9?type=otp', 'infra://pccc-node280-dallas-1-202/ap_n/9?type=raw'}
+    - infra: {'infra://pccc-node280-dallas-1-202/ap_n/10?type=otp', 'infra://pccc-node280-dallas-1-202/ap_n/10?type=raw'}

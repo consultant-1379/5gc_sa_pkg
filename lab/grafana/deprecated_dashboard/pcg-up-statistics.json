@@ -1,0 +1,1202 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 17,
+  "iteration": 1659575623656,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 0,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "kube_deployment_spec_replicas{deployment=\"eric-pc-up-data-plane\",namespace=\"pcg\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Replicas",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": true,
+          "expr": "min(kube_pod_container_resource_requests{resource=\"cpu\",unit=\"core\",pod=~\"eric-pc-up-data-plane.*\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "CPU size",
+          "refId": "C"
+        }
+      ],
+      "title": "DP Info",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 11,
+        "x": 5,
+        "y": 0
+      },
+      "id": 4,
+      "interval": "5s",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "pc_up_cpu_load_1s_percent{kubernetes_pod_name=~\"$pod\",role=~\"$role\",cpu=~\"$CPU\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{kubernetes_pod_name}}_{{role}}_{{cpu}}",
+          "refId": "B"
+        }
+      ],
+      "title": "DP CPU Load per CPU (%)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 8,
+      "interval": "1m",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "pc_up_pktio_libpio_dpdk_extended_packets_total{type=\"rx_dropped_packets\",kubernetes_pod_name=~\"$pod\",port=~\"$port\"} - (pc_up_pktio_libpio_dpdk_extended_packets_total{type=\"rx_dropped_packets\",kubernetes_pod_name=~\"$pod\",port=~\"$port\"} offset 1m)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{kubernetes_pod_name}}_port-{{port}}_rx_dropped_packets",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "pc_up_pktio_dropped_packets_total{kubernetes_pod_name=~\"$pod\",reason=\"egress_overload\"} - (pc_up_pktio_dropped_packets_total{kubernetes_pod_name=~\"$pod\",reason=\"egress_overload\"} offset 1m)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{kubernetes_pod_name}}_egress_overload",
+          "refId": "B"
+        }
+      ],
+      "title": "Packet Loss on DP",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "displayMode": "auto",
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Worker"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 297
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Replicas"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 121
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #A"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 77
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 0,
+        "y": 3
+      },
+      "id": 16,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+          },
+          "exemplar": false,
+          "expr": "count by (node) (kube_pod_info{pod=~\"eric-pc-up-data-plane.*\"})",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "DP Deployment Layout",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Replicas",
+              "node": "Worker"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sessions"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 95
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 5,
+        "x": 0,
+        "y": 9
+      },
+      "id": 18,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Sessions"
+          }
+        ]
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": false,
+          "expr": "pc_up_upf_session_ctrl_cached_sessions{kubernetes_pod_name=~\"$pod\"}",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{kubernetes_pod_name}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": false,
+          "expr": "sum(pc_up_upf_session_ctrl_cached_sessions)",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Total sessions",
+          "refId": "B"
+        }
+      ],
+      "title": "Stable sessions on DPs (k)",
+      "transformations": [
+        {
+          "id": "seriesToRows",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Metric": "Pods",
+              "Value": "Sessions"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 10,
+        "x": 5,
+        "y": 10
+      },
+      "id": 19,
+      "interval": "1m",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "sum(pc_up_upf_engine_dropped_packets_total{kubernetes_pod_name=~\"$pod\",reason=~\"$upf_drop_reason\"}) by (kubernetes_pod_name,reason) - sum(pc_up_upf_engine_dropped_packets_total{kubernetes_pod_name=~\"$pod\",reason=~\"$upf_drop_reason\"} offset 1m) by (kubernetes_pod_name,reason)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{kubernetes_pod_name}}_{{reason}}",
+          "refId": "B"
+        }
+      ],
+      "title": "UPF Engine Dropped Packets",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 9,
+        "x": 15,
+        "y": 10
+      },
+      "id": 20,
+      "interval": "1m",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "sum(pc_up_payload_received_gtp_packets_total{action=\"drop\",protocol=\"ipv4\",reason=~\"$rx_drop_reason\"}) by (network_instance,interface,reason) - sum(pc_up_payload_received_gtp_packets_total{action=\"drop\",protocol=\"ipv4\",reason=~\"$rx_drop_reason\"} offset 1m) by (network_instance,interface,reason)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{network_instance}}_{{interface}}_{{reason}}",
+          "refId": "A"
+        }
+      ],
+      "title": "GTP Rx Dropped Packets",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 22
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "sum(pc_up_pktio_received_bps)",
+          "interval": "",
+          "legendFormat": "pc_up_pktio_received_bps",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "sum(pc_up_pktio_transmitted_bps)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "pc_up_pktio_transmitted_bps",
+          "refId": "B"
+        }
+      ],
+      "title": "Data Rate",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 6,
+        "y": 22
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "sum(pc_up_pktio_received_pps)",
+          "interval": "",
+          "legendFormat": "pc_up_pktio_received_pps",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "sum(pc_up_pktio_transmitted_pps)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "pc_up_pktio_transmitted_pps",
+          "refId": "B"
+        }
+      ],
+      "title": "Packet Rate",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "eric-pm-server-pcg1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "pc_up_pktio_received_pps{kubernetes_pod_name=~\"$pod\"}",
+          "interval": "",
+          "legendFormat": "{{kubernetes_pod_name}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eric-pm-server-pcg1"
+          },
+          "exemplar": true,
+          "expr": "-pc_up_pktio_transmitted_pps{kubernetes_pod_name=~\"$pod\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{kubernetes_pod_name}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Packet Rate per DP",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 33,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-victoria-metrics-cluster-vmselect-monitoring"
+        },
+        "definition": "label_values(container_last_seen{namespace=\"pcg\"}, pod)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "pod",
+        "options": [],
+        "query": {
+          "query": "label_values(container_last_seen{namespace=\"pcg\"}, pod)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "/eric-pc-up-data-plane.*/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "Ingress"
+          ],
+          "value": [
+            "Ingress"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-pm-server-pcg1"
+        },
+        "definition": "label_values(pc_up_cpu_load_5s_percent,role)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "role",
+        "options": [],
+        "query": {
+          "query": "label_values(pc_up_cpu_load_5s_percent,role)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-pm-server-pcg1"
+        },
+        "definition": "label_values(pc_up_cpu_load_5s_percent{role=~\"$role\"},cpu)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "CPU",
+        "options": [],
+        "query": {
+          "query": "label_values(pc_up_cpu_load_5s_percent{role=~\"$role\"},cpu)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "0"
+          ],
+          "value": [
+            "0"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-pm-server-pcg1"
+        },
+        "definition": "label_values(pc_up_pktio_libpio_dpdk_extended_packets_total,port)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "port",
+        "options": [],
+        "query": {
+          "query": "label_values(pc_up_pktio_libpio_dpdk_extended_packets_total,port)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "bar_core_suggested_packet_count_exceeded"
+          ],
+          "value": [
+            "bar_core_suggested_packet_count_exceeded"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-pm-server-pcg1"
+        },
+        "definition": "label_values(pc_up_upf_engine_dropped_packets_total,reason)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "upf_drop_reason",
+        "options": [],
+        "query": {
+          "query": "label_values(pc_up_upf_engine_dropped_packets_total,reason)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "buffer_full"
+          ],
+          "value": [
+            "buffer_full"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "eric-pm-server-pcg1"
+        },
+        "definition": "label_values(pc_up_payload_received_gtp_packets_total,reason)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "rx_drop_reason",
+        "options": [],
+        "query": {
+          "query": "label_values(pc_up_payload_received_gtp_packets_total,reason)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Europe/Stockholm",
+  "title": "PCG-UP-Statistics",
+  "uid": "qkOM4uank",
+  "version": 1,
+  "weekStart": ""
+}

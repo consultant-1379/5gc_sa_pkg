@@ -1,0 +1,58 @@
+#
+## The ccd external network environment file for CCD External Network Heat Stack
+#
+
+parameters:
+  prefix: n280-eccd3
+  phynet_virtio: n280vpod1-dcgw
+  l2gw_dcgw_id: <External L2GW UUID>
+
+  virtio_networks:
+  - name: ccd-oam
+    vlan: 222
+    vxlan: 4222
+    cidr: 10.117.54.80/28
+    enable_dhcp: false
+    gateway: 10.117.54.81
+    allocation_pools: { start: 10.117.54.84, end: 10.117.54.94 }
+    routes: []
+
+  - name: primary-oam
+    vlan: 2353
+    vxlan: 6353
+    cidr: 10.255.44.0/24
+    enable_dhcp: false
+    gateway: 10.255.44.1
+    allocation_pools: { start: 10.255.44.21, end: 10.255.44.84 }
+    routes:
+    - { destination: 10.63.0.0/16, nexthop: 10.255.44.1 } # Terminal Server
+    - { destination: 10.86.0.0/16, nexthop: 10.255.44.1 } # Terminal Server
+    - { destination: 10.117.91.0/24, nexthop: 10.255.44.1 } # Terminal Server
+    - { destination: 132.196.0.0/16, nexthop: 10.255.44.1 } # Terminal Server
+    - { destination: 10.155.142.68/32, nexthop: 10.255.44.1 } # Centralized NeLS Server
+    - { destination: 10.143.139.64/26, nexthop: 10.255.44.1 } # n280 Shared CNF OAM services
+    - { destination: 10.255.43.0/24, nexthop: 10.255.44.1 } # n280-eccd2 ECFE OAM link for EVNFM
+    - { destination: 10.155.138.0/26, nexthop: 10.255.44.1 } # n99 Shared CNF OAM services
+    - { destination: 10.255.38.0/24, nexthop: 10.255.44.1 } # n99-eccd2 ECFE OAM link for EVNFM
+    - { destination: 172.30.32.0/24, nexthop: 10.255.44.1 } # n280/n99 tool services 1
+    - { destination: 172.30.36.0/24, nexthop: 10.255.44.1 } # n280/n99 tool services 2
+
+  - name: primary-signaling
+    vlan: 2352
+    vxlan: 6352
+    cidr: 172.21.162.0/24
+    enable_dhcp: false
+    gateway: 172.21.162.1
+    allocation_pools: { start: 172.21.162.21, end: 172.21.162.84 }
+    routes: []
+
+  - name: primary-signaling-ext
+    vlan: 2358
+    vxlan: 6358
+    cidr: 172.21.226.0/24
+    enable_dhcp: false
+    gateway: 172.21.226.1
+    allocation_pools: { start: 172.21.226.21, end: 172.21.226.84 }
+    routes: []
+
+

@@ -1,0 +1,336 @@
+---
+hostConfig:
+  - name: compute_host_config
+    hardeningProfile: default
+    ##For Latency Sensitive Applications force to turn turbo off, default: true
+    #noTurbo: true
+    ##cpuScalingGovernor can be set to 'performance' or 'powersave', default: performance
+    cpuScalingGovernor: performance
+    ## By default SLES fstrim.timer is enabled and activated once a week (at midnight on Mondays),
+    ## this might have effect on performance in specific circumstences.
+    ## enable or disable fstrim.timer systemd service by defining boolean value for 'fsTrim' key.
+    #fsTrim: true|false|yes|no
+    ## Task-isolation mode, can be used for CPU threads that are allocated for tenant vCPUs
+    ## or for the poll mode driver threads of the software switch solution.
+    # useIsolcpus: True
+    ## Full dynamic ticks mode, stops the timer ticks and off-loads the associated workload.
+    ## The scheduling tick is also omitted when the CPU is idle or having only a single runnable task.
+    # useNohzFull: True
+    ## The TEAL services input parameters. The main purpose is to distribute
+    ## interrupts and kernel worker threads among the processors (CPU threads).
+    ## irqCpus: set of CPUs reserved for IRQ handlers other than NIC
+    ## queue IRQs
+    ## Default host operating system CPUs (defined in control groups).
+    ## e.g: irqCpus: "0-1,20-21"
+    #irqCpus: ""
+    ## nicIrqCpus: set of CPUs for NIC queue IRQ handlers
+    ## Default all CPUs except PMD CPUs (defined in control groups).
+    ## nicIrqCpus: "0-1,20-21,4-19,24-39"
+    #nicIrqCpus: ""
+    ## kthreadCpus: set of CPUs for kernel threads
+    ## Default host operating system CPUs (defined in control groups).
+    ## e.g: kthreadCpus: "0-1,20-21"
+    #kthreadCpus: ""
+    lldp:
+      enabled: True
+      msgTxInterval: 30
+      msgTxHold: 4
+    kernelBootParameters: audit=1 console=tty0 console=ttyS0,115200 net.ifnames=0 biosdevname=0 rootdelay=90 nomodeset crashkernel=256M transparent_hugepage=never intel_iommu=on iommu=pt nomdmonddf nomdmonisw plymouth.ignore-serial-consoles idle=halt
+    sysctlOptions:
+      - fs.aio-max-nr: 1048576
+      - net.nf_conntrack_max: 1048576
+      - kernel.panic: 60
+      - kernel.printk: 1
+      - kernel.nmi_watchdog: 0
+      - kernel.sched_min_granularity_ns: 3000000
+      - kernel.sched_wakeup_granularity_ns: 4000000
+      - net.ipv4.ip_local_reserved_ports: 35357,41055-41056,49000-49001,49152-49215,55572,58882
+      - vm.swappiness: 10
+      - vm.stat_interval: 120
+      - net.ipv4.conf.default.arp_accept: 1
+      - net.core.netdev_max_backlog: 261144
+      - net.ipv4.tcp_keepalive_intvl: 3
+      - net.ipv4.tcp_keepalive_time: 30
+      - net.ipv4.tcp_keepalive_probes: 8
+      - net.ipv4.conf.all.arp_accept: 1
+      - net.ipv4.tcp_retries2: 5
+      - net.bridge.bridge-nf-call-arptables: 1
+      - net.bridge.bridge-nf-call-iptables: 1
+      - net.bridge.bridge-nf-call-ip6tables: 1
+      - net.ipv4.neigh.default.gc_thresh1: 4096
+      - net.ipv4.neigh.default.gc_thresh2: 8192
+      - net.ipv4.neigh.default.gc_thresh3: 16384
+      - net.ipv6.neigh.default.gc_thresh1: 4096
+      - net.ipv6.neigh.default.gc_thresh2: 8192
+      - net.ipv6.neigh.default.gc_thresh3: 16384
+      - net.ipv4.ip_forward: 1
+      - net.ipv4.conf.all.arp_filter: 1
+      - net.ipv4.conf.all.arp_announce: 2
+      - net.ipv4.conf.all.arp_notify: 1
+      - net.ipv4.conf.default.log_martians: 0
+      - net.ipv4.conf.all.secure_redirects: 0
+      - net.ipv4.conf.all.rp_filter: 1
+      - net.ipv4.conf.all.accept_source_route: 0
+      - net.ipv4.conf.default.secure_redirects: 0
+      - net.ipv4.conf.all.accept_redirects: 0
+      - net.ipv4.conf.default.rp_filter: 1
+      - net.ipv4.conf.default.accept_source_route: 0
+      - net.ipv4.conf.default.accept_redirects: 0
+      - net.ipv4.conf.all.log_martians: 0
+      - net.ipv6.conf.default.disable_ipv6: 1
+      - net.ipv6.conf.all.disable_ipv6: 1
+      - net.ipv6.conf.all.accept_redirects: 0
+      - net.ipv6.conf.default.accept_redirects: 0
+      - vm.max_map_count: 262144
+      - net.ipv4.ip_nonlocal_bind: 1
+      - net.ipv6.ip_nonlocal_bind: 1
+      - net.unix.max_dgram_qlen: 128
+      - net.ipv6.conf.default.forwarding: 1
+      - net.ipv6.conf.all.forwarding: 1
+      - kernel.numa_balancing: 0
+  - name: control_compute_host_config
+    hardeningProfile: default
+    ##For Latency Sensitive Applications force to turn turbo off, default: true
+    #noTurbo: true
+    ##cpuScalingGovernor can be set to 'performance' or 'powersave', default: performance
+    cpuScalingGovernor: performance
+    ## By default SLES fstrim.timer is enabled and activated once a week (at midnight on Mondays),
+    ## this might have effect on performance in specific circumstences.
+    ## enable or disable fstrim.timer systemd service by defining boolean value for 'fsTrim' key.
+    #fsTrim: true|false|yes|no
+    ## Task-isolation mode, can be used for CPU threads that are allocated for tenant vCPUs
+    ## or for the poll mode driver threads of the software switch solution.
+    # useIsolcpus: True
+    ## Full dynamic ticks mode, stops the timer ticks and off-loads the associated workload.
+    ## The scheduling tick is also omitted when the CPU is idle or having only a single runnable task.
+    # useNohzFull: True
+    lldp:
+      enabled: True
+      msgTxInterval: 30
+      msgTxHold: 4
+    kernelBootParameters: audit=1 console=tty0 console=ttyS0,115200 net.ifnames=0 biosdevname=0 rootdelay=90 nomodeset crashkernel=256M transparent_hugepage=never intel_iommu=on iommu=pt nomdmonddf nomdmonisw plymouth.ignore-serial-consoles idle=halt
+    sysctlOptions:
+      - fs.aio-max-nr: 1048576
+      - fs.inotify.max_user_instances: 4096
+      - net.nf_conntrack_max: 1048576
+      - kernel.panic: 60
+      - kernel.printk: 1
+      - kernel.nmi_watchdog: 0
+      - kernel.sched_min_granularity_ns: 3000000
+      - kernel.sched_wakeup_granularity_ns: 4000000
+      - net.ipv4.ip_local_reserved_ports: 35357,41055-41056,49000-49001,49152-49215,55572,58882
+      - vm.swappiness: 10
+      - vm.stat_interval: 120
+      - net.ipv4.conf.default.arp_accept: 1
+      - net.core.netdev_max_backlog: 261144
+      - net.ipv4.tcp_keepalive_intvl: 3
+      - net.ipv4.tcp_keepalive_time: 30
+      - net.ipv4.tcp_keepalive_probes: 8
+      - net.ipv4.conf.all.arp_accept: 1
+      - net.ipv4.tcp_retries2: 5
+      - net.bridge.bridge-nf-call-arptables: 1
+      - net.bridge.bridge-nf-call-iptables: 1
+      - net.bridge.bridge-nf-call-ip6tables: 1
+      - net.ipv4.neigh.default.gc_thresh1: 4096
+      - net.ipv4.neigh.default.gc_thresh2: 8192
+      - net.ipv4.neigh.default.gc_thresh3: 16384
+      - net.ipv6.neigh.default.gc_thresh1: 4096
+      - net.ipv6.neigh.default.gc_thresh2: 8192
+      - net.ipv6.neigh.default.gc_thresh3: 16384
+      - net.ipv4.ip_forward: 1
+      - net.ipv4.conf.all.arp_filter: 1
+      - net.ipv4.conf.all.arp_announce: 2
+      - net.ipv4.conf.all.arp_notify: 1
+      - net.ipv4.conf.default.log_martians: 0
+      - net.ipv4.conf.all.secure_redirects: 0
+      - net.ipv4.conf.all.rp_filter: 1
+      - net.ipv4.conf.all.accept_source_route: 0
+      - net.ipv4.conf.default.secure_redirects: 0
+      - net.ipv4.conf.all.accept_redirects: 0
+      - net.ipv4.conf.default.rp_filter: 1
+      - net.ipv4.conf.default.accept_source_route: 0
+      - net.ipv4.conf.default.accept_redirects: 0
+      - net.ipv4.conf.all.log_martians: 0
+      - net.ipv6.conf.default.disable_ipv6: 1
+      - net.ipv6.conf.all.disable_ipv6: 1
+      - net.ipv6.conf.all.accept_redirects: 0
+      - net.ipv6.conf.default.accept_redirects: 0
+      - vm.max_map_count: 262144
+      - net.ipv4.ip_nonlocal_bind: 1
+      - net.ipv6.ip_nonlocal_bind: 1
+      - net.unix.max_dgram_qlen: 128
+      - net.ipv6.conf.default.forwarding: 1
+      - net.ipv6.conf.all.forwarding: 1
+      - kernel.numa_balancing: 0
+  - name: control_host_config
+    hardeningProfile: default
+    cpuScalingGovernor: performance
+    lldp:
+      enabled: False
+      msgTxInterval: 30
+      msgTxHold: 4
+    kernelBootParameters: audit=1 console=tty0 console=ttyS0,115200 net.ifnames=0 biosdevname=0 rootdelay=90 nomodeset crashkernel=256M transparent_hugepage=never intel_iommu=on iommu=pt nomdmonddf nomdmonisw plymouth.ignore-serial-consoles idle=halt
+    sysctlOptions:
+      - fs.aio-max-nr: 1048576
+      - fs.inotify.max_user_instances: 4096
+      - net.nf_conntrack_max: 1048576
+      - kernel.panic: 60
+      - kernel.printk: 1
+      - net.ipv4.ip_local_reserved_ports: 35357,41055-41056,49000-49001,49152-49215,55572,58882
+      - vm.swappiness: 10
+      - net.ipv4.conf.default.arp_accept: 1
+      - net.core.netdev_max_backlog: 261144
+      - net.ipv4.tcp_keepalive_intvl: 3
+      - net.ipv4.tcp_keepalive_time: 30
+      - net.ipv4.tcp_keepalive_probes: 8
+      - net.ipv4.conf.all.arp_accept: 1
+      - net.ipv4.tcp_retries2: 5
+      - net.bridge.bridge-nf-call-arptables: 1
+      - net.bridge.bridge-nf-call-iptables: 1
+      - net.bridge.bridge-nf-call-ip6tables: 1
+      - net.ipv4.neigh.default.gc_thresh1: 4096
+      - net.ipv4.neigh.default.gc_thresh2: 8192
+      - net.ipv4.neigh.default.gc_thresh3: 16384
+      - net.ipv6.neigh.default.gc_thresh1: 4096
+      - net.ipv6.neigh.default.gc_thresh2: 8192
+      - net.ipv6.neigh.default.gc_thresh3: 16384
+      - net.ipv4.ip_forward: 1
+      - net.ipv4.conf.all.arp_filter: 1
+      - net.ipv4.conf.all.arp_announce: 2
+      - net.ipv4.conf.all.arp_notify: 1
+      - net.ipv4.conf.default.log_martians: 0
+      - net.ipv4.conf.all.secure_redirects: 0
+      - net.ipv4.conf.all.rp_filter: 1
+      - net.ipv4.conf.all.accept_source_route: 0
+      - net.ipv4.conf.default.secure_redirects: 0
+      - net.ipv4.conf.all.accept_redirects: 0
+      - net.ipv4.conf.default.rp_filter: 1
+      - net.ipv4.conf.default.accept_source_route: 0
+      - net.ipv4.conf.default.accept_redirects: 0
+      - net.ipv4.conf.all.log_martians: 0
+      - net.ipv6.conf.default.disable_ipv6: 1
+      - net.ipv6.conf.all.disable_ipv6: 1
+      - net.ipv6.conf.all.accept_redirects: 0
+      - net.ipv6.conf.default.accept_redirects: 0
+      - vm.max_map_count: 262144
+      - net.ipv4.ip_nonlocal_bind: 1
+      - net.ipv6.ip_nonlocal_bind: 1
+      - net.unix.max_dgram_qlen: 128
+      - net.ipv6.conf.default.forwarding: 1
+      - net.ipv6.conf.all.forwarding: 1
+      - kernel.numa_balancing: 0    
+  - name: virtual_host_config
+    hardeningProfile: default
+    kernelBootParameters: audit=1 console=tty0 console=ttyS0,115200 net.ifnames=0 biosdevname=0 rootdelay=90 nomodeset crashkernel=256M transparent_hugepage=never intel_iommu=on iommu=pt nomdmonddf nomdmonisw plymouth.ignore-serial-consoles
+    ## By default SLES fstrim.timer is enabled and activated once a week (at midnight on Mondays),
+    ## this might have effect on performance in specific circumstences.
+    ## enable or disable fstrim.timer systemd service by defining boolean value for 'fsTrim' key.
+    #fsTrim: true|false|yes|no
+    sysctlOptions:
+      - fs.aio-max-nr: 1048576
+      - net.nf_conntrack_max: 1048576
+      - kernel.panic: 60
+      - kernel.printk: 1
+      - net.ipv4.ip_local_reserved_ports: 35357,41055-41056,49000-49001,49152-49215,55572,58882
+      - vm.swappiness: 10
+      - net.ipv4.conf.default.arp_accept: 1
+      - net.core.netdev_max_backlog: 261144
+      - net.ipv4.tcp_keepalive_intvl: 3
+      - net.ipv4.tcp_keepalive_time: 30
+      - net.ipv4.tcp_keepalive_probes: 8
+      - net.ipv4.conf.all.arp_accept: 1
+      - net.ipv4.tcp_retries2: 5
+      - net.bridge.bridge-nf-call-arptables: 1
+      - net.bridge.bridge-nf-call-iptables: 1
+      - net.bridge.bridge-nf-call-ip6tables: 1
+      - net.ipv4.neigh.default.gc_thresh1: 4096
+      - net.ipv4.neigh.default.gc_thresh2: 8192
+      - net.ipv4.neigh.default.gc_thresh3: 16384
+      - net.ipv6.neigh.default.gc_thresh1: 4096
+      - net.ipv6.neigh.default.gc_thresh2: 8192
+      - net.ipv6.neigh.default.gc_thresh3: 16384
+      - net.ipv4.ip_forward: 1
+      - net.ipv4.conf.all.arp_filter: 1
+      - net.ipv4.conf.all.arp_announce: 2
+      - net.ipv4.conf.all.arp_notify: 1
+      - net.ipv4.conf.default.log_martians: 0
+      - net.ipv4.conf.all.secure_redirects: 0
+      - net.ipv4.conf.all.rp_filter: 1
+      - net.ipv4.conf.all.accept_source_route: 0
+      - net.ipv4.conf.default.secure_redirects: 0
+      - net.ipv4.conf.all.accept_redirects: 0
+      - net.ipv4.conf.default.rp_filter: 1
+      - net.ipv4.conf.default.accept_source_route: 0
+      - net.ipv4.conf.default.accept_redirects: 0
+      - net.ipv4.conf.all.log_martians: 0
+      - net.ipv6.conf.default.disable_ipv6: 1
+      - net.ipv6.conf.all.disable_ipv6: 1
+      - net.ipv6.conf.all.accept_redirects: 0
+      - net.ipv6.conf.default.accept_redirects: 0
+      - vm.max_map_count: 262144
+      - net.ipv4.ip_nonlocal_bind: 1
+      - net.ipv6.ip_nonlocal_bind: 1
+      - net.unix.max_dgram_qlen: 128
+      - net.ipv6.conf.default.forwarding: 1
+      - net.ipv6.conf.all.forwarding: 1
+      - kernel.numa_balancing: 0
+
+#CUSTOM ADD  needs to be checked if it caters for Dell R650 
+  - name: vxsds_host_config
+    hardeningProfile: default
+    cpuScalingGovernor: performance
+    kernelBootParameters: audit=1 console=tty0 console=ttyS0,115200 net.ifnames=0 biosdevname=0 rootdelay=90 nomodeset crashkernel=256M transparent_hugepage=never intel_iommu=on iommu=pt nomdmonddf nomdmonisw plymouth.ignore-serial-consoles idle=halt
+    sysctlOptions:
+      - fs.aio-max-nr: 1048576
+      - net.nf_conntrack_max: 1048576
+      - kernel.panic: 60
+      - kernel.printk: 1
+      - kernel.nmi_watchdog: 0
+      - kernel.sched_min_granularity_ns: 3000000
+      - kernel.sched_wakeup_granularity_ns: 4000000
+      - net.ipv4.ip_local_reserved_ports: 35357,41055-41056,49000-49001,49152-49215,55572,58882
+      - vm.swappiness: 10
+      - vm.stat_interval: 120
+      - net.ipv4.conf.default.arp_accept: 1
+      - net.core.netdev_max_backlog: 261144
+      - net.ipv4.tcp_keepalive_intvl: 3
+      - net.ipv4.tcp_keepalive_time: 30
+      - net.ipv4.tcp_keepalive_probes: 8
+      - net.ipv4.conf.all.arp_accept: 1
+      - net.ipv4.tcp_retries2: 5
+      - net.bridge.bridge-nf-call-arptables: 1
+      - net.bridge.bridge-nf-call-iptables: 1
+      - net.bridge.bridge-nf-call-ip6tables: 1
+      - net.ipv4.neigh.default.gc_thresh1: 4096
+      - net.ipv4.neigh.default.gc_thresh2: 8192
+      - net.ipv4.neigh.default.gc_thresh3: 16384
+      - net.ipv6.neigh.default.gc_thresh1: 4096
+      - net.ipv6.neigh.default.gc_thresh2: 8192
+      - net.ipv6.neigh.default.gc_thresh3: 16384
+      - net.ipv4.ip_forward: 1
+      - net.ipv4.conf.all.arp_filter: 1
+      - net.ipv4.conf.all.arp_announce: 2
+      - net.ipv4.conf.all.arp_notify: 1
+      - net.ipv4.conf.default.log_martians: 0
+      - net.ipv4.conf.all.secure_redirects: 0
+      - net.ipv4.conf.all.rp_filter: 1
+      - net.ipv4.conf.all.accept_source_route: 0
+      - net.ipv4.conf.default.secure_redirects: 0
+      - net.ipv4.conf.all.accept_redirects: 0
+      - net.ipv4.conf.default.rp_filter: 1
+      - net.ipv4.conf.default.accept_source_route: 0
+      - net.ipv4.conf.default.accept_redirects: 0
+      - net.ipv4.conf.all.log_martians: 0
+      - net.ipv6.conf.default.disable_ipv6: 1
+      - net.ipv6.conf.all.disable_ipv6: 1
+      - net.ipv6.conf.all.accept_redirects: 0
+      - net.ipv6.conf.default.accept_redirects: 0
+      - vm.max_map_count: 262144
+      - net.ipv4.ip_nonlocal_bind: 1
+      - net.ipv6.ip_nonlocal_bind: 1
+      - net.unix.max_dgram_qlen: 128
+      - net.ipv6.conf.default.forwarding: 1
+      - net.ipv6.conf.all.forwarding: 1
+      - kernel.numa_balancing: 0
+#CUSTOM END
+...

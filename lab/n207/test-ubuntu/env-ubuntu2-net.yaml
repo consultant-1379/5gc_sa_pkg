@@ -1,0 +1,15 @@
+parameters:
+
+  prefix: test
+  phynet_virtio: n280vpod1-dcgw
+  l2gw_dcgw_id: fac7e9ac-5b6e-45aa-bf70-8c64a924000f
+
+  virtio_networks:
+  - name: mgmt229
+    vlan: 229
+    vxlan: 4229
+    cidr: 10.117.54.120/29
+    enable_dhcp: false
+    gateway: 10.117.54.121
+    allocation_pools: { start: 10.117.54.124, end: 10.117.54.126 }
+    routes: []

@@ -1,0 +1,947 @@
+root enable
+alias-config
+ alias wr "copy running-config startup-config"
+!
+clock timezone Europe/Stockholm
+ha
+ process-restart mpls
+ no process-restart bgp
+ no process-restart isis
+ no process-restart ospfv2
+ no process-restart ospfv3
+!
+hardware
+ profile route default
+ profile route maximum-paths 64
+ profile qos lossy
+ connector 0/1
+  breakout mode 4x10g
+ !
+ connector 0/2
+  breakout mode 4x10g
+ !
+ connector 0/7
+  breakout mode 4x25g
+ !
+ connector 0/8
+  breakout mode 4x10g
+ !
+ connector 0/13
+  breakout mode 4x25g
+ !
+!
+switch-attributes chassis-name SLX8720-32C
+switch-attributes host-name N186_TSW_seliintrt00012
+no support autoupload enable
+support ffdc
+resource-monitor cpu enable threshold 90 action raslog
+resource-monitor memory enable threshold 100 action raslog
+resource-monitor process memory enable alarm 1500 critical 1800
+system-monitor fan threshold marginal-threshold 1 down-threshold 2
+system-monitor fan alert state removed action raslog
+system-monitor power threshold marginal-threshold 1 down-threshold 2
+system-monitor power alert state removed action raslog
+system-monitor temp threshold marginal-threshold 1 down-threshold 2
+system-monitor cid-card threshold marginal-threshold 1 down-threshold 2
+system-monitor cid-card alert state none action none
+system-monitor compact-flash threshold marginal-threshold 1 down-threshold 0
+system-monitor MM threshold marginal-threshold 1 down-threshold 0
+system-monitor LineCard threshold marginal-threshold 1 down-threshold 2
+system-monitor LineCard alert state none action none
+system-monitor SFM threshold marginal-threshold 1 down-threshold 2
+system-monitor port
+ crc enable
+!
+system-monitor tm
+!
+system interface utilization-watermark
+line vty
+ exec-timeout 136
+!
+threshold-monitor Buffer limit 70
+vrf media_cn
+ address-family ipv4 unicast
+ !
+!
+vrf mgmt-vrf
+ address-family ipv4 unicast
+  ip route 0.0.0.0/0 10.158.209.1
+ !
+ address-family ipv6 unicast
+ !
+!
+vrf ran
+ address-family ipv4 unicast
+ !
+!
+vrf sig_cn
+ address-family ipv4 unicast
+ !
+!
+vrf sig_data
+ address-family ipv4 unicast
+ !
+!
+vrf toext_open1
+ address-family ipv4 unicast
+ !
+!
+vrf toext_open2
+ address-family ipv4 unicast
+ !
+!
+vrf VPN01313
+ address-family ipv4 unicast
+ !
+ address-family ipv6 unicast
+ !
+!
+ssh server key rsa 2048
+ssh server key ecdsa 256
+ssh server key dsa
+ssh server use-vrf default-vrf
+ssh server use-vrf mgmt-vrf
+telnet server use-vrf mgmt-vrf shutdown
+http server use-vrf default-vrf
+http server use-vrf mgmt-vrf
+role name admin desc Administrator
+role name user desc User
+tacacs-server host 10.210.45.116 use-vrf mgmt-vrf
+ port 10020
+ protocol pap
+ key "6ESLdSgmR4K/a8WjUMfmag==\n"
+ encryption-level 7
+!
+tacacs-server host 10.210.45.117 use-vrf mgmt-vrf
+ port 10020
+ protocol pap
+ key "6ESLdSgmR4K/a8WjUMfmag==\n"
+ encryption-level 7
+!
+aaa authentication login tacacs+ local-auth-fallback
+aaa accounting exec default start-stop none
+aaa accounting commands default start-stop tacacs+
+aaa authorization command none
+service password-encryption
+username admin password $6$tuuY8/8GfbwoV7qF$6Wl8WXwkwu7PnuGuYZTy5ozy7akHuC6y6pzcqHcbttnytpHXdjGfbQjpFNPvPbN.F8LE.8DHxW57Lnlt5cP1B1 encryption-level 10 role admin desc Administrator
+username user password $6$mAog0c./JxVGu1zy$6wFogQmek0KOEgTav.0DVKXz1vRodc1UCAbipYft/DWnT5R6/Y3qpq7V3JHlhRNVtwguLgXnzdtBDKPKaXbBg/ encryption-level 10 role user desc User
+snmp-server sys-descr "Extreme SLX8720-32C Switch/Router"
+snmp-server engineID local 80:0:6:34:b2:44:e4:0:10:5:c:7a:e5
+snmp-server use-vrf default-vrf
+snmp-server use-vrf mgmt-vrf
+ntp server 10.221.17.134
+ntp server 10.221.17.174
+ntp server 10.133.0.194
+ntp server 10.133.0.202
+ntp server 10.133.1.26
+ntp server 10.133.1.18
+vlan 1
+!
+vlan 602
+ router-interface Ve 602
+!
+vlan 603
+ router-interface Ve 603
+!
+vlan 604
+ router-interface Ve 604
+!
+vlan 605
+ router-interface Ve 605
+!
+vlan 606
+ router-interface Ve 606
+!
+vlan 901
+ router-interface Ve 901
+ description P01_seliintrt00010_BE186.901
+!
+vlan 951
+ router-interface Ve 951
+ description P02_seliintrt00011_BE186.951
+!
+vlan 1202
+ router-interface Ve 1202
+!
+vlan 1203
+ router-interface Ve 1203
+!
+vlan 1204
+ router-interface Ve 1204
+!
+vlan 1205
+ router-interface Ve 1205
+!
+vlan 1206
+ router-interface Ve 1206
+!
+vlan 1207
+ router-interface Ve 1207
+!
+vlan 1222
+ router-interface Ve 1222
+!
+vlan 1223
+ router-interface Ve 1223
+!
+vlan 1224
+ router-interface Ve 1224
+!
+vlan 1225
+ router-interface Ve 1225
+!
+vlan 1226
+ router-interface Ve 1226
+!
+vlan 1242
+ router-interface Ve 1242
+!
+vlan 1243
+ router-interface Ve 1243
+!
+vlan 1244
+ router-interface Ve 1244
+!
+vlan 1245
+ router-interface Ve 1245
+!
+vlan 1246
+ router-interface Ve 1246
+!
+vlan 1247
+ router-interface Ve 1247
+!
+vlan 1260
+ router-interface Ve 1260
+!
+vlan 1262
+ router-interface Ve 1262
+!
+vlan 1263
+ router-interface Ve 1263
+!
+vlan 1264
+ router-interface Ve 1264
+!
+vlan 1265
+ router-interface Ve 1265
+!
+vlan 1266
+ router-interface Ve 1266
+!
+vlan 1401
+ router-interface Ve 1401
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1402
+ router-interface Ve 1402
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1403
+ router-interface Ve 1403
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1404
+ router-interface Ve 1404
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1405
+ router-interface Ve 1405
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1406
+ router-interface Ve 1406
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1407
+ router-interface Ve 1407
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1408
+ router-interface Ve 1408
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1409
+ router-interface Ve 1409
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1410
+ router-interface Ve 1410
+ description P0111_seliintsw01107-SLX-A
+!
+vlan 1411
+ router-interface Ve 1411
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1412
+ router-interface Ve 1412
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1413
+ router-interface Ve 1413
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1414
+ router-interface Ve 1414
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1415
+ router-interface Ve 1415
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1416
+ router-interface Ve 1416
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1417
+ router-interface Ve 1417
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1418
+ router-interface Ve 1418
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1419
+ router-interface Ve 1419
+ description P0112_seliintsw01108-SLX-B
+!
+vlan 1420
+ router-interface Ve 1420
+ description P0112_seliintsw01108-SLX-B
+!
+protocol lldp
+ system-description Extreme SLX8720-32C Switch/Router
+!
+vlan dot1q tag native
+ip dns domain-name seli.gic.ericsson.se
+ip dns name-server 150.132.95.20 use-vrf mgmt-vrf
+!
+ip dns name-server 150.132.95.40 use-vrf mgmt-vrf
+!
+ip dns name-server 10.221.16.11 use-vrf mgmt-vrf
+!
+ip dns name-server 10.221.16.10 use-vrf mgmt-vrf
+!
+class-map default
+!
+no protocol vrrp
+no protocol vrrp-extended
+router bgp
+ local-as 8068
+ neighbor slx-data_fabric-peers peer-group
+ neighbor slx-data_fabric-peers remote-as 4251100003
+ neighbor slx-data_fabric-peers timers keep-alive 60 hold-time 180
+ neighbor slx-data_fabric-peers bfd
+ neighbor slx-data_fabric-peers bfd interval 300 min-rx 300 multiplier 3
+ neighbor slx-media_cn_bgp peer-group
+ neighbor slx-media_cn_bgp remote-as 4251100001
+ neighbor slx-media_cn_bgp local-as 4261000001
+ neighbor slx-media_cn_bgp timers keep-alive 60 hold-time 180
+ neighbor slx-media_cn_bgp bfd
+ neighbor slx-media_cn_bgp bfd interval 300 min-rx 300 multiplier 3
+ neighbor slx-ran_bgp peer-group
+ neighbor slx-ran_bgp remote-as 4251100004
+ neighbor slx-ran_bgp local-as 4261000004
+ neighbor slx-ran_bgp timers keep-alive 60 hold-time 180
+ neighbor slx-ran_bgp bfd
+ neighbor slx-ran_bgp bfd interval 300 min-rx 300 multiplier 3
+ neighbor slx-sig_cn_bgp peer-group
+ neighbor slx-sig_cn_bgp remote-as 4251100002
+ neighbor slx-sig_cn_bgp local-as 4261000002
+ neighbor slx-sig_cn_bgp timers keep-alive 60 hold-time 180
+ neighbor slx-sig_cn_bgp bfd
+ neighbor slx-sig_cn_bgp bfd interval 300 min-rx 300 multiplier 3
+ neighbor slx-sig_data_bgp peer-group
+ neighbor slx-sig_data_bgp remote-as 4251100010
+ neighbor slx-sig_data_bgp local-as 4261000010
+ neighbor slx-sig_data_bgp timers keep-alive 60 hold-time 180
+ neighbor slx-sig_data_bgp bfd
+ neighbor slx-sig_data_bgp bfd interval 300 min-rx 300 multiplier 3
+ neighbor slx-toext_open1_bgp peer-group
+ neighbor slx-toext_open1_bgp remote-as 4251100005
+ neighbor slx-toext_open1_bgp local-as 4261000005
+ neighbor slx-toext_open1_bgp timers keep-alive 60 hold-time 180
+ neighbor slx-toext_open1_bgp bfd
+ neighbor slx-toext_open1_bgp bfd interval 300 min-rx 300 multiplier 3
+ neighbor slx-toext_open2_bgp peer-group
+ neighbor slx-toext_open2_bgp remote-as 4251100006
+ neighbor slx-toext_open2_bgp local-as 4261000006
+ neighbor slx-toext_open2_bgp timers keep-alive 60 hold-time 180
+ neighbor slx-toext_open2_bgp bfd
+ neighbor slx-toext_open2_bgp bfd interval 300 min-rx 300 multiplier 3
+ neighbor stc-asr-peers peer-group
+ neighbor stc-asr-peers remote-as 4248830171
+ neighbor stc-asr-peers timers keep-alive 60 hold-time 180
+ neighbor stc-asr-peers bfd
+ neighbor stc-asr-peers bfd interval 300 min-rx 300 multiplier 3
+ neighbor stc-asr-peers capability as4 enable
+ address-family ipv4 unicast
+ !
+ address-family ipv4 unicast vrf VPN01313
+  neighbor 214.6.198.98 peer-group stc-asr-peers
+  neighbor 214.6.198.100 peer-group stc-asr-peers
+  neighbor 214.6.198.103 remote-as 4251100003
+  neighbor 214.6.198.103 capability as4 enable
+  neighbor 214.6.198.103 peer-group slx-data_fabric-peers
+  neighbor 214.6.198.113 remote-as 4251100003
+  neighbor 214.6.198.113 capability as4 enable
+  neighbor 214.6.198.113 peer-group slx-data_fabric-peers
+  maximum-paths 8
+  multipath ebgp
+ !
+ address-family ipv4 unicast vrf media_cn
+  neighbor 172.23.0.0 remote-as 4251100001
+  neighbor 172.23.0.0 capability as4 enable
+  neighbor 172.23.0.0 peer-group slx-media_cn_bgp
+  neighbor 172.23.64.0 remote-as 4251100001
+  neighbor 172.23.64.0 capability as4 enable
+  neighbor 172.23.64.0 peer-group slx-media_cn_bgp
+  maximum-paths 8
+  multipath ebgp
+ !
+ address-family ipv4 unicast vrf ran
+  neighbor 172.23.12.0 remote-as 4251100004
+  neighbor 172.23.12.0 capability as4 enable
+  neighbor 172.23.12.0 peer-group slx-ran_bgp
+  neighbor 172.23.76.0 remote-as 4251100004
+  neighbor 172.23.76.0 capability as4 enable
+  neighbor 172.23.76.0 peer-group slx-ran_bgp
+  maximum-paths 8
+  multipath ebgp
+ !
+ address-family ipv4 unicast vrf sig_cn
+  neighbor 172.23.4.0 remote-as 4251100002
+  neighbor 172.23.4.0 capability as4 enable
+  neighbor 172.23.4.0 peer-group slx-sig_cn_bgp
+  neighbor 172.23.68.0 remote-as 4251100002
+  neighbor 172.23.68.0 capability as4 enable
+  neighbor 172.23.68.0 peer-group slx-sig_cn_bgp
+  maximum-paths 8
+  multipath ebgp
+ !
+ address-family ipv4 unicast vrf sig_data
+  neighbor 172.23.16.0 remote-as 4251100010
+  neighbor 172.23.16.0 capability as4 enable
+  neighbor 172.23.16.0 peer-group slx-sig_data_bgp
+  neighbor 172.23.80.0 remote-as 4251100010
+  neighbor 172.23.80.0 capability as4 enable
+  neighbor 172.23.80.0 peer-group slx-sig_data_bgp
+  maximum-paths 8
+  multipath ebgp
+ !
+ address-family ipv4 unicast vrf toext_open1
+  neighbor 172.23.20.0 remote-as 4251100005
+  neighbor 172.23.20.0 capability as4 enable
+  neighbor 172.23.20.0 peer-group slx-toext_open1_bgp
+  neighbor 172.23.84.0 remote-as 4251100005
+  neighbor 172.23.84.0 capability as4 enable
+  neighbor 172.23.84.0 peer-group slx-toext_open1_bgp
+  maximum-paths 8
+  multipath ebgp
+ !
+ address-family ipv4 unicast vrf toext_open2
+  neighbor 172.23.24.0 remote-as 4251100006
+  neighbor 172.23.24.0 capability as4 enable
+  neighbor 172.23.24.0 peer-group slx-toext_open2_bgp
+  neighbor 172.23.88.0 remote-as 4251100006
+  neighbor 172.23.88.0 capability as4 enable
+  neighbor 172.23.88.0 peer-group slx-toext_open2_bgp
+  maximum-paths 8
+  multipath ebgp
+ !
+ address-family ipv6 unicast
+ !
+ address-family ipv6 unicast vrf VPN01313
+  neighbor 2001:1b70:8209:f702::8 remote-as 4248830171
+  neighbor 2001:1b70:8209:f702::8 peer-group stc-asr-peers
+  neighbor 2001:1b70:8209:f702::8 activate
+  neighbor 2001:1b70:8209:f702::a remote-as 4248830171
+  neighbor 2001:1b70:8209:f702::a peer-group stc-asr-peers
+  neighbor 2001:1b70:8209:f702::a activate
+  neighbor 2001:1b70:8209:f702::d remote-as 4251100003
+  neighbor 2001:1b70:8209:f702::d peer-group slx-data_fabric-peers
+  neighbor 2001:1b70:8209:f702::d activate
+  neighbor 2001:1b70:8209:f702::f remote-as 4251100003
+  neighbor 2001:1b70:8209:f702::f peer-group slx-data_fabric-peers
+  neighbor 2001:1b70:8209:f702::f activate
+ !
+ address-family l2vpn evpn
+ !
+!
+interface Ve 602
+ description Link Net to dallas1 VPN-sig_cn
+ vrf forwarding sig_cn
+ ip address 172.31.208.1/29
+ no shutdown
+!
+interface Ve 604
+ description Link Net to dallas1 VPN-ran
+ vrf forwarding ran
+ ip address 172.31.208.17/29
+ no shutdown
+!
+interface Ve 605
+ description Link Net to dallas1 VPN-toext_open1
+ vrf forwarding toext_open1
+ ip address 172.31.208.25/29
+ no shutdown
+!
+interface Ve 606
+ description Link Net to dallas1 VPN-toext_open2
+ vrf forwarding toext_open2
+ ip address 172.31.208.33/29
+ no shutdown
+!
+interface Ve 901
+ description Towards_seliintrt00010_BE186.901
+ vrf forwarding VPN01313
+ ip mtu 9194
+ ip address 214.6.198.99/31
+ ipv6 address 2001:1b70:8209:f702::9/127
+ no shutdown
+!
+interface Ve 951
+ description Towards_seliintrt00011_BE186.951
+ vrf forwarding VPN01313
+ ip mtu 9194
+ ip address 214.6.198.101/31
+ ipv6 address 2001:1b70:8209:f702::b/127
+ no shutdown
+!
+interface Ve 1202
+ description Host Net to dallas1 VPN-sig_cn
+ vrf forwarding sig_cn
+ ip address 172.30.16.1/24
+ no shutdown
+!
+interface Ve 1203
+ description Host Net to dallas1 VPN-om_cn
+ vrf forwarding VPN01313
+ ip address 172.30.32.1/24
+ no shutdown
+!
+interface Ve 1204
+ description Host Net to dallas1 VPN-ran
+ vrf forwarding ran
+ ip address 172.30.48.1/24
+ no shutdown
+!
+interface Ve 1205
+ description Host Net to dallas1 VPN-toext_open1
+ vrf forwarding toext_open1
+ ip address 172.30.64.1/24
+ no shutdown
+!
+interface Ve 1206
+ description Host Net to dallas1 VPN-toext_open2
+ vrf forwarding toext_open2
+ ip address 172.30.80.1/24
+ no shutdown
+!
+interface Ve 1207
+ description Host Net 2 to dallas1 VPN-ran
+ vrf forwarding ran
+ ip address 172.30.49.1/24
+ no shutdown
+!
+interface Ve 1222
+ description Host Net to dallas1 NIC2 VPN-sig_cn
+ vrf forwarding sig_cn
+ ip address 172.30.18.1/24
+ no shutdown
+!
+interface Ve 1223
+ description Host Net 2 to dallas1 NIC2 VPN-om_cn
+ vrf forwarding VPN01313
+ ip address 172.30.34.1/24
+ no shutdown
+!
+interface Ve 1224
+ description Host Net 2 to dallas1 NIC2 VPN-ran
+ vrf forwarding ran
+ ip address 172.30.50.1/24
+ no shutdown
+!
+interface Ve 1225
+ description Host Net to dallas1 NIC2 VPN-toext_open1
+ vrf forwarding toext_open1
+ ip address 172.30.66.1/24
+ no shutdown
+!
+interface Ve 1226
+ description Host Net to dallas1 NIC2 VPN-toext_open2
+ vrf forwarding toext_open2
+ ip address 172.30.82.1/24
+ no shutdown
+!
+interface Ve 1401
+ vrf forwarding media_cn
+ ip address 172.23.0.1/31
+ no shutdown
+!
+interface Ve 1402
+ vrf forwarding sig_cn
+ ip address 172.23.4.1/31
+ no shutdown
+!
+interface Ve 1403
+ description Towards_seliintsw01107-SLX-A
+ vrf forwarding VPN01313
+ ip mtu 9194
+ ip address 214.6.198.102/31
+ ipv6 address 2001:1b70:8209:f702::c/127
+ no shutdown
+!
+interface Ve 1404
+ vrf forwarding ran
+ ip address 172.23.12.1/31
+ no shutdown
+!
+interface Ve 1405
+ vrf forwarding toext_open1
+ ip address 172.23.20.1/31
+ no shutdown
+!
+interface Ve 1406
+ vrf forwarding toext_open2
+ ip address 172.23.24.1/31
+ no shutdown
+!
+interface Ve 1410
+ vrf forwarding sig_data
+ ip address 172.23.16.1/31
+ no shutdown
+!
+interface Ve 1411
+ vrf forwarding media_cn
+ ip address 172.23.64.1/31
+ no shutdown
+!
+interface Ve 1412
+ vrf forwarding sig_cn
+ ip address 172.23.68.1/31
+ no shutdown
+!
+interface Ve 1413
+ description Towards_seliintsw01108-SLX-B
+ vrf forwarding VPN01313
+ ip mtu 9194
+ ip address 214.6.198.112/31
+ ipv6 address 2001:1b70:8209:f702::f/127
+ no shutdown
+!
+interface Ve 1414
+ vrf forwarding ran
+ ip address 172.23.76.1/31
+ no shutdown
+!
+interface Ve 1415
+ vrf forwarding toext_open1
+ ip address 172.23.84.1/31
+ no shutdown
+!
+interface Ve 1416
+ vrf forwarding toext_open2
+ ip address 172.23.88.1/31
+ no shutdown
+!
+interface Ve 1420
+ vrf forwarding sig_data
+ ip address 172.23.80.1/31
+ no shutdown
+!
+interface Management 0
+ no tcp burstrate
+ no shutdown
+ vrf forwarding mgmt-vrf
+ ip icmp unreachable
+ ip icmp echo-reply
+ no ip address dhcp
+ ip address 10.158.209.12/24
+ no ipv6 address autoconfig
+ no ipv6 address dhcp
+!
+interface Ethernet 0/1:1
+ description P01_seliintrt00010_eth1/3
+ channel-group 1 mode active type standard
+ lacp timeout short
+ no shutdown
+!
+interface Ethernet 0/1:2
+ description P02_seliintrt00011_eth1/3
+ channel-group 2 mode active type standard
+ lacp timeout short
+ no shutdown
+!
+interface Ethernet 0/1:3
+ shutdown
+!
+interface Ethernet 0/1:4
+ shutdown
+!
+interface Ethernet 0/2:1
+ shutdown
+!
+interface Ethernet 0/2:2
+ shutdown
+!
+interface Ethernet 0/2:3
+ shutdown
+!
+interface Ethernet 0/2:4
+ shutdown
+!
+interface Ethernet 0/3
+ description SLXL1B_seliintsw01108_eth0_29
+ channel-group 111 mode active type standard
+ lacp timeout long
+ no shutdown
+!
+interface Ethernet 0/4
+ description SLXL1B_seliintsw01108_eth0_30
+ channel-group 111 mode active type standard
+ lacp timeout short
+ no shutdown
+!
+interface Ethernet 0/5
+ description SLXL1A_seliintsw01107_eth0_29
+ channel-group 112 mode active type standard
+ lacp timeout short
+ no shutdown
+!
+interface Ethernet 0/6
+ description SLXL1A_seliintsw01107_eth0_30
+ channel-group 112 mode active type standard
+ lacp timeout short
+ no shutdown
+!
+interface Ethernet 0/7:1
+ description Back_OCP_1_25_Gbit_seliiadls00006
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1202-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/7:2
+ description Back_OCP_2_25_Gbit_seliiadls00006
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1202-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/7:3
+ description Back_OCP_1_25_Gbit_seliiadls00004
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1202-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/7:4
+ description Back_OCP_2_25_Gbit_seliiadls00004
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1202-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/8:1
+ description Back_PCIe_2_1_25Gbit_seliiadls00007
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1202-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/8:2
+ description Back_PCIe_2_2_25Gbit_seliiadls00007
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan all
+ no shutdown
+!
+interface Ethernet 0/8:3
+ shutdown
+!
+interface Ethernet 0/8:4
+ shutdown
+!
+interface Ethernet 0/9
+ description PCIe1_1_100_Gbit_seliiadls00006
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1203-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/10
+ description PCIe3_1_100_Gbit_seliiadls00006
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1203-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/11
+ description PCIe1_1_100_Gbit_seliiadls00004
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1203-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/12
+ description PCIe3_1_100_Gbit_seliiadls00004
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1203-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/13:1
+ description Back_PCIe1_1_25_Gbit_seliiadls00007
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1203-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/13:2
+ description Back_PCIe3_1_25_Gbit_seliiadls00007
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 602-606,1203-1207,1224-1225,1242-1247,1260,1262-1266
+ no shutdown
+!
+interface Ethernet 0/13:3
+ shutdown
+!
+interface Ethernet 0/13:4
+ shutdown
+!
+interface Ethernet 0/14
+ shutdown
+!
+interface Ethernet 0/15
+ shutdown
+!
+interface Ethernet 0/16
+ shutdown
+!
+interface Ethernet 0/17
+ shutdown
+!
+interface Ethernet 0/18
+ shutdown
+!
+interface Ethernet 0/19
+ shutdown
+!
+interface Ethernet 0/20
+ shutdown
+!
+interface Ethernet 0/21
+ shutdown
+!
+interface Ethernet 0/22
+ shutdown
+!
+interface Ethernet 0/23
+ shutdown
+!
+interface Ethernet 0/24
+ shutdown
+!
+interface Ethernet 0/25
+ shutdown
+!
+interface Ethernet 0/26
+ shutdown
+!
+interface Ethernet 0/27
+ shutdown
+!
+interface Ethernet 0/28
+ shutdown
+!
+interface Ethernet 0/29
+ shutdown
+!
+interface Ethernet 0/30
+ shutdown
+!
+interface Ethernet 0/31
+ shutdown
+!
+interface Ethernet 0/32
+ shutdown
+!
+interface Port-channel 1
+ description P01_seliintrt00010_BE186
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 901
+ no shutdown
+!
+interface Port-channel 2
+ description P02_seliintrt00011_BE186
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan add 951
+ no shutdown
+!
+interface Port-channel 111
+ description PO111_Towards_SLXL1A_seliintsw01107
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan all
+ no shutdown
+!
+interface Port-channel 112
+ description PO112_Towards_SLXL1B_seliintsw01108
+ switchport
+ switchport mode trunk-no-default-native
+ switchport trunk allowed vlan all
+ no shutdown
+!
+logging raslog console INFO
+logging auditlog class SECURITY
+logging auditlog class CONFIGURATION
+logging auditlog class FIRMWARE
+logging syslog-facility local LOG_LOCAL7
+telemetry profile system-utilization default_system_utilization_statistics
+ interval 60
+ add total-system-memory
+ add total-used-memory
+ add total-free-memory
+ add cached-memory
+ add buffers
+ add total-swap-memory
+ add total-free-swap-memory
+ add total-used-swap-memory
+ add user-process
+ add system-process
+ add niced-process
+ add iowait
+ add hw-interrupt
+ add sw-interrupt
+ add idle-state
+ add steal-time
+ add uptime
+!
+telemetry profile interface default_interface_statistics
+ interval 30
+ add out-pkts
+ add in-pkts
+ add out-unicast-pkts
+ add in-unicast-pkts
+ add out-broadcast-pkts
+ add in-broadcast-pkts
+ add out-multicast-pkts
+ add in-multicast-pkts
+ add out-pkts-per-second
+ add in-pkts-per-second
+ add out-bandwidth
+ add in-bandwidth
+ add out-octets
+ add in-octets
+ add out-errors
+ add in-errors
+ add out-crc-errors
+ add in-crc-errors
+ add out-discards
+ add in-discards
+!
+

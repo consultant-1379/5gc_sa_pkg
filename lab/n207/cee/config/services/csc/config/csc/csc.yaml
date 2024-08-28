@@ -1,0 +1,7 @@
+---
+csc_odl_password: "Ericsson@12345"
+csc_enable_nbi_tls: true
+csc_enable_tls_openflow: false
+csc_enable_tls_ovsdb: false
+csc_tep_zone_name: "TZA"
+csc_rest_password: "Ericsson@12345"

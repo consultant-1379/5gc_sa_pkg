@@ -1,0 +1,48 @@
+setenv LC_ALL en_US.UTF-8
+setenv VEPC_SCRIPT /lab/pccc_utils/scripts
+setenv KUBECTL_CMD /lab/pccc_utils/kubectl
+setenv HELM_CMD /lab/pccc_utils/helm
+
+
+setenv PATH $KUBECTL_CMD\:$HELM_CMD\:$VEPC_SCRIPT\:$PATH
+
+module add git
+module add openssl/1.1.1t
+module add tmux
+module add python
+module add jq
+module add sshpass
+module add helm/3.4.0
+module add geckodriver/0.31.0
+module add firefox/110.0
+
+
+alias l 'conn'
+set nodelist=`conn node_list`
+complete l 'p/1/$nodelist/'
+complete conn 'p/1/$nodelist/'
+
+
+alias py2env 'source /lab/pccc_utils/scripts/csdp_python2_venv/bin/activate'
+alias py3env 'source /lab/pccc_utils/scripts/csdp_python3_venv/bin/activate'
+
+
+alias cdtl 'cd /lab/pccc_archive/5GC'
+alias cdimages 'cd /lab/pccc_builds/images'
+
+
+# Add SP git branch info Dynamically
+set git_branch_info="git branch >&/dev/null && git branch --show-current | sed -re 's/(.*)/(\1)/'"
+alias setprompt 'set prompt="%m [%T] [%C3] %{\033[1;33m%}`eval $git_branch_info`%{\033[0m%}-%# "'
+alias cd '""cd \!* && setprompt'
+alias pushd '""pushd \!* && setprompt'
+alias popd '""popd \!* && setprompt'
+
+
+### alias for support package scripts ##, stop to use due to security issue needs to remove Anonymous access, 20230422
+set sp_cmds="`sh -c 'sputils cmdslist 2>/dev/null' | grep -v Error:` adc"
+#set sp_cmds="`sh -c 'sputils cmdslist 2>/dev/null' | grep -v Error:`"
+complete sputils 'p/1/$sp_cmds/'
+foreach cmd ($sp_cmds)
+  eval "alias $cmd sputils $cmd"
+end

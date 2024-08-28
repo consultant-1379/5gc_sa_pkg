@@ -1,0 +1,12 @@
+#---
+- hosts: all
+  gather_facts: no
+  vars:
+    route_script: /root/add_dm_5gc_route.sh
+  tasks:
+  - name: remove dallas network script from /etc/rc.local
+    blockinfile:
+      dest: /etc/rc.local
+      block: ''
+  - name: remove dallas network interfaces
+    shell: "{{ route_script }} remove"

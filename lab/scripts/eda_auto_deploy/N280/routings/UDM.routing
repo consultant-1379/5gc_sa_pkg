@@ -1,0 +1,6 @@
+{
+  "networkElementType": "UDM",
+  "routingMethod": "UnconditionalRouting",
+  "instance": "CCDM_PF_MAPI",
+  "instanceType": "NetworkElementGroup"
+}

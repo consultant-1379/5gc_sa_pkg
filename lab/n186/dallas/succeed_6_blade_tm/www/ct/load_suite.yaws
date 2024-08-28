@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Your site description here" />
+    <meta name="keywords" content="your, site, keywords, here" />
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    <title>
+      DALLAS O&M
+    </title>
+  </head>
+
+<script src="/jquery-3.1.0.min.js"></script>
+
+<body>
+<div id="container">
+
+<div id="top"></div>
+
+<h1>Common Test with DALLAS</h1>
+<h2>The Load Testing Tool for mobile core network</h2>
+<br />
+
+
+<div class="navmenu"><a href="../index.html">Home</a></div>
+
+
+<!-- Article Start -->
+
+<div class="outsidebox">
+<br />
+
+<div class="insidebox">
+
+<div id="suite" class="title">
+<erl>
+out(Arg) ->
+    QueryList = yaws_api:parse_query(Arg),
+    SuiteName = proplists:get_value("suite", QueryList),
+    [{html, SuiteName}].
+</erl>
+</div>
+<div>
+<div id="checkboxes"></div>
+<button id="run" type="button">RUN!</button>
+<script>
+$(function()
+{
+
+    var SuiteName = $('#suite').html().trim();
+    var WebSocket = window.WebSocket || window.MozWebSocket;
+    var WebHost = 'ws://' + location.host + '/CT';
+    Status = 'Connecting to ' + WebHost + '\n';
+
+    //acquire RESTful service to get available groups
+    $.ajax({
+        url: "http://"+location.host+"/CT/GroupList/" + SuiteName
+    }).then(function(data) {
+        if (data.returnCode == "ok") {
+            var GroupList = data.data;
+            $.each(GroupList, function(i, val) {
+              $('#checkboxes').append("<input type=\"checkbox\" class=\"groups\" value=\""+
+                                    val+"\">"+val+
+                                    " <br/>");
+            });
+        }
+    });
+
+    $('div#status').html(Status);
+
+    var socket = new WebSocket(WebHost);
+
+    // wait for socket to open
+    socket.onopen = function ()
+    {
+        Status = WebHost + ' Connected!\n';
+        $('div#status').html(Status);
+
+        $('button#run').on('click', function() {
+            var GroupNameList = [];
+            $('input.groups').each(function() {
+                var GroupName = $(this).attr('value');
+                if ($(this).prop('checked') == true) {
+                    GroupNameList.push(GroupName);
+                }
+            });
+
+            $('div#logs').html("<img src=\"images/loading.svg\">");
+
+            Msg = JSON.stringify(
+            {
+                msgType:"ct_req",
+                suite:SuiteName,
+                groupList:GroupNameList,
+                testcaseList:[]
+            });
+            //alert(Msg);
+            socket.send(Msg);
+        });
+        socket.onmessage = function (msg)
+        {
+            var message = $.parseJSON(msg.data);
+            var returnCode = message.returnCode;
+            var html = message.data;
+            if (returnCode == "ok") {
+                html = '<div class=\"test_report\"><a href=' + html + '>Test Report</a></div>';
+            } else {
+                html = '<div class=\"test_report\">'+html+'</div>';
+            }
+            $('div#logs').html(html);
+        }
+    };
+    socket.onclose = function ()
+    {
+        Status = WebHost + ' Closed!\n';
+        $('div#status').html(Status);
+        $('div#logs').html("");
+    };
+    window.onbeforeunload = function() {
+        socket.close();
+    };
+});
+</script>
+
+</div>
+
+
+<br /><br />
+<br /><br />
+
+</div>
+</div>
+
+<!-- End of article -->
+
+
+
+<!-- Article Start -->
+
+<div class="outsidebox">
+<br />
+
+
+<div class="insidebox">
+
+<div class="title">
+Logs:
+
+</div>
+<div id="status"></div>
+<br />
+<div id="logs"></div>
+
+<br /><br />
+
+<br /><br />
+
+
+</div>
+</div>
+
+<!-- End of article -->
+
+
+
+<br />
+<div class="archive"><a href="#">News Archive</a></div>
+<br /><br /><br /><br />
+
+<div class="footer">
+          &copy;2007 Yoursite.com <br />
+		Template by <a href="http://krneky.com" target="_blank">Krneky</a>
+</div>
+
+
+
+
+
+</div>
+
+
+</body>
+
+
+</html>

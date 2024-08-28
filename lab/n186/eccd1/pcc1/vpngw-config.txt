@@ -1,0 +1,186 @@
+autowizard false
+config
+
+interfaces interface cre:net0
+ type    ethernetCsmacd
+ enabled true
+ l2-mtu  1968
+exit
+interfaces interface vpngw:net0
+ type    ethernetCsmacd
+ enabled true
+exit
+
+network-instances network-instance intraForward
+ enabled true
+exit
+interfaces interface vpngw:intra
+ type            ipForward
+ enabled         true
+ encapsulation dot1q-vlan outer-tag tag-type c-vlan
+ encapsulation dot1q-vlan outer-tag vlan-id 2110
+ parent-interface vpngw:net0
+ bind-ni-name    intraForward
+ ipv4 enabled true
+ ipv4 address 172.21.128.1
+  prefix-length 24
+  exit
+ address-type ip-range 8
+ exit
+
+network-instances network-instance signaling
+ enabled                  true
+ description              signaling
+ routing bgp 4201111002
+  neighbor 172.21.32.2
+   peer-type                 external
+   advertisement-interval 20
+   bfd-enabled            false
+   remote-as              4251100002
+   address-family ipv4 unicast
+   exit
+  neighbor 172.21.32.3
+   peer-type                 external
+   advertisement-interval 20
+   bfd-enabled            false
+   remote-as              4251100002
+   address-family ipv4 unicast
+   exit
+ routing ingress-next-hop-announcements ingress-next-hop-announcement signaling_ingress
+  fallback-route-next-hop interface vpngw:signaling_vnfloop
+  service           vpngw-forwarder
+ ip static-route up 0.0.0.0/0 172.21.32.1
+  bfd-enabled true
+ exit
+exit
+
+interfaces interface cre:signaling_link
+ description      cre:signaling_link
+ type             ipForward
+ enabled          true
+ encapsulation dot1q-vlan outer-tag tag-type c-vlan
+ encapsulation dot1q-vlan outer-tag vlan-id 2102
+ parent-interface cre:net0
+ bind-ni-name     signaling
+ ipv4 enabled true
+ ipv4 address 172.21.32.21
+  prefix-length 24
+  exit
+ address-type ip-range 2
+ exit
+
+interfaces interface vpngw:signaling_link
+ description      vpngw:signaling_link
+ type             ipForward
+ enabled          true
+ encapsulation dot1q-vlan outer-tag tag-type c-vlan
+ encapsulation dot1q-vlan outer-tag vlan-id 2102
+ parent-interface vpngw:net0
+ bind-ni-name     signaling
+ ipv4 enabled true
+ ipv4 address 172.21.32.31
+  prefix-length 24
+  exit
+ address-type ip-range 8
+ exit
+
+interfaces interface vpngw:signaling_vnfloop
+ description  vpngw:signaling_vnfloop
+ type         softwareLoopback
+ enabled      true
+ bind-ni-name signaling
+ ipv4 enabled true
+ ipv4 address 172.17.32.254
+  prefix-length 32
+  exit
+ address-type single
+ exit
+
+network-instances network-instance media
+ enabled                  true
+ description              media
+ routing bgp 4201111001
+  neighbor 172.21.0.2
+   peer-type                 external
+   advertisement-interval 20
+   bfd-enabled            false
+   remote-as              4251100001
+   address-family ipv4 unicast
+   exit
+  neighbor 172.21.0.3
+   peer-type                 external
+   advertisement-interval 20
+   bfd-enabled            false
+   remote-as              4251100001
+   address-family ipv4 unicast
+   exit
+ routing ingress-next-hop-announcements ingress-next-hop-announcement media_ingress
+  fallback-route-next-hop interface vpngw:media_vnfloop
+  service           vpngw-forwarder
+ ip static-route up 0.0.0.0/0 172.21.0.1
+  bfd-enabled true
+ exit
+exit
+
+interfaces interface cre:media_link
+ description      cre:media_link
+ type             ipForward
+ enabled          true
+ encapsulation dot1q-vlan outer-tag tag-type c-vlan
+ encapsulation dot1q-vlan outer-tag vlan-id 2101
+ parent-interface cre:net0
+ bind-ni-name     media
+ ipv4 enabled true
+ ipv4 address 172.21.0.21
+  prefix-length 24
+  exit
+ address-type ip-range 2
+ exit
+
+interfaces interface vpngw:media_link
+ description      vpngw:media_link
+ type             ipForward
+ enabled          true
+ encapsulation dot1q-vlan outer-tag tag-type c-vlan
+ encapsulation dot1q-vlan outer-tag vlan-id 2101
+ parent-interface vpngw:net0
+ bind-ni-name     media
+ ipv4 enabled true
+ ipv4 address 172.21.0.31
+  prefix-length 24
+  exit
+ address-type ip-range 8
+ exit
+
+interfaces interface vpngw:media_vnfloop
+ description  vpngw:media_vnfloop
+ type         softwareLoopback
+ enabled      true
+ bind-ni-name media
+ ipv4 enabled true
+ ipv4 address 172.17.0.254
+  prefix-length 32
+  exit
+ address-type single
+ exit
+
+interfaces interface vpngw:loopback
+ type         softwareLoopback
+ enabled      true
+ bind-ni-name signaling
+ ipv4 enabled true
+ ipv4 address 172.17.32.1
+  prefix-length 32
+ exit
+ address-type single
+ exit
+
+vpn-gateway networks network vpngw-service
+ parent-interface vpngw:loopback
+ exit
+
+intra-forwarding interface intraforwarding
+ parent-interface vpngw:intra
+
+commit
+end

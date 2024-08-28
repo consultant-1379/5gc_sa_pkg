@@ -1,0 +1,20 @@
+autowizard false
+config
+
+epg pgw sbi scp scp-instance nscp-ins1
+  priority  1
+  fqdn      scp1.n280.5gc.mnc081.mcc240.3gppnetwork.org
+  fqdn-port 443
+
+epg pgw sbi scp logical-interface scp-service-if
+epg pgw sbi scp connection-client-profile client-profile-1
+epg pgw sbi scp enable-conditions pcfscp
+epg pgw sbi scp enable-conditions pcfscp match "PCF|pcf"
+epg pgw sbi scp enable-conditions pcfscp match-type nftype match "PCF|pcf"
+
+epg node logical-interface scp-service-if
+ routing-instance default
+ address          1.1.1.1
+
+commit
+end

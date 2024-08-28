@@ -1,0 +1,55 @@
+$TTL 600
+@   IN    SOA     apa ns. ( 14 3H 1H 1D 300 )
+
+    IN    NS      ns1.epc.mnc081.mcc240.3gppnetwork.org.
+    IN    A       172.30.32.50
+
+ns1 IN    A       172.30.32.50
+
+;; ======== SGW ========
+;                           Internet         NAPTR                                   order         pref  flags  service                                 regexp  replacement
+*.tac-hb00.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb01.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb02.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb03.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb04.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb05.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb06.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb07.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb08.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb09.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site1-cluster1.nodes
+*.tac-hb00.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb01.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb02.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb03.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb04.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb05.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb06.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb07.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb08.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+*.tac-hb09.tac              IN               NAPTR                                   10            1     "s"    "x-3gpp-sgw:x-s5-gtp+nc-smf:x-s11"      ""      sgw.site2-cluster1.nodes
+
+
+;                           InternetSer.Rec  Prio                                    Weight        Port
+sgw.site1-cluster1.nodes               IN               SRV                                     8             50    2123   topon.s11.gw.site1-cluster1.dns.nodes
+sgw.site2-cluster1.nodes               IN               SRV                                     8             50    2123   topon.s11.gw.site2-cluster1.dns.nodes
+
+
+;                           Internet         A                                       Address
+topon.s11.gw.site1-cluster1.dns.nodes   IN               A                                      172.17.0.1
+topon.s11.gw.site2-cluster1.dns.nodes  IN               A                                       172.17.8.1
+
+
+;; ======== PGW ========
+; From APNs to a list of PGW hostnames
+internet.apn                IN               NAPTR                                   10            1     "s"    "x-3gpp-pgw:x-s5-gtp+nc-smf"  ""      pgw.site1-cluster1.nodes
+ims.apn                     IN               NAPTR                                   10            1     "s"    "x-3gpp-pgw:x-s5-gtp+nc-smf"  ""      pgw.site1-cluster1.nodes
+internet.apn                IN               NAPTR                                   10            1     "s"    "x-3gpp-pgw:x-s5-gtp+nc-smf"  ""      pgw.site2-cluster1.nodes
+ims.apn                     IN               NAPTR                                   10            1     "s"    "x-3gpp-pgw:x-s5-gtp+nc-smf"  ""      pgw.site2-cluster1.nodes
+
+pgw.site1-cluster1.nodes               IN               SRV                                     7             50    2123   topon.s5.gw.site1-cluster1.dns.nodes
+pgw.site2-cluster1.nodes               IN               SRV                                     7             50    2123   topon.s5.gw.site2-cluster1.dns.nodes
+
+
+topon.s5.gw.site1-cluster1.dns.nodes    IN               A                                       172.17.0.3
+topon.s5.gw.site2-cluster1.dns.nodes   IN               A                                        172.17.8.3

@@ -1,0 +1,788 @@
+---
+hostProfiles:
+  - name: infra
+    interfaceAssignment: infra
+    diskAssignment: infra_disks
+    hostConfigAssignment: virtual_host_config
+    controlGroupScheme: infra_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+    type: virtualMachine
+    vmResources:
+      coreCount: 9
+      memGiB: 64
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony_server
+      - host_services_rsyslog_aggregator
+      - host_services_shared_filesystem
+    serviceComponentGroups:
+      - toolbox
+      - loadbalancer
+      - database_infra
+      - messagebus
+      - clustering_infra
+      - keystone_infra
+      - lcm
+      - idam
+      - idam_agents
+      - serviceassurance
+      - serviceassurance_frontend_infra
+      - serviceassurance_agents
+      - internal_pki_client
+      - internal_pki_server
+  - name: lcm
+    interfaceAssignment: lcm
+    diskAssignment: lcm_disks
+    hostConfigAssignment: virtual_host_config
+    controlGroupScheme: infra_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+    type: virtualMachine
+    vmResources:
+      coreCount: 9
+      memGiB: 64
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony_server
+      - host_services_rsyslog_generator
+      - host_services_shared_filesystem
+    serviceComponentGroups:
+      - toolbox
+      - loadbalancer
+      - database_infra
+      - clustering_infra
+      - keystone_infra
+      - lcm
+      - idam
+      - idam_agents
+      - serviceassurance_agents
+      - internal_pki_client
+      - internal_pki_server
+  - name: serviceassurance
+    interfaceAssignment: serviceassurance
+    diskAssignment: serviceassurance_disks
+    hostConfigAssignment: control_host_config
+    controlGroupScheme: host_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_aggregator
+    serviceComponentGroups:
+      - toolbox
+      - loadbalancer
+      - database_serviceassurance
+      - messagebus
+      - clustering_serviceassurance
+      - idam_agents
+      - serviceassurance
+      - serviceassurance_frontend
+      - serviceassurance_agents
+      - internal_pki_client
+  - name: vserviceassurance
+    interfaceAssignment: vserviceassurance
+    diskAssignment: vserviceassurance_disks
+    hostConfigAssignment: virtual_host_config
+    controlGroupScheme: infra_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+    type: virtualMachine
+    vmResources:
+      coreCount: 9
+      memGiB: 64
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_aggregator
+    serviceComponentGroups:
+      - toolbox
+      - loadbalancer
+      - database_serviceassurance
+      - messagebus
+      - clustering_serviceassurance
+      - idam_agents
+      - serviceassurance
+      - serviceassurance_frontend
+      - serviceassurance_agents
+      - internal_pki_client
+  - name: HPE_DL380_G10_Xeon6330N_512GB_control
+    interfaceAssignment: HPE_DL380G10_control_compute_infra
+    diskAssignment: controller_disks_HPE_DL360G10
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: control_memory_512GB
+    controlGroupScheme: HPE_control_Xeon6330N
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - HPE_host_services_Xeon6330N_control
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - clustering_openstack
+      - database_openstack # mariadb
+      - loadbalancer
+      - messagebus
+      - idam_agents
+      - keystone_openstack # keystone
+      - serviceassurance_agents
+      - openstack_control_default # cmha-service, glance-api, heat-api, heap-api-cfn, neutron-server, nova-api, placement-api
+      - openstack_computes_default
+      - openstack_neutron_dhcp_agent
+      - openstack_cinder # cinder-api
+      - openstack_neutron_metadata_agent
+      - openstack_swift # swift-proxy-server
+      - toolbox
+      - internal_pki_client
+      - vxsds_sdc
+      - vxsds_sds
+      - vxsds_gw_hyperconverged
+      - vxsds_tb
+      - HPE_openstack_control_Xeon6330N
+      - sdi_agent
+
+  - name: HPE_DL380_G10_Xeon6330N_512GB_control_2_plus_2
+    interfaceAssignment: HPE_DL380G10_control_compute_infra
+    diskAssignment: controller_disks_HPE_DL360G10
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: control_memory_512GB
+    controlGroupScheme: HPE_control_Xeon6330N_2_plus_2
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - HPE_host_services_Xeon6330N_control_2_plus_2
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - clustering_openstack
+      - database_openstack # mariadb
+      - loadbalancer
+      - messagebus
+      - idam_agents
+      - keystone_openstack # keystone
+      - serviceassurance_agents
+      - openstack_control_default # cmha-service, glance-api, heat-api, heap-api-cfn, neutron-server, nova-api, placement-api
+      - openstack_computes_default
+      - openstack_neutron_dhcp_agent
+      - openstack_cinder # cinder-api
+      - openstack_neutron_metadata_agent
+      - openstack_swift # swift-proxy-server
+      - toolbox
+      - internal_pki_client
+      - vxsds_sdc
+      - vxsds_sds
+      - vxsds_gw_hyperconverged
+      - vxsds_tb
+      - HPE_openstack_control_Xeon6330N
+      - sdi_agent
+
+  - name: HPE_DL380_G10_Xeon6330N_512GB
+    interfaceAssignment: HPE_DL380G10_SRIOV_ASSIGN
+    diskAssignment: compute_disks_HPE_DL360_DL380
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: HPE_compute_Xeon6330N
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - HPE_host_services_Xeon6330N
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_passthrough
+      - internal_pki_client
+      - vxsds_sdc
+      - vxsds_sds
+      - HPE_openstack_compute_Xeon6330N
+      - sdi_agent
+
+  - name: HPE_DL380_G10_Xeon6330N_512GB_sriov_mlag
+    interfaceAssignment: HPE_DL380G10_sriov_mlag
+    diskAssignment: compute_disks_HPE_DL360_DL380
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: HPE_compute_Xeon6330N
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - HPE_host_services_Xeon6330N
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_passthrough
+      - internal_pki_client
+      - vxsds_sdc
+      - vxsds_sds
+      - HPE_openstack_compute_Xeon6330N
+      - sdi_agent
+
+  - name: HPE_DL380_G10_Xeon6330N_512GB_2_plus_2
+    interfaceAssignment: HPE_DL380G10_SRIOV_ASSIGN
+    diskAssignment: compute_disks_HPE_DL360_DL380
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: HPE_compute_Xeon6330N_2_plus_2
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - HPE_host_services_Xeon6330N_2_plus_2
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_passthrough
+      - internal_pki_client
+      - vxsds_sdc
+      - vxsds_sds
+      - HPE_openstack_compute_Xeon6330N
+      - sdi_agent
+
+  - name: DELL_R650_Xeon6330N_512GB_control
+    interfaceAssignment: DELL_R650_control_compute_infra
+    diskAssignment: controller_disks_DELL_R650
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: control_memory_512GB
+    controlGroupScheme: DELL_control_Xeon6330N
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - DELL_host_services_Xeon6330N_control
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - clustering_openstack
+      - database_openstack # mariadb
+      - loadbalancer
+      - messagebus
+      - idam_agents
+      - keystone_openstack # keystone
+      - serviceassurance_agents
+      - openstack_control_default # cmha-service, glance-api, heat-api, heap-api-cfn, neutron-server, nova-api, placement-api
+      - openstack_neutron_dhcp_agent
+      - openstack_cinder # cinder-api
+      - openstack_swift # swift-proxy-server
+      - toolbox
+      - internal_pki_client
+      - vxsds_sdc
+      - DELL_openstack_control_Xeon6330N
+      - sdi_agent
+    firewallProfile: enable_ssh
+
+  - name: DELL_R650_Xeon6330N_512GB_control_2_plus_2
+    interfaceAssignment: DELL_R650_control_compute_infra
+    diskAssignment: controller_disks_DELL_R650
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: control_memory_512GB
+    controlGroupScheme: DELL_control_Xeon6330N_2_plus_2
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - DELL_host_services_Xeon6330N_control_2_plus_2
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - clustering_openstack
+      - database_openstack # mariadb
+      - loadbalancer
+      - messagebus
+      - idam_agents
+      - keystone_openstack # keystone
+      - serviceassurance_agents
+      - openstack_control_default # cmha-service, glance-api, heat-api, heap-api-cfn, neutron-server, nova-api, placement-api
+      - openstack_computes_default
+      - openstack_neutron_dhcp_agent
+      - openstack_cinder # cinder-api
+      - openstack_neutron_metadata_agent
+      - openstack_swift # swift-proxy-server
+      - toolbox
+      - internal_pki_client
+      - vxsds_sdc
+      - vxsds_sds
+      - vxsds_mdm
+      - DELL_openstack_control_Xeon6330N
+      - sdi_agent
+
+  - name: DELL_R650_Xeon6330N_512GB
+    interfaceAssignment: DELL_R650_standard_compute_interfaces
+    diskAssignment: compute_disks_DELLR650
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: DELL_compute_Xeon6330N
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - DELL_host_services_Xeon6330N
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_passthrough
+      - internal_pki_client
+      - vxsds_sdc
+      - DELL_openstack_compute_Xeon6330N
+      - sdi_agent
+
+  - name: DELL_R650_Xeon6330N_512GB_2_plus_2
+    interfaceAssignment: DELL_R650_pfpt
+    diskAssignment: compute_disks_DELLR650
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: DELL_compute_Xeon6330N_2_plus_2
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - DELL_host_services_Xeon6330N_2_plus_2
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_passthrough
+      - internal_pki_client
+      - vxsds_sdc
+      - DELL_openstack_compute_Xeon6330N
+      - sdi_agent
+
+  - name: DELL_R650_Xeon6330N_512GB-high-BW
+    interfaceAssignment: DELL_R650_sriov
+    diskAssignment: compute_disks_DELLR650
+    hostConfigAssignment: control_compute_host_config
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: DELL_compute_Xeon6330N
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - openstack_v1
+      - vxsds_client_sp3
+      - csc_drivers_v1
+    hostComponentGroups:
+      - DELL_host_services_Xeon6330N
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_passthrough
+      - internal_pki_client
+      - vxsds_sdc
+      - DELL_openstack_compute_Xeon6330N
+      - sdi_agent
+
+  # MDM compute-1-104 105  Dell R650
+  - name: DELL_R650_Xeon6330N_512GB_vxsds_mdm_hc_1
+    interfaceAssignment: DELL_R650_vxsds_hc_interfaces  #needs check#
+    diskAssignment: DELL_R650_compute_disks_vxsds_1  #needs check#
+    hostConfigAssignment: vxsds_host_config    # needs check#
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: DELL_compute_Xeon6330N_compute_vxsds_hc  #needs check#
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - DELL_host_services_Xeon6330N_vxsds
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - DELL_openstack_compute_Xeon6330N_vxsds
+      - internal_pki_client
+      - vxsds_sds
+      - vxsds_mdm
+      - vxsds_sdc
+      - vxsds_gw_hyperconverged
+      - sdi_agent
+
+  # MDM compute-1-106 Dell R650
+  - name: DELL_R650_Xeon6330N_512GB_vxsds_mdm_hc_2
+    interfaceAssignment: DELL_R650_vxsds_hc_interfaces  #needs check#
+    diskAssignment: DELL_R650_compute_disks_vxsds_2  #needs check#
+    hostConfigAssignment: vxsds_host_config    # needs check#
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: DELL_compute_Xeon6330N_compute_vxsds_hc  #needs check#
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - DELL_host_services_Xeon6330N_vxsds
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - DELL_openstack_compute_Xeon6330N_vxsds
+      - internal_pki_client
+      - vxsds_sds
+      - vxsds_mdm
+      - vxsds_sdc
+      - vxsds_gw_hyperconverged
+      - sdi_agent
+
+  # Hyperconverged VxSDS TB
+#TB compute-1-107 108
+  - name: DELL_R650_Xeon6330N_512GB_vxsds_tb_hc
+    interfaceAssignment: DELL_R650_vxsds_hc_interfaces  #needs check#
+    diskAssignment: DELL_R650_compute_disks_vxsds_2  #needs check#
+    hostConfigAssignment: vxsds_host_config  #  old needs update#
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: DELL_compute_Xeon6330N_compute_vxsds_hc #needs check#
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - DELL_host_services_Xeon6330N_vxsds
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - DELL_openstack_compute_Xeon6330N_vxsds
+#      - openstack_computes_passthrough
+      - internal_pki_client
+      - sdi_agent
+        ## To be included when VxSDS is deployed as embedded hyperconverged configuration.
+      - vxsds_sds
+      - vxsds_tb
+      - vxsds_sdc
+
+#TB compute-1-8029
+  - name: DELL_R650_Xeon6330N_512GB_vxsds_tb_hc_1
+    interfaceAssignment: DELL_R650_vxsds_hc_interfaces  #needs check#
+    diskAssignment: DELL_R650_compute_disks_vxsds_3  #needs check#
+    hostConfigAssignment: vxsds_host_config  #  old needs update#
+    memoryAssignment: compute_memory_512GB
+    controlGroupScheme: DELL_compute_Xeon6330N_compute_vxsds_hc #needs check#
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+      - vxsds_sp3
+      - vxsds_client_sp3
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - DELL_host_services_Xeon6330N_vxsds
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - DELL_openstack_compute_Xeon6330N_vxsds
+#      - openstack_computes_passthrough
+      - internal_pki_client
+      - sdi_agent
+        ## To be included when VxSDS is deployed as embedded hyperconverged configuration.
+      - vxsds_sds
+      - vxsds_tb
+      - vxsds_sdc
+
+
+  - name: csc
+    interfaceAssignment: csc
+    diskAssignment: csc_disks
+    hostConfigAssignment: virtual_host_config
+    controlGroupScheme: virtualhost_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+    type: virtualMachine
+    vmResources:
+      coreCount: 8
+      memGiB: 72
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+    serviceComponentGroups:
+      - loadbalancer
+      - clustering_csc
+      - idam_agents
+      - serviceassurance_agents
+      - csc
+      - internal_pki_client
+  - name: compute
+    interfaceAssignment: compute
+    diskAssignment: compute_disks
+    hostConfigAssignment: compute_host_config
+    memoryAssignment: compute_memory
+    controlGroupScheme: compute_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_css
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_nova
+      - openstack_openvswitch_agent
+      - internal_pki_client
+  - name: compute_diskless
+    interfaceAssignment: compute
+    diskAssignment: compute_diskless
+    hostConfigAssignment: compute_host_config
+    memoryAssignment: compute_memory
+    controlGroupScheme: compute_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_css
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_nova
+      - openstack_openvswitch_agent
+  - name: compute_with_neutron_l3_agent
+    interfaceAssignment: compute_with_neutron_l3
+    diskAssignment: compute_disks
+    hostConfigAssignment: compute_host_config
+    memoryAssignment: compute_memory
+    controlGroupScheme: compute_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_css
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_nova
+      - openstack_openvswitch_agent
+      - openstack_neutron_l3_agent
+      - internal_pki_client
+  - name: compute_passthrough
+    interfaceAssignment: compute_passthrough
+    diskAssignment: compute_disks
+    hostConfigAssignment: compute_host_config
+    memoryAssignment: compute_memory
+    controlGroupScheme: compute_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_css
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_nova
+      - openstack_computes_passthrough
+      - openstack_openvswitch_agent
+      - internal_pki_client
+  - name: compute_passthrough_with_neutron_l3_agent
+    interfaceAssignment: compute_passthrough_with_neutron_l3
+    diskAssignment: compute_disks
+    hostConfigAssignment: compute_host_config
+    memoryAssignment: compute_memory
+    controlGroupScheme: compute_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_css
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_nova
+      - openstack_computes_passthrough
+      - openstack_openvswitch_agent
+      - openstack_neutron_l3_agent
+      - internal_pki_client
+  - name: compute_only_passthrough
+    interfaceAssignment: compute_only_passthrough
+    diskAssignment: compute_disks
+    hostConfigAssignment: compute_host_config
+    memoryAssignment: compute_memory
+    controlGroupScheme: host_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_nova
+      - openstack_computes_passthrough
+      - internal_pki_client
+  - name: compute_switchdev
+    interfaceAssignment: compute_switchdev
+    diskAssignment: compute_disks
+    hostConfigAssignment: compute_host_config
+    memoryAssignment: compute_memory
+    controlGroupScheme: compute_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_css
+      - host_services_hypervisor
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_computes_default
+      - openstack_computes_nova
+      - openstack_openvswitch_agent
+      - internal_pki_client
+  - name: network
+    interfaceAssignment: network
+    diskAssignment: network_disks
+    hostConfigAssignment: control_host_config
+    controlGroupScheme: host_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+      - CSS_v1
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+      - host_services_css
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_openvswitch_agent
+      - openstack_neutron_l3_agent
+      - internal_pki_client
+  - name: vnetwork
+    interfaceAssignment: vnetwork
+    diskAssignment: network_disks
+    hostConfigAssignment: virtual_host_config
+    controlGroupScheme: infra_controlgroup
+    softwareAllocation:
+      - hostOS_sp3
+    type: virtualMachine
+    vmResources:
+      coreCount: <TO.BE.FILLED>
+      memGiB: <TO.BE.FILLED>
+    hostComponentGroups:
+      - host_services_common
+      - host_services_chrony
+      - host_services_rsyslog_generator
+    serviceComponentGroups:
+      - idam_agents
+      - serviceassurance_agents
+      - openstack_openvswitch_agent
+      - openstack_neutron_l3_agent
+      - internal_pki_client
+...
+
+

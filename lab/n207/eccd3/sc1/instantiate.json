@@ -1,0 +1,20 @@
+{
+  "clusterName": "n280-eccd3",
+  "targetScaleLevelInfo": [
+        {
+          "aspectId": "sepp_worker_scaling",
+          "scaleLevel": "2"
+        },
+        {
+          "aspectId": "scp_worker_scaling",
+          "scaleLevel": "0"
+        }
+   ],
+  "additionalParams": {
+       "namespace": "sc1",
+       "applicationTimeOut": "3600",
+       "skipJobVerification": "false",
+       "manoControlledScaling": "true",
+       "skipVerification": "true"
+      }
+}
